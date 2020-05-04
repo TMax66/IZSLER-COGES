@@ -177,15 +177,15 @@ output$attint <- renderValueBox({
 }
 
 
-r<-riepilogo %>% 
-  group_by(Reparto) %>% 
-  summarise(esami=round(sum(N.esami/1000),0), ricavi=round(sum(Valore/1000),0))  
-
-vp<-riepilogo %>% 
-  select(Reparto,`Vendita Prodotti`) %>% 
-  drop_na(`Vendita Prodotti`) 
-
-rvp<-left_join(r,vp)
-
+# r<-riepilogo %>% 
+#   group_by(Reparto) %>% 
+#   summarise(esami=round(sum(N.esami/1000),0), ricavi=round(sum(Valore/1000),0))  
+# 
+# vp<-riepilogo %>% 
+#   select(Reparto,`Vendita Prodotti`) %>% 
+#   drop_na(`Vendita Prodotti`) 
+# 
+# rvp<-left_join(r,vp)
+# 
 
   
