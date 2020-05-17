@@ -1,0 +1,647 @@
+---
+title: "IZSLER-Dati di attività e Personale-2019"
+output: 
+  flexdashboard::flex_dashboard:
+    source: embed
+    orientation: rows  
+    vertical_layout: fill
+ 
+---
+ 
+
+```{r global, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(networkD3)
+library(hrbrthemes)
+library(readxl)
+library(ggrepel)
+library("RColorBrewer")
+library(wesanderson)
+library(DT)
+library(plotly)
+library(shiny)
+options(scipen = .999)
+riepilogo <- read_excel("dati.xls", sheet = "riepilogo")
+personale<-read_excel("dati3.xls", sheet = "reparti")
+personale$comparto<-rowSums(personale[,2:8], na.rm = T)
+personale$dirigenza<-rowSums(personale[,9:11], na.rm = T)
+personale$personale<-rowSums(personale[,12:13], na.rm = T)
+costi<- read_excel("costi personale.xls")
+
+r<-riepilogo %>% 
+group_by(Reparto) %>% 
+summarise(esami=round(sum(N.esami),0), ricavi=round(sum(Valore),0)) 
+
+ai<-riepilogo %>% 
+  select(Reparto,`Attività Interna`) %>% 
+  drop_na(`Attività Interna`)
+
+vp<-riepilogo %>% 
+  select(Reparto,`Vendita Prodotti`) %>% 
+  drop_na(`Vendita Prodotti`) 
+
+p<-personale %>% 
+  select(1,12:14)
+
+costi<-costi[, c(3,5)]
+costi<-unique(costi)
+costi<-costi %>% 
+  group_by(Reparto) %>% 
+  summarise(costi=round(sum(`Costo personale`), 2))
+
+dt<-left_join(r,vp)
+dt<-left_join(dt,ai)
+dt<-left_join(dt,p)
+dt<-left_join(dt, costi)
+
+dt$Rtot<-rowSums(dt[3:5])
+dt<-dt %>% 
+mutate(RPA=round(Rtot/personale,0),
+       ICP=(round(100*(costi/Rtot),0))
+)
+
+```
+QUADRO GENERALE
+=========================================
+
+```{r include=FALSE}
+#totale esami
+totes<-sum(r$esami)
+#totuff
+totuff<-riepilogo %>% 
+        filter(Attività=="Ufficiale") %>% 
+        summarise(sum(N.esami))
+totnuf<-riepilogo %>% 
+        filter(Attività=="Non Ufficiale") %>% 
+        summarise(sum(N.esami))
+
+ruff<-round(100*(totuff/totes),0)
+nruff<-round(100*(totnuf/totes),0)
+
+tric<-sum(dt$ricavi)
+uric<-riepilogo %>% 
+      filter(Attività=="Ufficiale") %>% 
+      summarise(sum(Valore))
+nuric<-riepilogo %>% 
+      filter(Attività=="Non Ufficiale") %>% 
+      summarise(sum(Valore))
+
+
+puric<-round(100*(uric/tric),0)
+pnuric<-round(100*(nuric/tric),0)
+
+GT<-sum(dt$Rtot)
+
+pGTr<-round(100*(sum(dt$ricavi)/GT), 0)
+pGTai<-round(100*(sum(dt$`Attività Interna`)/GT), 0)
+pGTvp<-round(100*(sum(dt$`Vendita Prodotti`)/GT),0)
+```
+
+Row{data-width=150}
+-------------------------------------
+
+### Totale Esami eseguiti
+```{r}
+valueBox(prettyNum(totes,big.mark = ","),  icon = "fa-flask")
+```
+
+### % Controlli Ufficiali
+```{r}
+gauge(ruff$`sum(N.esami)`, min = 0, max = 100, symbol = '%', gaugeSectors(colors="steelblue"))
+```
+
+### % Controlli  Non Ufficiali
+```{r}
+gauge(nruff$`sum(N.esami)`, min = 0, max = 100, symbol = '%', gaugeSectors(colors="steelblue"))
+```
+
+Row{data-width=150}
+-------------------------------------
+### Totale Ricavi da attività analitica (esami)
+
+```{r}
+valueBox(prettyNum(tric,big.mark = ","),  icon = "fa-euro")
+```
+
+### % Ricavi da Controlli Ufficiali
+```{r}
+gauge(puric$`sum(Valore)`, min = 0, max = 100, symbol = '%', gaugeSectors(colors="steelblue"))
+```
+
+### % Ricavi da Controlli Non Ufficiali
+```{r}
+gauge(pnuric$`sum(Valore)`, min = 0, max = 100, symbol = '%', gaugeSectors(colors="steelblue"))
+```
+
+Row{data-width=150}
+-------------------------------------
+### TOTALE RICAVI (analisi+attività interna+vendita prodotti)
+```{r}
+valueBox(prettyNum(GT,big.mark = ","),  icon = "fa-euro")
+```
+
+### % Tot ricavi da Attività analitica (Ufficiale e Non Ufficiale)
+```{r}
+gauge(pGTr, min = 0, max = 100, symbol = '%', gaugeSectors(colors="steelblue"))
+```
+
+### % Tot ricavi da Attività Interna
+```{r}
+gauge(pGTai, min = 0, max = 100, symbol = '%', gaugeSectors(colors="steelblue"))
+```
+
+### % Tot ricavi da Vendita Prodotti
+```{r}
+gauge(pGTvp, min = 0, max = 100, symbol = '%', gaugeSectors(colors="steelblue"))
+```
+
+
+
+ESAMI  
+=========================================  
+
+Column {.tabset}
+-------------------------------------
+   
+### Attività analitica per reparto
+
+```{r fig.height=8.5, fig.width=15}
+
+dt %>%
+  group_by(Reparto ) %>%
+  summarise(esami=round(sum(esami/1000),0), ricavi=round(sum(Rtot/1000),0)) %>%
+  arrange(esami) %>%
+  mutate(Reparto = factor(Reparto, unique(Reparto))) %>%
+  ggplot(aes(x=Reparto,y=esami, label=esami))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=esami), color="black")+
+  geom_point( aes(x=Reparto, y=esami, size=ricavi),shape=21,color="darkblue" )+
+  scale_size("Ricavi (€x1000)",  range=c(5, 25))+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="N.esamix1000 ",x="")+
+  geom_hline(yintercept= round(235, 0), col="red")+
+   geom_label(
+    label="Mediana (234565 esami)",
+    x=5,
+    y=300,
+    label.padding = unit(0.55, "lines"), # Rectangle size around label
+    label.size = 0.35,
+    color = "black",
+    fill="white"
+  )
+
+``` 
+
+
+### Attività analitica da esami UFFICIALI
+    
+```{r fig.height=8.5, fig.width=15}
+riepilogo %>% 
+  group_by(Reparto, Attività) %>% 
+  filter(Attività=="Ufficiale") %>% 
+  summarise(esami=round(sum(N.esami/1000),0), ricavi=round(sum(Valore/1000),0)) %>% 
+  ungroup %>% 
+  arrange(esami) %>% 
+  mutate(Reparto = factor(Reparto, unique(Reparto))) %>% 
+  ggplot(aes(x=Reparto,y=esami, label=esami))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=esami), color="black")+  
+  geom_point( aes(x=Reparto, y=esami, size=ricavi),shape=21,color="darkblue" )+
+  scale_size("Ricavi (€x1000)",  range=c(5, 25))+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="N.esamix1000 ",x="")+
+  geom_hline(yintercept= round(104, 0), col="red")+
+  geom_label(
+    label="Mediana (104000 esami)", 
+    x=5,
+    y=150,
+    label.padding = unit(0.55, "lines"), # Rectangle size around label
+    label.size = 0.35,
+    color = "black",
+    fill="white"
+  )
+
+
+```
+
+### Attività analitica da esami NON UFFICIALI
+    
+```{r fig.height=8.5, fig.width=15}
+
+riepilogo %>% 
+  group_by(Reparto, Attività) %>% 
+    filter(Attività=="Non Ufficiale") %>% 
+  summarise(esami=round(sum(N.esami/1000),0), ricavi=round(sum(Valore/1000),0)) %>% 
+  ungroup() %>% 
+  arrange(esami) %>% 
+  mutate(Reparto = factor(Reparto, unique(Reparto))) %>% 
+  ggplot(aes(x=Reparto,y=esami, label=esami))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=esami), color="black")+  
+  geom_point( aes(x=Reparto, y=esami, size=ricavi),shape=21,color="darkblue" )+
+  scale_size("Ricavi (€x1000) ",  range=c(5, 25))+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="N.esamix1000 ",x="")+
+  geom_hline(yintercept= round(55, 0), col="red")+
+  geom_label(
+    label="Mediana (55000 esami)", 
+    x=5,
+    y=300,
+    label.padding = unit(0.55, "lines"), # Rectangle size around label
+    label.size = 0.35,
+    color = "black",
+    fill="white"
+  )
+
+```
+
+
+RICAVI {.storyboard}
+=========================================
+### Situazione Complessiva (Distribuzione per reparto dei ricavi maturati per le attività analitiche pesate per il numero di esami eseguiti)
+```{r fig.height=8.5, fig.width=15}
+dt%>% 
+  group_by(Reparto ) %>% 
+  summarise(esami=round(sum(esami/1000),0), ricavi=round(sum(Rtot/1000),0)) %>% 
+  arrange(ricavi) %>% 
+  mutate(Reparto = factor(Reparto, unique(Reparto))) %>% 
+  ggplot(aes(x=Reparto,y=ricavi, label=ricavi))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=ricavi), color="black")+  
+  geom_point( aes(x=Reparto, y=ricavi, size=esami), shape=21, alpha=0.9,color="darkblue" )+
+  scale_size("N.esami x 1000",  range=c(5, 25))+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="Ricavi (€x1000) ",x="")+
+  geom_hline(yintercept= round(985, 0), col="red")+
+  geom_label(
+    label="Mediana (1110000 €)", 
+    x=5,
+    y=1500,
+    label.padding = unit(0.55, "lines"), # Rectangle size around label
+    label.size = 0.35,
+    color = "black",
+    fill="white"
+  )
+
+``` 
+
+   
+### Da Attività Ufficiale
+```{r fig.height=8.5, fig.width=15}
+ riepilogo %>% 
+  group_by(Reparto, Attività) %>% 
+  filter(Attività=="Ufficiale") %>% 
+  summarise(esami=round(sum(N.esami/1000),0), ricavi=round(sum(Valore/1000),0)) %>% 
+  ungroup %>% 
+  arrange(ricavi) %>% 
+  mutate(Reparto = factor(Reparto, unique(Reparto))) %>% 
+  ggplot(aes(x=Reparto,y=ricavi, label=ricavi))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=ricavi), color="black")+  
+  geom_point( aes(x=Reparto, y=ricavi, size=esami),shape=21,color="darkblue" )+
+  scale_size("N.esami x 1000",  range=c(5, 25))+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="Ricavi (€x1000) ",x="")+
+  geom_hline(yintercept= round(505, 0), col="red")+
+  geom_label(
+    label="Mediana (505000 €)", 
+    x=5,
+    y=650,
+    label.padding = unit(0.55, "lines"), # Rectangle size around label
+    label.size = 0.35,
+    color = "black",
+    fill="white"
+  )
+
+```   
+
+### Da Attività Non Ufficiale
+```{r fig.height=8.5, fig.width=15}
+
+riepilogo %>% 
+  group_by(Reparto, Attività) %>% 
+  filter(Attività=="Non Ufficiale") %>% 
+  summarise(esami=round(sum(N.esami/1000),0), ricavi=round(sum(Valore/1000),0)) %>% 
+  ungroup %>% 
+  arrange(ricavi) %>% 
+  mutate(Reparto = factor(Reparto, unique(Reparto))) %>% 
+  ggplot(aes(x=Reparto,y=ricavi, label=ricavi))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=ricavi), color="black")+  
+  geom_point( aes(x=Reparto, y=ricavi, size=esami),shape=21, color="darkblue" )+
+  scale_size("N.esami x 1000",  range=c(5, 25))+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="Ricavi (€x1000) ",x="")+
+  geom_hline(yintercept= round(373, 0), col="red")+
+  geom_label(
+    label="Mediana (373000 €)", 
+    x=5,
+    y=500,
+    label.padding = unit(0.55, "lines"), # Rectangle size around label
+    label.size = 0.35,
+    color = "black",
+    fill="white"
+  )
+ 
+```
+
+### Da Vendita Prodotti 
+```{r,fig.height=8.5, fig.width=15}
+r<-riepilogo %>% 
+group_by(Reparto) %>% 
+summarise(esami=round(sum(N.esami/1000),0), ricavi=round(sum(Valore/1000),0))  
+  
+vp<-riepilogo %>% 
+  select(Reparto,`Vendita Prodotti`) %>% 
+  drop_na(`Vendita Prodotti`) 
+    
+rvp<-left_join(r,vp)
+
+rvp %>% 
+  filter(`Vendita Prodotti`>0) %>% 
+  arrange(`Vendita Prodotti`) %>% 
+  mutate(vendita=round(`Vendita Prodotti`/1000,0)) %>% 
+  mutate(Reparto = factor(Reparto, unique(Reparto))) %>% 
+  ggplot(aes(x=Reparto,y=vendita, label=vendita))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=vendita), color="black")+  
+  geom_point( size=15,shape=21, color="darkblue" )+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="Ricavi da Vendita prodotti (€x1000) ",x="")+
+  geom_hline(yintercept= round(41, 0), col="red")+
+  geom_label(
+    label="Mediana (41000 €)",
+    x=3,
+    y=250,
+    label.padding = unit(0.55, "lines"), # Rectangle size around label
+    label.size = 0.35,
+    color = "black",
+    fill="white"
+  )
+
+```
+
+### Da Attività Interna
+
+```{r ,fig.height=8.5, fig.width=15}
+ai<-riepilogo %>% 
+  select(Reparto,`Attività Interna`) %>% 
+  drop_na(`Attività Interna`) 
+
+rai<-left_join(r,ai)
+
+ rai %>% 
+  filter(`Attività Interna`>0) %>% 
+  arrange(`Attività Interna`) %>% 
+  mutate(attività=round(`Attività Interna`/1000,0)) %>% 
+  mutate(Reparto = factor(Reparto, unique(Reparto))) %>% 
+  ggplot(aes(x=Reparto,y=attività, label=attività,))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=attività,), color="black")+  
+  geom_point( size=15,shape=21,color="darkblue" )+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="Ricavi da Attività Interna (€x1000) ",x="")+
+  geom_hline(yintercept= round(9, 0), col="red")+
+  geom_label(
+    label="Mediana (9000 €)",
+    x=3,
+    y=200,
+    label.padding = unit(0.55, "lines"), # Rectangle size around label
+    label.size = 0.35,
+    color = "black",
+    fill="white"
+  )
+```
+
+
+
+PERSONALE {.storyboard}
+=========================================
+### Personale  Dirigente per Reparto
+
+```{r,fig.height=8.5, fig.width=15}
+dt %>% 
+  select(Reparto, comparto, dirigenza) %>%
+  pivot_longer(cols=2:3, names_to="categoria", values_to="personale") %>% 
+  filter(categoria=="dirigenza") %>% 
+  arrange(personale) %>%
+  mutate(Reparto = factor(Reparto, unique(Reparto)))%>% 
+  ggplot(aes(x=Reparto,y=personale, label=personale))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=personale), color="black")+  
+  geom_point( size=15,shape=21,color="darkblue" )+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="N. Personale Dirigente",x="")
+
+```
+
+### Personale di comparto  per Reparto
+
+```{r,fig.height=8.5, fig.width=15}
+dt %>% 
+  select(Reparto, comparto, dirigenza) %>%
+  pivot_longer(cols=2:3, names_to="categoria", values_to="personale") %>% 
+  filter(categoria=="comparto") %>% 
+  arrange(personale) %>%
+  mutate(Reparto = factor(Reparto, unique(Reparto)))%>% 
+  ggplot(aes(x=Reparto,y=personale, label=personale))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=personale), color="black")+  
+  geom_point( size=15,shape=21,color="darkblue" )+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="N. Personale di Comparto",x="")
+
+```
+
+
+### RPA (Ricavo per Addetto)- Distribuzione per reparto del Ricavo per Addetto ricavo totale diviso il numero di dipendenti, esprime di quanto un reparto  utilizza in modo efficiente la risorsa lavoro. Il confronto tra reparti,   utilizzando questo indicatore,  ha senso solo se i reparti confrontati hanno la stessa caratterizzazione in termini di tipologia di esami eseguiti e loro valorizzazione. 
+```{r,fig.height=8.5, fig.width=15}
+
+
+
+dt %>% 
+   
+  mutate(RPA=round((Rtot/personale)/1000,0)) %>%
+  arrange(RPA) %>%
+  mutate(Reparto = factor(Reparto, unique(Reparto)))%>% 
+  ggplot(aes(x=Reparto,y=RPA, label=RPA))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=RPA), color="black")+  
+  geom_point(  aes(size=personale), shape=21, alpha=0.8, color="darkblue") +
+   scale_size_continuous( range = c(10,18))+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="Ricavo per Addetto (RPA) €x1000",x="")+
+  geom_hline(yintercept= round(45, 0), col="red")+
+  geom_label(
+    label="Mediana= 45248 €",
+    x=6,
+    y=60000,
+    label.padding = unit(0.55, "lines"), # Rectangle size around label
+    label.size = 0.35,
+    color = "black",
+    fill="white"
+  )
+```
+
+### RPA vs Ricavi Totali: Questo grafico visualizza,  in uno spazio a due dimensioni,  la collocazione di ogni reparto in merito ai Ricavi Totali mauturati e il Ricavo per Addetto, pesato per il numero di esami effettuati.
+
+```{r,fig.height=8.5, fig.width=15}
+
+dt$size<-cut(dt$esami/1000, breaks=c(5,100,400,800,1200))
+dt<-dt %>% 
+   mutate(size=recode(size, 
+                         `(5,100]`="<100",
+                      `(100,400]`= "100-400",
+                         `(400,800]`="400-800",
+                      `(800,1.2e+03]`="800-1200"))
+dt %>% 
+  ggplot(aes(x=Rtot,y=RPA,label=Reparto, size=size, color=size))+
+  geom_point(alpha=0.9)+
+  scale_size_discrete("N.esamix1000",range=c(5, 12))+
+  scale_color_manual("N.esamix1000",
+     values= c("grey20","steelblue","salmon2","brown1"))+
+    geom_hline(yintercept= median(dt$RPA), col="red")+
+    geom_vline(xintercept= median(dt$Rtot), col="blue")+
+
+    labs(x="Ricavi Totali € ", y="Ricavo per Addetto €")+
+     geom_text_repel(aes(label = Reparto),
+                      size = 2.8, colour="black")+
+  annotate(geom="text",label="Mediana RPA = 45248 €",
+           x=500000,y=48000, size = 4, colour = "red")+
+  annotate(geom="text",label="Mediana Ricavi Totali = 1110000 €",
+           x=1300000,y=100000, size = 4, colour = "blue")
+
+```
+
+
+### Costo del personale
+
+```{r,fig.height=8.5, fig.width=15}
+# dt$size<-cut(dt$esami/1000, breaks=c(5,100,400,800,1200))
+# dt<-dt %>% 
+#    mutate(size=recode(size, 
+#                          `(5,100]`="<100",
+#                       `(100,400]`= "100-400",
+#                          `(400,800]`="400-800",
+#                       `(800,1.2e+03]`="800-1200"))
+
+dt %>% 
+  select(Reparto, costi) %>%
+  arrange(costi) %>%
+  mutate(Reparto = factor(Reparto, unique(Reparto)))%>% 
+  ggplot(aes(x=Reparto,y=costi/1000, label=round(costi/1000,0)))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=(costi/1000)-100), color="black")+  
+  geom_point( size=18,shape=21,color="darkblue" )+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="Costo del personalex1000",x="")+
+  geom_hline(yintercept= round(1284.355, 0), col="red")+
+  geom_label(
+    label="Mediana (1284355 € )", 
+    x=5,
+    y=1500,
+    label.padding = unit(0.55, "lines"), # Rectangle size around label
+    label.size = 0.35,
+    color = "black",
+    fill="white"
+  )
+```
+
+### Distribuzione per reaparto dell'incidenza del costo del personale sui ricavi totali
+```{r,fig.height=8.5, fig.width=15}
+
+dt %>% 
+  select(Reparto, ICP) %>%
+  arrange(ICP) %>%
+  mutate(Reparto = factor(Reparto, unique(Reparto)))%>% 
+  ggplot(aes(x=Reparto,y=ICP, label=ICP))+
+  geom_segment( aes(x=Reparto, xend=Reparto, y=0, yend=ICP-5),color="black")+  
+  geom_point( size=18,shape=21,color="darkblue" )+
+  geom_text(color="black", size=4)+
+  coord_flip()+
+  theme_ipsum_rc(axis_title_just = "mc")+
+  labs(y="Incidenza costo del personale sui ricavi totali (%)",x="")+
+  geom_hline(yintercept= 133, col="red")+
+  geom_label(
+    label="Mediana (133 %)", 
+    x=5,
+    y=140,
+    label.padding = unit(0.55, "lines"), # Rectangle size around label
+    label.size = 0.35,
+    color = "black",
+    fill="white"
+  )
+```
+
+### Costo personale e Ricavi totali: Questo grafico visualizza,  in uno spazio a due dimensioni,  la collocazione di ogni reparto in merito al costo del personale e i ricavi totali, pesato per il numero di esami effettuati.
+
+```{r,fig.height=8.5, fig.width=15}
+
+dt$size<-cut(dt$esami/1000, breaks=c(5,100,400,800,1200))
+dt<-dt %>% 
+   mutate(size=recode(size, 
+                         `(5,100]`="<100",
+                      `(100,400]`= "100-400",
+                         `(400,800]`="400-800",
+                      `(800,1.2e+03]`="800-1200"))
+
+dt %>% 
+  ggplot(aes(x=Rtot,y=costi,label=Reparto, size=size, color=size))+
+  geom_point(alpha=0.9)+
+  scale_size_discrete("N.esamix1000",range=c(5, 12))+
+  scale_color_manual("N.esamix1000",
+                     values= c("grey20","steelblue","salmon2","brown1"))+
+  geom_hline(yintercept= median(dt$costi), col="red")+
+  geom_vline(xintercept= median(dt$Rtot), col="blue")+
+  
+  labs(x="Ricavi Totali € ", y="Costi personale x 1000 €")+
+  geom_text_repel(aes(label = Reparto),
+                  size = 2, colour="black")+
+  annotate(geom="text",label="Mediana costi = 1284353 €",
+           x=400000,y=1.4e6, size = 3.5, colour = "red")+
+  annotate(geom="text",label="Mediana Ricavi Totali = 1110000 €",
+           x=1250000,y=2.5e6, size = 3.5, colour = "blue")
+```
+
+### Costo medio Personale (CMP) e Ricavi per Addetto (RPA): Questo grafico visualizza,  in uno spazio a due dimensioni,  la collocazione di ogni reparto in merito al Costo Medio del Personale e i Ricavi per Addetto, pesato per il numero di esami effettuati.
+
+```{r,fig.height=8.5, fig.width=15}
+
+dt %>% 
+  ggplot(aes(x=RPA,y=costi/personale,label=Reparto, size=size, color=size))+
+  geom_point(alpha=0.9)+
+  scale_size_discrete("N.esamix1000",range=c(5, 12))+
+  scale_color_manual("N.esamix1000",
+                     values= c("grey20","steelblue","salmon2","brown1"))+
+  geom_hline(yintercept= median(dt$costi/dt$personale), col="red")+
+  geom_vline(xintercept= median(dt$RPA), col="blue")+
+  
+  labs(x="RPA € ", y="Costo medio personale (CMP) x 1000 €")+
+  geom_text_repel(aes(label = Reparto),
+                  size = 2, colour="black")+
+  annotate(geom="text",label="Mediana CMP= 51780 €",
+           x=100000,y=53000, size = 3.5, colour = "red")+
+  annotate(geom="text",label="Mediana Ricavi Totali = 45248 €",
+           x=48000,y=80000, size = 3.5, colour = "blue")
+```
+
+FONTE DATI 
+=========================================
+
+```{r}
+ datatable(dt[,-13], rownames = FALSE, style = "bootstrap4", options= list( dom='t',bPaginate = FALSE))%>%
+formatStyle(1:12,fontSize = '11px')
+```
