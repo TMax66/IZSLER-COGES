@@ -52,6 +52,7 @@ dt<-dt %>%
 
 
 
+<<<<<<< HEAD
 
 dt[2:12]<- round(apply(dt[,2:12], 2, scale),2)
 
@@ -59,3 +60,37 @@ x<-dt %>%
   column_to_rownames("Reparto") %>% 
   ztable() %>% 
   makeHeatmap(palette="Blues") %>% print(caption="Table 4. Heatmap Table")
+=======
+ 
+dt[2:12]<- round(apply(dt[,2:12], 2, scale),2)
+
+x<-dt %>% 
+ column_to_rownames("Reparto") %>% 
+  ztable() %>% 
+  makeHeatmap(palette="Blues") %>% print(caption="Table 4. Heatmap Table")
+
+
+
+# dt %>% 
+#   pivot_longer(2:12, names_to = "Parametro", values_to = "valori")
+#  
+
+
+
+
+
+
+
+
+
+
+
+
+ %>% 
+  mutate(Parametro=casefold(Parametro, upper = TRUE)) %>%
+   ggplot(melt_mtcars, aes(variable, car)) +
+   geom_tile(aes(fill = value), colour = "white") +
+   scale_fill_gradient(low = "white", high = "red")
+  
+
+>>>>>>> 0acb51957057d7100d06fb5822cef63eb398f82a
