@@ -16,9 +16,14 @@ View(time)
 time$hr <- time$Minuti/60
 
 time %>% 
-  group_by(Mese) %>% 
+  group_by(Mese, Matricola) %>% 
   summarise(hrm=sum(hr)) %>% 
-  mutate(fte = hrm / 1449) %>% 
+  left_join(anag, by="Matricola") %>% 
+  drop_na() %>% 
+  group_by(Categoria,Matricola) %>% 
+  summarise(hrm = sum(hrm))
+
+
   
 #Attività####
 bg %>% 
@@ -26,7 +31,6 @@ bg %>%
   summarise(esami=sum(esami, na.rm = T)) %>% 
   arrange(desc(esami)) %>% 
   janitor::adorn_totals(where = "row")
-  View()
 
   
 
