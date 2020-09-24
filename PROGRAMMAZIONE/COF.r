@@ -2,7 +2,7 @@ library(readxl)
 library(tidyverse)
 library(lubridate)
 
-bg <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/bg.xlsx")
+bg <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
 anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/anagrafe.xlsx")
 time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/presenze.xlsx")
 
@@ -28,6 +28,22 @@ time %>%
   
 #Attività####
 
+bg %>% 
+  group_by(repacc) %>% 
+  summarise(conf = sum(Conf = sum(conf, na.rm = T))) %>% 
+  arrange(desc(conf)) %>% 
+  janitor::adorn_totals(where = "row")
+
+
+
+
+
+
+
+
+
+
+
 tabella <- bg %>% 
   mutate(mese = month(datareg)) %>% 
   group_by(settore, prova, tecnica, labs) %>% 
@@ -37,11 +53,7 @@ tabella <- bg %>%
 
 write.csv(tabella, file = "tabella.csv")
 
-bg %>% 
-  group_by(settore) %>% 
-  summarise(esami=sum(esami, na.rm = T)) %>% 
-  arrange(desc(esami)) %>% 
-  janitor::adorn_totals(where = "row")
+
 
 bg %>% 
   mutate(mese = month(datareg)) %>% 
@@ -52,10 +64,9 @@ bg %>%
   unique() 
 
 
-
-bg %>% 
+ 
   
 
 
-attività <- unique(factor(bg$FinalitàConf))
-
+attività <- unique(factor(bg$'Finalità del conferimento (SM)'))
+names(bg)
