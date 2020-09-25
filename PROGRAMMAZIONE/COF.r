@@ -2,14 +2,56 @@ library(readxl)
 library(tidyverse)
 library(lubridate)
 
-attività <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
+datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
 anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
-time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/presenze.xlsx")
+time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
 
 # setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
 # bg <- read_excel("bg.xlsx")
 # anag <- read_excel("anagrafe.xlsx")
 # time <- read_excel("presenze.xlsx")
+
+
+
+#Attività####
+
+datiatt$dtreg<-as.Date(datiatt$datareg, format="%Y-%m-%d")
+
+datiatt$anno <- year(datiatt$dtreg)
+datiatt$mese <- month(datiatt$dtreg)
+
+datiatt$repanalisi2 <- ifelse(datiatt$repanalisi== "Sede Territoriale di Bergamo", "Sede Territoriale di Bergamo", 
+                             ifelse(datiatt$repanalisi== "Sede Territoriale di Binago","Sede Territoriale di Binago",
+                                    ifelse(datiatt$repanalisi== "Sede Territoriale di Sondrio","Sede Territoriale di Sondrio","Altri reparti")))
+
+#Numero conferimenti 2019 BG-SO ####
+
+nconf<-datiatt %>% 
+  filter(anno==2019) %>% 
+  group_by(repacc) %>% 
+  summarise(totconf = sum(conf, na.rm = T)) %>% 
+  select("reparto" = repacc, totconf)
+
+
+nesami <- datiatt %>% 
+  filter(anno==2019) %>% 
+  group_by(repanalisi2) %>% 
+  summarise(totesami = sum(esami, na.rm = T)) %>% 
+  arrange(desc(totesami)) %>% 
+  select("reparto" = repanalisi2, totesami)
+
+  
+att <-  nconf %>% 
+  right_join(nesami, by = "reparto") %>% 
+  arrange(desc(totesami)) %>% 
+  janitor::adorn_totals(where = "row")
+
+
+
+
+
+
+
 
 #FULL TIME EQUIVALENT####
 View(time)
@@ -26,12 +68,7 @@ time %>%
 
 
   
-#Attività####
 
-
-attività$dtreg<-as.Date(attività$datareg, format="%Y-%m-%d")
-
-attività$anno <- year(attività$dtreg)
 
 
 
