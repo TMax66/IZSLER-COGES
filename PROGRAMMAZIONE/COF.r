@@ -2,8 +2,8 @@ library(readxl)
 library(tidyverse)
 library(lubridate)
 
-bg <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
-anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/anagrafe.xlsx")
+attività <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
+anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
 time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/presenze.xlsx")
 
 # setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
@@ -28,14 +28,25 @@ time %>%
   
 #Attività####
 
-bg %>% 
-  group_by(repacc) %>% 
-  summarise(conf = sum(Conf = sum(conf, na.rm = T))) %>% 
-  arrange(desc(conf)) %>% 
-  janitor::adorn_totals(where = "row")
+
+attività$dtreg<-as.Date(attività$datareg, format="%Y-%m-%d")
+
+attività$anno <- year(attività$dtreg)
 
 
 
+
+
+attività %>% 
+  group_by(anno, repanalisi) %>% 
+  summarise(Esami = sum(esami = sum(esami, na.rm = T)))
+
+
+
+attività %>% 
+  filter(repanalisi %in% c("Sede Territoriale di Bergamo", "Sede Territoriale di Sondrio")) %>% 
+  group_by(anno, repanalisi) %>% 
+    summarise(totes = sum(esami, na.rm = T))
 
 
 

@@ -1,0 +1,734 @@
+---
+title: "Covid-19"
+author: "Stefano Guazzetti <stefano.guazzetti@gmail.com>"
+date:  "`r format(Sys.time(), '%d/%m/%Y')`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(nlme)
+library(textreadr)
+library(DT)
+library(ggplot2)
+library(reshape2)
+library(scales)
+library(utils)
+library(httr)
+library(zoo)
+library(forecast)
+library(xts)
+library(grid)
+library(kableExtra)
+library(gridExtra)
+library(plotly)
+library(RColorBrewer)
+library(dygraphs)
+library(leaflet)
+library(classInt)
+library(raster)
+########################################################################################
+CovidIT<-read.csv("https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-andamento-nazionale/dpc-covid19-ita-andamento-nazionale.csv")
+                  #https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-andamento-nazionale/dpc-covid19-ita-andamento-nazionale.csv
+CovidIT$Date<-as.Date(substr(CovidIT$data, 1, 10), format="%Y-%m-%d")
+ultima_data<-tail(CovidIT$Date, 1)
+CovidIT$PropIncr<-round(c(0, exp(diff(log(CovidIT$totale_casi)))), 3)
+CovidIT$NewCases<-      CovidIT$nuovi_positivi #c(0, diff(CovidIT$totale_casi)) OCCHIO
+  #CovidIT$totale_attualmente_positivi[2:nrow(CovidIT)]/CovidIT$totale_attualmente_positivi[1:(nrow(CovidIT)-1)]
+CovidIT$GrowthFact<-round(c(NA, exp(diff(log(CovidIT$NewCases)))), 3)
+  #CovidIT$nuovi_attualmente_positivi[2:nrow(CovidIT)]/CovidIT$nuovi_attualmente_positivi[1:(nrow(CovidIT)-1)]
+#FIT<-lm(log(totale_casi)~Date, data=CovidIT)
+CovidIT$NewHosp<-c(0, diff(CovidIT$totale_ospedalizzati))
+CovidIT$NewIntens<-c(0, diff(CovidIT$terapia_intensiva))
+CovidIT$NewDeaths<-c(0, diff(CovidIT$deceduti))
+CovidIT$NewDischarged<-c(0, diff(CovidIT$dimessi_guariti))
+CovidITLong<-melt(CovidIT[, c("Date", "NewCases", "NewHosp", "NewIntens", "NewDeaths", "NewDischarged")], value.name = "Cases", id.vars=1)
+CovidITLong$variable<-factor(CovidITLong$variable, levels=c("NewCases", "NewHosp", "NewIntens", "NewDischarged", "NewDeaths" ))
+#########################à
+PopProvER<-read.csv("provincie_emilia.csv")
+CovidProv<-read.csv("https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-province/dpc-covid19-ita-province.csv", na.strings = "")#spero solo per il 20042020
+#CovidProv<-read.csv("dpc-covid19-ita-province.csv", na.strings = "")
+CovidProv<-CovidProv[  ! CovidProv$denominazione_provincia %in%  c("In fase di definizione/aggiornamento", "fuori Regione/P.A.", "In fase di definizione", "Fuori Regione / Provincia Autonoma"), ]
+names(CovidProv)[1]<-"data"
+CovidProv$denominazione_regione<-gsub("-", " ", CovidProv$denominazione_regione)
+CovidProv$Date<-as.Date(substr(CovidProv$data, 1, 10), format="%Y-%m-%d")
+#CovidProv$totale_casi<-as.integer(CovidProv$totale_casi)
+CovidER<-droplevels(subset(CovidProv, denominazione_regione == "Emilia Romagna"))
+#CovidER<-merge(CovidER, PopProvER, by.x="denominazione_provincia", by.y="Provincia")
+ERSplit<-split(CovidER$totale_casi, list(CovidER$denominazione_provincia))
+
+
+ER_NewCases<-data.frame(melt(lapply(ERSplit, function(x) c(0, diff(x))), value.name="NewCases"),
+                        melt(lapply(ERSplit, function(x) c(NA, exp(diff(log(x))))), value.name = "PropIncr"),
+           Date=unique(CovidER$Date))
+ER_NewCases<-ER_NewCases[,-2]
+ER_NewCases$NewCases[ER_NewCases$NewCases<0]<-0
+names(ER_NewCases)[3]<-"Provincia"
+ER_NewCases$GrowthFactor<- melt(lapply(split(ER_NewCases$NewCases, list(ER_NewCases$Provincia)), function(x) c(NA, exp(diff(log(x))))))[,-2]
+ER_NewCases$PropIncr[is.infinite(ER_NewCases$PropIncr)|is.nan(ER_NewCases$PropIncr)] <- NA
+ER_NewCases$GrowthFactor[is.infinite(ER_NewCases$GrowthFactor)|is.nan(ER_NewCases$GrowthFactor)] <- NA
+
+CovidReg<-read.csv("https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-regioni/dpc-covid19-ita-regioni.csv" )
+
+#CovidReg<-read.csv("dpc-covid19-ita-regioni.csv")
+
+CovidReg$Date<-as.Date(substr(CovidReg$data, 1, 10), format="%Y-%m-%d")
+CovidReg$denominazione_regione<-gsub("-", " ", CovidReg$denominazione_regione)#necessario dal 31/03/2020
+REGSplit<-split(CovidReg$totale_casi, list(CovidReg$denominazione_regione))
+PopReg<-read.csv("PopRegIta.csv", h=T)#########################
+PopReg$Regione<-factor(PopReg$Regione, levels=PopReg$Regione[PopReg$Ordine])
+CovidReg2<-merge(CovidReg, PopReg, by.x="denominazione_regione", by.y="Regione")
+CovidReg2$Area<-factor(CovidReg2$Area, levels=c("NORD", "CENTRO", "SUD"))
+CovidReg2$denominazione_regione<-factor(CovidReg2$denominazione_regione, levels=levels(PopReg$Regione))
+
+####nuovi casi per egione
+REG_NewCases<-data.frame(melt(lapply(REGSplit, function(x) c(0, diff(x)))),
+                        Date=unique(CovidReg$Date), Kind="Incident cases")
+names(REG_NewCases)[2]<-"Regione"
+########nuovi ospedalizzati totali totale_ospedalizzati
+REGTotHospSplit<-split(CovidReg$totale_ospedalizzati, list(CovidReg$denominazione_regione))
+REG_NewTotHosp<-data.frame(melt(lapply(REGTotHospSplit, function(x) c(0, diff(x)))),
+                        Date=unique(CovidReg$Date), Kind="Total Hospitalizations")
+names(REG_NewTotHosp)[2]<-"Regione"
+
+
+####nuovi ospedalizzati con sintomi
+REGHospSplit<-split(CovidReg$ricoverati_con_sintomi, list(CovidReg$denominazione_regione))
+REG_NewHosp<-data.frame(melt(lapply(REGHospSplit, function(x) c(0, diff(x)))),
+                        Date=unique(CovidReg$Date), Kind="Hospitalizations")
+names(REG_NewHosp)[2]<-"Regione"
+#REG_NewHosp$value[REG_NewHosp$value<0]<-0
+### nuovi morti
+REGDeathSplit<-split(CovidReg$deceduti, list(CovidReg$denominazione_regione))
+REG_NewDeaths<-data.frame(melt(lapply(REGDeathSplit, function(x) c(0, diff(x)))),
+                         Date=unique(CovidReg$Date), Kind="Deaths")
+names(REG_NewDeaths)[2]<-"Regione"
+### nuovi dimessi
+REGDischSplit<-split(CovidReg$dimessi_guariti, list(CovidReg$denominazione_regione))
+REG_NewDischs<-data.frame(melt(lapply(REGDischSplit, function(x) c(0, diff(x)))),
+                         Date=unique(CovidReg$Date), Kind="Discharges")
+names(REG_NewDischs)[2]<-"Regione"
+####
+REGICUSplit<-split(CovidReg$terapia_intensiva, list(CovidReg$denominazione_regione))
+REG_NewICUs<-data.frame(melt(lapply(REGICUSplit, function(x) c(0, diff(x)))),
+                         Date=unique(CovidReg$Date), Kind="ICU admissions")
+#REG_NewICUs$value[REG_NewICUs$value<0]<-0
+names(REG_NewICUs)[2]<-"Regione"
+
+Events_REG<-rbind(REG_NewCases, REG_NewDeaths, REG_NewDischs, REG_NewHosp, REG_NewICUs, REG_NewTotHosp)
+Events_REG$Kind<-factor(Events_REG$Kind, levels=c("Incident cases", "Hospitalizations", "ICU admissions", "Total Hospitalizations", "Discharges", "Deaths"),
+                        labels=c("casi incidenti", "ricoveri netti (non ICU)", "ricoveri netti in ICU", "ricoveri netti totali", "dimissioni", "decessi"))
+
+###############################
+
+##################################
+
+#download the dataset from the ECDC website to a local temporary file
+GET("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv", authenticate(":", ":", type="ntlm"), write_disk(tf <- tempfile(fileext = ".csv")))
+
+#read the Dataset sheet into “R”. The dataset will be called "data".
+
+# https://opendata.ecdc.europa.eu/covid19/casedistribution/csv
+dataECDC <- read.csv(tf)
+dataECDC$dateRep<-as.Date(dataECDC$dateRep, format="%d/%m/%Y")
+
+ultima_ecdc<-max(dataECDC$dateRep)
+dataECDC$cases<-abs(dataECDC$cases)
+#AggECDC<-aggregate(cbind(cases, deaths) ~ countriesAndTerritories, data=dataECDC, FUN=sum)
+
+AddNew<-function(x, what="cases", other="deaths",  orderday="dateRep"){
+  x<-x[order(x[,orderday]),]
+  CumDeaths<-cumsum(x[,other])
+  CumCases<- cumsum(x[,what])
+  PropIncr<-round(100*c(1, exp(diff(log(CumCases))))-100, 1)
+  PropIncr[is.nan(PropIncr) | is.infinite(PropIncr)]<-0
+  GrowthFact<-round(c(NA, exp(diff(log(x[,what])))),3)
+  GrowthFact[is.nan(GrowthFact)]<-0
+  GrowthFact[is.infinite(GrowthFact)]<-NA
+  return(data.frame(x, CumCases, CumDeaths, PropIncr, GrowthFact))
+}
+
+ECDCSplit<-split(dataECDC, list(dataECDC$countriesAndTerritories))
+
+
+ECDC2<-do.call(rbind, lapply(ECDCSplit, AddNew))
+ECDC2$Country<-gsub("_", " ", ECDC2$countriesAndTerritories)
+ECDC2$Prevalence<-round(100000*ECDC2$CumCases/ECDC2$popData2019)
+Y<-ECDC2[order(ECDC2$dateRep, decreasing =F), 
+            c("dateRep", "Country", "cases", "CumCases", "deaths", "CumDeaths", "Prevalence",  "PropIncr", "GrowthFact" )]
+Yagg<-aggregate(cases~dateRep, data=dataECDC, FUN=sum, na.rm=T)
+
+doubtime2<-function(x){
+  half<-which.min(abs(x-max(x)/2))
+  return(length(x)-half)
+}
+
+LastDoubl<-tapply(Y$CumCases, list(Y$Country), doubtime2)
+LastDoubl.frame<-data.frame(Country=names(LastDoubl), DoubTime=LastDoubl)
+#Y2<-subset(Y, dateRep == ultima_ecdc)###solo ultima data
+Y2<-do.call(rbind,  lapply(split(Y, list(Y$Country)), tail, 1 ) )  #alternativa per la spagna
+
+Y3<-merge(Y2[,-1], LastDoubl.frame)
+Y3<-Y3[order(Y3$CumCases, decreasing = T), ]
+```
+
+
+# Report giornaliero sulla evoluzione dell'epidemia di COVID-19 (SARS-CoV-2)
+
+**Nota**: questo report viene aggiornato giornalmente, utilizzando i dati resi disponibili dall'[ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide), all'aggiornamento del `r format(ultima_ecdc,  format="%d/%m/%Y")` (riferiti al giorno precedente, per quel che riguarda l'Italia).
+
+
+I dati riguardanti l'evoluzione della epidemia in Italia sono forniti dalla [Protezione Civile](https://github.com/pcm-dpc/COVID-19), all'aggiornamento del `r format(ultima_data,  format="%d/%m/%Y")`.
+
+Per maggiore facilità di consultazione  delle [datatables](https://datatables.net), sulle quali è possibile fare operazioni di ordinamento, selezione, ricerca ed esportazione, si consiglia di aprire l'URL o il file HTML con un  browser come *chrome* o *firefox*, preferibilmente da computer.
+
+#La situazione mondiale
+
+I casi totali riportati, riguardanti l'intero pianeta, ad oggi sono `r sum(ECDC2$cases, na.rm=T)`, mentre il totale dei decessi riportato è di `r sum(ECDC2$deaths, na.rm=T)`.
+
+I nuovi casi dell'ultimo giorno ammontano a `r  sum(ECDC2$cases[ECDC2$dateRep == ultima_ecdc])`. 
+
+Il tempo empirico di raddoppio dei casi totali a livello planetario è attualmente di `r doubtime2(cumsum(Yagg$cases))` giorni.
+
+
+```{r chunk1, echo=FALSE}
+
+datatable(Y3, extensions = 'Buttons', rownames = FALSE, 
+          colnames=c(  "Nazione", "Nuovi casi",  "Casi totali",  "Nuovi decessi", 
+                     "Decessi totali", "Prevalenza periodale (casi per 100.000 abitati)",  "Incremento %le casi totali", "Growth Factor", "Tempo di raddoppio (gg)"),
+          caption=paste("Covid-19, casi diagnosticati al", format(ultima_ecdc, format="%d/%m/%Y"), "(fonte ECDC)"),
+          options = list(dom = 'Blfrtip',
+                         buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+                         lengthMenu = list(c(10,25,50,-1),
+                                           c(10,25,50,"All"))))
+
+
+```
+
+
+##Casi globali
+
+
+```{r global,  fig.align="center", echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, fig.cap="Casi globali giornalieri. "}
+ggplot(subset(Yagg,  dateRep > as.Date("2020-02-25", format="%Y-%m-%d")), aes(x=dateRep, y=cases))+geom_bar(stat="identity", width=1)+
+  ylab("incident cases")+ggtitle(paste("global confirmed cases as of ", format(ultima_ecdc, format="%m/%d/%Y")))+
+  #geom_line(aes(y=rollmean(cases, 10, na.pad = T , align="center") ), col=2, size=.8, alpha=1)+
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date( date_breaks = "15 day", minor_breaks = "1 day", date_labels = "%m-%d")+
+  labs(x="date", y="daily cases")+scale_y_continuous(labels = comma)
+```
+
+
+
+
+##Grafici di confronto 
+
+
+###Confronto fra alcune nazioni (casi totali)
+
+
+```{r chunk3, plotly=TRUE, fig.align="center", echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, fig.cap="Confronto fra prevalenze in alcune nazioni "}
+
+#ECDC2$Prevalence<-round(100000*ECDC2$CumCases/ECDC2$popData2018)
+
+GGX<-ggplot( subset(ECDC2, Country %in% c("United States of America", "Spain", "Germany", "France", "United Kingdom", "Italy", "Russia", "Netherlands",  "Brazil", "Sweden") & 
+                 dateRep > as.Date("2020-02-25", format="%Y-%m-%d")) , 
+              aes(x=dateRep, y=Prevalence, col=Country))+#scale_color_brewer( palette="Set1")+
+  geom_line(size=1)+#scale_y_log10()+
+  ylab("period prevalence")+#theme_bw()+
+  theme(legend.position = "bottom")+scale_y_continuous(labels=comma, breaks = pretty_breaks(10))+
+  ggtitle(paste("period prevalence as of ", format(ultima_ecdc, format="%m/%d/%Y")))+
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date( date_breaks = "30 day", minor_breaks = "15 days", date_labels = "%m-%d")+
+  labs(x="date", y="cases per 100,000 persons")+
+  scale_color_manual(values=colorRampPalette(brewer.pal(8, "Set1"))(10))
+
+ggplotly(GGX, session="knitr", kwargs=list(filename="nations",
+                                             fileopt="overwrite"))
+
+```
+
+
+###Confronto fra alcune nazioni (casi incidenti)
+
+```{r chunk4,  fig.align="center", echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, fig.cap="Confronto casi incidenti fra alcune nazioni"}
+ggplot(subset(ECDC2, Country %in% c("United States of America", "Spain", "Germany", "France", "United Kingdom", "Italy")  & dateRep > "2020-02-22"), 
+       aes(x=dateRep, y=cases))+ geom_bar(stat="identity", width=1)+
+  ggtitle(paste("incident cases in as of", format(ultima_ecdc, format="%m/%d/%Y")))+ 
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date(date_labels = "%m-%d", date_breaks = "30 day", minor_breaks = "15 day")+
+  labs(x="date", y="new cases")+facet_wrap(~Country, scales="free_y")+theme(panel.spacing = unit(1, "lines"))
+
+```
+
+Si presti attenzione alla diversa scala verticale per nazione nel pannello sopra riportato.
+
+```{r chunk4bis,  fig.align="center", echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, fig.cap="Confronto casi cumulati fra alcune nazioni, dal giorno del 100* caso "}
+
+Confirmed100<-droplevels(subset(ECDC2, CumCases > 99 & Country %in%  c("United States of America", "Spain", "Germany", "France", "United Kingdom", "Italy") ))
+SplitConf100<-split(Confirmed100, Confirmed100$Country)
+add_order<-function(X, what="dateRep"){
+  Day<-order(X[,what])
+  LastSeven<-Day>(length(Day)-7)
+  return(data.frame(X, Day, LastSeven))
+}
+CasesCommonOrigin<-do.call(rbind, lapply(SplitConf100, add_order))
+#splittedDay0<-lapply(SplitConf100, add_order)
+#splittedDay0<-splittedDay0[lapply(splittedDay0, nrow)>10]
+#doubtime2(cumsum(Yagg$cases))
+#linear_models7<-lmList(log(CumCases)~Day|Country, data=CasesCommonOrigin, subset=LastSeven, na.action = na.omit)
+
+#linear_models<-lmList(log(CumCases)~Day|Country, data=CasesCommonOrigin, na.action = na.omit)
+#fitted_values<-do.call(rbind, lapply(linear_models, fortify))
+#CasesCommonOrigin$predicted<-round(exp(fitted_values$.fitted+0.5*fitted_values$.sigma^2))
+
+ggplot(CasesCommonOrigin, aes(x=Day, y=CumCases)) +
+  geom_line(size=.8)+
+  theme(legend.position = "bottom")+ggtitle("total cases by country")+labs(x="days since 100 cases", y="cases")+
+  scale_y_continuous( labels=comma)+ #limits=c(NA, max(CasesCommonOrigin$CumCases)),
+# scale_y_log10() +   
+# scale_y_continuous(breaks=c( 10000, 50000, 100000, 150000, 200000, 250000, 300000),
+#                    labels = c("10000", "50000", "100000", "150000", "200000", "250000", "300000"))+
+  theme(plot.title = element_text(hjust = 0.5)) + #coord_fixed(ratio = 10)+
+ #geom_line(aes(x=Day, y=predicted), linetype ="dotted", col="red", size=1)  +
+  facet_wrap(Country~.,  scales="free_y")  #, scales="free")
+
+
+
+```
+
+Si presti attenzione alla diversa scala verticale per nazione nel pannello sopra riportato.
+
+###Velocità di crescita
+
+L'allontanamento da un modello di crescita proporzionale, nel quale ad una variazione proporzionale costante dei casi cumulati corrisponde un incremento costante del numero dei nuovi casi, è meglio valutabile in un grafico che rappresenta il numero di nuovi casi giornaliero in funzione del numero totale di casi, in scala logaritmica per entrambe le quantità. Il modello moltiplicativo a tasso costante è idealmente rappresentato da una retta, mentre un rallentamento nella diffusione del contagio è rappresentato da una deviazione dalla linearità.
+
+```{r chunk6v, fig.align="center", echo=FALSE, warning=FALSE, message = FALSE, fig.width=10, fig.height=10, fig.cap="Casi incidenti (media mobile di ampiezza 45 gg) in funzione dei casi totali (scala log-log), per alcuni paesi."}
+#colorRampPalette(brewer.pal(8, "Set1"))(10)
+ggplot(subset(ECDC2, CumCases > 99 & Country %in%  c("United States of America", "Spain", "Germany", "France", "United Kingdom", "Italy", "China", "Brazil", "Sweden") ), 
+       aes(x=CumCases, y=rollmean(cases, 45, na.pad = T, align="center"), col=Country)) +
+  geom_line(size=.8)+
+  theme(legend.position = "bottom") +  scale_y_log10(labels=comma, limits=c(100, NA))+scale_x_log10(limits=c(1000, NA), labels=comma)+
+  # scale_color_brewer( palette="Set1")
+  labs(x="cumulative cases", y="incident cases")+scale_color_manual(values=colorRampPalette(brewer.pal(8, "Set1"))(10))
+
+```
+
+
+
+*** 
+
+
+
+# La situazione italiana
+
+
+
+I casi totali riportati sono `r CovidIT$totale_casi[CovidIT$Date == ultima_data]` ed il totale dei decessi è di `r CovidIT$deceduti[CovidIT$Date == ultima_data]`. I nuovi casi, al `r format(ultima_data,  format="%d/%m/%Y")` sono stati  `r CovidIT$NewCases[CovidIT$Date == ultima_data] `, mentre i decessi registrati nell'ultimo giorno sono  `r CovidIT$NewDeaths[CovidIT$Date == ultima_data] `.
+
+
+Il tempo di raddoppio empirico (basato sui dati e non sul modello esponenziale di contagio, dal quale l'Italia si è allontanata con l'adozione di misure di mitigazione) è stato di  `r nrow(CovidIT) - which.min(abs(CovidIT$totale_casi-max(CovidIT$totale_casi)/2))` giorni.
+
+
+```{r chunk5, echo=FALSE, warning=FALSE, message = FALSE}
+IND<-c("Date", "ricoverati_con_sintomi", "terapia_intensiva", "totale_ospedalizzati", "totale_positivi",
+        "deceduti", "totale_casi", "NewHosp",   "NewIntens", "NewDeaths", "NewCases", "PropIncr", "GrowthFact")
+Nam<-c("Data",  "ricoverati (non ICU)",  "ricoverati (ICU)", "totale ospedalizzati",  "totale positivi" ,  
+       "totale decessi", "totale casi", "diff ricoveri (non ICU)", "diff ricoveri (ICU)",  "nuovi decessi",   "nuovi casi",    "incr prop casi totali (%)" ,             
+     "fattore di crescita")
+#CovidIT$NewIntens[CovidIT$NewIntens<0]<-0
+CovidIT$PropIncr<-round(100*CovidIT$PropIncr - 100, 1)
+tabella<-CovidIT[order(CovidIT$Date, decreasing=TRUE), IND]
+tabella$Date<-format(tabella$Date,  format="%d/%m/%Y")
+datatable(tabella, colnames=Nam, 
+          extensions = 'Buttons', rownames = FALSE, 
+                caption=paste("Covid-19, situazione italiana al", format(ultima_data, format="%d/%m/%Y")),
+                options = list(dom = 'Blfrtip',
+                               buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+                               lengthMenu = list(c(10,25,50, -1),
+                                                 c( 10,25,50, "All"))))
+```
+
+##Nuovi casi
+
+```{r chunk6, fig.align="center", echo=FALSE, warning=FALSE, message = FALSE, fig.width=10, fig.height=8, fig.cap="Casi incidenti. La linea rossa rappresenta la media mobile, di  ampiezza  7 gg."}
+ggplot(CovidIT, aes(x=Date, y=NewCases))+ geom_bar(stat="identity", width=1, alpha=.8)+
+  ggtitle(paste("casi incidenti in Italia al", format(ultima_data,  format="%d/%m/%Y")))+ 
+  geom_line(aes(y=rollmean(NewCases, 7, na.pad = T , align="center") ), col=2, size=.8, alpha=1)+
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date(date_labels = "%d/%m", date_breaks = "14 day",  minor_breaks = "1 day")+
+  labs(x="data", y="nuovi casi")
+```
+
+
+
+
+
+###Variazione giornaliera eventi
+
+```{r chunk6b, echo=FALSE, fig.align="center", warning=FALSE, message = FALSE, fig.width=10, fig.height=10, fig.cap="Eventi incidenti: nuovi casi, bilancio ospedalizzazioni, bilancio ingressi in terapia intensiva, dimissioni,  decessi (attenzione alle scale, diverse per pannello)"}
+
+#CovidITLong$Cases[CovidITLong$Cases < 0]<-0
+ggplot(CovidITLong, aes(x=Date, y=Cases))+geom_bar(stat = "identity", width=1)+labs(x="data", y="nuovi eventi")+
+  scale_x_date(date_labels = "%d/%m", date_breaks = "15 day",  minor_breaks = "1 day")+
+  facet_grid(variable~., scales = "free", 
+             labeller=labeller(variable=c(NewCases="casi incidenti", NewHosp="ricoverati (non ICU)", NewIntens="ricoverati in ICU", 
+                                          NewDischarged ="dimessi",
+                                          NewDeaths="decessi")))
+```
+
+
+
+
+
+##Casi totali
+
+```{r chunk7, echo=FALSE, fig.align="center", warning=FALSE, message = FALSE, fig.width=10, fig.height=8, fig.cap="Casi e decessi totali"}
+#FIT<-lm(log(totale_casi)~Date, data=CovidIT)
+GA<-ggplot(CovidIT, aes(x=Date, y=totale_casi))+   geom_point(size=1)+geom_line(size=1)+
+  ggtitle(paste("casi cumulati al",  format(ultima_data,  format="%d/%m/%Y")))+ 
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date(date_labels = "%d/%m", date_breaks = "30 day",  minor_breaks = "7 day")+
+  labs(x="", y="casi")#+
+  #geom_line(data = fortify(FIT), aes(x = Date, y = exp(.fitted+.sigma^(2)/2)), col="red")
+
+GB<-ggplot(CovidIT, aes(x=Date, y=deceduti))+   geom_point(size=1)+geom_line(size=1)+
+  ggtitle(paste("decessi cumulati al",  format(ultima_data,  format="%d/%m/%Y")))+ 
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date(date_labels = "%d/%m", date_breaks = "30 day",  minor_breaks = "7 day")+
+  labs(x="", y="decessi")
+
+grid.arrange(GA, GB, ncol=2)
+
+```
+
+
+
+***
+
+#Previsione per i prossimi 7 giorni: casi incidenti in Italia
+
+La serie storica accumulata in `r nrow(CovidIT)` giorni mostra, nelle osservazioni più recenti, una debole componente ciclica, settimanale, legata verosimilmente alle frequenze di refertazione degli esiti degli esami real-time PCR (tamponi). Si è qui adattato per la previsione un modello ARIMA (AutoRegressive Integrated Moving Average), al quale è stata aggiunta una componente ciclica settimanale.
+
+```{r forecast, echo=F, warning=F, message=F, fig.align="center", fig.width=10, fig.height=8, results="asis",  fig.cap="Serie dei casi giornalieri e previsione e IC al 95% per la previsione (modello ARIMA)"}
+
+Data<-zoo(CovidIT$NewCases, CovidIT$Date, frequency=7 )
+
+dataX<-as.xts(Data, frequency =1)
+#fitHW<-ets(dataX)
+fitARIMA <- Arima(dataX, order=c(0,2,1), seasonal = list(order = c(0,1,1), period=7), lambda="auto", biasadj = T)
+fc4<-forecast(fitARIMA, h=7)#, lev=80)
+#fc4<-forecast(fitHW, h=7)
+
+Obs<-fortify(fc4$x)
+Pred<-fortify(fc4$mean)
+Upper95<-fc4$upper[,2]
+Upper80<-fc4$upper[,1]
+Lower95<-fc4$lower[,2]
+Lower80<-fc4$lower[,1]
+#Lower<-fortify(fc4$lower)
+Dates<-seq.Date(from=min(CovidIT$Date), by="day", length.out = nrow(Obs)+nrow(Pred))
+
+DFX<-data.frame(Date=Dates, y=c(Obs$y, Pred$y), UL95=c(rep(NA, nrow(Obs)), Upper95), LL95=c(rep(NA, nrow(Obs)), Lower95),
+                UL80=c(rep(NA, nrow(Obs)), Upper80), LL80=c(rep(NA, nrow(Obs)), Lower80), 
+                value=rep(c("observed", "predicted"), c(nrow(Obs), nrow(Pred))))
+
+tozero<-function(x) { 
+  x[x<0]<-0 
+  x
+  }
+
+DFX[,c(2:6)]<-apply(DFX[,c(2:6)], 2, tozero)
+
+
+
+
+OBSERVED<-PREDICTED<-DFX$y
+OBSERVED[DFX$value == "predicted"]<-NA
+PREDICTED[DFX$value != "predicted"]<-NA
+
+DFX2<-xts(data.frame(OBSERVED, PREDICTED=ceiling(PREDICTED), LCL= ceiling(DFX$LL95), UCL= ceiling(DFX$UL95)), order.by = as.Date(DFX$Date))
+
+
+
+dygraph(DFX2, "nuovi casi") %>%
+  dyRangeSelector() %>% 
+  dyRangeSelector(height = 50) %>%
+  dySeries("OBSERVED", label = "osservati") %>%
+  dySeries(c("LCL", "PREDICTED", "UCL"), label = "previsti") %>%
+  dyLegend(show = "always", hideOnMouseOut = FALSE) %>%
+  dyHighlight(highlightCircleSize = 5,
+              highlightSeriesOpts = list(strokeWidth = 2)) %>%
+  dyOptions(axisLineColor = "navy", gridLineColor = "grey")
+
+
+
+#ggplot(DFX, aes(x=Date, y=y, col=value))+scale_x_date(date_labels = "%d/%m", date_breaks = "7 day",  minor_breaks = "1 day")+
+#  geom_ribbon(aes(ymin = LL95, ymax = UL95), fill =  "slategray2", linetype=0)+
+#   geom_ribbon(aes(ymin = LL80, ymax = UL80), fill = "slateblue1", alpha=.7, linetype=0)+
+#  geom_line(size=1, aes(linetype=value)) +labs(x="data",  y="nuovi casi") +
+#  scale_color_manual(values=c("black", "black"))+
+#  scale_linetype_manual(values=c("solid", "dashed"))+
+#  theme_minimal()+scale_y_continuous(n.breaks = 6)+
+#  theme(legend.position = "none",  plot.title = element_text(hjust = 0.5))+
+#  ggtitle(paste("previsione (al ", format(max(CovidIT$Date), format="%d/%m/%Y"), ")", sep=""))
+
+
+
+
+```
+
+
+```{r predvalue, echo=FALSE, warning=FALSE, results="asis", message=FALSE}
+
+
+kable_styling(knitr::kable(data.frame(Data=format(DFX$Date[Pred$x], format="%d/%m/%Y"), "Casi predetti"=ceiling(DFX$y[Pred$x]), 
+                                      #"ICL 80%"=round(DFX$LL80[Pred$x]), "ICU 80%"=round(DFX$UL80[Pred$x]), 
+                                      "ICL 95%"=ceiling(DFX$LL95[Pred$x]), "ICU 95%"=ceiling(DFX$UL95[Pred$x]) ), format="html", 
+             col.names = c("Data", "Casi predetti", #"ICL 80%", "ICU 80%", 
+                           "ICL 95%", "ICU 95%")), full_width = F)
+
+```
+
+
+Valori predetti per i prossimi 7 gg, con intervalli di confidenza al 95%.
+
+
+
+ Il modello prevede l'accumularsi di `r format(round(sum(Pred$y)), scientific=F)` nuovi casi nei prossimi 7 gg.
+
+***
+
+#Dati Regionali
+
+####Casi totali
+
+```{r chunk13, plotly=TRUE,   echo=FALSE, fig.align="center", warning=FALSE, message = FALSE, fig.width=10, fig.height=8, fig.cap="Casi cumulati, per le regioni del nord Italia"}
+
+
+mycolors<-colorRampPalette(brewer.pal(8, "Set1"))(21)
+GGREG<-ggplot(CovidReg2, aes(x=Date, y=totale_casi, col=denominazione_regione))+ #subset(CovidReg2, Area=="NORD")
+  geom_line(size=1)+#scale_y_log10()+
+  ggtitle(paste("casi cumulativi, per regione, al", format(ultima_data,  format="%d/%m/%Y")))+# scale_color_brewer( palette=colorRampPalette(brewer.pal(8, "Set1"))(21))+
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date(date_labels = "%d/%m", date_breaks = "30 day",  minor_breaks = "7 day")+
+  scale_color_manual(values=mycolors)+scale_y_continuous(breaks = pretty_breaks(10))+
+  labs(x="data", y="casi cumulativi", color="Regione")#+theme(legend.position = "bottom")
+
+ggplotly(GGREG, session="knitr", kwargs=list(filename="region_cumul",
+                                             fileopt="overwrite"))
+
+```
+
+####Prevalenza periodale
+
+```{r chunk14, plotly=TRUE,  echo=FALSE, fig.align="center", warning=FALSE, message = FALSE, fig.width=10, fig.height=8, fig.cap="Prevalenza periodale per  regione (casi per 100.000 abitanti)"}
+GGPREVPERIOD<-ggplot(CovidReg2, aes(x=Date, y=round(100000*totale_casi/Abitanti), col=denominazione_regione))+ 
+  geom_line(size=1)+#scale_y_log10()+
+  scale_y_continuous(breaks = pretty_breaks(10))+
+  ggtitle(paste("prevalenza periodale in Italia al", format(ultima_data,  format="%d/%m/%Y")))+  scale_color_manual(values=mycolors)+
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date(date_labels = "%d/%m", date_breaks = "14 day",  minor_breaks = "7 day")+
+  labs(x="", y="casi per 100.000 abitanti", color="Regione")
+
+ggplotly(GGPREVPERIOD, session="knitr", kwargs=list(filename="regions_prev",
+                                             fileopt="overwrite"))
+
+```
+
+####Incidenza giornaliera
+
+```{r chunk14inc, echo=FALSE, fig.align="center", warning=FALSE, message = FALSE, fig.width=10, fig.height=8, fig.cap="Incidenza, valori giornalieri per area e regione  (casi per 100.000 abitanti)"}
+
+ggplot(CovidReg2, aes(x=Date, y=100000*nuovi_positivi/Abitanti))+ 
+  geom_bar(stat="identity", width=1)+
+  ggtitle(paste("incidenza giornaliera in Italia al", format(ultima_data,  format="%d/%m/%Y")))+# scale_color_brewer( palette="Dark2")+
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date(date_labels = "%d/%m", date_breaks = "30 day",  minor_breaks = "14 day")+
+  labs(x="", y="nuovi casi al giorno per 100000 abitanti")+theme(legend.position = "bottom")+facet_wrap(Area~denominazione_regione, ncol=6)+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+```
+
+
+
+#Dati Provinciali
+
+###Prevalenza periodale 
+
+```{r prevprovIt, include=TRUE, fig.align="center", echo=FALSE, warning=FALSE, error=FALSE, fig.width=10, fig.height=8, fig.cap="Prevalenza (casi x 100.000 abitanti), i colori corrispondono ad una discretizzazione in decili"}
+LastDate<-max(CovidProv$Date)
+LastProvCovid<-subset(CovidProv, Date==LastDate)
+load("ItaPoly.Rdata")
+#ProvCov<-unique(CovidProv$sigla_provincia)
+PopProv<-read.csv("province.csv")
+LastProvCovid2<-merge(LastProvCovid, PopProv, by.x="codice_provincia", by.y="Codice.provincia")
+LastProvCovid2$Prevalence<-round(100000*LastProvCovid2$totale_casi/LastProvCovid2$POPOLAZIONE)
+ItaPolyCovid<-merge(ItaPoly, LastProvCovid2, by="sigla_provincia")
+
+breaks_qt <- classIntervals(ItaPolyCovid$Prevalence, 
+                            n = 9, 
+                            style = "quantile" )
+
+
+breaks_qt <- classIntervals(ItaPolyCovid$Prevalence, n = 10)
+#str(breaks_qt)
+#breaks_qt$brks
+
+pal_fun <- colorQuantile("YlOrRd", NULL, n = 10)
+p_popup <- paste0("<strong>Casi x 100.000 abitanti: ", ItaPolyCovid$Prevalence, " </strong> <br> <center>(n casi totali: ", ItaPolyCovid$totale_casi, ")<center>")
+LFLT<-leaflet(ItaPolyCovid) %>%
+  addPolygons(stroke = FALSE,
+              fillColor = ~pal_fun(Prevalence), # set fill color with function from above and value
+              fillOpacity = 0.7, smoothFactor = 0.1, 
+              popup = p_popup) %>%
+  addTiles(group = "OSM") %>%
+  addProviderTiles("Thunderforest.MobileAtlas", group = "Carto") %>%
+  addLegend("bottomleft", 
+            colors = colorRampPalette(brewer.pal(9, "YlOrRd"))(10), #mycolors<-colorRampPalette(brewer.pal(9, "YlOrRd"))(10)
+            labels = paste0("fino a ", as.character(round(breaks_qt$brks[-1]))),
+            opacity=0.7,
+            title = 'Casi x 100.000 abitanti')
+LFLT
+```
+
+
+
+*** 
+#Emilia Romagna
+
+
+I casi totali riportati, alla data del `r format(ultima_data, format="%d/%m/%Y")` sono `r CovidReg$totale_casi[CovidReg$Date==ultima_data & CovidReg$denominazione_regione=="Emilia Romagna"]`, mentre il totale dei decessi è di `r CovidReg$deceduti[CovidReg$Date==ultima_data & CovidReg$denominazione_regione=="Emilia Romagna"]`.
+
+
+### Variazione giornaliera di alcuni eventi in ER
+
+```{r chunk9bis, echo=FALSE, fig.align="center", warning=FALSE, message = FALSE, fig.width=10, fig.height=10, fig.cap="Variazione degli eventi in ER: nuovi casi, bilancio ospedalizzazioni, bilancio terapia intensiva, dimissioni, decessi (attenzione alle scale, diverse per pannello)"}
+
+ggplot(subset(Events_REG, Regione=="Emilia Romagna"), aes(x=Date, y=value))+geom_bar(stat = "identity", width=1)+labs(x="data", y="nuovi eventi")+ 
+  scale_x_date(date_labels = "%d/%m", date_breaks = "7 day",  minor_breaks = "1 day")+
+              facet_grid(Kind~., scales = "free")
+             
+
+
+```
+
+
+```{r chunk9ter, echo=FALSE, message=FALSE, warning=FALSE}
+
+tab<-reshape(subset(Events_REG, Regione=="Emilia Romagna", select = c(value, Date, Kind)), 
+          direction="wide", timevar = "Kind", idvar="Date")
+
+datatable(tab[order(tab$Date, decreasing=TRUE),], extensions = 'Buttons', rownames = FALSE, 
+          colnames=c("data", "casi", "decessi", "dimessi", "ospedalizzati (non ICU)", "terapia intensiva", "ricoveri totali"),
+          caption=paste("Bilancio giornaliero nuovi eventi in ER fino al", format(ultima_data, format="%d/%m/%Y")),
+          options = list(dom = 'Blfrtip',
+                         buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+                         lengthMenu = list(c(10,25,50, -1),
+                                           c(10,25,50, "All"))))
+
+
+
+
+```
+
+
+
+
+
+###Nuovi casi, per provincia
+
+```{r chunk9, echo=FALSE, fig.align="center", warning=FALSE, message = FALSE, fig.width=10, fig.height=8, fig.cap="Casi incidenti, per provincia"}
+ggplot(ER_NewCases, aes(x=Date, y=NewCases))+geom_bar(stat="identity", width=1)+
+  ggtitle(paste("nuovi casi in Emilia Romagna al", format(ultima_data, format="%d/%m/%Y")))+ 
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date(date_labels = "%d/%m", date_breaks = "30 days",  minor_breaks = "14 days")+
+  labs(x="data", y="casi incidenti")+facet_wrap(~Provincia)
+```
+
+
+###Prevalenza periodale 
+
+```{r chunk10, echo=FALSE, plotly=TRUE,  fig.align="center", warning=FALSE, message = FALSE, fig.width=10, fig.height=8, fig.cap="Prevalenza periodale per  provincia (casi per 100.000 abitanti)"}
+
+mycolors<-colorRampPalette(brewer.pal(8, "Set1"))(9)
+CovidER2<-merge(CovidER, PopProvER, by.x="denominazione_provincia", by.y="Provincia")
+CovidER2$PeriodPrev<-round(100000*CovidER2$totale_casi/CovidER2$Popolazione)
+
+GGPREVPROV<-  ggplot(CovidER2, aes(x=Date, y=PeriodPrev, col=denominazione_provincia))+ 
+  geom_line(size=1)+
+  scale_y_continuous(breaks = pretty_breaks(10))+
+  ggtitle(paste("prevalenza periodale in ER al", format(ultima_data,  format="%d/%m/%Y")))+  scale_color_manual(values=mycolors)+
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date(date_labels = "%d/%m", date_breaks = "14 day",  minor_breaks = "7 day")+
+  labs(x="", y="casi per 100.000 abitanti", color="Provincia")
+
+ggplotly(GGPREVPROV, session="knitr", kwargs=list(filename="prov_prev", fileopt="overwrite"))
+
+```
+
+
+
+###Incremento proporzionale giornaliero dei casi totali
+
+Valoni prossimi a zero indicano un rallentamento nella comparsa di  nuovi casi.
+
+```{r chunk11, echo=FALSE, fig.align="center", warning=FALSE, message = FALSE, fig.width=10, fig.height=10, fig.cap="Incremento proporzionale giornaliero dei casi totali, per provincia"}
+ER_NewCases$PropIncr<-100*ER_NewCases$PropIncr-100
+ggplot(ER_NewCases, aes(x=Date, y=PropIncr))+ geom_line()+geom_point(size=0.8)+
+  ggtitle(paste("incremento percentuale dei casi in ER  al", format(ultima_data, format="%d/%m/%Y")))+ scale_y_continuous(limits=c(0,100))+
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date(date_labels = "%d/%m", date_breaks = "30 days",  minor_breaks = "14 days")+
+  labs(x="data", y="% dei casi totali del giorno precedente")+facet_wrap(~Provincia)+
+  geom_hline(yintercept=0, col=2, size=.5)
+```
+
+###_Growth Factor_ $(\frac{\Delta N_{t}}{\Delta N_{t-1}})$
+
+Un GF minore o uguale a uno indica un rallentamento nella velocità di accumulo dei casi ed un allontanamento da una crescita esponenziale dei contagi.
+
+```{r chunk12, echo=FALSE, fig.align="center", warning=FALSE, message = FALSE, fig.width=10, fig.height=10, fig.cap="Growth factor, per provincia"}
+ggplot(ER_NewCases, aes(x=Date, y=GrowthFactor))+ geom_point(size=0.8)+
+ # geom_line(aes(x=Date, y=rollmean(GrowthFactor, 120, na.pad=T, align="center")), col=2)+
+  ggtitle(paste("fattore di crescita giornaliero in ER al", format(ultima_data, format="%d/%m/%Y")))+scale_y_continuous(limits=c(0, NA))+ 
+  theme(plot.title = element_text(hjust = 0.5))+scale_x_date(date_labels = "%d/%m", date_breaks = "30 days",  minor_breaks = "14 days")+
+  labs(x="data", y="growth factor")+facet_wrap(~Provincia)+
+  geom_hline(yintercept=1, col=2, size=.5)+stat_smooth(n=14, span=.35)
+
+#rollmean(NewCases, 7, na.pad = T , align="center")
+```
+
+
+###Casi in ER per giorno e provincia
+
+```{r chunk16, message=FALSE, echo=FALSE, warning=FALSE}
+CovidERx<-CovidER[, c("Date", "denominazione_provincia", "totale_casi")]
+CovidERSplit<- split(CovidERx, list(CovidERx$denominazione_provincia))
+
+add_New<-function(x, what="totale_casi"){
+  NewCases<-c(0, diff(x[,what]))
+  NewCases[NewCases<0]<-0
+  PropIncr<-round(c(1, exp(diff(log(x[,what])))), 3)
+  PropIncr[is.nan(PropIncr) | is.infinite(PropIncr)]<-1
+  GrowthFact<-round(c(NA, exp(diff(log(NewCases)))), 3)
+  GrowthFact[is.nan(GrowthFact)]<-0
+  GrowthFact[is.infinite(GrowthFact)]<-NA
+  data.frame(x, NewCases, PropIncr, GrowthFact)
+}
+#add_New(SplitConf[[1]])
+
+Covider3 <- do.call(rbind, lapply(CovidERSplit, add_New))
+Covider3x<-merge(Covider3, PopProvER, by.x="denominazione_provincia", by.y="Provincia")
+Covider3x$Prevalence<-round(100000*Covider3x$totale_casi/Covider3x$Popolazione)
+tabellaER<-Covider3x[order(Covider3x$Date, decreasing=TRUE), c("Date", "denominazione_provincia",  "totale_casi",
+                                                               "Prevalence", "NewCases", "PropIncr", "GrowthFact" )]
+
+tabellaER$Date<-format(tabellaER$Date, format="%d/%m/%Y")
+tabellaER$PropIncr<-round(100*tabellaER$PropIncr - 100, 1)
+
+datatable(tabellaER, extensions = 'Buttons', rownames = FALSE, 
+          colnames=c("data", "provincia", "totale casi","prevalenza periodale (x100.0000 ab)",  "nuovi casi", "incr prop casi totali (%)", "growth factor"),
+                caption=paste("Covid-19, casi totali in ER fino al", format(ultima_data, format="%d/%m/%Y")),
+                options = list(dom = 'Blfrtip',
+                               buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+                               lengthMenu = list(c(9,20,50, -1),
+                                                 c(9,20,50, "All"))))
+
+
+
+```
+
+
