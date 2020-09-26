@@ -2,15 +2,46 @@ library(readxl)
 library(tidyverse)
 library(lubridate)
 
-datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
-anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
-time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
+# datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
+# anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
+# time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
 
-# setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
-# bg <- read_excel("bg.xlsx")
-# anag <- read_excel("anagrafe.xlsx")
-# time <- read_excel("presenze.xlsx")
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
 
+datiatt <- read_excel("BGSOBI2019.xlsx")
+anag <- read_excel("HR.xlsx")
+time <- read_excel("personaleBgSoVa.xlsx")
+
+
+
+#standard time
+#time std
+anag$stdtime <- anag$hsett*(anag$attività/100)*4.3
+
+#worked time
+mat2019 <- unique(factor(anag$Matricola))
+
+
+FTE <- time %>% 
+  filter(rep %in% c("BG", "SO") & Anno==2019) %>% 
+  mutate(hwd = (Minuti/60) ) %>% 
+  select ( rep, Matricola, Mese, hwd) %>% 
+  filter(., Matricola %in% mat2019) %>% 
+  left_join(anag, by = "Matricola") %>% 
+  mutate(wkdtime = hwd*(attività/100))
+
+FTE %>% 
+  group_by(rep, laboratorio) %>% 
+  summarise(hstd = sum(stdtime),
+    hsettw = sum(wkdtime)) %>% 
+  mutate(fte = hsettw/1860, 
+         ftew = hsettw/hstd)
+
+
+
+anag %>% 
+  group_by(reparto, laboratorio) %>% 
+  summarise(hstd = sum(time, na.rm = TRUE))
 
 
 #Attività####
@@ -28,9 +59,12 @@ datiatt$repanalisi2 <- ifelse(datiatt$repanalisi== "Sede Territoriale di Bergamo
 
 nconf<-datiatt %>% 
   filter(anno==2019) %>% 
-  group_by(repacc) %>% 
+  group_by(mese,repacc) %>% 
   summarise(totconf = sum(conf, na.rm = T)) %>% 
-  select("reparto" = repacc, totconf)
+  select(mese, "reparto" = repacc, totconf)
+
+
+
 
 
 nesami <- datiatt %>% 
@@ -49,6 +83,17 @@ att <-  nconf %>%
 
 
 
+
+
+
+z <-datiatt %>% 
+  filter(repacc == "Sede Territoriale di Bergamo") %>% 
+  group_by(repanalisi2) %>% 
+  summarise(sum(esami,na.rm = T)) %>% 
+  janitor::adorn_totals(where = "row")
+
+
+unique(factor(z$prova))
 
 
 

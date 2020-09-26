@@ -1,25 +1,32 @@
 ---
-title: "Struttura complessa BG-SO-VA: analisi del carico di lavoro svolto nel 2019 dal personale di comparto "
-output: html_notebook
+title: 'Struttura complessa BG-SO-VA: analisi del carico di lavoro svolto nel 2019
+  dal personale di comparto '
+output:
+  html_document:
+    df_print: paged
 ---
 
 
 # Fonte dati  e metodologia
 
-Di seguito è riportata un'analisi del carico di lavoro svolto nel 2019 presso i laboratori della struttura complessa BG-SO-VA utilizzando i dati di attività e di ore lavorate estratte dalle seguenti fonti:
+Di seguito è riportata un'analisi del carico di lavoro svolto nel 2019 presso i laboratori della struttura complessa BG-SO-VA dal personale di comparto,  utilizzando i dati di attività e di ore lavorate estratte dalle seguenti fonti:
 
 * Dati di attività : Business Object 
 * Dati ore lavorate : registrazioni delle presenze/mese in minuti (convertiti in ore settimana). I dati fanno riferimento alle ore effettivamente lavorate,registrate giornalmente nelle varie sedi,  comprensive di missioni.  
 
-L'attività è stata misurata in numero di conferimenti come indicatore dell'attività eseguita in accettazione/registrazione e in numero di esami eseguiti come indicatore dell'attività dei laboratori, suddividendo i dati per mese (derivata dalla data di registrazione dei conferimenti), reparto che esegue la registrazione e laboratorio che esegue l'analisi. L'unità laboratorio/mese rappresenta la più piccola unità di aggregazione dei dati. 
+L'unità laboratorio/mese rappresenta la più piccola unità di aggregazione dei dati. Il numero di esami eseguiti per unità di aggregazione rappresenta l'indicatore di attività. Il numero di conferimenti per reparto accettante rappresenta l'indicatore dell'attività di accettazione. Un ulteriore parcellizzazione dei dati porterebbe solo ad eccessiva frammentazione dell'analisi a livello di prova o tecnicna eseguita senza un effettivo vantaggio dal punto di vista della valutazione dei carichi di lavoro in un ottica di programmazione. Si consideri ad esempio che nel 2019 la sezione di BG su un totale di oltre 200000 esami eseguiti ha utilizzando  75 tipologie differenti di prove (MMPP). Se si considerano tutti i conferimenti accettati presso la sezione di BG i cui esami sono stati eseguiti anche o solo in altri laboratori risulta che per un totale di 244 mila esami sono state utilizzati 312 tipoologie di prove differenti. In assenza di un sistema di rilevazione puntuale del tempo/prova utilizzato da ogni operatore (sistema non realizzabile e probabilmente non auspicabile), un modello basato sull'unità laboratorio/mese rappresenta probabilmente il sistema meno onoreso e più efficace per disporre di stime dei carichi di lavoro adeguate in termini di programmazione con un grado di approssimazione accettabile.
 
 I dati riferiti agli esami conferiti presso la struttura complessa ma eseguiti presso altri reparti dell'Istituto (Altri laboratori), sono stati presi in considerazione esclusivamente in riferimento all'attività di accettazione, preparazione e trasferimento dei campioni. 
 
 Nelle diverse strutture il personale tecnico, sulla base delle competenze e qualificazioni viene  assegnato ai  diversi laboratori in proporzioni al  tempo di lavoro indicato dai responsabili di struttura. Le ore lavorate sono state quindi ripartite nelle medesime proporzioni  per ogni collaboratore nei diversi laboratori e nei diversi mesi dell'anno.
 
-Sono stati definiti i tempi standard previsti dal contratto di lavoro di 36 h settimanali per un totale di 48 settimane, pari ad un monte ore di 1728 a persona. 
-Il numero di 48 settimane è ottenuto sottraendo al numero di settimane in un anno (52), il numero medio di giorni di ferie previsto dai contratti (per lavoratori su 5 giorni) pari a 28gg equivalente a 4 settimane: 52-4= 48. Per il personale part-time si è proceduto a conteggiare le ore/settimana previste dal contratto in essere.
+L'analisi è stata condotta per la sede territoriale di BG e di SO per i quali erano disponibili i dati relativi alla distribuzione del personale nei diversi laboratori.
+
+Sono stati utilizzati come tempo standard di lavoro quello previsto dal contratto per il personale di comparto pari a 36 h settimanali per un totale di 48 settimane/anno (1728 persona/anno).  Il numero di 48 settimane è ottenuto sottraendo al numero di settimane in un anno (52), il numero medio di giorni di ferie previsto dai contratti (per lavoratori su 5 giorni) pari a 28gg equivalente a 4 settimane: 52-4= 48. Per il personale part-time si è proceduto a conteggiare le ore/settimana previste dal contratto in essere.
 
 ### Full Time Equivalent (FTE)
 
-Per poter confrontare l'impegno in ore erogato dai vari collaboratori nei diversi reparti/laboratorio/mese dell'anno, si è proceduto a calcolare il Full Time Equivalent, indicatore delle risorse effettivamente disponibili per l'esecuzione di attività o progetti. Per definizione 1 FTE corrisponde ad un individuo a tempo pieno con contratto di 36h/settimanali. Una persona che lavora 18h in una settimana   corrisponde a  18/36 = 0.5 FTE, una persona che lavora 40 h settimana corrisponde a 40/36 = 1.25 FTE. Analogamente due persone che lavorano 18h settimana corrispondono a 1 FTE mentre una persona che lavora 72 h settimana corrisponde a 2 FTE. Il FTE peremette quindi di effettuare confronti tra laboratori/reparti/mesi indipendentemente dal numero effettivo di persone presenti.
+Per poter confrontare l'impegno in ore erogato dai vari collaboratori nei diversi reparti/laboratorio/mese dell'anno, si è proceduto a calcolare il Full Time Equivalent, indicatore delle risorse effettivamente disponibili per l'esecuzione di attività o progetti. Per definizione 1 FTE corrisponde ad un individuo a tempo pieno con contratto di 36h/settimanali. Una persona che lavora 18h in una settimana   corrisponde a  18/36 = 0.5 FTE, una persona che lavora 40 h settimana corrisponde a 40/36 = 1.25 FTE. Analogamente due persone che lavorano 18h settimana corrispondono a 1 FTE mentre una persona che lavora 72 h settimana corrisponde a 2 FTE. Il FTE peremette quindi di effettuare confronti tra laboratori/reparti/mesi indipendentemente dal numero effettivo di persone presenti. Per ogni unità di aggregazione si è proceduto quindi a calcolare il FTE mediante la formula: 
+
+$$ \text{FTE}_{u} = \frac{\text{numero ore erogate}_{u}}{\text{numero di ore standard previste}_{u} } $$
+
