@@ -31,11 +31,14 @@ FTE <- time %>%
   mutate(wkdtime = hwd*(attività/100))
 
 FTE %>% 
-  group_by(rep, laboratorio) %>% 
+  group_by(rep, laboratorio, Mese) %>% 
   summarise(hstd = sum(stdtime),
     hsettw = sum(wkdtime)) %>% 
-  mutate(fte = hsettw/1860, 
-         ftew = hsettw/hstd)
+  mutate(fte = hsettw/155, 
+         ftew = hsettw/hstd) %>% 
+  ggplot() +
+  aes(x=Mese, y=ftew)+
+  geom_point()+geom_line()+ geom_line(aes(y=fte))+facet_wrap(rep~laboratorio)
 
 
 

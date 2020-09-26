@@ -8,8 +8,50 @@ library(gridExtra)
 library(plotly)
 library(RColorBrewer)
 library(dygraphs)
-####
-Data<-zoo(CovidIT$NewCases, CovidIT$Date, frequency=7 )
+
+ 
+dati<-read.csv("newdati3.csv", header=T, sep=";", fileEncoding="latin1")
+# dati<-as_tibble(dati)
+# dati$datainizio<-dmy(dati$datainizio)
+# dati<- mutate(dati, mese=paste(year(datainizio),'-',month(datainizio),sep=''))
+# dati$mese<-as.Date((paste(dati$mese,"-01",sep="")))
+# dati<-mutate(dati,anno=year(datainizio))
+# dati$anno<-as.Date((paste(dati$anno,"-01","-01",sep="")))
+# setvar<-summarise(group_by(dati,settore, mese),esami=sum(esami,na.rm=TRUE))%>%
+#   mutate(var_change = (esami/lag(esami) - 1) * 100)
+
+
+dati$Date<-as.Date(dati$datareg, format="%d/%m/%Y")
+
+
+ 
+bg <- dati %>% 
+  filter(reparto=="Sezione di Bergamo") %>% 
+  group_by(Date) %>% 
+  summarise(es=sum(esami, na.rm = T))
+
+esami <-xts(bg[,-1],order.by=bg$Date) 
+
+esami <- apply.monthly(esami$es, FUN = sum)
+mseries <- cbind(esami, rollmean(esami,30))
+names(mseries) <- c("esami", "media mobile mensile")
+index(mseries) <- as.Date(index(mseries))
+library(broom)
+tidy(mseries) %>% ggplot(aes(x=index,y=value, color=series)) + geom_line()
+dygraph(mseries$`media mobile mensile`)
+
+autoplot(mseries, geom = c("line"))
+
+library(forecast)
+esamiprev <- HoltWinters(esami,beta=FALSE, gamma=FALSE)
+esamiprev2 <- forecast:::forecast.HoltWinters(esamiprev, h=12)
+
+
+dygraph(esamiprev2)
+
+
+
+
 
 dataX<-as.xts(Data, frequency =1)
 #fitHW<-ets(dataX)
