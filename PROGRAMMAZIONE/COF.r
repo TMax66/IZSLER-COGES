@@ -1,6 +1,8 @@
 library(readxl)
 library(tidyverse)
 library(lubridate)
+library(kableExtra)
+library(gridExtra)
 
 # datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
 # anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
@@ -16,10 +18,35 @@ time <- read_excel("personaleBgSoVa.xlsx")
 
 #standard time
 #time std
-anag$stdtime <- anag$hsett*(anag$attività/100)*4.3
+anag$htot <- anag$hsett*48
+anag$stdtime <- anag$hsett*(anag$attività/100)*48
 
 #worked time
 mat2019 <- unique(factor(anag$Matricola))
+
+
+## tabella ripartizione risorse in laboratorio
+
+
+anag %>% select(-dtnascita, -stdtime) %>% 
+  pivot_wider(names_from = laboratorio, values_from = c(attività)) %>%
+  kbl() %>% 
+  kable_classic(full_width = F, html_font = "Cambria") %>% 
+  collapse_rows(columns = 1, valign = "top")
+
+## tabella ore disponibili per reparto 
+
+anag %>% select(-dtnascita, -attività) %>% 
+  filter(reparto=="bg") %>% 
+  mutate(Matricola = as.character(Matricola), 
+         hsett = as.character(hsett)) %>% 
+  pivot_wider(names_from = laboratorio, values_from = c(stdtime)) %>%
+  janitor::adorn_totals(where = "row") %>% 
+  select(-reparto) %>% 
+  kbl() %>% 
+  kable_classic(full_width = F, html_font = "Cambria") 
+
+
 
 
 FTE <- time %>% 
@@ -29,6 +56,11 @@ FTE <- time %>%
   filter(., Matricola %in% mat2019) %>% 
   left_join(anag, by = "Matricola") %>% 
   mutate(wkdtime = hwd*(attività/100))
+
+
+
+
+
 
 FTE %>% 
   group_by(rep, laboratorio, Mese) %>% 

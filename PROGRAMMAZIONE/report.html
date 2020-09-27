@@ -1478,6 +1478,201 @@ window.onload = function() {
   PagedTableDoc.initAll();
 };
 </script>
+<script>$(document).ready(function(){
+    if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+    if ($('[data-toggle="popover"]').popover === 'function') {
+        $('[data-toggle="popover"]').popover();
+    }
+});
+</script>
+<style type="text/css">
+.lightable-minimal {
+border-collapse: separate;
+border-spacing: 16px 1px;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-minimal td {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal th {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal thead tr:last-child th {
+border-bottom: 2px solid #00000050;
+empty-cells: hide;
+}
+.lightable-minimal tbody tr:first-child td {
+padding-top: 0.5em;
+}
+.lightable-minimal.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-minimal.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic {
+border-top: 0.16em solid #111111;
+width: 100%;
+margin-bottom: 10px;
+margin: 10px 5px;
+}
+.lightable-classic caption {
+color: #222222;
+}
+.lightable-classic td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic thead tr:last-child th {
+border-bottom: 0.10em solid #111111;
+}
+.lightable-classic tbody tr:last-child td {
+border-bottom: 0.14em solid #111111;
+}
+.lightable-classic.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic-2 {
+border-top: 3px double #111111;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-classic-2 caption {
+color: #222222;
+}
+.lightable-classic-2 td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic-2 th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic-2 tbody tr:last-child td {
+border-bottom: 3px double #111111;
+}
+.lightable-classic-2 thead tr:last-child th {
+border-bottom: 1px solid #111111;
+}
+.lightable-classic-2.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic-2.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #EEE;
+border-collapse: collapse;
+margin-bottom: 10px;
+}
+.lightable-material th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+}
+.lightable-material td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+border-top: 1px solid #eeeeee;
+}
+.lightable-material.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #ddd;
+}
+.lightable-material-dark {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #FFFFFF12;
+border-collapse: collapse;
+margin-bottom: 10px;
+background-color: #363640;
+}
+.lightable-material-dark th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF60;
+}
+.lightable-material-dark td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF;
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark.lightable-hover tbody tr:hover {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody tr:nth-child(even) {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material-dark.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #FFFFFF12;
+}
+.lightable-paper {
+width: 100%;
+margin-bottom: 10px;
+color: #444;
+}
+.lightable-paper thead tr:last-child th {
+color: #666;
+vertical-align: bottom;
+border-bottom: 1px solid #00000020;
+line-height: 1.15em;
+padding: 10px 5px;
+}
+.lightable-paper td {
+vertical-align: middle;
+border-bottom: 1px solid #00000010;
+line-height: 1.15em;
+padding: 7px 5px;
+}
+.lightable-paper.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-paper.lightable-striped tbody tr:nth-child(even) {
+background-color: #00000008;
+}
+.lightable-paper.lightable-striped tbody td {
+border: 0;
+}
+</style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -1637,8 +1832,8 @@ summary {
 </div>
 
 
-<div id="fonte-dati-e-metodologia" class="section level1">
-<h1>Fonte dati e metodologia</h1>
+<div id="fonte-dati-e-metodologia" class="section level2">
+<h2>Fonte dati e metodologia</h2>
 <p>Di seguito è riportata un’analisi del carico di lavoro svolto nel 2019 presso i laboratori della struttura complessa BG-SO-VA dal personale di comparto, utilizzando i dati di attività e di ore lavorate estratte dalle seguenti fonti:</p>
 <ul>
 <li>Dati di attività : Business Object</li>
@@ -1649,11 +1844,1014 @@ summary {
 <p>Nelle diverse strutture il personale tecnico, sulla base delle competenze e qualificazioni viene assegnato ai diversi laboratori in proporzioni al tempo di lavoro indicato dai responsabili di struttura. Le ore lavorate sono state quindi ripartite nelle medesime proporzioni per ogni collaboratore nei diversi laboratori e nei diversi mesi dell’anno.</p>
 <p>L’analisi è stata condotta per la sede territoriale di BG e di SO per i quali erano disponibili i dati relativi alla distribuzione del personale nei diversi laboratori.</p>
 <p>Sono stati utilizzati come tempo standard di lavoro quello previsto dal contratto per il personale di comparto pari a 36 h settimanali per un totale di 48 settimane/anno (1728 persona/anno). Il numero di 48 settimane è ottenuto sottraendo al numero di settimane in un anno (52), il numero medio di giorni di ferie previsto dai contratti (per lavoratori su 5 giorni) pari a 28gg equivalente a 4 settimane: 52-4= 48. Per il personale part-time si è proceduto a conteggiare le ore/settimana previste dal contratto in essere.</p>
-<div id="full-time-equivalent-fte" class="section level3">
-<h3>Full Time Equivalent (FTE)</h3>
+<div id="full-time-equivalent-fte" class="section level4">
+<h4>Full Time Equivalent (FTE)</h4>
 <p>Per poter confrontare l’impegno in ore erogato dai vari collaboratori nei diversi reparti/laboratorio/mese dell’anno, si è proceduto a calcolare il Full Time Equivalent, indicatore delle risorse effettivamente disponibili per l’esecuzione di attività o progetti. Per definizione 1 FTE corrisponde ad un individuo a tempo pieno con contratto di 36h/settimanali. Una persona che lavora 18h in una settimana corrisponde a 18/36 = 0.5 FTE, una persona che lavora 40 h settimana corrisponde a 40/36 = 1.25 FTE. Analogamente due persone che lavorano 18h settimana corrispondono a 1 FTE mentre una persona che lavora 72 h settimana corrisponde a 2 FTE. Il FTE peremette quindi di effettuare confronti tra laboratori/reparti/mesi indipendentemente dal numero effettivo di persone presenti. Per ogni unità di aggregazione si è proceduto quindi a calcolare il FTE mediante la formula:</p>
 <p><span class="math display">\[ \text{FTE}_{u} = \frac{\text{numero ore erogate}_{u}}{\text{numero di ore standard previste}_{u} } \]</span></p>
 </div>
+</div>
+<div id="risultati" class="section level2">
+<h2>Risultati</h2>
+<p>La seguente tabella riporta la distribuzione percentuale dell’impiego del personale di comparto nei diversi laboratori. Per ogni matricola sono riportate le ore settimanali da contratto (hsett), le ore totali per 48 settimane lavorative.</p>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+reparto
+</th>
+<th style="text-align:right;">
+Matricola
+</th>
+<th style="text-align:right;">
+hsett
+</th>
+<th style="text-align:right;">
+htot
+</th>
+<th style="text-align:right;">
+Laboratorio Sierologia
+</th>
+<th style="text-align:right;">
+Laboratorio Microbiologia degli Alimenti
+</th>
+<th style="text-align:right;">
+Laboratorio Diagnostica Generale
+</th>
+<th style="text-align:right;">
+Amministrazione
+</th>
+<th style="text-align:right;">
+Accettazione
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="10">
+bg
+</td>
+<td style="text-align:right;">
+866
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+1200
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1523
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+634
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+100
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1306
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1046
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+668
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1797
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1878
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+100
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1557
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1877
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="6">
+so
+</td>
+<td style="text-align:right;">
+313
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+629
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+633
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+735
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+784
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+927
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+40
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sulla base di questa ripartizione percentuale dell’impegno nei diversi laboratori si calcola l’impegno orario previsto per matricola. La somma per laboratorio dei diversi impegni orari definisce la disponibilità (da contratto) di ore lavorative nei differenti laboratori, per le esecuzione delle attività specifiche.</p>
+<p>Nelle seguenti tabelle distinte per reparto sono riportati gli impegni orari per maricola e il dato complessivo per laboratorio</p>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+distribuzione dipsonibilità ore da contratto suddivise per matricola/laboratorio della sezione di BG
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Matricola
+</th>
+<th style="text-align:left;">
+hsett
+</th>
+<th style="text-align:right;">
+htot
+</th>
+<th style="text-align:right;">
+Laboratorio Sierologia
+</th>
+<th style="text-align:right;">
+Laboratorio Microbiologia degli Alimenti
+</th>
+<th style="text-align:right;">
+Laboratorio Diagnostica Generale
+</th>
+<th style="text-align:right;">
+Amministrazione
+</th>
+<th style="text-align:right;">
+Accettazione
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+866
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:right;">
+1200
+</td>
+<td style="text-align:right;">
+1080.0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+60.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1523
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+634
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+1728.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1306
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1046
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1728.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+668
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+1555.2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+86.4
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1797
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1878
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+1728.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1557
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1728.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1877
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+1555.2
+</td>
+<td style="text-align:right;">
+172.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:right;">
+16752
+</td>
+<td style="text-align:right;">
+2635.2
+</td>
+<td style="text-align:right;">
+3456
+</td>
+<td style="text-align:right;">
+3602.4
+</td>
+<td style="text-align:right;">
+1555.2
+</td>
+<td style="text-align:right;">
+3628.8
+</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+distribuzione dipsonibilità ore da contratto suddivise per matricola/laboratorio della sezione di SO
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Matricola
+</th>
+<th style="text-align:left;">
+hsett
+</th>
+<th style="text-align:right;">
+htot
+</th>
+<th style="text-align:right;">
+Laboratorio Sierologia
+</th>
+<th style="text-align:right;">
+Laboratorio Microbiologia degli Alimenti
+</th>
+<th style="text-align:right;">
+Laboratorio Diagnostica Generale
+</th>
+<th style="text-align:right;">
+Amministrazione
+</th>
+<th style="text-align:right;">
+Accettazione
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+313
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+432.0
+</td>
+<td style="text-align:right;">
+864.0
+</td>
+<td style="text-align:right;">
+432.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+629
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+1296.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+432.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+633
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+1296.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+432.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+735
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+345.6
+</td>
+<td style="text-align:right;">
+1382.4
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+784
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+259.2
+</td>
+<td style="text-align:right;">
+1382.4
+</td>
+<td style="text-align:right;">
+86.4
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+927
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:right;">
+1728
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+1036.8
+</td>
+<td style="text-align:right;">
+691.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:right;">
+10368
+</td>
+<td style="text-align:right;">
+3283.2
+</td>
+<td style="text-align:right;">
+2592.0
+</td>
+<td style="text-align:right;">
+2764.8
+</td>
+<td style="text-align:right;">
+1036.8
+</td>
+<td style="text-align:right;">
+691.2
+</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
 </div>
 
 

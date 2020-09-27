@@ -6,8 +6,44 @@ output:
     df_print: paged
 ---
 
+```{r include=FALSE}
+library(readxl)
+library(tidyverse)
+library(lubridate)
+library(kableExtra)
+library(gridExtra)
+library(dygraphs)
+library(forecast)
+# datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
+# anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
+# time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
 
-# Fonte dati  e metodologia
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
+datiatt <- read_excel("BGSOBI2019.xlsx")
+anag <- read_excel("HR.xlsx")
+time <- read_excel("personaleBgSoVa.xlsx")
+
+#standard time
+#time std
+anag$stdtime <- anag$hsett*(anag$attività/100)*4.3
+
+#worked time
+mat2019 <- unique(factor(anag$Matricola))
+
+FTE <- time %>% 
+  filter(rep %in% c("BG", "SO") & Anno==2019) %>% 
+  mutate(hwd = (Minuti/60) ) %>% 
+  select ( rep, Matricola, Mese, hwd) %>% 
+  filter(., Matricola %in% mat2019) %>% 
+  left_join(anag, by = "Matricola") %>% 
+  mutate(wkdtime = hwd*(attività/100))
+
+```
+
+
+
+
+## Fonte dati  e metodologia
 
 Di seguito è riportata un'analisi del carico di lavoro svolto nel 2019 presso i laboratori della struttura complessa BG-SO-VA dal personale di comparto,  utilizzando i dati di attività e di ore lavorate estratte dalle seguenti fonti:
 
@@ -24,9 +60,62 @@ L'analisi è stata condotta per la sede territoriale di BG e di SO per i quali e
 
 Sono stati utilizzati come tempo standard di lavoro quello previsto dal contratto per il personale di comparto pari a 36 h settimanali per un totale di 48 settimane/anno (1728 persona/anno).  Il numero di 48 settimane è ottenuto sottraendo al numero di settimane in un anno (52), il numero medio di giorni di ferie previsto dai contratti (per lavoratori su 5 giorni) pari a 28gg equivalente a 4 settimane: 52-4= 48. Per il personale part-time si è proceduto a conteggiare le ore/settimana previste dal contratto in essere.
 
-### Full Time Equivalent (FTE)
+#### Full Time Equivalent (FTE)
 
 Per poter confrontare l'impegno in ore erogato dai vari collaboratori nei diversi reparti/laboratorio/mese dell'anno, si è proceduto a calcolare il Full Time Equivalent, indicatore delle risorse effettivamente disponibili per l'esecuzione di attività o progetti. Per definizione 1 FTE corrisponde ad un individuo a tempo pieno con contratto di 36h/settimanali. Una persona che lavora 18h in una settimana   corrisponde a  18/36 = 0.5 FTE, una persona che lavora 40 h settimana corrisponde a 40/36 = 1.25 FTE. Analogamente due persone che lavorano 18h settimana corrispondono a 1 FTE mentre una persona che lavora 72 h settimana corrisponde a 2 FTE. Il FTE peremette quindi di effettuare confronti tra laboratori/reparti/mesi indipendentemente dal numero effettivo di persone presenti. Per ogni unità di aggregazione si è proceduto quindi a calcolare il FTE mediante la formula: 
 
 $$ \text{FTE}_{u} = \frac{\text{numero ore erogate}_{u}}{\text{numero di ore standard previste}_{u} } $$
+
+## Risultati
+
+La seguente tabella riporta la distribuzione percentuale dell'impiego del personale di comparto nei diversi laboratori.
+Per ogni matricola sono riportate le ore settimanali da contratto (hsett), le ore totali per 48 settimane lavorative. 
+
+```{r echo=FALSE}
+anag$htot <- anag$hsett*48
+anag$stdtime <- anag$htot*(anag$attività/100)
+anag %>% select(-dtnascita, -stdtime) %>% 
+  pivot_wider(names_from = laboratorio, values_from = c(attività)) %>%
+  kbl() %>% 
+  kable_classic(full_width = F, html_font = "Cambria") %>% 
+  collapse_rows(columns = 1, valign = "top")
+```
+
+Sulla base di questa ripartizione percentuale dell'impegno nei diversi laboratori si calcola l'impegno orario previsto per matricola. La somma per laboratorio dei diversi impegni orari definisce la disponibilità (da contratto) di ore lavorative nei differenti laboratori, per le esecuzione delle attività specifiche. 
+
+Nelle seguenti tabelle distinte per reparto sono riportati gli impegni orari per maricola e il dato complessivo per laboratorio 
+
+```{r echo=FALSE}
+anag %>% select(-dtnascita, -attività) %>% 
+  filter(reparto=="bg") %>% 
+  mutate(Matricola = as.character(Matricola), 
+         hsett = as.character(hsett)) %>% 
+  pivot_wider(names_from = laboratorio, values_from = c(stdtime)) %>%
+  select(-reparto) %>% 
+    janitor::adorn_totals(where = "row") %>% 
+  kbl(caption = "distribuzione dipsonibilità ore da contratto suddivise per matricola/laboratorio della sezione di BG") %>% 
+  kable_classic(full_width = F, html_font = "Cambria") 
+
+```
+
+
+```{r echo=FALSE}
+anag %>% select(-dtnascita, -attività) %>% 
+  filter(reparto=="so") %>% 
+  mutate(Matricola = as.character(Matricola), 
+         hsett = as.character(hsett)) %>% 
+  pivot_wider(names_from = laboratorio, values_from = c(stdtime)) %>%
+  select(-reparto) %>% 
+    janitor::adorn_totals(where = "row") %>% 
+  kbl(caption = "distribuzione dipsonibilità ore da contratto suddivise per matricola/laboratorio della sezione di SO") %>% 
+  kable_classic(full_width = F, html_font = "Cambria") 
+```
+
+
+
+
+
+
+
+
 

@@ -44,7 +44,18 @@ autoplot(mseries, geom = c("line"))
 
 library(forecast)
 esamiprev <- HoltWinters(esami,beta=FALSE, gamma=FALSE)
-esamiprev2 <- forecast:::forecast.HoltWinters(esamiprev, h=12)
+#esamiprev2 <- forecast:::forecast.HoltWinters(esamiprev, h=12)
+
+
+p <- predict(esamiprev, n.ahead = 12, prediction.interval = TRUE)
+all <- cbind(esami, p)
+
+dygraph(all, "Deaths from Lung Disease (UK)") %>%
+  dySeries("ldeaths", label = "Actual") %>%
+  dySeries(c("p.lwr", "p.fit", "p.upr"), label = "Predicted")
+
+
+
 
 
 dygraph(esamiprev2)
