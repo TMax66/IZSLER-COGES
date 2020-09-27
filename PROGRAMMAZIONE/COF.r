@@ -19,7 +19,7 @@ time <- read_excel("personaleBgSoVa.xlsx")
 #standard time
 #time std
 anag$htot <- anag$hsett*48
-anag$stdtime <- anag$hsett*(anag$attività/100)*48
+anag$stdtime <- anag$htot*(anag$attività/100)
 
 #worked time
 mat2019 <- unique(factor(anag$Matricola))
@@ -57,9 +57,13 @@ FTE <- time %>%
   left_join(anag, by = "Matricola") %>% 
   mutate(wkdtime = hwd*(attività/100))
 
-
-
-
+FTE <- time %>% 
+  filter(rep %in% c("BG", "SO") & Anno==2019) %>% 
+  mutate(hwd = (Minuti/60) ) %>% 
+  select ( rep, Matricola, Mese, hwd) %>% 
+  filter(., Matricola %in% mat2019) %>% 
+  left_join(anag, by = "Matricola") %>% 
+  mutate(wkdtime = hwd*(attività/100))
 
 
 FTE %>% 

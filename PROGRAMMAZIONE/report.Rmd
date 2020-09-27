@@ -112,6 +112,32 @@ anag %>% select(-dtnascita, -attività) %>%
 ```
 
 
+Da cui si ricava,  per ogni laboratorio,  le risorse disponibili e le risorse effettivamente impiegate espresse in FTE per l'attività del 2019: 
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+options(digits = 2)
+time %>% 
+  filter(rep %in% c("BG", "SO") & Anno==2019) %>% 
+  select ( rep, Matricola, Mese, Minuti) %>% 
+  group_by(rep, Matricola) %>% 
+  summarise(wdmin = sum(Minuti/60, na.rm = T)) %>% 
+  filter(., Matricola %in% mat2019) %>% 
+  left_join(anag, by = "Matricola") %>% 
+  mutate(wkdtime = wdmin*(attività/100)) %>% 
+  group_by(rep, laboratorio) %>% 
+  summarise(hstd = sum(stdtime),
+            hsettw = sum(wkdtime)) %>% 
+  mutate(FTEp = hstd/1728, 
+         FTEe = hsettw/1728) %>% 
+  select("reparto" = rep, laboratorio, "FTE-previsto" = FTEp, "FTE-effettivo" = FTEe) %>% 
+  kbl() %>% 
+  kable_classic(full_width = F, html_font = "Cambria") %>% 
+  collapse_rows(columns = 1, valign = "top")
+```
+
+
+
+
 
 
 
