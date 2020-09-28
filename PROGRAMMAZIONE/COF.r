@@ -4,22 +4,24 @@ library(lubridate)
 library(kableExtra)
 library(gridExtra)
 
-# datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
-# anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
-# time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
+datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
+anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
+time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
 
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
-
-datiatt <- read_excel("BGSOBI2019.xlsx")
-anag <- read_excel("HR.xlsx")
-time <- read_excel("personaleBgSoVa.xlsx")
+# setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
+# 
+# datiatt <- read_excel("BGSOBI2019.xlsx")
+# anag <- read_excel("HR.xlsx")
+# time <- read_excel("personaleBgSoVa.xlsx")
 
 
 
 #standard time
 #time std
 anag$htot <- anag$hsett*48
+anag$hot_m <- anag$hsett*4.3
 anag$stdtime <- anag$htot*(anag$attività/100)
+anag$stdtime_m <-anag$hot_m*(anag$attività/100)
 
 #worked time
 mat2019 <- unique(factor(anag$Matricola))
@@ -47,40 +49,36 @@ anag %>% select(-dtnascita, -attività) %>%
   kable_classic(full_width = F, html_font = "Cambria") 
 
 
-
-
-FTE <- time %>% 
+time %>% 
   filter(rep %in% c("BG", "SO") & Anno==2019) %>% 
-  mutate(hwd = (Minuti/60) ) %>% 
-  select ( rep, Matricola, Mese, hwd) %>% 
+  select ( rep, Matricola, Mese, Minuti) %>% 
+  group_by(rep, Matricola, Mese) %>% 
+  summarise(wdmin = sum(Minuti/60, na.rm = T)) %>% 
   filter(., Matricola %in% mat2019) %>% 
   left_join(anag, by = "Matricola") %>% 
-  mutate(wkdtime = hwd*(attività/100))
-
-FTE <- time %>% 
-  filter(rep %in% c("BG", "SO") & Anno==2019) %>% 
-  mutate(hwd = (Minuti/60) ) %>% 
-  select ( rep, Matricola, Mese, hwd) %>% 
-  filter(., Matricola %in% mat2019) %>% 
-  left_join(anag, by = "Matricola") %>% 
-  mutate(wkdtime = hwd*(attività/100))
-
-
-FTE %>% 
+  mutate(wkdtime = wdmin*(attività/100)) %>% 
+  select(- htot, - stdtime) %>% 
   group_by(rep, laboratorio, Mese) %>% 
-  summarise(hstd = sum(stdtime),
-    hsettw = sum(wkdtime)) %>% 
-  mutate(fte = hsettw/155, 
-         ftew = hsettw/hstd) %>% 
+  summarise(hstd_m = sum(stdtime_m, na.rm = T),
+            hwd_m = sum(wkdtime)) %>% 
+  mutate("FTE previsto" = hstd_m/154.80, 
+         "FTE effettivo" = hwd_m/154.80) %>% 
+  pivot_longer(cols = 6:7, names_to = "FTE") %>% 
+  
   ggplot() +
-  aes(x=Mese, y=ftew)+
-  geom_point()+geom_line()+ geom_line(aes(y=fte))+facet_wrap(rep~laboratorio)
+  aes(x=Mese, y=value, col = FTE)+
+  geom_point()+geom_line()+  
+  scale_color_manual(values = c("FTE effettivo" = "black", "FTE previsto" = "red"))+
+  facet_wrap(~laboratorio+rep)+
+  theme_ipsum_rc(strip_text_size = 8.5, 
+                 strip_text_face = "bold")+ ylab("")+
+  theme(legend.title = element_blank()) +
+  scale_x_continuous(breaks=c(1,2,3,4,5,6,7,8,9,10,11,12))
+  
+  
+  
 
 
-
-anag %>% 
-  group_by(reparto, laboratorio) %>% 
-  summarise(hstd = sum(time, na.rm = TRUE))
 
 
 #Attività####
@@ -98,20 +96,19 @@ datiatt$repanalisi2 <- ifelse(datiatt$repanalisi== "Sede Territoriale di Bergamo
 
 nconf<-datiatt %>% 
   filter(anno==2019) %>% 
-  group_by(mese,repacc) %>% 
+  group_by(repacc) %>% 
   summarise(totconf = sum(conf, na.rm = T)) %>% 
-  select(mese, "reparto" = repacc, totconf)
-
-
+  select( "reparto" = repacc, totconf) 
 
 
 
 nesami <- datiatt %>% 
-  filter(anno==2019) %>% 
-  group_by(repanalisi2) %>% 
+  filter(anno==2019 & repanalisi2 != "Altri reparti", repanalisi2 != "Sede Territoriale di Binago") %>% 
+  group_by(repanalisi2, labs) %>% 
   summarise(totesami = sum(esami, na.rm = T)) %>% 
-  arrange(desc(totesami)) %>% 
-  select("reparto" = repanalisi2, totesami)
+  arrange(repanalisi2, desc(totesami)) %>% 
+  select( "reparto-analisi" = repanalisi2, "laboratorio" =labs, totesami)   
+ 
 
   
 att <-  nconf %>% 
