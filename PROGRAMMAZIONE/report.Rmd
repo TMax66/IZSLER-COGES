@@ -14,14 +14,15 @@ library(gridExtra)
 library(dygraphs)
 library(forecast)
 library(hrbrthemes)
-# datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
-# anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
-# time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
+library(knitr)
+datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
+anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
+time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
 
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
-datiatt <- read_excel("BGSOBI2019.xlsx")
-anag <- read_excel("HR.xlsx")
-time <- read_excel("personaleBgSoVa.xlsx")
+# setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
+# datiatt <- read_excel("BGSOBI2019.xlsx")
+# anag <- read_excel("HR.xlsx")
+# time <- read_excel("personaleBgSoVa.xlsx")
 
 #standard time
 #time std
@@ -30,29 +31,33 @@ anag$stdtime <- anag$hsett*(anag$attività/100)*4.3
 #worked time
 mat2019 <- unique(factor(anag$Matricola))
 
-FTE <- time %>% 
-  filter(rep %in% c("BG", "SO") & Anno==2019) %>% 
-  mutate(hwd = (Minuti/60) ) %>% 
-  select ( rep, Matricola, Mese, hwd) %>% 
-  filter(., Matricola %in% mat2019) %>% 
-  left_join(anag, by = "Matricola") %>% 
-  mutate(wkdtime = hwd*(attività/100))
+# FTE <- time %>% 
+#   filter(rep != "VA" & Anno==2019) %>% 
+#   mutate(hwd = (Minuti/60) ) %>% 
+#   select ( rep, Matricola, Mese, hwd) %>% 
+#   filter(., Matricola %in% mat2019) %>% 
+#   left_join(anag, by = "Matricola") %>% 
+#   mutate(wkdtime = hwd*(attività/100))
 
 ```
 
 
-## Struttura complessa BG-SO-VA: analisi del carico di lavoro svolto nel 2019 dal personale di comparto
+### Sedi territoriali di Bergamo e Sondrio : analisi del carico di lavoro in FTE del personale di comparto nel 2019
+<br>
 
-### Fonte dati  e metodologia
+#### Fonte dati 
 
 Di seguito è riportata un'analisi del carico di lavoro svolto nel 2019 presso i laboratori della struttura complessa BG-SO-VA dal personale di comparto,  utilizzando i dati di attività e di ore lavorate estratte dalle seguenti fonti:
 
 * Dati di attività : Business Object 
-* Dati ore lavorate : registrazioni delle presenze/mese in minuti (convertiti in ore settimana). I dati fanno riferimento alle ore effettivamente lavorate,registrate giornalmente nelle varie sedi,  comprensive di missioni.  
+* Dati ore lavorate : registrazioni delle presenze/mese in minuti (convertiti in ore settimana) ottenuti mediante il software SIGMA.  I dati fanno riferimento alle ore effettivamente lavorate,registrate giornalmente nelle varie sedi,  comprensive di missioni e d aggregati per mese.  
+<br>
 
-**L'unità laboratorio/tempo** rappresenta la più piccola unità di aggregazione dei dati, dove la componente temporale può essere espressa in giorni/sett/ mesie/anno a seconda delle esigenze. Il **numero di esami eseguiti** per unità di aggregazione rappresenta l'indicatore di attività del laboratorio. Il **numero di conferimenti per reparto accettante** rappresenta l'indicatore dell'attività di accettazione. 
+#### Metodologia
 
-Un ulteriore parcellizzazione dei dati porterebbe solo ad eccessiva frammentazione dell'analisi a livello di prova o tecnicna eseguita senza un effettivo vantaggio dal punto di vista della valutazione dei carichi di lavoro in un ottica di programmazione. Si consideri ad esempio che nel 2019 la sezione di BG su un totale di oltre 200000 esami eseguiti ha utilizzando  **75 tipologie differenti di prove (MMPP)**. Se si considerano tutti i conferimenti accettati presso la sezione di BG i cui esami sono stati eseguiti anche o solo in altri laboratori risulta che per un totale di 244 mila esami sono state utilizzati **312 tipologie di prove differenti**. In assenza di un sistema di rilevazione puntuale del tempo/prova utilizzato da ogni operatore (sistema  probabilmente non realizzabile e forse non auspicabile), un modello basato sull'unità laboratorio/tempo rappresenta probabilmente il sistema meno oneroso (non è necessario raccogliere nuovi dati - almeno per il comparto tecnico) e più efficace per disporre di stime dei carichi di lavoro adeguate in termini di programmazione con un grado di approssimazione accettabile.
+**L'unità laboratorio/tempo** rappresenta la più piccola unità di aggregazione dei dati, dove la componente temporale può essere espressa in giorni/sett/ mesi/anno a seconda delle esigenze. Il **numero di esami eseguiti** per unità di aggregazione rappresenta l'indicatore di attività del laboratorio. Il **numero di conferimenti per reparto accettante** rappresenta l'indicatore dell'attività di accettazione. 
+
+Un ulteriore parcellizzazione dei dati porterebbe solo ad eccessiva frammentazione dell'analisi a livello di prova o tecnica eseguita senza un effettivo vantaggio dal punto di vista della valutazione dei carichi di lavoro in un ottica di programmazione. Si consideri ad esempio che nel 2019 la sezione di BG su un totale di oltre 200000 esami eseguiti ha utilizzando  **75 tipologie differenti di prove (MMPP)**. Se si considerano tutti i conferimenti accettati presso la sezione di BG i cui esami sono stati eseguiti anche o solo in altri laboratori risulta che per un totale di 244 mila esami sono state utilizzati **312 tipologie di prove differenti**. In assenza di un sistema di rilevazione puntuale del tempo/prova utilizzato da ogni operatore (sistema  probabilmente non realizzabile e forse non auspicabile), un modello basato sull'unità laboratorio/tempo rappresenta probabilmente il sistema meno oneroso (non è necessario raccogliere nuovi dati - almeno per il comparto tecnico) e più efficace per disporre di stime dei carichi di lavoro adeguate in termini di programmazione con un grado di approssimazione accettabile.
 
 I dati riferiti agli esami conferiti presso la struttura complessa ma eseguiti presso altri reparti dell'Istituto (Altri laboratori), sono stati presi in considerazione esclusivamente in riferimento all'attività di accettazione, preparazione e trasferimento dei campioni. 
 
@@ -61,130 +66,27 @@ Nelle diverse strutture il personale tecnico, sulla base delle competenze e qual
 L'analisi è stata condotta per la sede territoriale di BG e di SO per i quali erano disponibili i dati relativi alla distribuzione del personale nei diversi laboratori.
 
 E' stato utilizzato come  **tempo standard di lavoro** quello previsto dal contratto per il personale di comparto di **36 h settimanali** per un totale di **48 settimane/anno** , pari a **1728 h a  persona/anno**.  Il numero di 48 settimane si ottiene per convenzione sottraendo al numero di settimane in un anno (52), il numero medio di giorni di ferie previsto dai contratti (per lavoratori su 5 giorni) pari a 28gg equivalente a 4 settimane: 52-4= 48. Per il personale part-time si è proceduto a conteggiare le ore/settimana previste dal contratto in essere. Le modalità di definizione del numero di settimane lavorative determina è fonte di approssimazione più o meno elevata degli indicatori di seguito utilizzati. 
+ 
+
+<br>
 
 #### Full Time Equivalent (FTE)
+
 
 Per poter confrontare l'impegno in ore erogato dal personale di comparto nei diversi reparti/laboratorio/mese dell'anno, si è proceduto a calcolare il **Full Time Equivalent**: si tratta di un indicatore delle risorse effettivamente disponibili per l'esecuzione di attività o progetti. Per definizione 1 FTE corrisponde ad **un individuo a tempo pieno con contratto di 36h/settimanali**. Una persona che lavora 18h in una settimana   corrisponde a  18/36 = 0.5 FTE, una persona che lavora 40 h settimana corrisponde a 40/36 = 1.25 FTE. Analogamente due persone che lavorano 18h settimana corrispondono a 1 FTE mentre una persona che lavora 72 h settimana corrisponde a 2 FTE. Il FTE peremette quindi di effettuare confronti tra laboratori/reparti/tempo indipendentemente dal numero effettivo di persone presenti. Per ogni unità di aggregazione si è proceduto quindi a calcolare il FTE mediante la formula: 
 
 $$ \text{FTE}_{u} = \frac{\text{numero ore erogate}_{u}}{\text{numero di ore standard previste}_{u} } $$
-
-### Risultati
-
-La seguente tabella riporta la distribuzione percentuale dell'impiego del personale di comparto nei diversi laboratori.
-Per ogni matricola sono riportate le ore settimanali da contratto (hsett) e  le ore totali (htot) per 48 settimane lavorative. 
-
-```{r echo=FALSE}
-anag$htot <- anag$hsett*48
-anag$stdtime <- anag$htot*(anag$attività/100)
-anag %>% select(-dtnascita, -stdtime) %>% 
-  pivot_wider(names_from = laboratorio, values_from = c(attività)) %>%
-  kbl() %>% 
-  kable_classic(full_width = F, html_font = "Cambria") %>% 
-  collapse_rows(columns = 1, valign = "top")
-```
-
-Sulla base di questa ripartizione percentuale dell'impegno nei diversi laboratori si calcola l'impegno orario previsto per matricola. La somma per laboratorio dei diversi impegni orari definisce la disponibilità (da contratto) di ore lavorative nei differenti laboratori, per le esecuzione delle attività specifiche. 
-
-Nelle seguenti tabelle distinte per reparto sono riportati gli impegni orari per maricola e il dato complessivo per laboratorio 
-
-```{r echo=FALSE}
-anag %>% select(-dtnascita, -attività) %>% 
-  filter(reparto=="bg") %>% 
-  mutate(Matricola = as.character(Matricola), 
-         hsett = as.character(hsett)) %>% 
-  pivot_wider(names_from = laboratorio, values_from = c(stdtime)) %>%
-  select(-reparto) %>% 
-    janitor::adorn_totals(where = "row") %>% 
-  kbl(booktabs = T, caption = "distribuzione dipsonibilità ore da contratto suddivise per matricola/laboratorio della sezione di Bergamo") %>% 
-  kable_classic(full_width = F, html_font = "Cambria") 
-
-```
+<hr>
 
 
-```{r echo=FALSE}
-anag %>% select(-dtnascita, -attività) %>% 
-  filter(reparto=="so") %>% 
-  mutate(Matricola = as.character(Matricola), 
-         hsett = as.character(hsett)) %>% 
-  pivot_wider(names_from = laboratorio, values_from = c(stdtime)) %>%
-  select(-reparto) %>% 
-    janitor::adorn_totals(where = "row") %>% 
-  kbl(caption = "distribuzione disponibilità ore da contratto suddivise per matricola/laboratorio della sezione di Sondrio") %>% 
-  kable_classic(full_width = F, html_font = "Cambria") 
-```
-
-
-
-Da cui si ricava,  per ogni laboratorio,  le risorse disponibili e le risorse effettivamente impiegate espresse in FTE per l'attività del 2019: 
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-options(digits = 2)
-time %>% 
-  filter(rep %in% c("BG", "SO") & Anno==2019) %>% 
-  select ( rep, Matricola, Mese, Minuti) %>% 
-  group_by(rep, Matricola) %>% 
-  summarise(wdmin = sum(Minuti/60, na.rm = T)) %>% 
-  filter(., Matricola %in% mat2019) %>% 
-  left_join(anag, by = "Matricola") %>% 
-  mutate(wkdtime = wdmin*(attività/100)) %>% 
-  group_by(rep, laboratorio) %>% 
-  summarise(hstd = sum(stdtime),
-            hsettw = sum(wkdtime)) %>% 
-  mutate(FTEp = hstd/1728, 
-         FTEe = hsettw/1728,
-         perc = 100*(hsettw/hstd)) %>% 
-  select("reparto" = rep, laboratorio,"tempo-standard" = hstd, "tempo-lavorato" = hsettw, "%tempo-stand utilizzato" = perc,  "FTE-previsto" = FTEp, "FTE-effettivo" = FTEe) %>% 
-  kbl() %>% 
-  kable_classic(full_width = F, html_font = "Cambria") %>% 
-  collapse_rows(columns = 1, valign = "top")
-```
-
-
-
-Di seguito è riportato in grafico l'andamento mensile dei valori di FTE previsto ed effettivo per i diversi reparti e laboratori. 
-
-```{r echo=FALSE, fig.height=8, fig.width=12, message=FALSE, warning=FALSE}
-anag$htot <- anag$hsett*48
-anag$hot_m <- anag$hsett*4.3
-anag$stdtime <- anag$htot*(anag$attività/100)
-anag$stdtime_m <-anag$hot_m*(anag$attività/100)
-time %>% 
-  filter(rep %in% c("BG", "SO") & Anno==2019) %>% 
-  select ( rep, Matricola, Mese, Minuti) %>% 
-  group_by(rep, Matricola, Mese) %>% 
-  summarise(wdmin = sum(Minuti/60, na.rm = T)) %>% 
-  filter(., Matricola %in% mat2019) %>% 
-  left_join(anag, by = "Matricola") %>% 
-  mutate(wkdtime = wdmin*(attività/100)) %>% 
-  select(- htot, - stdtime) %>% 
-  group_by(rep, laboratorio, Mese) %>% 
-  summarise(hstd_m = sum(stdtime_m, na.rm = T),
-            hwd_m = sum(wkdtime)) %>% 
-  mutate("FTE previsto" = hstd_m/154.80, 
-         "FTE effettivo" = hwd_m/154.80) %>% 
-  pivot_longer(cols = 6:7, names_to = "FTE") %>% 
-  
-  ggplot() +
-  aes(x=Mese, y=value, col = FTE)+
-  geom_point()+geom_line()+  
-  scale_color_manual(values = c("FTE effettivo" = "black", "FTE previsto" = "red"))+
-  facet_wrap(~laboratorio+rep)+
-  theme_ipsum_rc(strip_text_size = 8.5, 
-                 strip_text_face = "bold")+ ylab("")+
-  theme(legend.title = element_blank()) +
-  scale_x_continuous(breaks=c(1,2,3,4,5,6,7,8,9,10,11,12))
-```
-
-
-### Dati di attività e FTE
+#### Dati di attività  
 
 Nell'arco del 2019 sono stati registrati **36737 conferimenti** nella sezione di BG, da cui sono stati effettuati **201235 esami** in sezione e **33026** presso altri laboratori
 
 Nella sezione di Sondrio sono stati registrati **34529 conferimenti**, da cui sono stati effettuati **108183** esami in  sezione e **22326** presso altri laboratori.
 
 In tabella è riportata per le due sezioni, la distribuzione del n. di esami effettuati nei differenti laboratori. 
-
-
+<br>
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 datiatt$dtreg<-as.Date(datiatt$datareg, format="%Y-%m-%d")
 
@@ -208,8 +110,164 @@ datiatt %>%
   
 
 ```
+<hr>
+
+#### Carichi di lavoro in FTE
+
+La seguente tabella riporta la distribuzione percentuale dell'impiego del personale di comparto nei diversi laboratori.
+Per ogni matricola sono riportate le ore settimanali da contratto (hsett) e  le ore totali (htot) per 48 settimane lavorative. 
+<br>
+```{r echo=FALSE}
+anag$htot <- anag$hsett*48
+anag$stdtime <- anag$htot*(anag$attività/100)
+anag %>% select(-dtnascita, -stdtime) %>% 
+  filter(., Matricola %in% mat2019) %>% 
+  pivot_wider(names_from = laboratorio, values_from = c(attività)) %>%
+  kbl() %>% 
+  kable_classic(full_width = F, html_font = "Cambria") %>% 
+  collapse_rows(columns = 1, valign = "top")
+```
+<br>
+Sulla base di questa ripartizione percentuale dell'impegno nei diversi laboratori si calcola l'impegno orario previsto per matricola. La somma per laboratorio dei diversi impegni orari definisce la disponibilità (da contratto) di ore lavorative nei differenti laboratori, per le esecuzione delle attività specifiche. 
+
+Nelle seguenti tabelle distinte per reparto sono riportati gli impegni orari per maricola e il dato complessivo per laboratorio <br>
+```{r echo=FALSE}
+anag %>% select(-dtnascita, -attività) %>% 
+  filter(reparto=="Sede Territoriale di Bergamo") %>% 
+  filter(., Matricola %in% mat2019) %>% 
+  mutate(Matricola = as.character(Matricola), 
+         hsett = as.character(hsett)) %>% 
+  pivot_wider(names_from = laboratorio, values_from = c(stdtime)) %>%
+  select(-reparto) %>% 
+    janitor::adorn_totals(where = "row") %>% 
+  kbl(booktabs = T, caption = "distribuzione dipsonibilità ore da contratto suddivise per matricola/laboratorio della sezione di Bergamo") %>% 
+  kable_classic(full_width = F, html_font = "Cambria") 
+
+```
+
+<br>
+```{r echo=FALSE}
+anag %>% select(-dtnascita, -attività) %>% 
+  filter(reparto=="Sede Territoriale di Sondrio") %>% 
+  filter(., Matricola %in% mat2019) %>% 
+  mutate(Matricola = as.character(Matricola), 
+         hsett = as.character(hsett)) %>% 
+  pivot_wider(names_from = laboratorio, values_from = c(stdtime)) %>%
+  select(-reparto) %>% 
+    janitor::adorn_totals(where = "row") %>% 
+  kbl(caption = "distribuzione disponibilità ore da contratto suddivise per matricola/laboratorio della sezione di Sondrio") %>% 
+  kable_classic(full_width = F, html_font = "Cambria") 
+```
+<br>
+Da cui si ricava,  per ogni laboratorio,  le risorse disponibili e le risorse effettivamente impiegate espresse in FTE per l'attività del 2019: 
+<br>
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+options(digits = 2)
+time %>% 
+  filter(rep != "VA" & Anno==2019) %>% 
+  select ( rep, Matricola, Mese, Minuti) %>% 
+  group_by(rep, Matricola) %>% 
+  summarise(wdmin = sum(Minuti/60, na.rm = T)) %>% 
+  filter(., Matricola %in% mat2019) %>% 
+  left_join(anag, by = "Matricola") %>% 
+  mutate(wkdtime = wdmin*(attività/100)) %>% 
+  group_by(rep, laboratorio) %>%
+  summarise(hstd = sum(stdtime, na.rm=T),
+            hsettw = sum(wkdtime, na.rm = T)) %>% 
+  mutate(FTEp = hstd/1728, 
+         FTEe = hsettw/1728,
+         perc = 100*(hsettw/hstd)) %>% 
+  select("reparto" = rep, laboratorio,"tempo-standard" = hstd, "tempo-lavorato" = hsettw, "%tempo-stand utilizzato" = perc,  "FTE-disponibile" = FTEp, "FTE-effettivo" = FTEe) %>% 
+  kbl() %>% 
+  kable_classic(full_width = F, html_font = "Cambria") %>% 
+  collapse_rows(columns = 1, valign = "top")
+```
+<br>
+Di seguito è riportato in grafico l'andamento mensile dei valori di FTE previsto ed effettivo per i diversi reparti e laboratori. 
+
+```{r echo=FALSE, fig.height=8, fig.width=12, message=FALSE, warning=FALSE}
+anag$htot <- anag$hsett*48
+anag$hot_m <- anag$hsett*4.3
+anag$stdtime <- anag$htot*(anag$attività/100)
+anag$stdtime_m <-anag$hot_m*(anag$attività/100)
+time %>% 
+  filter(rep != "VA" & Anno==2019) %>% 
+  select ( rep, Matricola, Mese, Minuti) %>% 
+  group_by(rep, Matricola, Mese) %>% 
+  summarise(wdmin = sum(Minuti/60, na.rm = T)) %>% 
+  filter(., Matricola %in% mat2019) %>% 
+  left_join(anag, by = "Matricola") %>% 
+  mutate(wkdtime = wdmin*(attività/100)) %>% 
+  select(- htot, - stdtime) %>% 
+  group_by(rep, laboratorio, Mese) %>% 
+  summarise(hstd_m = sum(stdtime_m, na.rm = T),
+            hwd_m = sum(wkdtime)) %>% 
+  mutate("FTE disponibile" = hstd_m/154.80, 
+         "FTE effettivo" = hwd_m/154.80) %>% 
+  pivot_longer(cols = 6:7, names_to = "FTE") %>% 
+  
+  ggplot() +
+  aes(x=Mese, y=value, col = FTE)+
+  geom_point()+geom_line()+  
+  scale_color_manual(values = c("FTE effettivo" = "black", "FTE disponibile" = "red"))+
+  facet_wrap(~laboratorio+rep)+
+  theme_ipsum_rc(strip_text_size = 8.5, 
+                 strip_text_face = "bold")+ ylab("")+
+  theme(legend.title = element_blank()) +
+  scale_x_continuous(breaks=c(1,2,3,4,5,6,7,8,9,10,11,12))
+```
+
+### Attività e FTE 
+
+Nella seguente tabella per ogni laboratorio sono riportati i FTE e l'attività eseguita nell'arco del 2019
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+WL <- time %>% 
+ filter(rep != "VA" & Anno==2019) %>% 
+  select ( rep, Matricola, Mese, Minuti) %>% 
+  group_by(rep, Matricola) %>% 
+  summarise(wdmin = sum(Minuti/60, na.rm = T)) %>% 
+  filter(., Matricola %in% mat2019) %>% 
+  left_join(anag, by = "Matricola") %>% 
+  mutate(wkdtime = wdmin*(attività/100)) %>% 
+  group_by(rep, laboratorio) %>% 
+  summarise(hstd = sum(stdtime),
+            hsettw = sum(wkdtime)) %>% 
+  mutate(FTEp = hstd/1728, 
+         FTEe = hsettw/1728,
+         perc = 100*(hsettw/hstd)) %>% 
+  select("reparto" = rep, laboratorio,"tempo-standard" = hstd, "tempo-lavorato" = hsettw, "%tempo-stand utilizzato" = perc,  "FTE-previsto" = FTEp, "FTE-effettivo" = FTEe)
 
 
+names(WL)[1] <- "Reparto"
+
+att <-datiatt %>% 
+  filter(anno==2019 & repanalisi2 != "Altri reparti", repanalisi2 != "Sede Territoriale di Binago") %>% 
+  group_by(repanalisi2, labs) %>% 
+  summarise(totesami = sum(esami, na.rm = T)) %>% 
+  arrange(repanalisi2, desc(totesami)) %>% 
+  select( "Reparto" = repanalisi2, "laboratorio" =labs, "Totale esami" = totesami)
+
+accett <- datiatt %>% 
+  filter(anno==2019 ) %>% 
+  group_by(repacc) %>% 
+  summarise(totconf = sum(conf, na.rm = T)) %>% 
+  arrange(repacc, desc(totconf)) %>% 
+  mutate(laboratorio = rep("Accettazione", 3)) %>% 
+  select( "Reparto" = repacc, laboratorio,  "Totale conferimenti" = totconf) %>% 
+  filter(Reparto != "Sede Territoriale di Binago") %>% 
+  bind_rows(att)
+  
+options(knitr.kable.NA = '')
+WL %>% 
+  # filter(!laboratorio %in% c("Accettazione", "Amministrazione")) %>% 
+ # mutate(Reparto = recode(Reparto, BG = "Sede Territoriale di Bergamo", SO = "Sede Territoriale di Sondrio")) %>% 
+  right_join(accett, by = c("Reparto", "laboratorio")) %>% 
+  kbl(digits = 2) %>% 
+  kable_classic(full_width = F, html_font = "Cambria") %>% 
+  collapse_rows(columns = 1, valign = "top")
+  
+```
 
 
 

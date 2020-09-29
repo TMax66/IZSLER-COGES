@@ -4,17 +4,18 @@ library(lubridate)
 library(kableExtra)
 library(gridExtra)
 library(hrbrthemes)
+library(knitr)
 
-# datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
-# anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
-# time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
+datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
+anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
+time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
 
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
-
-datiatt <- read_excel("BGSOBI2019.xlsx")
-anag <- read_excel("HR.xlsx")
-time <- read_excel("personaleBgSoVa.xlsx")
-
+# setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
+# 
+# datiatt <- read_excel("BGSOBI2019.xlsx")
+# anag <- read_excel("HR.xlsx")
+# time <- read_excel("personaleBgSoVa.xlsx")
+ 
 
 
 #standard time
@@ -66,6 +67,43 @@ time %>%
          FTEe = hsettw/1728,
          perc = 100*(hsettw/hstd)) %>% 
   select("reparto" = rep, laboratorio,"tempo-standard" = hstd, "tempo-lavorato" = hsettw, "%tempo-stand utilizzato" = perc,  "FTE-previsto" = FTEp, "FTE-effettivo" = FTEe)
+
+
+
+
+options(digits = 2)
+time %>% 
+  filter(rep != "VA" & Anno==2019) %>% 
+  select ( rep, Matricola, Mese, Minuti) %>% 
+  group_by(rep, Matricola) %>% 
+  summarise(wdmin = sum(Minuti/60, na.rm = T)) %>% 
+  filter(., Matricola %in% mat2019) %>% 
+  right_join(anag, by = "Matricola") %>% 
+  View()
+  mutate(wkdtime = wdmin*(attività/100)) %>% 
+  group_by(rep, laboratorio) %>%
+  summarise(hstd = sum(stdtime, na.rm=T),
+            hsettw = sum(wkdtime, na.rm = T)) %>% 
+  mutate(FTEp = hstd/1728, 
+         FTEe = hsettw/1728,
+         perc = 100*(hsettw/hstd)) %>% 
+  select("reparto" = rep, laboratorio,"tempo-standard" = hstd, "tempo-lavorato" = hsettw, "%tempo-stand utilizzato" = perc,  "FTE-disponibile" = FTEp, "FTE-effettivo" = FTEe) %>% 
+  kbl() %>% 
+  kable_classic(full_width = F, html_font = "Cambria") %>% 
+  collapse_rows(columns = 1, valign = "top")
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -137,14 +175,9 @@ nesami <- datiatt %>%
   select( "reparto-analisi" = repanalisi2, "laboratorio" =labs, totesami)   
  
 
-att <-datiatt %>% 
-  filter(anno==2019 & repanalisi2 != "Altri reparti", repanalisi2 != "Sede Territoriale di Binago") %>% 
-  group_by(repanalisi2, labs) %>% 
-  summarise(totesami = sum(esami, na.rm = T)) %>% 
-  arrange(repanalisi2, desc(totesami)) %>% 
-  select( "Reparto" = repanalisi2, "laboratorio" =labs, "Totale esami" = totesami)
 
-options(digits = 2)
+
+
 WL <- time %>% 
   filter(rep %in% c("BG", "SO") & Anno==2019) %>% 
   select ( rep, Matricola, Mese, Minuti) %>% 
@@ -163,19 +196,40 @@ WL <- time %>%
 
 
 names(WL)[1] <- "Reparto"
+
+att <-datiatt %>% 
+  filter(anno==2019 & repanalisi2 != "Altri reparti", repanalisi2 != "Sede Territoriale di Binago") %>% 
+  group_by(repanalisi2, labs) %>% 
+  summarise(totesami = sum(esami, na.rm = T)) %>% 
+  arrange(repanalisi2, desc(totesami)) %>% 
+  select( "Reparto" = repanalisi2, "laboratorio" =labs, "Totale esami" = totesami)
+
+accett <- datiatt %>% 
+  filter(anno==2019 ) %>% 
+  group_by(repacc) %>% 
+  summarise(totconf = sum(conf, na.rm = T)) %>% 
+  arrange(repacc, desc(totconf)) %>% 
+  mutate(laboratorio = rep("Accettazione", 3)) %>% 
+  select( "Reparto" = repacc, laboratorio,  "Totale conferimenti" = totconf) %>% 
+  filter(Reparto != "Sede Territoriale di Binago") %>% 
+  bind_rows(att)
   
-  WL %>% 
-  filter(!laboratorio %in% c("Accettazione", "Amministrazione")) %>% 
+options(digits = 2)
+WL %>% 
+  # filter(!laboratorio %in% c("Accettazione", "Amministrazione")) %>% 
   mutate(Reparto = recode(Reparto, BG = "Sede Territoriale di Bergamo", SO = "Sede Territoriale di Sondrio")) %>% 
-  right_join(att, by = c("Reparto", "laboratorio")) %>% 
-    View()
+  right_join(accett, by = c("Reparto", "laboratorio"))  
+  
 
 
-
-
-
-
-
+options(knirt.kable.NA = "")
+WL %>% 
+  # filter(!laboratorio %in% c("Accettazione", "Amministrazione")) %>% 
+  mutate(Reparto = recode(Reparto, BG = "Sede Territoriale di Bergamo", SO = "Sede Territoriale di Sondrio")) %>% 
+  right_join(accett, by = c("Reparto", "laboratorio")) %>% 
+  kbl(digits = 2) %>% 
+  kable_classic(full_width = F, html_font = "Cambria") %>% 
+  collapse_rows(columns = 1, valign = "top")
 
 
 
