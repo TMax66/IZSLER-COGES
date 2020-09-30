@@ -73,9 +73,11 @@ E' stato utilizzato come  **tempo standard di lavoro** quello previsto dal contr
 #### Full Time Equivalent (FTE)
 
 
-Per poter confrontare l'impegno in ore erogato dal personale di comparto nei diversi reparti/laboratorio/mese dell'anno, si è proceduto a calcolare il **Full Time Equivalent**: si tratta di un indicatore delle risorse effettivamente disponibili per l'esecuzione di attività o progetti. Per definizione 1 FTE corrisponde ad **un individuo a tempo pieno con contratto di 36h/settimanali**. Una persona che lavora 18h in una settimana   corrisponde a  18/36 = 0.5 FTE, una persona che lavora 40 h settimana corrisponde a 40/36 = 1.25 FTE. Analogamente due persone che lavorano 18h settimana corrispondono a 1 FTE mentre una persona che lavora 72 h settimana corrisponde a 2 FTE. Il FTE peremette quindi di effettuare confronti tra laboratori/reparti/tempo indipendentemente dal numero effettivo di persone presenti. Per ogni unità di aggregazione si è proceduto quindi a calcolare il FTE mediante la formula: 
+Per poter confrontare l'impegno in ore erogato dal personale di comparto nei diversi reparti/laboratorio/mese dell'anno, si è proceduto a calcolare il **Full Time Equivalent**: si tratta di un indicatore delle risorse effettivamente disponibili per l'esecuzione di attività o progetti. Per definizione 1 FTE corrisponde ad **un individuo a tempo pieno con contratto di 36h/settimanali**. Una persona che lavora 18h in una settimana   corrisponde a  18/36 = 0.5 FTE, una persona che lavora 40 h settimana corrisponde a 40/36 = 1.25 FTE. Analogamente due persone che lavorano 18h settimana corrispondono a 1 FTE mentre una persona che lavora 72 h settimana corrisponde a 2 FTE. Il FTE peremette quindi di effettuare confronti tra laboratori/reparti/tempo indipendentemente dal numero effettivo di persone presenti. FTE è rapporto tra il tempo di lavoro, all'interno di un ambito specifico, come un dipartimento, e il numero di ore di lavoro durante un dato periodo di tempo. In quanto tale, un FTE spesso non corrisponde al numero di dipendenti presenti. Il FTE è uno strumento matematico utilizzato per confrontare e aiutare a comprendere i carichi di lavoro e la frammentazione di tali carichi di lavoro, tra processi, team, reparti, flussi di valore e aziende. Ciò è particolarmente importante negli ambienti in cui i dipendenti lavorano su più processi, sono condivisi tra più team, lavorano orari dispari e / o lavorano part-time.
 
-$$ \text{FTE}_{u} = \frac{\text{numero ore erogate}_{u}}{\text{numero di ore standard previste}_{u} } $$
+Per ogni unità di aggregazione si è proceduto quindi a calcolare il FTE mediante la formula: 
+
+$$ \text{FTE}_{u} = \frac{\text{numero ore erogate}_{u}}{\text{numero di ore standard}_{u} } $$
 <hr>
 
 
