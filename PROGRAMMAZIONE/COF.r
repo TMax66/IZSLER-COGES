@@ -93,22 +93,74 @@ time %>%
   collapse_rows(columns = 1, valign = "top")
 
 
+ 
+
+  datiatt$dtreg<-as.Date(datiatt$datareg, format="%Y-%m-%d")
+  
+  datiatt$anno <- year(datiatt$dtreg)
+  datiatt$mese <- month(datiatt$dtreg)
+  
+  datiatt$repanalisi2 <- ifelse(datiatt$repanalisi== "Sede Territoriale di Bergamo", "Sede Territoriale di Bergamo", 
+                                ifelse(datiatt$repanalisi== "Sede Territoriale di Binago","Sede Territoriale di Binago",
+                                       ifelse(datiatt$repanalisi== "Sede Territoriale di Sondrio","Sede Territoriale di Sondrio","Altri reparti")))
+  
+  
+  
+  
+  
+  accett <- datiatt %>% 
+    filter(anno==2019 ) %>% 
+    group_by(repacc) %>% 
+    summarise(totconf = sum(conf, na.rm = T)) %>% 
+    arrange(repacc, desc(totconf)) %>% 
+    mutate(laboratorio = rep("Accettazione", 3)) %>% 
+    select( "Reparto" = repacc, laboratorio,  "Totale conferimenti" = totconf) %>% 
+    filter(Reparto != "Sede Territoriale di Binago") %>% 
+    bind_rows(
+      datiatt %>% 
+        filter(anno==2019 & repanalisi2 != "Altri reparti", repanalisi2 != "Sede Territoriale di Binago") %>% 
+        group_by(repanalisi2, labs) %>% 
+        summarise(totesami = sum(esami, na.rm = T)) %>% 
+        arrange(repanalisi2, desc(totesami)) %>% 
+        select( "Reparto" = repanalisi2, laboratorio =labs, "Totale esami" = totesami) ) 
+  
+  accett %>% 
+    kbl() %>% 
+    kable_classic(full_width = F, html_font = "Cambria") %>% 
+    collapse_rows(columns = 1, valign = "top")
+
+
+
+  att <-datiatt %>% 
+    filter(anno==2019 & repanalisi2 != "Altri reparti", repanalisi2 != "Sede Territoriale di Binago") %>% 
+    group_by(repanalisi2, labs) %>% 
+    summarise(totesami = sum(esami, na.rm = T)) %>% 
+    arrange(repanalisi2, desc(totesami)) %>% 
+    select( "Reparto" = repanalisi2, "laboratorio" =labs, "Totale esami" = totesami)
+  
+  accett <- datiatt %>% 
+    filter(anno==2019 ) %>% 
+    group_by(repacc) %>% 
+    summarise(totconf = sum(conf, na.rm = T)) %>% 
+    arrange(repacc, desc(totconf)) %>% 
+    mutate(laboratorio = rep("Accettazione", 3)) %>% 
+    select( "Reparto" = repacc, laboratorio,  "Totale conferimenti" = totconf) %>% 
+    filter(Reparto != "Sede Territoriale di Binago") %>% 
+    bind_rows(att) %>% 
+    kbl() %>% 
+    kable_classic(full_width = F, html_font = "Cambria") %>% 
+    collapse_rows(columns = 1, valign = "top")
 
 
 
 
+x <-datiatt %>% 
+  filter(repanalisi2=="Sede Territoriale di Bergamo") 
 
 
 
-
-
-
-
-
-
-
-
-
+unique(datiatt$finalità)
+ 
 
 
 
@@ -233,95 +285,13 @@ WL %>%
 
 
 
+#####
+P1 <- read_excel("PROGRAMMAZIONE/P1.xlsx")
+
+p<-P1 %>% 
+kbl() %>% 
+  kable_classic(full_width = F, html_font = "Cambria", font_size = 30) %>% 
+  column_spec()
 
 
-
-  
-att <-  nconf %>% 
-  right_join(nesami, by = "reparto") %>% 
-  arrange(desc(totesami)) %>% 
-  janitor::adorn_totals(where = "row")
-
-
-
-
-
-
-
-z <-datiatt %>% 
-  filter(repacc == "Sede Territoriale di Bergamo") %>% 
-  group_by(repanalisi2) %>% 
-  summarise(sum(esami,na.rm = T)) %>% 
-  janitor::adorn_totals(where = "row")
-
-
-unique(factor(z$prova))
-
-
-
-
-#FULL TIME EQUIVALENT####
-View(time)
-
-time$hr <- time$Minuti/60
-
-time %>% 
-  group_by(Matricola) %>% 
-  summarise(hrm=sum(hr)) %>% 
-  left_join(anag, by="Matricola") %>% 
-  drop_na() %>% 
-  group_by(Categoria,Matricola, Cognome) %>% 
-  summarise(hrm = sum(hrm))
-
-
-  
-
-
-
-
-
-
-attività %>% 
-  group_by(anno, repanalisi) %>% 
-  summarise(Esami = sum(esami = sum(esami, na.rm = T)))
-
-
-
-attività %>% 
-  filter(repanalisi %in% c("Sede Territoriale di Bergamo", "Sede Territoriale di Sondrio")) %>% 
-  group_by(anno, repanalisi) %>% 
-    summarise(totes = sum(esami, na.rm = T))
-
-
-
-
-
-
-
-
-tabella <- bg %>% 
-  mutate(mese = month(datareg)) %>% 
-  group_by(settore, prova, tecnica, labs) %>% 
-  summarise(Esami = sum(esami, na.rm = T)) %>% 
-  #select(settore, prova, esami) %>% 
-  unique() 
-
-write.csv(tabella, file = "tabella.csv")
-
-
-
-bg %>% 
-  mutate(mese = month(datareg)) %>% 
-  group_by(labs) %>% 
-  summarise(Esami = sum(esami, na.rm = T)) %>% 
-  janitor::adorn_totals(where = "row") %>% 
-  #select(settore, prova, esami) %>% 
-  unique() 
-
-
- 
-  
-
-
-attività <- unique(factor(bg$'Finalità del conferimento (SM)'))
-names(bg)
+p$'Obiettivo A' <- rep("?", 8)
