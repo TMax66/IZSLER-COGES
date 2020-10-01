@@ -10,11 +10,11 @@ datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/
 anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
 time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
 
-# setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
-# 
-# datiatt <- read_excel("BGSOBI2019.xlsx")
-# anag <- read_excel("HR.xlsx")
-# time <- read_excel("personaleBgSoVa.xlsx")
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
+
+datiatt <- read_excel("BGSOBI2019.xlsx")
+anag <- read_excel("HR.xlsx")
+time <- read_excel("personaleBgSoVa.xlsx")
  
 
 
@@ -286,12 +286,13 @@ WL %>%
 
 
 #####
-P1 <- read_excel("PROGRAMMAZIONE/P1.xlsx")
+p <- read_excel("P1.xlsx")
+p$'Obiettivo A' <- rep(12, 8)
+p$labA <- c(84, 0,78,88,0,75,5,4)
+p$labB <- c(0,88,5,0,0,0,5,0)
+p$labC <- c(4,0,5,0,88,13,78,84)
+hst <- function(x)
+{ (x/100)*1728
+}
+M <- data.frame("Operatore" = p$operatore, apply(p[,-1], 2, hst))
 
-p<-P1 %>% 
-kbl() %>% 
-  kable_classic(full_width = F, html_font = "Cambria", font_size = 30) %>% 
-  column_spec()
-
-
-p$'Obiettivo A' <- rep("?", 8)

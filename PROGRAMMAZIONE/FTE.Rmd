@@ -1,12 +1,13 @@
 ---
-title: "Analisi dei carichi di lavoro in FTE presso la sezione di BG e SO"
-author: " "
-date: " "
-output: 
+title: "Definizione dei FTE presso la sezione di BG e SO per la programmazione"
+author: ' '
+date: ' '
+output:
   ioslides_presentation:
     css: slide.css
-    widescreen: true
-     
+    widescreen: yes
+  slidy_presentation: default
+  beamer_presentation: default
 ---
 
 ```{r setup, include=FALSE}
@@ -20,14 +21,14 @@ library(dygraphs)
 library(forecast)
 library(hrbrthemes)
 library(knitr)
-datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
-anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
-time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
+# datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
+# anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
+# time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
 
-# setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
-# datiatt <- read_excel("BGSOBI2019.xlsx")
-# anag <- read_excel("HR.xlsx")
-# time <- read_excel("personaleBgSoVa.xlsx")
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
+datiatt <- read_excel("BGSOBI2019.xlsx")
+anag <- read_excel("HR.xlsx")
+time <- read_excel("personaleBgSoVa.xlsx")
 anag$stdtime <- anag$hsett*(anag$attività/100)*4.3
 mat2019 <- unique(factor(anag$Matricola))
 
@@ -37,8 +38,7 @@ mat2019 <- unique(factor(anag$Matricola))
 
 - Anno 2019
 - Dati di attività da Business-Object (Darwin) della sezione di BG e SO
-- Ore lavorate : dati delle presenze in minuti/mese per matricola dal software SIGMA (non più attivo dal 01/09/2020)
-del personale di comparto
+- Ore lavorate : dati delle presenze in minuti/mese per matricola dal software SIGMA (non più attivo dal 01/09/2020) del **personale di comparto**
 
 - Unità di aggregazione dati : Laboratorio/tempo 
 - Tempo standard : 36 h/settimanali x 48 settimane lavorative 
@@ -47,7 +47,7 @@ del personale di comparto
 
 ## FTE
 
-Tull Time Equivalent
+Full Time Equivalent
 
 Indicatore delle risorse effettivamente disponibili per l'esecuzione di attività o progetti.
 
@@ -57,6 +57,7 @@ Indicatore delle risorse effettivamente disponibili per l'esecuzione di attivit�
 - Una persona che lavora 40 h settimana corrisponde a 40/36 = 1.25 FTE
 - Due persone che lavorano 18h settimana corrispondono a 2*18/36 = 1 FTE
 
+FTE per aggregato :
 $$ \text{FTE}_{u} = \frac{\sum \text{numero ore erogate}_{u}}{\sum\text{numero di ore standard}_{u} } $$
 
 
@@ -256,7 +257,8 @@ WL %>%
 ## esempio di programmazione basata sul FTE
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-p <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/P1.xlsx")
+# p <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/P1.xlsx")
+p <- read_excel("P1.xlsx")
 p %>% 
 kbl() %>% 
   kable_classic(full_width = F, html_font = "Cambria") 
@@ -289,10 +291,7 @@ p%>%
 
 - ogni operatore coinvolto dovrà usare 4.5*48 = 216 h
 
-- % di ore standard per operatore da allocare all'obiettivo = 216/1728 = 12%
-
-
-
+- % di ore standard per operatore da allocare all'obiettivo = 216/1728 = 12.5%
 
 ## esempio di programmazione basata sul FTE
 
@@ -305,7 +304,48 @@ p%>%
 ```
 
 ## esempio di programmazione basata sul FTE
-tabella finale 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+p$'Obiettivo A' <- rep("12.5", 8)
+p%>% 
+  kbl() %>% 
+  kable_classic(full_width = F, html_font = "Cambria") %>% 
+  column_spec(5, color = "red")
+```
+
+## esempio di programmazione basata sul FTE
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+p$'Obiettivo A' <- rep("12.5", 8)
+p$labA <- c(80, 0,75,87.5,0,62.5,5,7.5)
+p$labB <- c(0,87.5,5,0,0,0,5,0)
+p$labC <- c(7.5,0,7.5,0,87.5,25,77.5,80)
+p%>% 
+  kbl() %>% 
+  kable_classic(full_width = F, html_font = "Cambria") %>% 
+  column_spec(2:4, color = "blue") %>% 
+  column_spec(5, color = "red")
+```
+
+## esempio di programmazione basata sul FTE
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+p <- read_excel("P1.xlsx")
+p$'Obiettivo A' <- rep(12.5, 8)
+p$labA <- c(80, 0,75,87.5,0,62.5,5,7.5)
+p$labB <- c(0,87.5,5,0,0,0,5,0)
+p$labC <- c(7.5,0,7.5,0,87.5,25,77.5,80)
+hst <- function(x)
+{ (x/100)*1728
+}
+M <- data.frame("Operatore" = p$operatore, apply(p[,-1], 2, hst))
+
+M %>% 
+  kbl() %>% 
+  kable_classic(full_width = F, html_font = "Cambria") 
+
+```
+
+
+
+
 
 
 ## ...da fare
