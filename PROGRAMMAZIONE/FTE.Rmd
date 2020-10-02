@@ -1,5 +1,5 @@
 ---
-title: "Definizione dei FTE presso la sezione di BG e SO per la programmazione"
+title: "Definizione dei FTE e programmazione"
 author: ' '
 date: ' '
 output:
@@ -41,7 +41,7 @@ mat2019 <- unique(factor(anag$Matricola))
 - Ore lavorate : dati delle presenze in minuti/mese per matricola dal software SIGMA (non più attivo dal 01/09/2020) del **personale di comparto**
 
 - Unità di aggregazione dati : Laboratorio/tempo 
-- Tempo standard : 36 h/settimanali x 48 settimane lavorative 
+- Tempo standard : 36 h/settimanali x 46.4 settimane lavorative (escluse 4.6 settimane di ferie pari a 28gg come da contratto )
 - Calcolo del full time equivalent (FTE) per unità di aggregazione
 
 
@@ -54,7 +54,7 @@ Indicatore delle risorse effettivamente disponibili per l'esecuzione di attivit�
  
 - 1 FTE = <span style="color:blue">**un individuo a tempo pieno con contratto di 36h/settimanali**</span>
 - Una persona che lavora 18h in una settimana corrisponde a  18/36 = 0.5 FTE
-- Una persona che lavora 40 h settimana corrisponde a 40/36 = 1.25 FTE
+- Una persona che lavora 40 h settimana corrisponde a 40/36 = 1.11 FTE
 - Due persone che lavorano 18h settimana corrispondono a 2*18/36 = 1 FTE
 
 FTE per aggregato :
@@ -106,7 +106,7 @@ datiatt$repanalisi2 <- ifelse(datiatt$repanalisi== "Sede Territoriale di Bergamo
 ## Ripartizione del personale nei laboratori {.smaller}
 
 ```{r echo=FALSE}
-anag$htot <- anag$hsett*48
+anag$htot <- anag$hsett*46.4
 anag$stdtime <- anag$htot*(anag$attività/100)
 anag %>% select(-dtnascita, -stdtime) %>% 
   filter(., Matricola %in% mat2019) %>% 
@@ -162,8 +162,8 @@ time %>%
   group_by(rep, laboratorio) %>%
   summarise(hstd = sum(stdtime, na.rm=T),
             hsettw = sum(wkdtime, na.rm = T)) %>% 
-  mutate(FTEp = hstd/1728, 
-         FTEe = hsettw/1728,
+  mutate(FTEp = hstd/1670.4, 
+         FTEe = hsettw/1670.4,
          perc = 100*(hsettw/hstd)) %>% 
   select("reparto" = rep, laboratorio,"tempo-standard" = hstd, "tempo-lavorato" = hsettw, "%tempo-stand utilizzato" = perc,  "FTE-disponibile" = FTEp, "FTE-effettivo" = FTEe) %>% 
   kbl() %>% 
@@ -174,7 +174,7 @@ time %>%
 ## Variazione mensile del FTE 
 
 ```{r echo=FALSE, fig.height=6, fig.width=11.2, message=FALSE, warning=FALSE}
-anag$htot <- anag$hsett*48
+anag$htot <- anag$hsett*46.4
 anag$hot_m <- anag$hsett*4.3
 anag$stdtime <- anag$htot*(anag$attività/100)
 anag$stdtime_m <-anag$hot_m*(anag$attività/100)
@@ -219,8 +219,8 @@ WL <- time %>%
   group_by(rep, laboratorio) %>% 
   summarise(hstd = sum(stdtime),
             hsettw = sum(wkdtime)) %>% 
-  mutate(FTEp = hstd/1728, 
-         FTEe = hsettw/1728,
+  mutate(FTEp = hstd/1670.4, 
+         FTEe = hsettw/1670.4,
          perc = 100*(hsettw/hstd)) %>% 
   select("reparto" = rep, laboratorio,"tempo-standard" = hstd, "tempo-lavorato" = hsettw, "%tempo-stand utilizzato" = perc,  "FTE-previsto" = FTEp, "FTE-effettivo" = FTEe)
 
@@ -289,9 +289,9 @@ p%>%
 
 - ore per persona a settimana da dedicare all'obiettivo = 0.125*36 = 4.5 h /settimana / persona
 
-- ogni operatore coinvolto dovrà usare 4.5*48 = 216 h
+- ogni operatore coinvolto dovrà usare 4.5*46.4 = 208.8 h
 
-- % di ore standard per operatore da allocare all'obiettivo = 216/1728 = 12.5%
+- % di ore standard per operatore da allocare all'obiettivo = 208.8/1670.4 = 12.5%
 
 ## esempio di programmazione basata sul FTE
 
@@ -333,7 +333,7 @@ p$labA <- c(80, 0,75,87.5,0,62.5,5,7.5)
 p$labB <- c(0,87.5,5,0,0,0,5,0)
 p$labC <- c(7.5,0,7.5,0,87.5,25,77.5,80)
 hst <- function(x)
-{ (x/100)*1728
+{ (x/100)*1670.4
 }
 M <- data.frame("Operatore" = p$operatore, apply(p[,-1], 2, hst))
 
