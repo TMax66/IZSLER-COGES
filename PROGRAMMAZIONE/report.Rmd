@@ -70,7 +70,7 @@ Per poter confrontare l'impegno in ore erogato dal personale di comparto nei div
 
 Per ogni unità di aggregazione si è proceduto quindi a calcolare il FTE mediante la formula: 
 
-$$ \text{FTE}_{u} = \frac{\sum \text{numero ore erogate}_{u}}{\sum\text{numero di ore standard}_{u} } $$
+$$ \text{FTE}_{u} = \frac{\sum \text{numero ore erogate}_{u}}{\text{numero di ore standard}_{u} } $$
 <hr>
 
 

@@ -58,7 +58,7 @@ Indicatore delle risorse effettivamente disponibili per l'esecuzione di attivitÃ
 - Due persone che lavorano 18h settimana corrispondono a 2*18/36 = 1 FTE
 
 FTE per aggregato :
-$$ \text{FTE}_{u} = \frac{\sum \text{numero ore erogate}_{u}}{\sum\text{numero di ore standard}_{u} } $$
+$$ \text{FTE}_{u} = \frac{\sum \text{numero ore erogate}_{u}}{\text{numero di ore standard}_{u} } $$
 
 
 ## Dati di  AttivitÃ  2019 
@@ -274,7 +274,7 @@ p%>%
 ```
 
 
-## esempio di programmazione basata sul FTE
+## esempio di programmazione basata sul FTE {.smaller}
 
 - Obiettivo A 
 
@@ -285,7 +285,7 @@ p%>%
     - 4 persone 0.25 FTE
     - 8 persone 0.125 FTE
     
-- si decide di assegnare l'obiettivo a 8 operatori del comparto
+- si decide di assegnare l'obiettivo a 8 operatori 
 
 - ore per persona a settimana da dedicare all'obiettivo = 0.125*36 = 4.5 h /settimana / persona
 
