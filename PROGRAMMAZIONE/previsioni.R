@@ -24,8 +24,6 @@ dati<-read.csv("newdati3.csv", header=T, sep=";", fileEncoding="latin1")
 dati$Date<-as.Date(dati$datareg, format="%d/%m/%Y")
 dati$anno <- year(dati$Date)
 
-
- 
 bg <- dati %>% 
   filter(reparto=="Sezione di Bergamo" & anno >= 2018) %>% 
   group_by(Date) %>% 
@@ -33,15 +31,21 @@ bg <- dati %>%
 
 esami <-xts(bg[,-1],order.by=bg$Date) 
 
-esami <- apply.monthly(esami$es, FUN = sum)
-# mseries <- cbind(esami, rollmean(esami,7))
-# names(mseries) <- c("esami", "media mobile settimanale")
-# index(mseries) <- as.Date(index(mseries))
-# library(broom)
-# tidy(mseries) %>% ggplot(aes(x=index,y=value, color=series)) + geom_line()
-# dygraph(mseries$`media mobile mensile`)
-# 
-# autoplot(mseries, geom = c("line"))
+esami <- apply.weekly(esami$es, FUN = sum)
+
+esami <- subset(esami, esami$es >71)
+
+mseries <- cbind(esami, rollmean(esami,4.6))
+
+names(mseries) <- c("esami", "media mobile mensile")
+index(mseries) <- as.Date(index(mseries))
+library(broom)
+tidy(mseries) %>% ggplot(aes(x=index,y=value, color=series)) + geom_line()
+dygraph(mseries$`media mobile mensile`)
+
+dygraph(mseries$es)
+
+autoplot(mseries, geom = c("point", "line"))
 
 library(forecast)
 
