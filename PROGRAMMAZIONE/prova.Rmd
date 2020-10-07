@@ -25,14 +25,15 @@ library(dygraphs)
 library(forecast)
 library(hrbrthemes)
 library(knitr)
-datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
-anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
-time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
+library(xaringan)
+# datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
+# anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
+# time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
 
-# setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
-# datiatt <- read_excel("BGSOBI2019.xlsx")
-# anag <- read_excel("HR.xlsx")
-# time <- read_excel("personaleBgSoVa.xlsx")
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
+datiatt <- read_excel("BGSOBI2019.xlsx")
+anag <- read_excel("HR.xlsx")
+time <- read_excel("personaleBgSoVa.xlsx")
 anag$stdtime <- anag$hsett*(anag$attività/100)*4.3
 mat2019 <- unique(factor(anag$Matricola))
 
@@ -45,7 +46,7 @@ mat2019 <- unique(factor(anag$Matricola))
 
 - Dati di attività da Business-Object (Darwin) della sezione di BG e SO
 
-- Tempo standard : 36 h/settimanali x 46.4 settimane lavorative (escluse 4.6 settimane di ferie pari a 28gg come da contratto ) del **personale di comparto**
+- Tempo standard : 36 h/settimanali x 46.4 settimane lavorative (escluse 5.6 settimane di ferie pari a 28gg come da contratto ) del **personale di comparto**
 
 - Ore lavorate : dati delle presenze in minuti/mese per matricola dal software SIGMA (non più attivo dal 01/09/2020) del **personale di comparto**
 
@@ -56,17 +57,18 @@ mat2019 <- unique(factor(anag$Matricola))
 
 
 ---
-class: center, middle 
-
 # Full Time Equivalent
-
-## Indicatore delle risorse effettivamente disponibili per l'esecuzione di attività o progetti.
-
-
----
-# Full Time Equivalent
-
 <br>
+- Indicatore delle risorse effettivamente disponibili per l'esecuzione di attività o progetti.
+<br>
+- Permette quindi di effettuare confronti tra laboratori/reparti/tempo indipendentemente dal numero effettivo di persone presenti. 
+<br>
+- FTE spesso non corrisponde al numero di dipendenti presenti. 
+<br>
+- FTE è un indicatore utilizzato per confrontare e aiutare a comprendere i carichi di lavoro e la frammentazione di tali carichi,  tra processi, team, reparti, flussi di valore e aziende. Ciò è particolarmente importante negli ambienti in cui i dipendenti lavorano su più processi, sono condivisi tra più team, lavorano orari dispari e / o lavorano part-time.
+
+--
+
 - 1 FTE = <span style="color:blue">**un individuo a tempo pieno con contratto di 36h/settimanali**</span>
 
 - Una persona che lavora 18h in una settimana corrisponde a  18/36 = 0.5 FTE
@@ -292,7 +294,7 @@ WL %>%
 # Programmazione basata sul FTE
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-# p <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/P1.xlsx")
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
 p <- read_excel("P1.xlsx")
 p %>% 
   rename("Operatore" = operatore, "Laboratorio A" = labA, "Laboratorio B" = labB, "Laboratorio C" = labC) %>% 
@@ -383,6 +385,7 @@ p%>%
 # Programmazione basata sul FTE
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
 p <- read_excel("P1.xlsx")
 p$'Obiettivo A' <- rep(12.5, 8)
 p$labA <- c(80, 0,75,87.5,0,62.5,5,7.5)
