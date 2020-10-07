@@ -9,8 +9,12 @@ library(plotly)
 library(RColorBrewer)
 library(dygraphs)
 library(lubridate)
- 
+library(hrbrthemes)
+
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
 dati<-read.csv("newdati3.csv", header=T, sep=";", fileEncoding="latin1")
+
+
 # dati<-as_tibble(dati)
 # dati$datainizio<-dmy(dati$datainizio)
 # dati<- mutate(dati, mese=paste(year(datainizio),'-',month(datainizio),sep=''))
@@ -25,27 +29,37 @@ dati$Date<-as.Date(dati$datareg, format="%d/%m/%Y")
 dati$anno <- year(dati$Date)
 
 bg <- dati %>% 
-  filter(reparto=="Sezione di Bergamo" & anno >= 2018) %>% 
+  filter(reparto=="Sezione di Bergamo" & anno >= 2019) %>% 
+  #filter(reparto=="Sezione di Bergamo") %>% 
   group_by(Date) %>% 
   summarise(es=sum(esami, na.rm = T))
 
 esami <-xts(bg[,-1],order.by=bg$Date) 
 
-esami <- apply.weekly(esami$es, FUN = sum)
+#esami <- apply.weekly(esami$es, FUN = sum)
 
-esami <- subset(esami, esami$es >71)
 
-mseries <- cbind(esami, rollmean(esami,4.6))
 
-names(mseries) <- c("esami", "media mobile mensile")
+
+#esami <- subset(esami, esami$es >71)
+
+#mseries <- cbind(esami, rollmean(esami,4.3), rollmean(esami, 52)) 
+
+mseries <- cbind(esami, rollmean(esami,5), rollmean(esami, 25)) 
+
+
+
+
+names(mseries) <- c("esami/giorno", "media mobile settimanale", "media mobile mensile")
 index(mseries) <- as.Date(index(mseries))
-library(broom)
-tidy(mseries) %>% ggplot(aes(x=index,y=value, color=series)) + geom_line()
-dygraph(mseries$`media mobile mensile`)
+# library(broom)
+# tidy(mseries) %>% ggplot(aes(x=index,y=value, color=series)) + geom_line()
+# dygraph(mseries$`media mobile mensile`)
 
-dygraph(mseries$es)
+#dygraph(mseries$es)
 
-autoplot(mseries, geom = c("point", "line"))
+autoplot(mseries, geom = c("line")) +
+  theme_ipsum_rc()
 
 library(forecast)
 

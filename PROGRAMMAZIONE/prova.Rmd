@@ -26,6 +26,12 @@ library(forecast)
 library(hrbrthemes)
 library(knitr)
 library(xaringan)
+library(forecast)
+library(xts)
+library(grid)
+library(hrbrthemes)
+
+
 # datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
 # anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
 # time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
@@ -61,7 +67,7 @@ mat2019 <- unique(factor(anag$Matricola))
 <br>
 - Indicatore delle risorse effettivamente disponibili per l'esecuzione di attività o progetti.
 <br>
-- Permette quindi di effettuare confronti tra laboratori/reparti/tempo indipendentemente dal numero effettivo di persone presenti. 
+- Permette  di effettuare confronti tra laboratori/reparti/tempo indipendentemente dal numero effettivo di persone presenti. 
 <br>
 - FTE spesso non corrisponde al numero di dipendenti presenti. 
 <br>
@@ -79,7 +85,7 @@ mat2019 <- unique(factor(anag$Matricola))
 
 --
 
-$$\text{FTE}_{u} = \frac{\sum \text{numero ore erogate}_{u}}{\text{numero di ore standard} }$$
+$$\text{FTE}_{agg} = \frac{\sum \text{numero ore erogate}_{agg}}{\text{numero di ore standard} }$$
 
 ---
 # Dati di  Attività 2019 
@@ -290,6 +296,60 @@ WL %>%
   collapse_rows(columns = 1, valign = "top")
   
 ```
+---
+# Attività e FTE
+
+## Attività Sede Territoriale di Bergamo 2002-2019
+```{r echo=FALSE, fig.height=9, fig.width=13, message=FALSE, warning=FALSE }
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
+dati<-read.csv("newdati3.csv", header=T, sep=";", fileEncoding="latin1")
+
+dati$Date<-as.Date(dati$datareg, format="%d/%m/%Y")
+dati$anno <- year(dati$Date)
+
+bg <- dati %>% 
+  #filter(reparto=="Sezione di Bergamo" & anno >= 2018) %>% 
+  filter(reparto=="Sezione di Bergamo") %>% 
+  group_by(Date) %>% 
+  summarise(es=sum(esami, na.rm = T))
+
+esami <-xts(bg[,-1],order.by=bg$Date) 
+esami <- apply.weekly(esami$es, FUN = sum)
+esami <- subset(esami, esami$es >71)
+mseries <- cbind(esami, rollmean(esami,4.3), rollmean(esami, 52)) 
+names(mseries) <- c("esami/settimana", "media mobile mensile", "media mobile annuale")
+index(mseries) <- as.Date(index(mseries))
+autoplot(mseries, geom = c("line")) + xlab("Anno") +
+  theme_ipsum_rc()
+
+```
+---
+# Attività e FTE
+##  Attività Sede Territoriale di Bergamo 2019
+
+```{r echo=FALSE, fig.height=9, fig.width=13, message=FALSE, warning=FALSE}
+bg <- dati %>% 
+  filter(reparto=="Sezione di Bergamo" & anno >= 2019) %>% 
+  group_by(Date) %>% 
+  summarise(es=sum(esami, na.rm = T))
+esami <-xts(bg[,-1],order.by=bg$Date) 
+mseries <- cbind(esami, rollmean(esami,5), rollmean(esami, 25)) 
+names(mseries) <- c("esami/giorno", "media mobile settimanale", "media mobile mensile")
+index(mseries) <- as.Date(index(mseries))
+autoplot(mseries, geom = c("line")) +  xlab("Anno") +
+  theme_ipsum_rc()
+```
+
+
+
+
+
+
+
+
+
+
+
 ---
 # Programmazione basata sul FTE
 
