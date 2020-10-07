@@ -21,14 +21,14 @@ library(dygraphs)
 library(forecast)
 library(hrbrthemes)
 library(knitr)
-# datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
-# anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
-# time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
+datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
+anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
+time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
 
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
-datiatt <- read_excel("BGSOBI2019.xlsx")
-anag <- read_excel("HR.xlsx")
-time <- read_excel("personaleBgSoVa.xlsx")
+# setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
+# datiatt <- read_excel("BGSOBI2019.xlsx")
+# anag <- read_excel("HR.xlsx")
+# time <- read_excel("personaleBgSoVa.xlsx")
 anag$stdtime <- anag$hsett*(anag$attività/100)*4.3
 mat2019 <- unique(factor(anag$Matricola))
 
@@ -147,7 +147,7 @@ anag %>% select(-dtnascita, -attività) %>%
   kable_classic(full_width = F, html_font = "Cambria") 
 ```
 
-## FTE per Reparto/laboratorio {.smaller}
+## FTE per Reparto/Laboratorio {.smaller}
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 options(digits = 2)
