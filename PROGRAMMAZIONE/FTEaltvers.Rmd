@@ -53,7 +53,7 @@ mat2019 <- unique(factor(anag$Matricola))
 
 - Dati di attività da Business-Object (Darwin) della sezione di BG e SO
 
-- Tempo standard : 36 h/settimanali x 45.6 settimane lavorative (escluse 6.7 settimane di ferie pari a 32 gg come da contratto ) del **personale di comparto**
+- Tempo standard : 36 h/settimanali x 45.6 settimane lavorative (escluse 6.4 settimane di ferie pari a 32 gg come da contratto ) del **personale di comparto**
 
 - Ore lavorate : dati delle presenze in minuti/mese per matricola dal software SIGMA (non più attivo dal 01/09/2020) del **personale di comparto**
 
@@ -75,7 +75,7 @@ mat2019 <- unique(factor(anag$Matricola))
 
 ---
 # Full Time Equivalent
-- 1 FTE = <span style="color:blue">**un individuo a tempo pieno con contratto di 36h/settimanali (1670.4 h/anno)**</span>
+- 1 FTE = <span style="color:blue">**un individuo a tempo pieno con contratto di 36h/settimanali (1641.6 h/anno)**</span>
 <br>
 
 - Una persona che lavora 18h in una settimana corrisponde a  18/36 = 0.5 FTE
