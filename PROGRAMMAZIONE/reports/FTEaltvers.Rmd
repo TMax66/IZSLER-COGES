@@ -16,30 +16,24 @@ output:
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-library(readxl)
-library(tidyverse)
-library(lubridate)
-library(kableExtra)
-library(gridExtra)
-library(dygraphs)
-library(forecast)
-library(hrbrthemes)
-library(knitr)
-library(xaringan)
-library(forecast)
-library(xts)
-library(grid)
-library(hrbrthemes)
-
-
-datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
-anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
-time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
-
-# setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
-# datiatt <- read_excel("BGSOBI2019.xlsx")
-# anag <- read_excel("HR.xlsx")
-# time <- read_excel("personaleBgSoVa.xlsx")
+library("readxl")
+library("tidyverse")
+library("lubridate")
+library("kableExtra")
+library("gridExtra")
+library("dygraphs")
+library("forecast")
+library("hrbrthemes")
+library("knitr")
+library("xaringan")
+library("forecast")
+library("xts")
+library("grid")
+library("hrbrthemes")
+library("here")
+datiatt <- read_excel(here("programmazione", "data", "raw","BGSOBI2019.xlsx"))
+anag <- read_excel(here("programmazione", "data", "raw","HR.xlsx"))
+time <- read_excel( here("programmazione", "data", "raw", "personaleBgSoVa.xlsx"))
 
 anag$stdtime <- anag$hsett*(anag$attività/100)*4.3
 mat2019 <- unique(factor(anag$Matricola))
@@ -306,7 +300,8 @@ WL %>%
 ```{r echo=FALSE, fig.height=8, fig.width=12, message=FALSE, warning=FALSE }
 # setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
 
-dati<-read.csv("newdati3.csv", header=T, sep=";", fileEncoding="latin1")
+myfile <- here("programmazione", "data", "raw", "newdati3.csv")
+dati<-read.csv(myfile,  header=T, sep=";", fileEncoding="latin1")
 
 dati$Date<-as.Date(dati$datareg, format="%d/%m/%Y")
 dati$anno <- year(dati$Date)
@@ -351,8 +346,7 @@ autoplot(mseries, geom = c("line")) +  xlab("Anno") +
 # Programmazione basata sul FTE
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-# setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
-p <- read_excel("P1.xlsx")
+p <- read_excel(here("programmazione", "data", "raw", "P1.xlsx"))
 p %>% 
   rename("Operatore" = operatore, "Laboratorio A" = labA, "Laboratorio B" = labB, "Laboratorio C" = labC) %>% 
 kbl() %>% 
@@ -443,7 +437,7 @@ p%>%
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 # setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
-p <- read_excel("P1.xlsx")
+p <- read_excel(here("programmazione", "data", "raw", "P1.xlsx"))
 p$'Obiettivo A' <- rep(12.5, 8)
 p$labA <- c(80, 0,75,87.5,0,62.5,5,7.5)
 p$labB <- c(0,87.5,5,0,0,0,5,0)
