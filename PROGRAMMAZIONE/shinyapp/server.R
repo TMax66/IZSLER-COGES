@@ -26,12 +26,12 @@
         # hot.to.df function will convert your updated table into the dataframe
         mytable <- as.data.frame(hot_to_r(input$hotable1))
         # here the second column is a function of the first and it will be multipled by 100 given the values in the first column
-        mytable <- mytable[1:numberofrows,]
+        mytable <- mytable[1:dim(df)[1],]
         
         # Add some test cases
-        mytable[,1][is.na(mytable[,1])] <- 1
-        mytable[,2][is.na(mytable[,2])] <- 1
-        mytable[,3] <- mytable[,1]*mytable[,2]
+        # mytable[,1][is.na(mytable[,1])] <- 1
+        # mytable[,2][is.na(mytable[,2])] <- 1
+        # mytable[,3] <- mytable[,1]*mytable[,2]
         mytable
       }
     })
