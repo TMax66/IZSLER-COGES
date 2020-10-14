@@ -1,21 +1,22 @@
-library(readxl)
-library(tidyverse)
-library(lubridate)
-library(kableExtra)
-library(gridExtra)
-library(hrbrthemes)
-library(knitr)
+library("readxl")
+library("tidyverse")
+library("lubridate")
+library("kableExtra")
+library("gridExtra")
+library("hrbrthemes")
+library("knitr")
+library("here")
 
-datiatt <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/BGSOBI2019.xlsx")
-anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
-time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
-
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
-
-datiatt <- read_excel("BGSOBI2019.xlsx")
-anag <- read_excel("HR.xlsx")
-time <- read_excel("personaleBgSoVa.xlsx")
- 
+# datiatt <- read_excel(here("programmazione", "scripts", "BGSOBI2019.xlsx")
+# anag <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/HR.xlsx")
+# time <- read_excel("D:/Dati/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/PROGRAMMAZIONE/personaleBgSoVa.xlsx")
+# 
+# setwd("~/Library/Mobile Documents/com~apple~CloudDocs/gitProject/IZSLER-COGES/PROGRAMMAZIONE")
+# 
+# datiatt <- read_excel("BGSOBI2019.xlsx")
+# anag <- read_excel("HR.xlsx")
+# time <- read_excel("personaleBgSoVa.xlsx")
+#  
 
 
 #standard time
