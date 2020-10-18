@@ -42,7 +42,9 @@ hwd <- hwd %>%
   select(Dipartimento, Reparto, "Laboratorio" = CDC, Matricola, Mese, Minuti ) %>% 
   mutate(Laboratorio = recode(Laboratorio, "Tecnologia Acidi Nucleici: produzione" = "REPARTO CONTROLLO ALIMENTI", 
                               "Microbiologia: produzione" = "REPARTO CONTROLLO ALIMENTI",
-                              "COSTI COMUNI REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO" = "LABORATORIO PRODUZIONE TERRENI")) %>% 
+                              "COSTI COMUNI REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO" = "LABORATORIO PRODUZIONE TERRENI", 
+                              "LABORATORIO LATTE" = "SEDE TERRITORIALE DI PIACENZA - PARMA", 
+                              "LABORATORIO DIAGNOSTICA GENERALE, SIEROLOGIA, BIOLOGIA MOLECOLARE E MICROBIOLOGIA" = "SEDE TERRITORIALE DI PIACENZA - PARMA")) %>% 
   group_by(Dipartimento, Reparto, Laboratorio, Matricola) %>% 
   summarise(hworked = sum(Minuti/60)) %>% 
   filter(str_detect(Dipartimento, paste(c("Dipartimento", "Area"),collapse = '|')) ) %>% 

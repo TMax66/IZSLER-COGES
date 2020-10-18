@@ -26,13 +26,15 @@ att19 %>%
                           "PIACENZA - PARMA" = "SEDE TERRITORIALE DI PIACENZA - PARMA", 
                           "REGGIO EMILIA" = "SEDE TERRITORIALE DI REGGIO EMILIA" )) %>% 
   filter(Reparto != "ANALISI DEL RISCHIO ED EPIDEMIOLOGIA GENOMICA") %>% 
+  mutate(Laboratorio = recode(Laboratorio,"Bologna" = "SEDE TERRITORIALE DI BOLOGNA", 
+                              "Modena" = "SEDE TERRITORIALE DI MODENA", 
+                              "Ferrara" = "SEDE TERRITORIALE DI FERRARA", 
+                              "Bergamo" = "SEDE TERRITORIALE DI BERGAMO", 
+                              "Binago" = "SEDE TERRITORIALE DI BINAGO", 
+                              "Sondrio" = "SEDE TERRITORIALE DI SONDRIO", 
+                              "Brescia" = "SEDE TERRITORIALE DI BRESCIA")) %>% 
   View()
-
-
-
-%>% 
-  left_join(hwd19, by = "Reparto") %>% 
-  View()
+  
 
 
   
