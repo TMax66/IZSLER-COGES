@@ -565,3 +565,7 @@ dt %>%
  datatable(dt[,-13], rownames = FALSE, style = "bootstrap4", options= list( dom='t',bPaginate = FALSE))%>%
 formatStyle(1:12,fontSize = '11px')
 
+dt
+
+
+saveRDS(dt, file = "attività2019.rds")
