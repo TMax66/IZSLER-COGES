@@ -32,8 +32,7 @@ att19 %>%
                               "Bergamo" = "SEDE TERRITORIALE DI BERGAMO", 
                               "Binago" = "SEDE TERRITORIALE DI BINAGO", 
                               "Sondrio" = "SEDE TERRITORIALE DI SONDRIO", 
-                              "Brescia" = "SEDE TERRITORIALE DI BRESCIA")) %>% 
-  View()
+                              "Brescia" = "SEDE TERRITORIALE DI BRESCIA")) 
   
 
 
