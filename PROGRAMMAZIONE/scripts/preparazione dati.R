@@ -19,6 +19,7 @@ hwd <- read_excel(here("programmazione", "data", "raw", "PresenzePersonale2019_1
 hwd$CDC <- ifelse(hwd$CodiceCDC %in% c(5502, 5501), "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)", hwd$CDC)
 
 hwd <- hwd %>% 
+  filter(is.na(CodiceProgetto)) %>% 
   mutate(Dipartimento = recode (Reparto, "REPARTO VIROLOGIA" = "Dipartimento Tutela e  Salute Animale", 
                                 "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE" = "Dipartimento Tutela e  Salute Animale",
                                 "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO" = "Dipartimento Tutela e  Salute Animale",
@@ -69,10 +70,12 @@ anag19 %>%
          "hperc" = PCGIUR, 
          "contratto" = DECOMP) %>% 
   mutate(hcontr = ifelse( contratto == "COMPARTO SSN", (36*hperc)/100, (38*hperc)/100)) %>% 
+  # filter(contratto == "COMPARTO SSN") %>%
   left_join(grusigma, by = "matricola") %>% 
   right_join(hwd, by = "Matricola" ) %>% 
   group_by(Dipartimento, Reparto, Laboratorio) %>% 
-  summarise(hworked= sum(hworked)) %>% 
+  summarise(hworked= sum(hworked), 
+            hprev = sum(hcontr*45.6)) %>% 
   saveRDS(., file = here("programmazione", "data", "processed", "hwd19.rds"))
 
 ### Dati di attività e ricavi 2019###

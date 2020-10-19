@@ -61,10 +61,14 @@ att19 %>%
                               "Proteomica" = "LABORATORIO DI PROTEOMICA E DIAGNOSTICA TSE", 
                               "Virologia" = "LABORATORIO DI VIROLOGIA E SIEROLOGIA SPECIALIZZATA, MICROSCOPIA ELETTRONICA", 
                               "Virus Vescicolari e Produzioni Biotecnologiche" = "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE")) %>% 
-  left_join(., hwd19, by = c("Reparto", "Laboratorio")) 
+  left_join(., hwd19, by = c("Reparto", "Laboratorio")) %>% 
+  mutate("FTE-previsto" = hprev/(36*45.6), 
+         "FTE-reale" = hworked/(36*45.6), 
+         "%tempo-utilizzato" = 100*(hworked/hprev), 
+         "tempo-medio esame" = hworked/esami, 
+         "RxFTEr" = ricavi/`FTE-reale`)
  
 
-  
 
 
   
