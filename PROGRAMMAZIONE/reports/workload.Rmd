@@ -4,7 +4,6 @@ output:
   flexdashboard::flex_dashboard:
     source: embed
     orientation: rows  
-    #vertical_layout: fill
     logo: www/logo.png
 runtime: shiny
 ---
@@ -25,7 +24,6 @@ library("here")
 library("knitr")
 library("kableExtra")
 library("formattable")
-library("ztable")
 
 options(scipen = .999)
 
@@ -47,8 +45,6 @@ selectInput("indicatore", "Indicatore", choices = c("FTE previsto" = "FTEpr", "F
 Dipartimenti
 =========================================
 
-Row
-----------------------------------------------------------------
 ```{r graficoDip}
 
  dt <-reactive(
@@ -95,10 +91,11 @@ renderPlot({
      theme(axis.text.y = element_text(color="blue", size=12, face="bold"))
 })
 
+
 ```
 
 Row
---------------------------------------------------------------------
+---------------------------------------------------------------------------------
 ```{r tabella dip}
 
 dtx <-reactive(dati %>% ungroup() %>% 
@@ -133,117 +130,115 @@ dtx() %>%
 
 
 
-Reparti
+<!-- Reparti -->
+<!-- =========================================   -->
+
+<!-- ```{r graficoRep} -->
+
+<!--  dt2 <-reactive( -->
+<!--     dati %>% ungroup() %>%  -->
+<!--              group_by(Reparto) %>%  -->
+<!--              summarise(hworked = sum(hworked),  -->
+<!--                        hprev = sum(hprev),  -->
+<!--                        esami = sum(esami),  -->
+<!--                        ricavi = sum (ricavi)) %>%  -->
+<!--              mutate("FTEpr" = hprev/(36*45.6),  -->
+<!--                     "FTEr" = hworked/(36*45.6), -->
+<!--                     "Perchwd" = 100*(hworked/hprev), -->
+<!--                     "tempo medio esame" = 60*(hworked/esami)) %>%  -->
+<!--     pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>%  -->
+<!--     filter(indicatore==input$indicatore)) -->
+
+
+<!-- renderPlot({ -->
+
+<!--   dt2() %>% -->
+<!--   arrange(valore) %>% -->
+<!--   mutate(Reparto = factor(Reparto, levels = .$Reparto)) %>% -->
+<!--   mutate(media = mean(valore, na.rm = TRUE)) %>% -->
+<!--         ggplot(aes(x=Reparto, y=valore, label = round(valore, 1)))+ -->
+<!--         geom_point( aes(x=Reparto, y=valore),color="lightblue", size = 15 )+ -->
+<!--         geom_text(color = "black", size = 5)+ -->
+<!--         geom_segment(aes(y = media, x = Reparto, yend = valore, xend = Reparto ),color = "grey50") + -->
+<!--         coord_flip() + -->
+<!--         theme_ipsum_rc(axis_title_just = "mc")+ -->
+<!--         labs(y=input$indicatore,x="")+ -->
+<!--         #geom_hline(yintercept= round(.,mediana, 0), col="red")+ -->
+<!--   # geom_label( -->
+<!--   #   label="Mediana (89%)", -->
+<!--   #   x=25, -->
+<!--   #   y=25, -->
+<!--   #   label.padding = unit(0.55, "lines"), # Rectangle size around label -->
+<!--   #   label.size = 0.35, -->
+<!--   #   color = "black", -->
+<!--   #   fill="red" -->
+<!--   # )+ -->
+<!--      theme(axis.text.x = element_text(color="blue", size=12, face="bold"))+ -->
+<!--      theme(axis.text.y = element_text(color="blue", size=12, face="bold")) -->
+<!-- }) -->
+<!-- ``` -->
+
+<!-- Row -->
+<!-- -------------------------------------------------------------------------------------------------------- -->
+<!-- ```{r tabella rep} -->
+
+<!-- dtx2 <-reactive(dati %>% ungroup() %>%  -->
+<!--   group_by(Reparto) %>%  -->
+<!--   summarise(hworked = sum(hworked),  -->
+<!--             hprev = sum(hprev),  -->
+<!--             esami = sum(esami),  -->
+<!--             ricavi = sum (ricavi)) %>%  -->
+<!--   mutate("FTE-previsto" = hprev/(36*45.6),  -->
+<!--          "FTE-reale" = hworked/(36*45.6), -->
+<!--          "%tempo-utilizzato" = 100*(hworked/hprev), -->
+<!--          "tempo-medio-esame" = 60*(hworked/esami)) %>%  -->
+<!--     mutate(across(where(is.numeric), function(x) scale(x))) -->
+<!-- ) -->
+
+
+
+
+<!-- renderPlot( -->
+<!-- dtx2() %>%  -->
+<!--   pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>%  -->
+<!--   # arrange("valore") %>%  -->
+<!--   # mutate(Dipartimento = factor(Dipartimento, levels = .$Dipartimento)) %>% -->
+<!--   ggplot(aes(Reparto,indicatore, label = round(valore,1))) +  -->
+<!--   geom_tile(aes(fill = valore), colour = "white") + geom_text(color = "black", size = 5)+ -->
+<!--   scale_fill_gradient(low = "snow2", high = "steelblue")+theme_grey(base_size = 18) + -->
+<!--   coord_flip()+labs(x = "", y = "", title="") + theme(legend.position = "none") + -->
+<!--   scale_x_discrete(expand = c(0, 0)) + -->
+<!--   scale_y_discrete(expand = c(0, 0), position = "right") -->
+<!-- ) -->
+<!-- ``` -->
+
+
+
+
+Dipartimento/Reparti
 =========================================  
-
-Column {.tabset}
--------------------------------------
-   
-### Quadro generale
-
-
-```{r graficoRep}
-
- dt2 <-reactive(
-    dati %>% ungroup() %>% 
-             group_by(Reparto) %>% 
-             summarise(hworked = sum(hworked), 
-                       hprev = sum(hprev), 
-                       esami = sum(esami), 
-                       ricavi = sum (ricavi)) %>% 
-             mutate("FTEpr" = hprev/(36*45.6), 
-                    "FTEr" = hworked/(36*45.6),
-                    "Perchwd" = 100*(hworked/hprev),
-                    "tempo medio esame" = 60*(hworked/esami)) %>% 
-    pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% 
-    filter(indicatore==input$indicatore))
-  
-    
-renderPlot({
-  
-  dt2() %>%
-  arrange(valore) %>%
-  mutate(Reparto = factor(Reparto, levels = .$Reparto)) %>%
-  mutate(media = mean(valore, na.rm = TRUE)) %>%
-        ggplot(aes(x=Reparto, y=valore, label = round(valore, 1)))+
-        geom_point( aes(x=Reparto, y=valore),color="lightblue", size = 15 )+
-        geom_text(color = "black", size = 5)+
-        geom_segment(aes(y = media, x = Reparto, yend = valore, xend = Reparto ),color = "grey50") +
-        coord_flip() +
-        theme_ipsum_rc(axis_title_just = "mc")+
-        labs(y=input$indicatore,x="")+
-        #geom_hline(yintercept= round(.,mediana, 0), col="red")+
-  # geom_label(
-  #   label="Mediana (89%)",
-  #   x=25,
-  #   y=25,
-  #   label.padding = unit(0.55, "lines"), # Rectangle size around label
-  #   label.size = 0.35,
-  #   color = "black",
-  #   fill="red"
-  # )+
-     theme(axis.text.x = element_text(color="blue", size=12, face="bold"))+
-     theme(axis.text.y = element_text(color="blue", size=12, face="bold"))
-})
-```
-
-Row
---------------------------------------------------------------------
-```{r tabella rep}
-
-dtx2 <-reactive(dati %>% ungroup() %>% 
-  group_by(Reparto) %>% 
-  summarise(hworked = sum(hworked), 
-            hprev = sum(hprev), 
-            esami = sum(esami), 
-            ricavi = sum (ricavi)) %>% 
-  mutate("FTE-previsto" = hprev/(36*45.6), 
-         "FTE-reale" = hworked/(36*45.6),
-         "%tempo-utilizzato" = 100*(hworked/hprev),
-         "tempo-medio-esame" = 60*(hworked/esami)) %>% 
-    mutate(across(where(is.numeric), function(x) scale(x)))
-)
-
-
-
-
-renderPlot(
-dtx2() %>% 
-  pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% 
-  # arrange("valore") %>% 
-  # mutate(Dipartimento = factor(Dipartimento, levels = .$Dipartimento)) %>%
-  ggplot(aes(Reparto,indicatore, label = round(valore,1))) + 
-  geom_tile(aes(fill = valore), colour = "white") + geom_text(color = "black", size = 5)+
-  scale_fill_gradient(low = "snow2", high = "steelblue")+theme_grey(base_size = 18) +
-  coord_flip()+labs(x = "", y = "", title="") + theme(legend.position = "none") +
-  scale_x_discrete(expand = c(0, 0)) +
-  scale_y_discrete(expand = c(0, 0), position = "right")
-)
-```
-
-### Intra-Dipartimento
 
 ```{r repintradip}
 selectInput("dip", "Dipartimento", choices = unique(factor(dati$Dipartimento)))
 
 dt3 <-reactive(
-    dati %>% ungroup() %>% 
-      filter(Dipartimento == input$dip) %>% 
-             group_by(Reparto) %>% 
-             summarise(hworked = sum(hworked), 
-                       hprev = sum(hprev), 
-                       esami = sum(esami), 
-                       ricavi = sum (ricavi)) %>% 
-             mutate("FTEpr" = hprev/(36*45.6), 
+    dati %>% ungroup() %>%
+      filter(Dipartimento == input$dip) %>%
+             group_by(Reparto) %>%
+             summarise(hworked = sum(hworked),
+                       hprev = sum(hprev),
+                       esami = sum(esami),
+                       ricavi = sum (ricavi)) %>%
+             mutate("FTEpr" = hprev/(36*45.6),
                     "FTEr" = hworked/(36*45.6),
                     "Perchwd" = 100*(hworked/hprev),
-                    "tempo medio esame" = 60*(hworked/esami)) %>% 
-    pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% 
+                    "tempo medio esame" = 60*(hworked/esami)) %>%
+    pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>%
     filter(indicatore==input$indicatore))
-  
-    
+
+
 renderPlot({
-  
+
   dt3() %>%
   arrange(valore) %>%
   mutate(Reparto = factor(Reparto, levels = .$Reparto)) %>%
@@ -271,87 +266,121 @@ renderPlot({
 
 ```
 
-Laboratori 
-=========================================  
+Row
+--------------------------------------------------------------------------------------------------------
+```{r tabella rep2}
 
-Column {.tabset}
--------------------------------------
+#selectInput("dip2", "", choices = unique(factor(dati$Dipartimento)))
 
-### Quadro generale
+dtx3 <-reactive(dati %>% ungroup() %>% 
+                  filter(Dipartimento == input$dip) %>%
+  group_by(Reparto) %>% 
+  summarise(hworked = sum(hworked), 
+            hprev = sum(hprev), 
+            esami = sum(esami), 
+            ricavi = sum (ricavi)) %>% 
+  mutate("FTE-previsto" = hprev/(36*45.6), 
+         "FTE-reale" = hworked/(36*45.6),
+         "%tempo-utilizzato" = 100*(hworked/hprev),
+         "tempo-medio-esame" = 60*(hworked/esami)) %>% 
+    mutate(across(where(is.numeric), function(x) scale(x)))
+)
 
-```{r graficoLab}
-
- dt4 <-reactive(
-    dati %>% ungroup() %>% 
-             group_by(Laboratorio) %>% 
-             summarise(hworked = sum(hworked), 
-                       hprev = sum(hprev), 
-                       esami = sum(esami), 
-                       ricavi = sum (ricavi)) %>% 
-             mutate("FTEpr" = hprev/(36*45.6), 
-                    "FTEr" = hworked/(36*45.6),
-                    "Perchwd" = 100*(hworked/hprev),
-                    "tempo medio esame" = 60*(hworked/esami)) %>% 
-    pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% 
-    filter(indicatore==input$indicatore))
-  
-    
-renderPlot({
-  
-  dt4() %>%
-  arrange(valore) %>%
-  mutate(Laboratorio = factor(Laboratorio, levels = .$Laboratorio)) %>%
-  mutate(mediana = median(valore, na.rm = TRUE)) %>%
-        ggplot(aes(x=Laboratorio, y=valore, label = round(valore, 1)))+
-        geom_point( aes(x=Laboratorio, y=valore),color="lightblue", size = 15 )+
-        geom_text(color = "black", size = 5)+
-        geom_segment(aes(y = mediana, x = Laboratorio, yend = valore, xend = Laboratorio ),color = "grey50") +
-        coord_flip() +
-        theme_ipsum_rc(axis_title_just = "mc")+
-        labs(y=input$indicatore,x="")+
-        #geom_hline(yintercept= round(.,mediana, 0), col="red")+
-  # geom_label(
-  #   label="Mediana (89%)",
-  #   x=25,
-  #   y=25,
-  #   label.padding = unit(0.55, "lines"), # Rectangle size around label
-  #   label.size = 0.35,
-  #   color = "black",
-  #   fill="red"
-  # )+
-     theme(axis.text.x = element_text(color="blue", size=12, face="bold"))+
-     theme(axis.text.y = element_text(color="blue", size=12, face="bold"))
-})
+renderPlot(
+dtx3() %>% 
+  pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% 
+  # arrange("valore") %>% 
+  # mutate(Dipartimento = factor(Dipartimento, levels = .$Dipartimento)) %>%
+  ggplot(aes(Reparto,indicatore, label = round(valore,1))) + 
+  geom_tile(aes(fill = valore), colour = "white") + geom_text(color = "black", size = 5)+
+  scale_fill_gradient(low = "snow2", high = "steelblue")+theme_grey(base_size = 18) +
+  coord_flip()+labs(x = "", y = "", title="") + theme(legend.position = "none") +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_discrete(expand = c(0, 0), position = "right")
+)
 ```
 
-### Intra-Dipartimento
+<!-- Laboratori -->
+<!-- ========================================= -->
+
+<!-- ```{r graficoLab} -->
+
+<!--  dt4 <-reactive( -->
+<!--     dati %>% ungroup() %>% -->
+<!--              group_by(Laboratorio) %>% -->
+<!--              summarise(hworked = sum(hworked), -->
+<!--                        hprev = sum(hprev), -->
+<!--                        esami = sum(esami), -->
+<!--                        ricavi = sum (ricavi)) %>% -->
+<!--              mutate("FTEpr" = hprev/(36*45.6), -->
+<!--                     "FTEr" = hworked/(36*45.6), -->
+<!--                     "Perchwd" = 100*(hworked/hprev), -->
+<!--                     "tempo medio esame" = 60*(hworked/esami)) %>% -->
+<!--     pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% -->
+<!--     filter(indicatore==input$indicatore)) -->
+
+
+<!-- renderPlot({ -->
+
+<!--   dt4() %>% -->
+<!--   arrange(valore) %>% -->
+<!--   mutate(Laboratorio = factor(Laboratorio, levels = .$Laboratorio)) %>% -->
+<!--   mutate(mediana = median(valore, na.rm = TRUE)) %>% -->
+<!--         ggplot(aes(x=Laboratorio, y=valore, label = round(valore, 1)))+ -->
+<!--         geom_point( aes(x=Laboratorio, y=valore),color="lightblue", size = 15 )+ -->
+<!--         geom_text(color = "black", size = 5)+ -->
+<!--         geom_segment(aes(y = mediana, x = Laboratorio, yend = valore, xend = Laboratorio ),color = "grey50") + -->
+<!--         coord_flip() + -->
+<!--         theme_ipsum_rc(axis_title_just = "mc")+ -->
+<!--         labs(y=input$indicatore,x="")+ -->
+<!--         #geom_hline(yintercept= round(.,mediana, 0), col="red")+ -->
+<!--   # geom_label( -->
+<!--   #   label="Mediana (89%)", -->
+<!--   #   x=25, -->
+<!--   #   y=25, -->
+<!--   #   label.padding = unit(0.55, "lines"), # Rectangle size around label -->
+<!--   #   label.size = 0.35, -->
+<!--   #   color = "black", -->
+<!--   #   fill="red" -->
+<!--   # )+ -->
+<!--      theme(axis.text.x = element_text(color="blue", size=12, face="bold"))+ -->
+<!--      theme(axis.text.y = element_text(color="blue", size=12, face="bold")) -->
+<!-- }) -->
+<!-- ``` -->
+
+Dipartimento/Laboratori
+=========================================
 
 ```{r labintradiprep}
 
-selectInput("dip", "Dipartimento", choices = unique(factor(dati$Dipartimento)))
-#selectInput("rep", "Reparto", choices = unique(factor(dati$Reparto)))
+selectInput("dip2", "Dipartimento", choices = unique(factor(dati$Dipartimento)))
 
-renderPlot({
-     dati %>% ungroup() %>% 
-       filter(Dipartimento == input$dip) %>% 
-             group_by(Laboratorio) %>% 
-             summarise(hworked = sum(hworked), 
-                       hprev = sum(hprev), 
-                       esami = sum(esami), 
-                       ricavi = sum (ricavi)) %>% 
-             mutate("FTEpr" = hprev/(36*45.6), 
+dt5 <-reactive(
+    dati %>% ungroup() %>%
+      filter(Dipartimento == input$dip2) %>%
+             group_by(Laboratorio) %>%
+             summarise(hworked = sum(hworked),
+                       hprev = sum(hprev),
+                       esami = sum(esami),
+                       ricavi = sum (ricavi)) %>%
+             mutate("FTEpr" = hprev/(36*45.6),
                     "FTEr" = hworked/(36*45.6),
                     "Perchwd" = 100*(hworked/hprev),
-                    "tempo medio esame" = 60*(hworked/esami)) %>% 
-    pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% 
-    filter(indicatore==input$indicatore)%>%
+                    "tempo medio esame" = 60*(hworked/esami)) %>%
+    pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>%
+    filter(indicatore==input$indicatore))
+
+
+
+renderPlot({
+     dt5() %>%
   arrange(valore) %>%
-  mutate(Laboratoro = factor(Laboratorio, levels = .$Laboratorio)) %>%
-  mutate(mediana = median(valore, na.rm = TRUE)) %>%
+  mutate(Laboratorio = factor(Laboratorio, levels = .$Laboratorio)) %>%
+  mutate(media = mean(valore, na.rm = TRUE)) %>%
         ggplot(aes(x=Laboratorio, y=valore, label = round(valore, 1)))+
         geom_point( aes(x=Laboratorio, y=valore),color="lightblue", size = 15 )+
         geom_text(color = "black", size = 5)+
-        geom_segment(aes(y = mediana, x = Laboratorio, yend = valore, xend = Laboratorio ),color = "grey50") +
+        geom_segment(aes(y = media, x = Laboratorio, yend = valore, xend = Laboratorio ),color = "grey50") +
         coord_flip() +
         theme_ipsum_rc(axis_title_just = "mc")+
         labs(y=input$indicatore,x="")+
