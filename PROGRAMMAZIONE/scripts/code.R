@@ -192,3 +192,43 @@ dt %>%
   scale_x_discrete(expand = c(0, 0)) +
   scale_y_discrete(expand = c(0, 0), position = "right")
 
+
+
+dt <- dati %>% ungroup() %>% 
+  group_by(Dipartimento) %>% 
+  summarise(hworked = sum(hworked)/1000, 
+            hprev = sum(hprev)/1000, 
+            esami = sum(esami)/1000, 
+            ricavi = sum (ricavi)/1000) %>% 
+  mutate("FTEpr" = (1000*hprev)/(36*45.6), 
+         "FTEr" = (1000*hworked)/(36*45.6),
+         "Perchwd" = 100*(hworked/hprev),
+         "tempo medio esame" = 60*(hworked/esami)) %>% 
+  pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% 
+  mutate(indicatore = factor(indicatore, levels = c("esami", "ricavi","hprev","hworked", "Perchwd","FTEpr", "FTEr","tempo medio esame")))
+
+
+
+
+
+dati %>% ungroup() %>% 
+                 group_by(Dipartimento) %>% 
+                 summarise(hworked = sum(hworked), 
+                           hprev = sum(hprev), 
+                           esami = sum(esami), 
+                           ricavi = sum (ricavi)) %>% 
+                 mutate("FTE-previsto" = hprev/(36*45.6), 
+                        "FTE-reale" = hworked/(36*45.6),
+                        "%tempo-utilizzato" = 100*(hworked/hprev),
+                        "tempo-medio-esame" = 60*(hworked/esami)) %>% 
+                 mutate(across(where(is.numeric), function(x) scale(x))) %>% 
+                 pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% 
+                 mutate(indicatore = factor(indicatore, levels = c("esami", "ricavi","hprev","hworked", "%tempo-utilizzato","FTEpr", "FTEr","tempo medio esame"))) %>% 
+  View()
+
+
+
+
+   %>% 
+    mutate(indicatore = factor(indicatore, levels = c("esami", "ricavi","hprev","hworked", "Perchwd","FTEpr", "FTEr","tempo medio esame"))) %>%
+    ggplot(aes(Dipartimento,indicatore, label = round(valore,1)))

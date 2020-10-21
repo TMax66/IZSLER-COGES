@@ -3,6 +3,7 @@ title: "IZSLER-Carichi di lavoro e attività 2019"
 output: 
   flexdashboard::flex_dashboard:
     source: embed
+    vertical: fill
     orientation: rows  
     logo: www/logo.png
 runtime: shiny
@@ -28,6 +29,11 @@ library("formattable")
 options(scipen = .999)
 
  dati <- readRDS( here("programmazione", "data", "processed", "dati.rds"))
+ dati <- dati %>% 
+ filter(!Laboratorio %in% c("LABORATORIO DI CONTROLLO DI PRODOTTI BIOLOGICI, FARMACEUTICI E CONVALIDA DI PROCESSI PRODUTTIVI",
+                                "LABORATORIO PRODUZIONE TERRENI",
+                                "LABORATORIO PRODUZIONE VACCINI E REAGENTI",
+                                "LABORATORIO COLTURE CELLULARI, BIOBANCA") )
  
 
 ```
@@ -38,7 +44,7 @@ Sidebar {.sidebar }
 
 ```{r input}
 selectInput("indicatore", "Indicatore", choices = c("FTE previsto" = "FTEpr", "FTE reale" = "FTEr", "% di ore lavorate" = "Perchwd",
-                                                            "Tempo medio per esame (minuti)" = "tempo medio esame", "ore previste da contratto" = "hprev", "ore effettivamente erogate" = "hworked"))
+                                                            "Tempo medio per esame (minuti)" = "tempo medio esame", "ore previste da contratto" = "hprev", "ore effettivamente erogate" = "hworked", "N.esami (x1000)" = "esami", "Ricavi (x1000)" = "ricavi"))
 ```
 
 
@@ -50,15 +56,15 @@ Dipartimenti
  dt <-reactive(
     dati %>% ungroup() %>% 
              group_by(Dipartimento) %>% 
-             summarise(hworked = sum(hworked), 
-                       hprev = sum(hprev), 
-                       esami = sum(esami), 
-                       ricavi = sum (ricavi)) %>% 
-             mutate("FTEpr" = hprev/(36*45.6), 
-                    "FTEr" = hworked/(36*45.6),
+             summarise(hworked = sum(hworked)/1000, 
+                       hprev = sum(hprev)/1000, 
+                       esami = sum(esami)/1000, 
+                       ricavi = sum (ricavi)/1000) %>% 
+             mutate("FTEpr" = (1000*hprev)/(36*45.6), 
+                    "FTEr" = (1000*hworked)/(36*45.6),
                     "Perchwd" = 100*(hworked/hprev),
                     "tempo medio esame" = 60*(hworked/esami)) %>% 
-    pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% 
+    pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>%  
     filter(indicatore==input$indicatore))
   
     
@@ -88,14 +94,14 @@ renderPlot({
   #   fill="red"
   # )+
      theme(axis.text.x = element_text(color="blue", size=12, face="bold"))+
-     theme(axis.text.y = element_text(color="blue", size=12, face="bold"))
+     theme(axis.text.y = element_text(color="blue", size=12, face="bold"))+
+     theme(axis.title.x = element_text(size = 12, face = "bold"))
 })
 
 
 ```
 
-Row
----------------------------------------------------------------------------------
+## Heatmap
 ```{r tabella dip}
 
 dtx <-reactive(dati %>% ungroup() %>% 
@@ -111,22 +117,24 @@ dtx <-reactive(dati %>% ungroup() %>%
     mutate(across(where(is.numeric), function(x) scale(x)))
 )
 
-
-
-
 renderPlot(
 dtx() %>% 
   pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% 
-  # arrange("valore") %>% 
-  # mutate(Dipartimento = factor(Dipartimento, levels = .$Dipartimento)) %>%
+  mutate(indicatore = factor(indicatore, levels = c("esami", "ricavi","hprev","hworked", "%tempo-utilizzato",
+                                                    "FTE-previsto", "FTE-reale", "tempo-medio-esame"))) %>%
   ggplot(aes(Dipartimento,indicatore, label = round(valore,1))) + 
   geom_tile(aes(fill = valore), colour = "white") + geom_text(color = "black", size = 5)+
   scale_fill_gradient(low = "snow2", high = "steelblue")+theme_grey(base_size = 18) +
   coord_flip()+labs(x = "", y = "", title="") + theme(legend.position = "none") +
   scale_x_discrete(expand = c(0, 0)) +
-  scale_y_discrete(expand = c(0, 0), position = "right")
+  scale_y_discrete(expand = c(0, 0), position = "right")+
+  theme(axis.text.x = element_text(color="blue", size=10, face="bold"))+
+  theme(axis.text.y = element_text(color="blue", size=10, face="bold"))
 )
 ```
+
+
+
 
 
 
@@ -225,12 +233,12 @@ dt3 <-reactive(
     dati %>% ungroup() %>%
       filter(Dipartimento == input$dip) %>%
              group_by(Reparto) %>%
-             summarise(hworked = sum(hworked),
-                       hprev = sum(hprev),
-                       esami = sum(esami),
-                       ricavi = sum (ricavi)) %>%
-             mutate("FTEpr" = hprev/(36*45.6),
-                    "FTEr" = hworked/(36*45.6),
+             summarise(hworked = sum(hworked)/1000,
+                       hprev = sum(hprev)/1000,
+                       esami = sum(esami)/1000,
+                       ricavi = sum (ricavi)/1000) %>%
+             mutate("FTEpr" = (1000*hprev)/(36*45.6),
+                    "FTEr" = (1000*hworked)/(36*45.6),
                     "Perchwd" = 100*(hworked/hprev),
                     "tempo medio esame" = 60*(hworked/esami)) %>%
     pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>%
@@ -250,18 +258,9 @@ renderPlot({
         coord_flip() +
         theme_ipsum_rc(axis_title_just = "mc")+
         labs(y=input$indicatore,x="")+
-        #geom_hline(yintercept= round(.,mediana, 0), col="red")+
-  # geom_label(
-  #   label="Mediana (89%)",
-  #   x=25,
-  #   y=25,
-  #   label.padding = unit(0.55, "lines"), # Rectangle size around label
-  #   label.size = 0.35,
-  #   color = "black",
-  #   fill="red"
-  # )+
      theme(axis.text.x = element_text(color="blue", size=12, face="bold"))+
-     theme(axis.text.y = element_text(color="blue", size=12, face="bold"))
+     theme(axis.text.y = element_text(color="blue", size=12, face="bold"))+
+     theme(axis.title.x = element_text(size = 12, face = "bold"))
 })
 
 ```
@@ -289,14 +288,16 @@ dtx3 <-reactive(dati %>% ungroup() %>%
 renderPlot(
 dtx3() %>% 
   pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% 
-  # arrange("valore") %>% 
-  # mutate(Dipartimento = factor(Dipartimento, levels = .$Dipartimento)) %>%
+  mutate(indicatore = factor(indicatore, levels = c("esami", "ricavi","hprev","hworked", "%tempo-utilizzato",
+                                                    "FTE-previsto", "FTE-reale", "tempo-medio-esame"))) %>%
   ggplot(aes(Reparto,indicatore, label = round(valore,1))) + 
   geom_tile(aes(fill = valore), colour = "white") + geom_text(color = "black", size = 5)+
   scale_fill_gradient(low = "snow2", high = "steelblue")+theme_grey(base_size = 18) +
   coord_flip()+labs(x = "", y = "", title="") + theme(legend.position = "none") +
   scale_x_discrete(expand = c(0, 0)) +
-  scale_y_discrete(expand = c(0, 0), position = "right")
+  scale_y_discrete(expand = c(0, 0), position = "right")+
+  theme(axis.text.x = element_text(color="blue", size=10, face="bold"))+
+  theme(axis.text.y = element_text(color="blue", size=10, face="bold"))
 )
 ```
 
@@ -359,12 +360,12 @@ dt5 <-reactive(
     dati %>% ungroup() %>%
       filter(Dipartimento == input$dip2) %>%
              group_by(Laboratorio) %>%
-             summarise(hworked = sum(hworked),
-                       hprev = sum(hprev),
-                       esami = sum(esami),
-                       ricavi = sum (ricavi)) %>%
-             mutate("FTEpr" = hprev/(36*45.6),
-                    "FTEr" = hworked/(36*45.6),
+             summarise(hworked = sum(hworked)/1000,
+                       hprev = sum(hprev)/1000,
+                       esami = sum(esami)/1000,
+                       ricavi = sum (ricavi)/1000) %>%
+             mutate("FTEpr" = (1000*hprev)/(36*45.6),
+                    "FTEr" = (1000*hworked)/(36*45.6),
                     "Perchwd" = 100*(hworked/hprev),
                     "tempo medio esame" = 60*(hworked/esami)) %>%
     pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>%
@@ -384,23 +385,48 @@ renderPlot({
         coord_flip() +
         theme_ipsum_rc(axis_title_just = "mc")+
         labs(y=input$indicatore,x="")+
-        #geom_hline(yintercept= round(.,mediana, 0), col="red")+
-  # geom_label(
-  #   label="Mediana (89%)",
-  #   x=25,
-  #   y=25,
-  #   label.padding = unit(0.55, "lines"), # Rectangle size around label
-  #   label.size = 0.35,
-  #   color = "black",
-  #   fill="red"
-  # )+
      theme(axis.text.x = element_text(color="blue", size=12, face="bold"))+
-     theme(axis.text.y = element_text(color="blue", size=12, face="bold"))
+     theme(axis.text.y = element_text(color="blue", size=12, face="bold"))+
+     theme(axis.title.x = element_text(size = 12, face = "bold"))
 })
 
 ```
 
+Row
+------------------------------------------------------------
+```{r tabella rep3}
 
+#selectInput("dip2", "", choices = unique(factor(dati$Dipartimento)))
+
+dtx4 <-reactive(dati %>% ungroup() %>% 
+                  filter(Dipartimento == input$dip2) %>%
+  group_by(Laboratorio) %>% 
+  summarise(hworked = sum(hworked)/1000, 
+            hprev = sum(hprev)/1000, 
+            esami = sum(esami), 
+            ricavi = sum (ricavi)) %>% 
+  mutate("FTE-previsto" = (1000*hprev)/(36*45.6), 
+         "FTE-reale" = (1000*hworked)/(36*45.6),
+         "%tempo-utilizzato" = 100*(hworked/hprev),
+         "tempo-medio-esame" = 60*(hworked/esami)) %>% 
+    mutate(across(where(is.numeric), function(x) scale(x)))
+)
+
+renderPlot(
+dtx4() %>% 
+  pivot_longer(2:9, names_to = "indicatore", values_to ="valore") %>% 
+  mutate(indicatore = factor(indicatore, levels = c("esami", "ricavi","hprev","hworked", "%tempo-utilizzato",
+                                                    "FTE-previsto", "FTE-reale", "tempo-medio-esame"))) %>%
+  ggplot(aes(Laboratorio,indicatore, label = round(valore,1))) + 
+  geom_tile(aes(fill = valore), colour = "white") + geom_text(color = "black", size = 5)+
+  scale_fill_gradient(low = "snow2", high = "steelblue")+theme_grey(base_size = 18) +
+  coord_flip()+labs(x = "", y = "", title="") + theme(legend.position = "none") +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_discrete(expand = c(0, 0), position = "right")+
+  theme(axis.text.x = element_text(color="blue", size=10, face="bold"))+
+  theme(axis.text.y = element_text(color="blue", size=10, face="bold"))
+)
+```
 
 
 
