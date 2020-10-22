@@ -4,12 +4,12 @@ ui<-navbarPage("IZSLER-Carichi di lavoro e attività 2019",
     tabPanel("Dipartimento",
              sidebarLayout(
                sidebarPanel(
-                 # selectInput("indicatore", "Indicatore", 
-                 #             choices = c("FTE previsto" = "FTEpr", "FTE reale" = "FTEr", "% di ore lavorate" = "Perchwd",
-                 #                          "Tempo medio per esame (minuti)" = "tempo medio esame", 
-                 #                         "ore previste da contratto" = "hprev",
-                 #                         "ore effettivamente erogate" = "hworked", 
-                 #                         "N.esami (x1000)" = "esami", "Ricavi (x1000)" = "ricavi"))
+                 selectInput("indicatore", "Indicatore",
+                             choices = c("FTE previsto" = "FTEpr", "FTE reale" = "FTEr", "% di ore lavorate" = "Perchwd",
+                                          "Tempo medio per esame (minuti)" = "tempo medio esame",
+                                         "ore previste da contratto" = "hprev",
+                                         "ore effettivamente erogate" = "hworked",
+                                         "N.esami (x1000)" = "esami", "Ricavi (x1000)" = "ricavi"))
                 ), 
                mainPanel(
                  fluidRow(
@@ -19,13 +19,6 @@ ui<-navbarPage("IZSLER-Carichi di lavoro e attività 2019",
                  ),
                  fluidRow(
                    wellPanel(
-                       selectInput("indicatore", "Indicatore", 
-                                   choices = c("FTE previsto" = "FTEpr", "FTE reale" = "FTEr", "% di ore lavorate" = "Perchwd",
-                                               "Tempo medio per esame (minuti)" = "tempo medio esame", 
-                                               "ore previste da contratto" = "hprev",
-                                               "ore effettivamente erogate" = "hworked", 
-                                               "N.esami (x1000)" = "esami", "Ricavi (x1000)" = "ricavi")),
-                       
                    plotOutput("diplot")
                    )
                  ), 
