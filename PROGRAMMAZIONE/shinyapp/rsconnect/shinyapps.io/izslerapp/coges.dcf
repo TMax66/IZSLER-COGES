@@ -1,0 +1,13 @@
+name: coges
+title: coges
+username:
+account: izslerapp
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3071979
+bundleId: 3769899
+url: https://izslerapp.shinyapps.io/coges/
+when: 1603357147.39167
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: oldstuff/repsim.xlsx|oldstuff/server.R|oldstuff/ui.R
