@@ -9,14 +9,52 @@ library("here")
 
 
 
-t <- read_excel(here("programmazione", "data", "raw", "tempianalisi.xlsx"))
-
-View(t)
-
+tempi <- read_excel(here("programmazione", "data", "raw", "tempianalisi.xlsx"))
+esami <- read_excel(here("programmazione", "data", "raw", "dati2019.xlsx"))
 
 
-t$VNMP <- paste(t$vn,t$mp)
-t$VNMPdup <- duplicated(t$VNMP)
+tempi$mp <- substr(tempi$mp, start=1, stop = 9)
+
+tempi$VNMP <- paste(tempi$vn,tempi$mp) # <- creo una chiave univoca in tempi tempi$VNMPdup <- duplicated(tempi$VNMP)
+
+esami$VNMP <- paste(esami$chiave, esami$`Descrizione del MP`) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi
+
+esami$REPARTO <- tolower(esami$reparto)
+
+
+t <- tempi %>% 
+  select(VNMP, timecomp, timedirig)
+
+e <- esami %>% 
+  select(VNMP, esami, reparto)
+
+
+e %>% 
+  left_join(t, by = "VNMP") %>% 
+  mutate(tempoesami = esami*timecomp)
+
+
+hwd19 <- readRDS( here("programmazione", "data", "processed", "hwd19.rds")) # <- dati ore contratto e ore erogate per dip/rep/lab
+
+hwd19$REPARTO <- tolower(hwd19$Laboratorio)
+
+hwd19 <- hwd19 %>% 
+  mutate(REPARTO = recode(REPARTO, "sede territoriale di piacenza - parma" = "sede territoriale di piacenza" ))
+
+
+# ### dati presenze matricole 2019 ####
+# hwd <- read_excel(here("programmazione", "data", "raw", "PresenzePersonale2019_12Ott2020.xlsx"))
+# hwd$CDC <- ifelse(hwd$CodiceCDC %in% c(5502, 5501), "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)", hwd$CDC)
+# 
+# ###dati conversione matricole gru-sigma##
+# grusigma <- read_excel(here("programmazione", "data", "raw", "MatricoleSigmaGRU.xlsx"))
+# grusigma <- grusigma %>% 
+#   select("matricola" = Matricola, "Matricola" = MatricolaSigma)
+# 
+# ### dati dei presenti nel 2019 -anagrafica con dati contrattuali ####
+# anag19 <- read_excel(here("programmazione", "data", "raw", "Presenti_2019.xls"))
+
+
 
 
 # # datiatt <- read_excel(here("programmazione", "scripts", "BGSOBI2019.xlsx")
