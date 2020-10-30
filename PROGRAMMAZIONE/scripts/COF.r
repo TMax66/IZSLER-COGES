@@ -9,18 +9,60 @@ library("here")
 
 
 
+##tempi esame
 tempi <- read_excel(here("programmazione", "data", "raw", "tempianalisi.xlsx"))
-esami <- read_excel(here("programmazione", "data", "raw", "dati2019.xlsx"))
-
 
 tempi$mp <- substr(tempi$mp, start=1, stop = 9)
 
 tempi$VNMP <- paste(tempi$vn,tempi$mp) # <- creo una chiave univoca in tempi tempi$VNMPdup <- duplicated(tempi$VNMP)
 
+
+
+## esami
+esami <- read_excel(here("programmazione", "data", "raw", "dati2019.xlsx"))
+
 esami$VNMP <- paste(esami$chiave, esami$`Descrizione del MP`) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi
 
 esami$REPARTO <- tolower(esami$reparto)
 
+esami <- esami %>% 
+  mutate(REPARTO = recode(REPARTO, "sede territoriale di milano (is)" = "sede territoriale di milano", 
+                          "reparto tecnologie biologiche applicate - batteriologia specializzata" = "reparto tecnologie biologiche applicate", 
+                          "reparto tecnologie biologiche applicate - colture cellulari" = "reparto tecnologie biologiche applicate", 
+                          "reparto virologia - laboratorio proteomica" = "reparto virologia", 
+                          )) %>% 
+  filter(!REPARTO %in% c("analisi del rischio ed epidemiologia genomica",
+                         "reparto produzione e controllo materiale biologico"))
+
+
+
+###ore lavorate
+
+hwd19 <- readRDS( here("programmazione", "data", "processed", "hwd19.rds")) # <- dati ore contratto e ore erogate per dip/rep/lab
+
+hwd19$REPARTO <- tolower(hwd19$Laboratorio)
+
+hwd19 <- hwd19 %>% 
+  mutate(REPARTO = recode(REPARTO, "sede territoriale di piacenza - parma" = "sede territoriale di piacenza" , 
+                          "laboratorio chimica applicata alle tecnologie alimentari" = "reparto chimica degli alimenti e mangimi",
+                          "laboratorio contaminanti ambientali" = "reparto chimica degli alimenti e mangimi", 
+                          "laboratorio mangimi e tossicologia" = "reparto chimica degli alimenti e mangimi", 
+                          "laboratorio residui" = "reparto chimica degli alimenti e mangimi", 
+                          "reparto chimico degli alimenti (bologna)" = "bologna (reparto chimico degli alimenti)", 
+                          "laboratorio analisi genomiche, laboratorio diagnostica molecolare, ogm" = "reparto tecnologie biologiche applicate",
+                          "laboratorio batteriologia specializzata" = "reparto tecnologie biologiche applicate", 
+                          "laboratorio colture cellulari, biobanca" = "reparto tecnologie biologiche applicate", 
+                          "laboratorio di proteomica e diagnostica tse" = "reparto virologia", 
+                          "laboratorio di virologia e sierologia specializzata, microscopia elettronica" = "reparto virologia")) %>% 
+  filter(!REPARTO %in% c("laboratorio benessere animale, biochimica clinica, immunologia veterinaria e stabulari",
+                         "laboratorio di controllo di prodotti biologici, farmaceutici e convalida di processi produttivi", 
+                         "laboratorio produzione terreni", 
+                         "laboratorio produzione vaccini e reagenti"))
+
+
+
+
+#####adtabase######
 
 t <- tempi %>% 
   select(VNMP, timecomp, timedirig)
@@ -34,12 +76,14 @@ e %>%
   mutate(tempoesami = esami*timecomp)
 
 
-hwd19 <- readRDS( here("programmazione", "data", "processed", "hwd19.rds")) # <- dati ore contratto e ore erogate per dip/rep/lab
 
-hwd19$REPARTO <- tolower(hwd19$Laboratorio)
 
-hwd19 <- hwd19 %>% 
-  mutate(REPARTO = recode(REPARTO, "sede territoriale di piacenza - parma" = "sede territoriale di piacenza" ))
+
+
+
+
+
+
 
 
 # ### dati presenze matricole 2019 ####
