@@ -62,18 +62,22 @@ hwd19 <- hwd19 %>%
 
 
 
-#####adtabase######
+#####database######
 
 t <- tempi %>% 
   select(VNMP, timecomp, timedirig)
 
 e <- esami %>% 
-  select(VNMP, esami, reparto)
+  select(VNMP, esami, REPARTO)
 
+h <- hwd19 %>% 
+  select(Dipartimento, REPARTO, hworked, hprev)
 
 e %>% 
   left_join(t, by = "VNMP") %>% 
-  mutate(tempoesami = esami*timecomp)
+  mutate(tempoesami = esami*timecomp) %>% 
+  left_join(h, by = "REPARTO")
+  
 
 
 
