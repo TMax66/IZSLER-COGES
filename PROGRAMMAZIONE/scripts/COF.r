@@ -21,7 +21,9 @@ tempi$VNMP <- paste(tempi$vn,tempi$mp) # <- creo una chiave univoca in tempi tem
 ## esami
 esami <- read_excel(here("programmazione", "data", "raw", "dati2019.xlsx"))
 
-esami$VNMP <- paste(esami$chiave, esami$`Descrizione del MP`) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi
+esami$MMPP <- substr(esami$`Descrizione del MP`, start=1, stop = 9)
+
+esami$VNMP <- paste(esami$chiave, esami$MMPP) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi
 
 esami$REPARTO <- tolower(esami$reparto)
 
@@ -65,16 +67,30 @@ hwd19 <- hwd19 %>%
 #####database######
 
 t <- tempi %>% 
-  select(VNMP, timecomp, timedirig)
+  select(VNMP, mincomp, mindir) %>% 
+  group_by(VNMP) %>% 
+  summarise(mincomp = mean(mincomp, na.rm = TRUE), 
+            mindir = mean(mindir, na.rm = TRUE))
+
+
+
+
+t_vnmp <- unique(factor(t$VNMP))
 
 e <- esami %>% 
-  select(VNMP, esami, REPARTO)
+  filter(VNMP %in% t_vnmp)
+
+
+
 
 h <- hwd19 %>% 
   select(Dipartimento, REPARTO, hworked, hprev)
 
+
+
 e %>% 
   left_join(t, by = "VNMP") %>% 
+  View()
   mutate(tempoesami = esami*timecomp) %>% 
   left_join(h, by = "REPARTO")
   
