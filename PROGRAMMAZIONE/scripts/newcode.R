@@ -65,24 +65,69 @@ hwd19 <- hwd19 %>%
 
 
 #####database######
-
 t <- tempi %>% 
   select(VNMP, mincomp, mindir) %>% 
   group_by(VNMP) %>% 
   summarise(mincomp = mean(mincomp, na.rm = TRUE), 
             mindir = mean(mindir, na.rm = TRUE)) 
-  ggplot(aes(mincomp)) +
-  geom_histogram()
+
+esami %>% 
+  group_by(REPARTO, VNMP) %>% 
+  summarise(nesami = sum(esami, na.rm = T)) %>% 
+  semi_join(t, by = "VNMP") %>% 
+  left_join(t, by = "VNMP") %>% 
+  mutate(tesamiC = nesami*mincomp, 
+         tesamiD = nesami*mindir) %>% 
+  summarise(nesami = sum(nesami), 
+            tesamiC = sum(tesamiC, na.rm = T)/60, 
+            tesamiD = sum(tesamiD, na.rm = T)/60) %>% 
+  View()
+
+
+
+
+
 
 
 esami %>% 
-  semi_join(t, by = "VNMP") %>% 
+  
   left_join(t, by = "VNMP") %>% 
   group_by(REPARTO) %>% 
-  summarise(tesame = sum(mincomp))
-
-  left_join(hwd19, by="REPARTO") %>% 
+  summarise(tesame = sum(mincomp)/60) %>% 
+  left_join(hwd19, by = "REPARTO") %>% 
   View()
+
+  
+  
+  
+  
+hwd19ù
+  
+  
+#   semi_join(t, by = "VNMP") %>% 
+#   left_join(t, by = "VNMP") %>% 
+#   group_by(REPARTO) %>% 
+#   summarise(tesame = sum(mincomp))
+# 
+# left_join(hwd19, by="REPARTO") %>% 
+#   View()
+
+
+
+
+tempi %>% 
+  select(VNMP, mincomp, mindir) %>% 
+  group_by(VNMP) %>% 
+  summarise(mincomp = mean(mincomp, na.rm = TRUE), 
+            mindir = mean(mindir, na.rm = TRUE)) %>% 
+  ggplot(aes(mincomp)) +
+  geom_histogram()+
+
+
+  
+  
+  
+  
 
 # t_vnmp <- unique(factor(t$VNMP))
 # 
