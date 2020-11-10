@@ -10,22 +10,22 @@ library("here")
 
 
 ##tempi esame
-tempi <- read_excel(here("programmazione", "data", "raw", "tempianalisi.xlsx"))
+tempi <- read_excel(here("programmazione", "data", "raw", "newtempianalisi.xlsx"))
 
-tempi$mp <- substr(tempi$mp, start=1, stop = 9)
+tempi$mp <- substr(tempi$VALORI_MP_REV, start=1, stop = 9)
 
-tempi$VNMP <- paste(tempi$vn,tempi$mp) # <- creo una chiave univoca in tempi tempi$VNMPdup <- duplicated(tempi$VNMP)
+tempi$VNMP <- paste(tempi$VALORI_VN,tempi$mp, tempi$VALORI_REVISIONE) # <- creo una chiave univoca in tempi tempi$VNMPdup <- duplicated(tempi$VNMP)
 
 
 
 ## esami
 esami <- read_excel(here("programmazione", "data", "raw", "dati2019.xlsx"))
 
-esami$MMPP <- substr(esami$`Descrizione del MP`, start=1, stop = 9)
+esami$MMPP <- substr(esami$mp, start=1, stop = 9)
 
-esami$VNMP <- paste(esami$chiave, esami$MMPP) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi
+esami$VNMP <- ifelse(!is.na(esami$vngruppo), paste(esami$vngruppo, esami$MMPP, esami$revmp), paste(esami$vn, esami$MMPP, esami$revmp)) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi
 
-esami$REPARTO <- tolower(esami$reparto)
+esami$REPARTO <- tolower(esami$Reparto)
 
 esami <- esami %>% 
   mutate(REPARTO = recode(REPARTO, "sede territoriale di milano (is)" = "sede territoriale di milano", 
@@ -66,25 +66,60 @@ hwd19 <- hwd19 %>%
 
 #####database######
 t <- tempi %>% 
-  select(VNMP, mincomp, mindir) %>% 
+  select(VNMP, MinutiComparto, MinutiDirigente) %>% 
   group_by(VNMP) %>% 
-  summarise(mincomp = mean(mincomp, na.rm = TRUE), 
-            mindir = mean(mindir, na.rm = TRUE)) 
+  summarise(mincomp = mean(MinutiComparto, na.rm = TRUE), 
+            mindir = mean(MinutiDirigente, na.rm = TRUE)) 
+
 
 esami %>% 
-  group_by(REPARTO, VNMP) %>% 
-  summarise(nesami = sum(esami, na.rm = T)) %>% 
-  semi_join(t, by = "VNMP") %>% 
   left_join(t, by = "VNMP") %>% 
-  mutate(tesamiC = nesami*mincomp, 
-         tesamiD = nesami*mindir) %>% 
-  summarise(nesami = sum(nesami), 
-            tesamiC = sum(tesamiC, na.rm = T)/60, 
-            tesamiD = sum(tesamiD, na.rm = T)/60) %>% 
+  mutate(tesami = esami*mincomp) %>% 
+  group_by(REPARTO) %>% 
+  summarise(nesami = sum(esami, na.rm = T),
+            tesami = sum(tesami, na.rm = T)/60) %>% 
+  left_join(
+    (hwd19 %>% 
+      group_by(Dipartimento, REPARTO) %>% 
+      summarise(hworked = sum(hworked), 
+                hprev = sum(hprev))),
+    by = "REPARTO") %>% 
+  mutate(FTE_previsto = hprev/1641.6, 
+         FTE_reale = hworked/1641.6, 
+         FTE_necessari = tesami/1641.6)
+
+
+
+
+
+
+esami %>% 
+  left_join(t, by = "VNMP") %>% 
+  mutate(dup = duplicated(VNMP)) %>% 
+  filter(dup == "FALSE") %>% 
+  group_by(REPARTO) %>% 
+  summarise(n = n(),
+    minimo = min(mincomp,na.rm = T), 
+            mediana = median(mincomp, na.rm = T),
+            massimo = max(mincomp, na.rm = T)) %>% 
+    knitr::kable() %>% 
+    kableExtra::kable_styling()
+
+m <- median(x$mincomp, na.rm= TRUE)
+ggplot(x,aes(mincomp)) +
+  geom_histogram(bins = 20)+
+  theme_ipsum_rc()+
+  facet_wrap(~REPARTO)
+  geom_vline(aes(xintercept = m), colour = "red") 
+  
+
+  
+
+  filter(dup == "FALSE") 
+
+esami %>% 
+  group_by(REPARTO) %>% 
   View()
-
-
-
 
 
 
@@ -121,9 +156,20 @@ tempi %>%
   summarise(mincomp = mean(mincomp, na.rm = TRUE), 
             mindir = mean(mindir, na.rm = TRUE)) %>% 
   ggplot(aes(mincomp)) +
-  geom_histogram()+
+  geom_histogram()
 
+t <- tempi %>% 
+  select(VNMP, MinutiComparto, MinutiDirigente) %>% 
+  group_by(VNMP) %>% 
+  summarise(mincomp = mean(MinutiComparto, na.rm = TRUE), 
+            mindir = mean(MinutiDirigente, na.rm = TRUE))  
 
+m <- median(t$mincomp, na.rm = T)
+
+ggplot(t,aes(mincomp)) +
+  geom_histogram(bins = 20)+
+  theme_ipsum_rc()+
+  geom_vline(aes(xintercept = m), colour = "red")
   
   
   

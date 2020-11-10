@@ -1,3 +1,43 @@
+tempi_vnmp <- unique(factor(tempi$VNMP))
+
+
+esami %>% 
+  anti_join(tempi, by = "VNMP") %>% 
+  select(VNMP, MMPP, provasingola) %>% 
+  View()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 library("readxl")
 library("tidyverse")
 library("lubridate")
