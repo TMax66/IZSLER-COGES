@@ -58,7 +58,7 @@ gruppi <- gruppi %>%
 
 
 gruppi <-  gruppi %>% 
-  group_by(REPARTO, VNMP, 
+  group_by(REPARTO, VNMP,
           dtreg = `Data di registrazione`) %>% 
   summarise(esami = n()) 
 
