@@ -1,5 +1,5 @@
 ---
-title: "Analisi tempi esame"
+title: "Attività 2019 - definizione dei tempi analisi"
 author: " "
 date: "11/11/2020"
 output: html_document
@@ -26,9 +26,18 @@ tempi$VNMP <- paste(tempi$VALORI_VN,tempi$mp, tempi$VALORI_REVISIONE) # <- creo 
 
 ###ESAMI 2019 DARWIN###
 esami <- read_excel(here("programmazione", "data", "raw", "dati2019.xlsx"))
+
+
+###esami singoli
+esami <- esami %>% 
+  filter(is.na(provagruppi))
+
 esami$MMPP <- substr(esami$mp, start=1, stop = 9)
-esami$VNMP <- ifelse(!is.na(esami$vngruppo), paste(esami$vngruppo, esami$MMPP, esami$revmp), paste(esami$vn, esami$MMPP, esami$revmp)) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi
+
+esami$VNMP <- paste(esami$vn, esami$MMPP, esami$revmp) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi
+
 esami$REPARTO <- tolower(esami$Reparto)
+
 esami <- esami %>% 
   mutate(REPARTO = recode(REPARTO, "sede territoriale di milano (is)" = "sede territoriale di milano", 
                           "reparto tecnologie biologiche applicate - batteriologia specializzata" = "reparto tecnologie biologiche applicate", 
@@ -37,6 +46,34 @@ esami <- esami %>%
                           )) %>% 
   filter(!REPARTO %in% c("analisi del rischio ed epidemiologia genomica",
                          "reparto produzione e controllo materiale biologico"))
+
+
+
+## esami gruppi####
+
+gruppi <- read_excel(here("programmazione", "data", "raw", "dati2019Gruppi.xlsx"))
+gruppi$MMPP <- substr(gruppi$`Descrizione del MP`, start=1, stop = 9)
+gruppi$VNMP <- paste(gruppi$`Chiave VN Gruppo`, gruppi$MMPP, gruppi$`Revisione del MP`)
+gruppi$REPARTO <- tolower(gruppi$`Reparto che esegue le analisi`)
+
+gruppi <- gruppi %>% 
+  mutate(REPARTO = recode(REPARTO,  
+                          "reparto tecnologie biologiche applicate - batteriologia specializzata" = "reparto tecnologie biologiche applicate")) %>% 
+  filter(!REPARTO %in% c("reparto produzione e controllo materiale biologico"))
+
+
+Gruppi <-  gruppi %>% 
+  group_by(REPARTO, VNMP, 
+          dtreg = `Data di registrazione`) %>% 
+  summarise(esami = n()) 
+
+
+###gruppi+singoli
+
+Esami <- esami %>% 
+  select(REPARTO, VNMP, dtreg, esami) %>% 
+  union ( (Gruppi %>% 
+             select(REPARTO,VNMP, dtreg, esami )) )
 
 
 #### Ore lavorate 2019###  GRU
@@ -101,7 +138,10 @@ p1/p2 + plot_annotation("Distribuzione dei tempi analisi in minuti di 1605 VN")
 
 ### Definizione tempi analisi per Reparto
 
-A partire dal database delle valorizzazioni utilizzando la chiave-analisi VNMP ( VN+MP+rev)  è stato possibile collegarsi al database derivato da Darwin degli esami eseguiti nel 2019. Per ogni chiave-analisi il numero di esami eseguiti per reparto è stato moltiplicato per il tempo-esame, ottenendo quindi il tempo-analisi. 
+A partire dal database delle valorizzazioni utilizzando la chiave-analisi VNMP ( VN+MP+rev)  è stato possibile collegarsi al database derivato da Darwin degli esami eseguiti nel 2019. Per ogni chiave-analisi il numero di esami eseguiti per reparto è stato moltiplicato per il tempo-esame, ottenendo quindi il tempo-analisi.
+
+Per gli esami appartenenti a gruppi-analisi, il calcolo del numero di analisi è basato sul conferimento, in quanto gli esami effettuati per ogni gruppo analisi ha lo stesso tempo-analisi del data-base valorizzazioni, in quanto è stato valorizzato per singola gruppo. Quindi il tempo analisi è definito dalla moltiplicazione del numero di analisi di gruppo definito dalla VN specifica  per il corrispondente tempo-analisi della VN.
+
 A titolo di esempio  due tabelle:  
 La tabella 1 riporta per la data del 7/1/2019 del reparto **Sede Territoriale di Bergamo**, le prove eseguite e corrispondente VNMP, il numero di esami eseguiti per singola VNMP, il tempo esame definito e il tempo-analisi (tempo esame X n.esami)
 
@@ -110,7 +150,7 @@ La tabella 1 riporta per la data del 7/1/2019 del reparto **Sede Territoriale di
 
 
  options(knitr.kable.NA = '')
- esami %>% 
+esami %>% 
     left_join((tempi %>% 
   select(VNMP, MinutiComparto, MinutiDirigente) %>% 
   group_by(VNMP) %>% 
@@ -121,29 +161,40 @@ La tabella 1 riporta per la data del 7/1/2019 del reparto **Sede Territoriale di
              as.Date(dtreg) == as.Date("2019-01-07")) %>% 
     select(VNMP, "prova_singola" = provasingola, "prova_gruppi" = provagruppi, esami, 
            "tempo_esame" = mincomp, "tempo_analisi" = tesami) %>% 
+  top_n(10) %>% 
    kable() %>% 
    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed"))
  
 ```
 
 
+
+
+
+
+
+
+
 La tabella 2 riporta lo stesso prospetto ma riferito al reparto **Bologna (reparto chimico degli alimenti)**
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
- options(knitr.kable.NA = '')
- esami %>% 
-    left_join((tempi %>% 
-  select(VNMP, MinutiComparto, MinutiDirigente) %>% 
-  group_by(VNMP) %>% 
-  summarise(mincomp = mean(MinutiComparto, na.rm = TRUE), 
-            mindir = mean(MinutiDirigente, na.rm = TRUE))), by = "VNMP") %>% 
-    mutate(tesami = esami*mincomp) %>%
-    filter(REPARTO == "bologna (reparto chimico degli alimenti)"  & 
-             as.Date(dtreg) == as.Date("2019-01-07")) %>% 
-    select(VNMP, "prova_singola" = provasingola, "prova_gruppi" = provagruppi, esami, 
-           "tempo_esame" = mincomp, "tempo_analisi" = tesami) %>% 
-   head(20) %>% 
+options(knitr.kable.NA = '')
+
+ gruppi %>% 
+  filter(REPARTO == "sede territoriale di bergamo") %>% 
+  group_by(REPARTO, VNMP, `Prova - Gruppi`,
+          dtreg = `Data di registrazione`) %>% 
+  summarise(esami = n()) %>% 
+   top_n(5) %>% 
+   kable() %>% 
+   kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed"))
+   
+
+ gruppi %>% 
+  filter(REPARTO == "sede territoriale di bergamo") %>% 
+  group_by(REPARTO, VNMP, `Prova - Gruppi`) %>% 
+  summarise(esami = n()) %>% 
    kable() %>% 
    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed"))
  
@@ -161,7 +212,8 @@ t <- tempi %>%
   summarise(mincomp = mean(MinutiComparto, na.rm = TRUE), 
             mindir = mean(MinutiDirigente, na.rm = TRUE)) 
 
-esami %>% 
+
+Esami %>% 
   left_join(t, by = "VNMP") %>% 
   mutate(tesami = esami*mincomp) %>% 
   group_by(REPARTO) %>% 
@@ -173,8 +225,12 @@ esami %>%
       summarise(hworked = sum(hworked), 
                 hprev = sum(hprev))),
     by = "REPARTO") %>% 
-  select(Dipartimento, Reparto = REPARTO, "N. esami" = nesami, "tempo analisi(h)" = tesami, 
-         "ore disponibili" = hprev, "ore erogate" = hworked ) %>% 
+  mutate(FTE_previsto = hprev/1641.6, 
+         FTE_reale = hworked/1641.6, 
+         FTE_necessari = tesami/1641.6) %>% 
+  select(Dipartimento, Reparto = REPARTO, "N. analisi" = nesami, "tempo analisi (min)" = tesami, "ore lavorate"= hworked, "ore disponibili" = hprev,
+         FTE_previsto, FTE_reale) %>% 
+  
   arrange(desc(Dipartimento)) %>% 
    kable() %>% 
    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed"))

@@ -26,9 +26,12 @@ tempi$VNMP <- paste(tempi$VALORI_VN,tempi$mp, tempi$VALORI_REVISIONE) # <- creo 
 ## esami singoli
 esami <- read_excel(here("programmazione", "data", "raw", "dati2019.xlsx"))
 
+esami <- esami %>% 
+  filter(is.na(provagruppi))
+
 esami$MMPP <- substr(esami$mp, start=1, stop = 9)
 
-esami$VNMP <- ifelse(!is.na(esami$vngruppo), paste(esami$vngruppo, esami$MMPP, esami$revmp), paste(esami$vn, esami$MMPP, esami$revmp)) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi
+esami$VNMP <- paste(esami$vn, esami$MMPP, esami$revmp) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi
 
 esami$REPARTO <- tolower(esami$Reparto)
 
@@ -55,13 +58,18 @@ gruppi <- gruppi %>%
 
 
 gruppi <-  gruppi %>% 
-  group_by("Reparto" = `Reparto che esegue le analisi`, "vngruppo" = `Chiave VN Gruppo`, 
-          "prova" = `Prova - Gruppi`, mp = `Descrizione del MP`,  rev  = `Revisione del MP`,
+  group_by(REPARTO, VNMP, 
           dtreg = `Data di registrazione`) %>% 
-  summarise(n = n()) 
+  summarise(esami = n()) 
 
 
+###gruppi+singoli
 
+Esami <- esami %>% 
+  select(REPARTO, VNMP, dtreg, esami) %>% 
+  union ( (gruppi %>% 
+             select(REPARTO,VNMP, dtreg, esami )) )
+  
 
 ###ore lavorate
 
@@ -97,7 +105,7 @@ t <- tempi %>%
             mindir = mean(MinutiDirigente, na.rm = TRUE)) 
 
 
-esami %>% 
+Esami %>% 
   left_join(t, by = "VNMP") %>% 
   mutate(tesami = esami*mincomp) %>% 
   group_by(REPARTO) %>% 
@@ -109,13 +117,12 @@ esami %>%
       summarise(hworked = sum(hworked), 
                 hprev = sum(hprev))),
     by = "REPARTO") %>% 
-  select(Dipartimento, Reparto = REPARTO, "N. esami" = nesami, "tempo analisi (min)" = tesami)
-  
-  
-
   mutate(FTE_previsto = hprev/1641.6, 
          FTE_reale = hworked/1641.6, 
-         FTE_necessari = tesami/1641.6)
+         FTE_necessari = tesami/1641.6) %>% 
+  select(Dipartimento, Reparto = REPARTO, "N. analisi" = nesami, "tempo analisi (min)" = tesami, "ore lavorate"= hworked, "ore disponibili" = hprev,
+         FTE_previsto, FTE_reale) 
+  
 
 
 
