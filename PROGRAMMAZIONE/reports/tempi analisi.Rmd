@@ -140,7 +140,7 @@ p1/p2 + plot_annotation("Distribuzione dei tempi analisi in minuti di 1605 VN")
 
 A partire dal database delle valorizzazioni utilizzando la chiave-analisi VNMP ( VN+MP+rev)  è stato possibile collegarsi al database derivato da Darwin degli esami eseguiti nel 2019. Per ogni chiave-analisi il numero di esami eseguiti per reparto è stato moltiplicato per il tempo-esame, ottenendo quindi il tempo-analisi.
 
-Per gli esami appartenenti a gruppi-analisi, il calcolo del numero di analisi è basato sul conferimento, in quanto gli esami effettuati per ogni gruppo analisi ha lo stesso tempo-analisi del data-base valorizzazioni, in quanto è stato valorizzato per singola gruppo. Quindi il tempo analisi è definito dalla moltiplicazione del numero di analisi di gruppo definito dalla VN specifica  per il corrispondente tempo-analisi della VN.
+Per gli esami appartenenti a gruppi-analisi, il calcolo del numero di analisi è basato sul conferimento, in quanto gli esami effettuati per ogni gruppo analisi ha lo stesso tempo-analisi del data-base valorizzazioni, in quanto è stato valorizzato per singolo gruppo. Quindi il tempo analisi è definito dalla moltiplicazione del numero di analisi di gruppo definito dalla VN specifica  per il corrispondente tempo-analisi della VN.
 
 A titolo di esempio  due tabelle:  
 La tabella 1 riporta per la data del 7/1/2019 del reparto **Sede Territoriale di Bergamo**, le prove eseguite e corrispondente VNMP, il numero di esami eseguiti per singola VNMP, il tempo esame definito e il tempo-analisi (tempo esame X n.esami)
@@ -161,58 +161,86 @@ esami %>%
              as.Date(dtreg) == as.Date("2019-01-07")) %>% 
     select(VNMP, "prova_singola" = provasingola, "prova_gruppi" = provagruppi, esami, 
            "tempo_esame" = mincomp, "tempo_analisi" = tesami) %>% 
-  top_n(10) %>% 
+ head(10) %>% 
    kable() %>% 
    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed"))
  
 ```
 
 
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE} -->
+<!-- esami2 <- read_excel(here("programmazione", "data", "raw", "dati2019.xlsx")) -->
+<!-- esami2$MMPP <- substr(esami2$mp, start=1, stop = 9) -->
+<!-- esami2$VNMP <- paste(esami2$vn, esami2$MMPP, esami2$revmp) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi -->
+
+<!-- esami2$REPARTO <- tolower(esami2$Reparto) -->
+
+<!-- esami2 <- esami2 %>%  -->
+<!--   mutate(REPARTO = recode(REPARTO, "sede territoriale di milano (is)" = "sede territoriale di milano",  -->
+<!--                           "reparto tecnologie biologiche applicate - batteriologia specializzata" = "reparto tecnologie biologiche applicate",  -->
+<!--                           "reparto tecnologie biologiche applicate - colture cellulari" = "reparto tecnologie biologiche applicate",  -->
+<!--                           "reparto virologia - laboratorio proteomica" = "reparto virologia",  -->
+<!--                           )) %>%  -->
+<!--   filter(!REPARTO %in% c("analisi del rischio ed epidemiologia genomica", -->
+<!--                          "reparto produzione e controllo materiale biologico")) -->
+
+<!--  options(knitr.kable.NA = '') -->
+<!-- esami2 %>%  -->
+<!--     left_join((tempi %>%  -->
+<!--   select(VNMP, MinutiComparto, MinutiDirigente) %>%  -->
+<!--   group_by(VNMP) %>%  -->
+<!--   summarise(mincomp = mean(MinutiComparto, na.rm = TRUE),  -->
+<!--             mindir = mean(MinutiDirigente, na.rm = TRUE))), by = "VNMP") %>%  -->
+<!--     mutate(tesami = esami*mincomp) %>% -->
+<!--     filter(REPARTO == "bologna (reparto chimico degli alimenti)" &  -->
+<!--              as.Date(dtreg) == as.Date("2019-01-25")) %>% -->
+<!--     select(VNMP, "prova_singola" = provasingola, "prova_gruppi" = provagruppi, esami,  -->
+<!--            "tempo_esame" = mincomp, "tempo_analisi" = tesami) %>%  -->
+<!--   View() -->
+<!--   top_n(20) %>%  -->
+<!--    kable() %>%  -->
+<!--    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) -->
+
+<!-- ``` -->
 
 
 
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE} -->
+
+<!-- options(knitr.kable.NA = '') -->
+
+<!--  gruppi %>%  -->
+<!--   filter(REPARTO == "sede territoriale di bergamo") %>%  -->
+<!--   group_by(REPARTO, VNMP, `Prova - Gruppi`, -->
+<!--           dtreg = `Data di registrazione`) %>%  -->
+<!--   summarise(esami = n()) %>%  -->
+<!--    top_n(5) %>%  -->
+<!--    kable() %>%  -->
+<!--    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) -->
 
 
+<!--  gruppi %>%  -->
+<!--   filter(REPARTO == "sede territoriale di bergamo") %>%  -->
+<!--   group_by(REPARTO, VNMP, `Prova - Gruppi`) %>%  -->
+<!--   summarise(esami = n()) %>%  -->
+<!--    kable() %>%  -->
+<!--    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) -->
+
+<!-- ``` -->
 
 
-La tabella 2 riporta lo stesso prospetto ma riferito al reparto **Bologna (reparto chimico degli alimenti)**
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-
-options(knitr.kable.NA = '')
-
- gruppi %>% 
-  filter(REPARTO == "sede territoriale di bergamo") %>% 
-  group_by(REPARTO, VNMP, `Prova - Gruppi`,
-          dtreg = `Data di registrazione`) %>% 
-  summarise(esami = n()) %>% 
-   top_n(5) %>% 
-   kable() %>% 
-   kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed"))
-   
-
- gruppi %>% 
-  filter(REPARTO == "sede territoriale di bergamo") %>% 
-  group_by(REPARTO, VNMP, `Prova - Gruppi`) %>% 
-  summarise(esami = n()) %>% 
-   kable() %>% 
-   kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed"))
- 
-```
 
 ### Tempi-analisi per Reparto
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
 options(knitr.kable.NA = '')
-
 t <- tempi %>% 
   select(VNMP, MinutiComparto, MinutiDirigente) %>% 
   group_by(VNMP) %>% 
   summarise(mincomp = mean(MinutiComparto, na.rm = TRUE), 
             mindir = mean(MinutiDirigente, na.rm = TRUE)) 
-
-
+##########################################################
 Esami %>% 
   left_join(t, by = "VNMP") %>% 
   mutate(tesami = esami*mincomp) %>% 
@@ -225,20 +253,121 @@ Esami %>%
       summarise(hworked = sum(hworked), 
                 hprev = sum(hprev))),
     by = "REPARTO") %>% 
+  rename(Laboratorio = REPARTO )%>% 
+  mutate(REPARTO = recode(Laboratorio, "sede territoriale di bergamo" = "sede territoriale di BG-VA-SO",
+                           "sede territoriale di binago" = "sede territoriale di BG-VA-SO" ,
+                         "sede territoriale di sondrio" = "sede territoriale di BG-VA-SO", 
+                         "sede territoriale di cremona" = "sede territoriale di CR-MN",
+                         "sede territoriale di mantova" = "sede territoriale di CR-MN",
+                         "sede territoriale di lodi" = "sede territoriale di LO-MI",
+                         "sede territoriale di milano" = "sede territoriale di LO-MI",
+                         "sede territoriale di pavia" = "sede territoriale di PV",
+                         "sede territoriale di brescia" = "sede territoriale di BS",
+                         "sede territoriale di bologna" = "sede territoriale di BO-MO-FE",
+                         "sede territoriale di modena" = "sede territoriale di BO-MO-FE",
+                         "sede territoriale di ferrara" = "sede territoriale di BO-MO-FE",
+                         "sede territoriale di forlì" = "sede territoriale di FO-RA",
+                         "sede territoriale di ravenna" = "sede territoriale di FO-RA",
+                         "sede territoriale di piacenza" = "sede territoriale di PC-PR",
+                         "sede territoriale di parma" = "sede territoriale di PC-PR",
+                         "sede territoriale di reggio emilia" = "sede territoriale di RE",
+                         )) %>% 
+  group_by(Dipartimento, REPARTO) %>% 
+  summarise(nesami = sum(nesami, na.rm = T),
+            tesami = sum(tesami, na.rm = T),
+    hworked = sum(hworked), 
+                hprev = sum(hprev)) %>% 
   mutate(FTE_previsto = hprev/1641.6, 
          FTE_reale = hworked/1641.6, 
-         FTE_necessari = tesami/1641.6) %>% 
-  select(Dipartimento, Reparto = REPARTO, "N. analisi" = nesami, "tempo analisi (min)" = tesami, "ore lavorate"= hworked, "ore disponibili" = hprev,
-         FTE_previsto, FTE_reale) %>% 
+         FTE_necessari = tesami/1641.6,
+         perctana= 100*(tesami/hworked), 
+         "%hworked" = 100*(hworked/hprev)) %>% 
+  select(Dipartimento, Reparto = REPARTO, "N. analisi" = nesami, "tempo analisi (h)" = tesami, "ore lavorate"= hworked, "ore disponibili" = hprev, "% tempi analisi su h lavorate" = perctana, "% h worked" = "%hworked",
+         FTE_previsto, FTE_reale, FTE_necessari) %>% 
   
   arrange(desc(Dipartimento)) %>% 
    kable() %>% 
-   kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed"))
+   kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) %>% 
+  collapse_rows(columns = 1, valign = "top")
 
 
 ```
 
 
+### Tempi-esame per Reparto
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+esami <- read_excel(here("programmazione", "data", "raw",  "dati2019.xlsx"))
+esami$MMPP <- substr(esami$mp, start=1, stop = 9)
+esami$VNMP <- ifelse(!is.na(esami$vngruppo), paste(esami$vngruppo, esami$MMPP, esami$revmp), paste(esami$vn, esami$MMPP, esami$revmp)) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi
+esami$REPARTO <- tolower(esami$Reparto)
+
+esami <- esami %>% 
+  mutate(REPARTO = recode(REPARTO, "sede territoriale di milano (is)" = "sede territoriale di milano", 
+                          "reparto tecnologie biologiche applicate - batteriologia specializzata" = "reparto tecnologie biologiche applicate", 
+                          "reparto tecnologie biologiche applicate - colture cellulari" = "reparto tecnologie biologiche applicate", 
+                          "reparto virologia - laboratorio proteomica" = "reparto virologia", 
+  )) %>% 
+  filter(!REPARTO %in% c("analisi del rischio ed epidemiologia genomica",
+                         "reparto produzione e controllo materiale biologico"))
+
+
+
+t <- tempi %>%
+  select(VNMP, MinutiComparto, MinutiDirigente) %>%
+  group_by(VNMP) %>%
+  summarise(mincomp = mean(MinutiComparto, na.rm = TRUE),
+            mindir = mean(MinutiDirigente, na.rm = TRUE))
+esami %>% 
+  left_join(t, by = "VNMP") %>% 
+  mutate(tesami = esami*mincomp) %>% 
+  group_by(REPARTO) %>% 
+  summarise(nesami = sum(esami, na.rm = T),
+            tesami = sum(tesami, na.rm = T)/60) %>% 
+  left_join(
+    (hwd19 %>% 
+       group_by(Dipartimento, REPARTO) %>% 
+       summarise(hworked = sum(hworked), 
+                 hprev = sum(hprev))),
+    by = "REPARTO") %>% 
+  rename(Laboratorio = REPARTO )%>% 
+  mutate(REPARTO = recode(Laboratorio, "sede territoriale di bergamo" = "sede territoriale di BG-VA-SO",
+                           "sede territoriale di binago" = "sede territoriale di BG-VA-SO" ,
+                         "sede territoriale di sondrio" = "sede territoriale di BG-VA-SO", 
+                         "sede territoriale di cremona" = "sede territoriale di CR-MN",
+                         "sede territoriale di mantova" = "sede territoriale di CR-MN",
+                         "sede territoriale di lodi" = "sede territoriale di LO-MI",
+                         "sede territoriale di milano" = "sede territoriale di LO-MI",
+                         "sede territoriale di pavia" = "sede territoriale di PV",
+                         "sede territoriale di brescia" = "sede territoriale di BS",
+                         "sede territoriale di bologna" = "sede territoriale di BO-MO-FE",
+                         "sede territoriale di modena" = "sede territoriale di BO-MO-FE",
+                         "sede territoriale di ferrara" = "sede territoriale di BO-MO-FE",
+                         "sede territoriale di forlì" = "sede territoriale di FO-RA",
+                         "sede territoriale di ravenna" = "sede territoriale di FO-RA",
+                         "sede territoriale di piacenza" = "sede territoriale di PC-PR",
+                         "sede territoriale di parma" = "sede territoriale di PC-PR",
+                         "sede territoriale di reggio emilia" = "sede territoriale di RE",
+                         )) %>% 
+  group_by(Dipartimento, REPARTO) %>% 
+  summarise(nesami = sum(nesami, na.rm = T),
+            tesami = sum(tesami, na.rm = T),
+    hworked = sum(hworked), 
+                hprev = sum(hprev)) %>% 
+  mutate(FTE_previsto = hprev/1641.6, 
+         FTE_reale = hworked/1641.6, 
+         FTE_necessari = tesami/1641.6,
+         perctana= 100*(tesami/hworked), 
+         "%hworked" = 100*(hworked/hprev)) %>% 
+  select(Dipartimento, Reparto = REPARTO, "N. analisi" = nesami, "tempo analisi (h)" = tesami, "ore lavorate"= hworked, "ore disponibili" = hprev, "% tempi analisi su h lavorate" = perctana, "% h worked" = "%hworked",
+         FTE_previsto, FTE_reale, FTE_necessari) %>% 
+  arrange(desc(Dipartimento)) %>% 
+   kable() %>% 
+   kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) %>% 
+  collapse_rows(columns = 1, valign = "top")
+
+```
 
 
   

@@ -1,10 +1,16 @@
-tempi_vnmp <- unique(factor(tempi$VNMP))
+esami <- read_excel(here("programmazione", "data", "raw",  "dati2019.xlsx"))
+esami$MMPP <- substr(esami$`Descrizione del MP`, start=1, stop = 9)
+esami$VNMP <- paste(esami$chiave, esami$MMPP, esami$`Revisione del MP`) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi
+esami$REPARTO <- tolower(esami$reparto)
 
-
-esami %>% 
-  anti_join(tempi, by = "VNMP") %>% 
-  select(VNMP, MMPP, provasingola) %>% 
-  View()
+esami <- esami %>% 
+  mutate(REPARTO = recode(REPARTO, "sede territoriale di milano (is)" = "sede territoriale di milano", 
+                          "reparto tecnologie biologiche applicate - batteriologia specializzata" = "reparto tecnologie biologiche applicate", 
+                          "reparto tecnologie biologiche applicate - colture cellulari" = "reparto tecnologie biologiche applicate", 
+                          "reparto virologia - laboratorio proteomica" = "reparto virologia", 
+  )) %>% 
+  filter(!REPARTO %in% c("analisi del rischio ed epidemiologia genomica",
+                         "reparto produzione e controllo materiale biologico"))
 
 
 
