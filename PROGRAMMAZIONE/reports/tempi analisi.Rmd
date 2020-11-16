@@ -1,8 +1,10 @@
 ---
 title: "Attività 2019 - definizione dei tempi analisi"
-author: " "
-date: "11/11/2020"
-output: html_document
+author: ' '
+date: "16/11/2020"
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -286,7 +288,7 @@ Esami %>%
          FTE_previsto, FTE_reale, FTE_necessari) %>% 
   
   arrange(desc(Dipartimento)) %>% 
-   kable() %>% 
+   kable(caption = "TEMPI-ANALISI PER REPARTO") %>% 
    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) %>% 
   collapse_rows(columns = 1, valign = "top")
 
@@ -365,10 +367,10 @@ esami %>%
          FTE_necessari = tesami/1641.6,
          perctana= 100*(tesami/hworked), 
          "%hworked" = 100*(hworked/hprev)) %>% 
-  select(Dipartimento, Reparto = REPARTO, "N. analisi" = nesami, "tempo analisi (h)" = tesami, "ore lavorate"= hworked, "ore disponibili" = hprev, "% tempi analisi su h lavorate" = perctana, "% h lavorate" = "%hworked",
+  select(Dipartimento, Reparto = REPARTO, "N. analisi" = nesami, "tempo esami (h)" = tesami, "ore lavorate"= hworked, "ore disponibili" = hprev, "% tempi esami su h lavorate" = perctana, "% h lavorate" = "%hworked",
          FTE_previsto, FTE_reale, FTE_necessari) %>% 
   arrange(desc(Dipartimento)) %>% 
-   kable() %>% 
+   kable(caption = "TEMPI-ESAMI PER REPARTO") %>% 
    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) %>% 
   collapse_rows(columns = 1, valign = "top")
 
