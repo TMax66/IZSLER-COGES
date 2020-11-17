@@ -2,9 +2,14 @@
 title: "Attività 2019 - definizione dei tempi analisi"
 author: ' '
 date: "16/11/2020"
+eader-includes: \usepackage[italian]{babel} \usepackage{setspace}\doublespacing \usepackage{float} 
+                  \usepackage{booktabs} \usepackage{longtable} 
+                  \usepackage{fontspec} \usepackage{caption}
+                  \setmainfont{Times New Roman}
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
+classoption: landscape
 ---
 
 ```{r setup, include=FALSE}
@@ -102,133 +107,52 @@ hwd19 <- hwd19 %>%
 
 ```
 
-### Distribuzione tempi-analisi
+<!-- ### Distribuzione tempi-analisi -->
 
-Ci sono complessivamente 1605 Voci Nomenclatore associati a differenti tempi-analisi cosi come sono stati calcolati per la valorizzazione. La Mediana è pari a 16 minuti. 
+<!-- Ci sono complessivamente 1605 Voci Nomenclatore associati a differenti tempi-analisi così come sono stati calcolati per la valorizzazione. La Mediana è pari a 16 minuti. -->
 
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE} -->
 
+<!-- m <- median(tempi$MinutiComparto, na.rm = TRUE) -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-
-m <- median(tempi$MinutiComparto, na.rm = TRUE)
-
-p1 <- tempi %>% 
-ggplot(aes(MinutiComparto)) +
-  geom_histogram(bins = 100, alpha=0.5)+
-  theme_ipsum_rc()+
-  labs(x="")+
-  geom_vline(xintercept = m, color = "red")+
-  theme(axis.title.y=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank())
-  
+<!-- p1 <- tempi %>% -->
+<!-- ggplot(aes(MinutiComparto)) + -->
+<!--   geom_histogram(bins = 100, alpha=0.5)+ -->
+<!--   theme_ipsum_rc()+ -->
+<!--   labs(x="")+ -->
+<!--   geom_vline(xintercept = m, color = "red")+ -->
+<!--   theme(axis.title.y=element_blank(), -->
+<!--         axis.text.y=element_blank(), -->
+<!--         axis.ticks.y=element_blank()) -->
 
 
-p2 <- tempi %>% 
-  ggplot(aes( MinutiComparto, y = 1))+
-  geom_jitter(aes(), alpha=0.2, position=position_jitter(w=0.1,h=0.1))+
-  theme_ipsum_rc()+
-  geom_vline(xintercept = m, color = "red")+
-  labs(x="")+
-  theme(axis.title.y=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank())
 
-p1/p2 + plot_annotation("Distribuzione dei tempi analisi in minuti di 1605 VN")
+<!-- p2 <- tempi %>% -->
+<!--   ggplot(aes( MinutiComparto, y = 1))+ -->
+<!--   geom_jitter(aes(), alpha=0.2, position=position_jitter(w=0.1,h=0.1))+ -->
+<!--   theme_ipsum_rc()+ -->
+<!--   geom_vline(xintercept = m, color = "red")+ -->
+<!--   labs(x="")+ -->
+<!--   theme(axis.title.y=element_blank(), -->
+<!--         axis.text.y=element_blank(), -->
+<!--         axis.ticks.y=element_blank()) -->
 
+<!-- p1/p2 -->
+
+<!-- ``` -->
+
+```{r echo=FALSE, fig1, fig.align = "center",out.width = '80%',fig.cap="Distribuzione dei tempi  di esecuzione analisi (min) relativi a 1605 VN utilizzate nel 2019: Mediana = 16 minuti."} 
+knitr::include_graphics("figure/fig1.png")
 ```
+
+
+\newpage
 
 ### Definizione tempi-analisi per Reparto
 
-A partire dal database delle valorizzazioni utilizzando la chiave-analisi VNMP ( VN+MP+rev)  è stato possibile collegarsi al database derivato da Darwin degli esami eseguiti nel 2019. Per ogni chiave-analisi il numero di esami eseguiti per reparto è stato moltiplicato per il tempo-esame, ottenendo quindi il tempo-analisi.
+A partire dal database delle valorizzazioni utilizzando la chiave-analisi VNMP ( VN+MP+rev)  è stato possibile collegarsi al database derivato da Darwin degli esami eseguiti nel 2019. Per ogni chiave-analisi il numero di esami eseguiti per reparto è stato moltiplicato per il tempo in minuti di ogni VNMP, ottenendo quindi il tempo-analisi espresso in ore.
 
-Per gli esami appartenenti a gruppi-analisi, il calcolo del numero di analisi è basato sul conferimento, in quanto gli esami effettuati per ogni gruppo analisi ha lo stesso tempo-analisi del data-base valorizzazioni, in quanto è stato valorizzato per singolo gruppo. Quindi il tempo analisi è definito dalla moltiplicazione del numero di analisi di gruppo definito dalla VN specifica  per il corrispondente tempo-analisi della VN.
-
-<!-- A titolo di esempio  due tabelle:   -->
-<!-- La tabella 1 riporta per la data del 7/1/2019 del reparto **Sede Territoriale di Bergamo**, le prove eseguite e corrispondente VNMP, il numero di esami eseguiti per singola VNMP, il tempo esame definito e il tempo-analisi (tempo esame X n.esami) -->
-
-
-<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE} -->
-
-
-<!--  options(knitr.kable.NA = '') -->
-<!-- esami %>%  -->
-<!--     left_join((tempi %>%  -->
-<!--   select(VNMP, MinutiComparto, MinutiDirigente) %>%  -->
-<!--   group_by(VNMP) %>%  -->
-<!--   summarise(mincomp = mean(MinutiComparto, na.rm = TRUE),  -->
-<!--             mindir = mean(MinutiDirigente, na.rm = TRUE))), by = "VNMP") %>%  -->
-<!--     mutate(tesami = esami*mincomp) %>% -->
-<!--     filter(REPARTO == "sede territoriale di bergamo"  &  -->
-<!--              as.Date(dtreg) == as.Date("2019-01-07")) %>%  -->
-<!--     select(VNMP, "prova_singola" = provasingola, "prova_gruppi" = provagruppi, esami,  -->
-<!--            "tempo_esame" = mincomp, "tempo_analisi" = tesami) %>%  -->
-<!--  head(10) %>%  -->
-<!--    kable() %>%  -->
-<!--    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) -->
-
-<!-- ``` -->
-
-
-<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE} -->
-<!-- esami2 <- read_excel(here("programmazione", "data", "raw", "dati2019.xlsx")) -->
-<!-- esami2$MMPP <- substr(esami2$mp, start=1, stop = 9) -->
-<!-- esami2$VNMP <- paste(esami2$vn, esami2$MMPP, esami2$revmp) # <- creo chiave simile a tempi$VNMP per fare collegamento tra esami e tempi -->
-
-<!-- esami2$REPARTO <- tolower(esami2$Reparto) -->
-
-<!-- esami2 <- esami2 %>%  -->
-<!--   mutate(REPARTO = recode(REPARTO, "sede territoriale di milano (is)" = "sede territoriale di milano",  -->
-<!--                           "reparto tecnologie biologiche applicate - batteriologia specializzata" = "reparto tecnologie biologiche applicate",  -->
-<!--                           "reparto tecnologie biologiche applicate - colture cellulari" = "reparto tecnologie biologiche applicate",  -->
-<!--                           "reparto virologia - laboratorio proteomica" = "reparto virologia",  -->
-<!--                           )) %>%  -->
-<!--   filter(!REPARTO %in% c("analisi del rischio ed epidemiologia genomica", -->
-<!--                          "reparto produzione e controllo materiale biologico")) -->
-
-<!--  options(knitr.kable.NA = '') -->
-<!-- esami2 %>%  -->
-<!--     left_join((tempi %>%  -->
-<!--   select(VNMP, MinutiComparto, MinutiDirigente) %>%  -->
-<!--   group_by(VNMP) %>%  -->
-<!--   summarise(mincomp = mean(MinutiComparto, na.rm = TRUE),  -->
-<!--             mindir = mean(MinutiDirigente, na.rm = TRUE))), by = "VNMP") %>%  -->
-<!--     mutate(tesami = esami*mincomp) %>% -->
-<!--     filter(REPARTO == "bologna (reparto chimico degli alimenti)" &  -->
-<!--              as.Date(dtreg) == as.Date("2019-01-25")) %>% -->
-<!--     select(VNMP, "prova_singola" = provasingola, "prova_gruppi" = provagruppi, esami,  -->
-<!--            "tempo_esame" = mincomp, "tempo_analisi" = tesami) %>%  -->
-<!--   View() -->
-<!--   top_n(20) %>%  -->
-<!--    kable() %>%  -->
-<!--    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) -->
-
-<!-- ``` -->
-
-
-
-<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE} -->
-
-<!-- options(knitr.kable.NA = '') -->
-
-<!--  gruppi %>%  -->
-<!--   filter(REPARTO == "sede territoriale di bergamo") %>%  -->
-<!--   group_by(REPARTO, VNMP, `Prova - Gruppi`, -->
-<!--           dtreg = `Data di registrazione`) %>%  -->
-<!--   summarise(esami = n()) %>%  -->
-<!--    top_n(5) %>%  -->
-<!--    kable() %>%  -->
-<!--    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) -->
-
-
-<!--  gruppi %>%  -->
-<!--   filter(REPARTO == "sede territoriale di bergamo") %>%  -->
-<!--   group_by(REPARTO, VNMP, `Prova - Gruppi`) %>%  -->
-<!--   summarise(esami = n()) %>%  -->
-<!--    kable() %>%  -->
-<!--    kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) -->
-
-<!-- ``` -->
+Per gli esami appartenenti a gruppi-analisi, il calcolo del numero di analisi è basato sul conferimento. Quindi il tempo analisi è definito dalla moltiplicazione del numero di analisi di gruppo definito dalla VN specifica  per il corrispondente tempo-analisi della VN di gruppo.
 
 
 
@@ -281,24 +205,26 @@ Esami %>%
                 hprev = sum(hprev)) %>% 
   mutate(FTE_previsto = hprev/1641.6, 
          FTE_reale = hworked/1641.6, 
-         FTE_necessari = tesami/1641.6,
+         FTE_xtempianalisi = tesami/1641.6,
          perctana= 100*(tesami/hworked), 
          "%hworked" = 100*(hworked/hprev)) %>% 
   select(Dipartimento, Reparto = REPARTO, "N. analisi" = nesami, "tempo analisi (h)" = tesami, "ore lavorate"= hworked, "ore disponibili" = hprev, "% tempi analisi su h lavorate" = perctana, "% h lavorate" = "%hworked",
-         FTE_previsto, FTE_reale, FTE_necessari) %>% 
+         FTE_previsto, FTE_reale, FTE_xtempianalisi) %>% 
   
   arrange(desc(Dipartimento)) %>% 
-   kable(caption = "TEMPI-ANALISI PER REPARTO") %>% 
-   kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) %>% 
-  collapse_rows(columns = 1, valign = "top")
+   kable("latex", booktabs = T) %>% 
+   kable_styling(latex_options="scale_down", full_width = F, bootstrap_options = c("striped", "hover", "condensed")) %>% 
+  collapse_rows(columns = 1, valign = "top")# %>% 
+    #kableExtra::landscape()
 
 
 ```
 
+\newpage
 
 ### Definizione dei Tempi-esame (determinazioni) per Reparto
 
-In questo caso i tempi-esame o tempi -determinazioni vengono calcolati rispetto alle singole determinazioni. Quindi le prove gruppo sono considerate per il numero di determinazioni fatte a cui si applica ripetutamente lo stesso tempo-analisi della corrispondente VN di gruppo a tutte le determinazioni. 
+In questo caso i tempi-esame o tempi-determinazioni vengono calcolati rispetto alle singole determinazioni. Quindi le prove gruppo sono considerate per il numero di determinazioni fatte a cui si applica ripetutamente lo stesso tempo-analisi della corrispondente VN di gruppo a tutte le determinazioni. 
 
 
 ### Tempi-esame per Reparto
@@ -364,15 +290,16 @@ esami %>%
                 hprev = sum(hprev)) %>% 
   mutate(FTE_previsto = hprev/1641.6, 
          FTE_reale = hworked/1641.6, 
-         FTE_necessari = tesami/1641.6,
+         FTE_xtempiesami = tesami/1641.6,
          perctana= 100*(tesami/hworked), 
          "%hworked" = 100*(hworked/hprev)) %>% 
   select(Dipartimento, Reparto = REPARTO, "N. analisi" = nesami, "tempo esami (h)" = tesami, "ore lavorate"= hworked, "ore disponibili" = hprev, "% tempi esami su h lavorate" = perctana, "% h lavorate" = "%hworked",
-         FTE_previsto, FTE_reale, FTE_necessari) %>% 
+         FTE_previsto, FTE_reale, FTE_xtempiesami) %>% 
   arrange(desc(Dipartimento)) %>% 
-   kable(caption = "TEMPI-ESAMI PER REPARTO") %>% 
-   kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed")) %>% 
-  collapse_rows(columns = 1, valign = "top")
+  kable("latex", booktabs = T) %>% 
+   kable_styling(latex_options="scale_down", full_width = F, bootstrap_options = c("striped", "hover", "condensed"), font_size = 15) %>% 
+  collapse_rows(columns = 1, valign = "top") #%>% 
+  #  kableExtra::landscape()
 
 ```
 
