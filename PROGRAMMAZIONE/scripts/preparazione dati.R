@@ -79,9 +79,46 @@ anag19 %>%
   saveRDS(., file = here("programmazione", "data", "processed", "hwd19.rds"))
 
 
+anag19 %>% 
+  select("matricola" = CDMATR, 
+         "sesso" = SESSO, 
+         "dtnasc" = DTNASC, 
+         "categoria" = DEMANSP3, 
+         "hperc" = PCGIUR, 
+         "contratto" = DECOMP) %>% 
+  mutate(hcontr = ifelse( contratto == "COMPARTO SSN", (36*hperc)/100, (38*hperc)/100)) %>% 
+  # filter(contratto == "COMPARTO SSN") %>%
+  left_join(grusigma, by = "matricola") %>% 
+  right_join(hwd, by = "Matricola" ) %>% 
+  group_by(Dipartimento, Reparto, Laboratorio, contratto) %>% 
+  summarise(hworked= sum(hworked), 
+            hprev = sum(hcontr*45.6)) %>% 
+  saveRDS(., file = here("programmazione", "data", "processed", "hwd19.rds"))
+
+
+anag19 %>% 
+  select("matricola" = CDMATR, 
+         "sesso" = SESSO, 
+         "dtnasc" = DTNASC, 
+         "categoria" = DEMANSP3, 
+         "hperc" = PCGIUR, 
+         "contratto" = DECOMP) %>% 
+  mutate(hcontr = ifelse( contratto == "COMPARTO SSN", (36*hperc)/100, (38*hperc)/100)) %>% 
+  # filter(contratto == "COMPARTO SSN") %>%
+  left_join(grusigma, by = "matricola") %>% 
+  right_join(hwd, by = "Matricola" ) %>% 
+  group_by(Dipartimento, Reparto, Laboratorio, contratto) %>% 
+  summarise(hworked= sum(hworked), 
+            hprev = sum(hcontr*45.6)) %>% 
+  saveRDS(., file = here("programmazione", "data", "processed", "hwd19c.rds"))
+
+
+
 ## carico i dati rds###
 
 hwd19 <- readRDS( here("programmazione", "data", "processed", "hwd19.rds"))
+
+hwd19c <- readRDS( here("programmazione", "data", "processed", "hwd19c.rds"))
 
 att19 <- readRDS( here("programmazione", "data", "processed", "esamiricavi2019.rds"))
 
