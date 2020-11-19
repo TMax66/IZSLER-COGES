@@ -62,38 +62,23 @@ grusigma <- grusigma %>%
 ### dati dei presenti nel 2019 -anagrafica con dati contrattuali ####
 anag19 <- read_excel(here("programmazione", "data", "raw", "Presenti_2019.xls"))
 
-anag19 %>% 
-  select("matricola" = CDMATR, 
-         "sesso" = SESSO, 
-         "dtnasc" = DTNASC, 
-         "categoria" = DEMANSP3, 
-         "hperc" = PCGIUR, 
-         "contratto" = DECOMP) %>% 
-  mutate(hcontr = ifelse( contratto == "COMPARTO SSN", (36*hperc)/100, (38*hperc)/100)) %>% 
-  # filter(contratto == "COMPARTO SSN") %>%
-  left_join(grusigma, by = "matricola") %>% 
-  right_join(hwd, by = "Matricola" ) %>% 
-  group_by(Dipartimento, Reparto, Laboratorio) %>% 
-  summarise(hworked= sum(hworked), 
-            hprev = sum(hcontr*45.6)) %>% 
-  saveRDS(., file = here("programmazione", "data", "processed", "hwd19.rds"))
+# anag19 %>% 
+#   select("matricola" = CDMATR, 
+#          "sesso" = SESSO, 
+#          "dtnasc" = DTNASC, 
+#          "categoria" = DEMANSP3, 
+#          "hperc" = PCGIUR, 
+#          "contratto" = DECOMP) %>% 
+#   mutate(hcontr = ifelse( contratto == "COMPARTO SSN", (36*hperc)/100, (38*hperc)/100)) %>% 
+#   # filter(contratto == "COMPARTO SSN") %>%
+#   left_join(grusigma, by = "matricola") %>% 
+#   right_join(hwd, by = "Matricola" ) %>% 
+#   group_by(Dipartimento, Reparto, Laboratorio) %>% 
+#   summarise(hworked= sum(hworked), 
+#             hprev = sum(hcontr*45.6)) %>% 
+#   saveRDS(., file = here("programmazione", "data", "processed", "hwd19.rds"))
 
 
-anag19 %>% 
-  select("matricola" = CDMATR, 
-         "sesso" = SESSO, 
-         "dtnasc" = DTNASC, 
-         "categoria" = DEMANSP3, 
-         "hperc" = PCGIUR, 
-         "contratto" = DECOMP) %>% 
-  mutate(hcontr = ifelse( contratto == "COMPARTO SSN", (36*hperc)/100, (38*hperc)/100)) %>% 
-  # filter(contratto == "COMPARTO SSN") %>%
-  left_join(grusigma, by = "matricola") %>% 
-  right_join(hwd, by = "Matricola" ) %>% 
-  group_by(Dipartimento, Reparto, Laboratorio, contratto) %>% 
-  summarise(hworked= sum(hworked), 
-            hprev = sum(hcontr*45.6)) %>% 
-  saveRDS(., file = here("programmazione", "data", "processed", "hwd19.rds"))
 
 
 anag19 %>% 
@@ -116,7 +101,7 @@ anag19 %>%
 
 ## carico i dati rds###
 
-hwd19 <- readRDS( here("programmazione", "data", "processed", "hwd19.rds"))
+#hwd19 <- readRDS( here("programmazione", "data", "processed", "hwd19.rds"))
 
 hwd19c <- readRDS( here("programmazione", "data", "processed", "hwd19c.rds"))
 
@@ -163,7 +148,7 @@ att19 %>%
                               "Milano" = "SEDE TERRITORIALE DI MILANO", 
                               "Pavia" = "SEDE TERRITORIALE DI PAVIA", 
                               "Parma" = "SEDE TERRITORIALE DI PARMA", 
-                              "Piacenza" = "SEDE TERRITORIALE DI PIACENZA - PARMA", 
+                              "Piacenza" = "SEDE TERRITORIALE DI PIACENZA", 
                               "Reggio Emilia" = "SEDE TERRITORIALE DI REGGIO EMILIA", 
                               "Benessere Animale, Biochimica Clinica, Immunologia Veterinaria e Stabulari" = "LABORATORIO BENESSERE ANIMALE, BIOCHIMICA CLINICA, IMMUNOLOGIA VETERINARIA E STABULARI", 
                               "Controllo di Prodotti Biologici, Farmaceutici e Convalida dei Processi Produttivi" = "LABORATORIO DI CONTROLLO DI PRODOTTI BIOLOGICI, FARMACEUTICI E CONVALIDA DI PROCESSI PRODUTTIVI", 
@@ -176,7 +161,7 @@ att19 %>%
                               "Proteomica" = "LABORATORIO DI PROTEOMICA E DIAGNOSTICA TSE", 
                               "Virologia" = "LABORATORIO DI VIROLOGIA E SIEROLOGIA SPECIALIZZATA, MICROSCOPIA ELETTRONICA", 
                               "Virus Vescicolari e Produzioni Biotecnologiche" = "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE")) %>% 
-  left_join(., hwd19, by = c("Reparto", "Laboratorio")) %>% 
+  left_join(., hwd19c, by = c("Reparto", "Laboratorio")) %>% 
   mutate("FTE-previsto" = hprev/(36*45.6), 
          "FTE-reale" = hworked/(36*45.6), 
          "%tempo-utilizzato" = 100*(hworked/hprev), 
