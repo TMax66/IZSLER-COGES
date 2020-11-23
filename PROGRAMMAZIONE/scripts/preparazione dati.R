@@ -7,6 +7,8 @@ library("hrbrthemes")
 library("knitr")
 library("here")
 library("stringr")
+library("janitor")
+library("flextable")
 
 #### PREPARAZIONE DATI ####
 
@@ -81,7 +83,7 @@ anag19 <- read_excel(here("programmazione", "data", "raw", "Presenti_2019.xls"))
 
 
 
-anag19 %>% 
+ anag19 %>% 
   select("matricola" = CDMATR, 
          "sesso" = SESSO, 
          "dtnasc" = DTNASC, 
@@ -94,11 +96,13 @@ anag19 %>%
   mutate(hcontr = ifelse( contratto == "COMPARTO", (36*hperc)/100, (38*hperc)/100)) %>% 
   
   # filter(contratto == "COMPARTO SSN") %>%
-  left_join(grusigma, by = "matricola") %>% 
-  right_join(hwd, by = "Matricola" ) %>% 
+  left_join(grusigma, by = "matricola") %>%  
+  mutate(matunique = !duplicated(matricola)) %>%  
+  filter(matunique == "TRUE") %>% 
+  right_join(hwd, by = "Matricola" ) %>%  
   group_by(Dipartimento, Reparto, Laboratorio, contratto) %>% 
   summarise(hworked= sum(hworked), 
-            hprev = sum(hcontr*45.6)) %>% 
+            hprev = sum(hcontr*45.6)) %>%
   saveRDS(., file = here("programmazione", "data", "processed", "hwd19c.rds"))
 
 
@@ -325,9 +329,7 @@ tabella <- dir %>%
   select(Dipartimento, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP, 
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")  
  
-         
-  
- 
+
 ft <- flextable(tabella)
 ft <- autofit(ft)
 print(ft, preview = "docx")
