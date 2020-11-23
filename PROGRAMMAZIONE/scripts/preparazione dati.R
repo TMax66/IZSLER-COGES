@@ -103,7 +103,7 @@ anag19 <- read_excel(here("programmazione", "data", "raw", "Presenti_2019.xls"))
   group_by(Dipartimento, Reparto, Laboratorio, contratto) %>% 
   summarise(hworked= sum(hworked), 
             hprev = sum(hcontr*45.6)) %>%
-  saveRDS(., file = here("programmazione", "data", "processed", "hwd19c.rds"))
+  saveRDS(., file = here("programmazione", "data", "processed", "hwd19.rds"))
 
 
 
@@ -138,7 +138,7 @@ costi %>% select(3:5) %>%
 
 #hwd19 <- readRDS( here("programmazione", "data", "processed", "hwd19.rds"))
 
-hwd19c <- readRDS( here("programmazione", "data", "processed", "hwd19c.rds"))
+hwd19 <- readRDS( here("programmazione", "data", "processed", "hwd19.rds"))
 
 att19 <- readRDS( here("programmazione", "data", "processed", "esamiricavi2019.rds"))
 
@@ -195,7 +195,7 @@ att19 %>%
                               "Proteomica" = "LABORATORIO DI PROTEOMICA E DIAGNOSTICA TSE", 
                               "Virologia" = "LABORATORIO DI VIROLOGIA E SIEROLOGIA SPECIALIZZATA, MICROSCOPIA ELETTRONICA", 
                               "Virus Vescicolari e Produzioni Biotecnologiche" = "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE")) %>% 
-  left_join(., hwd19c, by = c("Reparto", "Laboratorio")) %>% 
+  left_join(., hwd19, by = c("Reparto", "Laboratorio")) %>% 
    mutate("FTE-previsto" = ifelse(contratto == "DIRIGENZA", hprev/(38*45.6), hprev/(36*45.6)),
          "FTE-reale" = ifelse(contratto == "DIRIGENZA", hworked/(38*45.6), hworked/(36*45.6))) %>% 
          # "%tempo-utilizzato" = 100*(hworked/hprev),
@@ -218,7 +218,7 @@ ai <- readRDS( here("programmazione", "data", "processed", "ainterna19.rds"))
 dati <- readRDS( here("programmazione", "data", "processed", "dati.rds"))
 
 
-vp <- vp %>% 
+vp %>% 
   filter(Reparto != "ANALISI DEL RISCHIO ED EPIDEMIOLOGIA GENOMICA") %>% 
   mutate(Reparto = recode(Reparto, "VIROLOGIA" = "REPARTO VIROLOGIA",
                           "VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE" = "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE",
@@ -255,10 +255,11 @@ vp <- vp %>%
                                                                "SEDE TERRITORIALE DI PIACENZA - PARMA" = "Area Territoriale Emilia Romagna", 
                                                                "SEDE TERRITORIALE DI REGGIO EMILIA" = "Area Territoriale Emilia Romagna")) %>% 
   group_by(Dipartimento) %>% 
-  summarise(VP = round(sum(`Vendita Prodotti`), 0))
+  summarise(VP = round(sum(`Vendita Prodotti`), 0)) %>% 
+  saveRDS(., file = here("programmazione", "shinyapp", "vp.rds"))
 
 
-ai <- ai %>% 
+ ai %>% 
   filter(Reparto != "ANALISI DEL RISCHIO ED EPIDEMIOLOGIA GENOMICA") %>% 
   mutate(Reparto = recode(Reparto, "VIROLOGIA" = "REPARTO VIROLOGIA",
                           "VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE" = "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE",
@@ -295,7 +296,8 @@ ai <- ai %>%
                                 "SEDE TERRITORIALE DI PIACENZA - PARMA" = "Area Territoriale Emilia Romagna", 
                                 "SEDE TERRITORIALE DI REGGIO EMILIA" = "Area Territoriale Emilia Romagna"))%>% 
   group_by(Dipartimento) %>% 
-  summarise(AI = round(sum(`Attività Interna`),0))
+  summarise(AI = round(sum(`Attività Interna`),0)) %>% 
+   saveRDS(., file = here("programmazione", "shinyapp", "ai.rds"))
 
 
 
