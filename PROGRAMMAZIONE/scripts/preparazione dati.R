@@ -359,10 +359,19 @@ tabella %>%
   geom_hline(yintercept= median(tabella$`R/FTET`), col="red")+
   geom_vline(xintercept= median(tabella$RT), col="blue")+
   labs(x="Ricavi Totali € ", y="Ricavo per FTE €")+
-  geom_text_repel(aes(label = Dipartimento),
+  geom_text_repel(aes(label = Dipartimento))
   #                 size = 2.8, colour="black")+
   # annotate(geom="text",label="Mediana RPA = 40671 €",
   #          x=500000,y=42000, size = 4, colour = "red")+
   # annotate(geom="text",label="Mediana Ricavi Totali = 1110935 €",
   #          x=1300000,y=100000, size = 4, colour = "blue")
 
+
+  z<-x %>% 
+    group_by(Dipartimento, Reparto, Laboratorio, contratto) %>% 
+    summarise(matricole = n(),
+              orelavorate = sum(hworked))
+  
+    
+    
+  
