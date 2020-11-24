@@ -110,29 +110,29 @@ anag19 <- read_excel(here("programmazione", "data", "raw", "Presenti_2019.xls"))
 
 ### Dati di attività e ricavi 2019###
 
-riepilogo <- read_excel( sheet = "riepilogo", here("report attività 2019", "data", "raw", "dati.xls"))
-reparti <- read_excel( sheet = "reparti", here("report attività 2019", "data", "raw", "dati.xls"))
-costi<- read_excel(sheet = "Reparti Formato Long", here(  "report attività 2019", "data", "raw", "costi personale.xls"))
-
-r<-reparti %>% 
-  group_by(Reparto, Laboratorio) %>% 
-  summarise(esami=round(sum(n.esami),0), ricavi=round(sum(valore),0)) %>% 
-  saveRDS(., file = here("programmazione", "data", "processed", "esamiricavi2019.rds"))
-
-riepilogo %>%
-  select(Reparto,`Attività Interna`) %>%
-  drop_na(`Attività Interna`) %>% 
-  saveRDS(., file = here("programmazione", "data", "processed", "ainterna19.rds"))
-
-riepilogo %>%
-  select(Reparto,`Vendita Prodotti`) %>%
-  drop_na(`Vendita Prodotti`) %>% 
-  saveRDS(., file = here("programmazione", "data", "processed", "vprodotti.rds"))
-
-costi %>% select(3:5) %>% 
-  unique() %>% 
-  saveRDS(., file = here("programmazione", "data", "processed", "costip2019.rds"))
-
+# riepilogo <- read_excel( sheet = "riepilogo", here("report attività 2019", "data", "raw", "dati.xls"))
+# reparti <- read_excel( sheet = "reparti", here("report attività 2019", "data", "raw", "dati.xls"))
+# costi<- read_excel(sheet = "Reparti Formato Long", here(  "report attività 2019", "data", "raw", "costi personale.xls"))
+# 
+# r<-reparti %>% 
+#   group_by(Reparto, Laboratorio) %>% 
+#   summarise(esami=round(sum(n.esami),0), ricavi=round(sum(valore),0)) %>% 
+#   saveRDS(., file = here("programmazione", "data", "processed", "esamiricavi2019.rds"))
+# 
+# riepilogo %>%
+#   select(Reparto,`Attività Interna`) %>%
+#   drop_na(`Attività Interna`) %>% 
+#   saveRDS(., file = here("programmazione", "data", "processed", "ainterna19.rds"))
+# 
+# riepilogo %>%
+#   select(Reparto,`Vendita Prodotti`) %>%
+#   drop_na(`Vendita Prodotti`) %>% 
+#   saveRDS(., file = here("programmazione", "data", "processed", "vprodotti.rds"))
+# 
+# costi %>% select(3:5) %>% 
+#   unique() %>% 
+#   saveRDS(., file = here("programmazione", "data", "processed", "costip2019.rds"))
+# 
 
 ## carico i dati rds###
 
@@ -201,8 +201,8 @@ att19 %>%
          # "%tempo-utilizzato" = 100*(hworked/hprev),
          # "tempo-medio esame" = hworked/esami,
          # "RxFTEr" = ricavi/`FTE-reale`) %>%
-  saveRDS(., file = here("programmazione", "data", "processed", "dati.rds"))
-
+  #saveRDS(., file = here("programmazione", "data", "processed", "dati.rds"))
+  saveRDS(., file = here("programmazione", "shinyapp",  "dati.rds"))
 
 
 
@@ -335,6 +335,101 @@ tabella <- dir %>%
 ft <- flextable(tabella)
 ft <- autofit(ft)
 print(ft, preview = "docx")
+
+
+
+###############################
+########DATI PER SHINY APP#####
+###############################
+vp <- readRDS( here("programmazione", "data", "processed", "vprodotti.rds"))
+ai <- readRDS( here("programmazione", "data", "processed", "ainterna19.rds"))
+dati <- readRDS( here("programmazione", "data", "processed", "dati.rds"))
+
+
+
+vp %>% 
+  filter(Reparto != "ANALISI DEL RISCHIO ED EPIDEMIOLOGIA GENOMICA") %>% 
+  mutate(Reparto = recode(Reparto, "VIROLOGIA" = "REPARTO VIROLOGIA",
+                          "VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE" = "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE",
+                          "TECNOLOGIE BIOLOGICHE APPLICATE" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE", 
+                          "PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE",
+                          "CONTROLLO ALIMENTI" = "REPARTO CONTROLLO ALIMENTI",
+                          "PRODUZIONE PRIMARIA" = "REPARTO PRODUZIONE PRIMARIA",
+                          "CHIMICO DEGLI ALIMENTI E DEI MANGIMI" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI",
+                          "CHIMICO DEGLI ALIMENTI (BOLOGNA)" = "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)",
+                          "BERGAMO - BINAGO - SONDRIO" = "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO",
+                          "CREMONA - MANTOVA" = "SEDE TERRITORIALE DI CREMONA - MANTOVA",
+                          "PAVIA" = "SEDE TERRITORIALE DI PAVIA",
+                          "LODI - MILANO" = "SEDE TERRITORIALE DI LODI - MILANO",
+                          "BRESCIA" = "SEDE TERRITORIALE DI BRESCIA", 
+                          "BOLOGNA - MODENA - FERRARA" = "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA",
+                          "FORLI' - RAVENNA" = "SEDE TERRITORIALE DI FORLÌ - RAVENNA",
+                          "PIACENZA - PARMA" = "SEDE TERRITORIALE DI PIACENZA - PARMA",
+                          "REGGIO EMILIA" = "SEDE TERRITORIALE DI REGGIO EMILIA"),
+         Dipartimento = recode (Reparto, "REPARTO VIROLOGIA" = "Dipartimento Tutela e  Salute Animale", 
+                                "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE" = "Dipartimento Tutela e  Salute Animale",
+                                "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO" = "Dipartimento Tutela e  Salute Animale",
+                                "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE" = "Dipartimento Tutela e  Salute Animale", 
+                                "REPARTO PRODUZIONE PRIMARIA" = "Dipartimento Sicurezza Alimentare", 
+                                "REPARTO CONTROLLO ALIMENTI" = "Dipartimento Sicurezza Alimentare",
+                                "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI" = "Dipartimento Sicurezza Alimentare", 
+                                "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)" = "Dipartimento Sicurezza Alimentare", 
+                                "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO" = "Area Territoriale Lombardia",
+                                "SEDE TERRITORIALE DI BRESCIA" = "Area Territoriale Lombardia",
+                                "SEDE TERRITORIALE DI PAVIA" = "Area Territoriale Lombardia",
+                                "SEDE TERRITORIALE DI CREMONA - MANTOVA" = "Area Territoriale Lombardia", 
+                                "SEDE TERRITORIALE DI LODI - MILANO" = "Area Territoriale Lombardia", 
+                                "SEDE TERRITORIALE DI FORLÌ - RAVENNA" = "Area Territoriale Emilia Romagna", 
+                                "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA" = "Area Territoriale Emilia Romagna", 
+                                "SEDE TERRITORIALE DI PIACENZA - PARMA" = "Area Territoriale Emilia Romagna", 
+                                "SEDE TERRITORIALE DI REGGIO EMILIA" = "Area Territoriale Emilia Romagna")) %>% 
+  saveRDS(., file = here("programmazione", "shinyapp", "vp.rds"))
+
+ai %>% 
+  filter(Reparto != "ANALISI DEL RISCHIO ED EPIDEMIOLOGIA GENOMICA") %>% 
+  mutate(Reparto = recode(Reparto, "VIROLOGIA" = "REPARTO VIROLOGIA",
+                          "VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE" = "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE",
+                          "TECNOLOGIE BIOLOGICHE APPLICATE" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE", 
+                          "PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE",
+                          "CONTROLLO ALIMENTI" = "REPARTO CONTROLLO ALIMENTI",
+                          "PRODUZIONE PRIMARIA" = "REPARTO PRODUZIONE PRIMARIA",
+                          "CHIMICO DEGLI ALIMENTI E DEI MANGIMI" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI",
+                          "CHIMICO DEGLI ALIMENTI (BOLOGNA)" = "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)",
+                          "BERGAMO - BINAGO - SONDRIO" = "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO",
+                          "CREMONA - MANTOVA" = "SEDE TERRITORIALE DI CREMONA - MANTOVA",
+                          "PAVIA" = "SEDE TERRITORIALE DI PAVIA",
+                          "LODI - MILANO" = "SEDE TERRITORIALE DI LODI - MILANO",
+                          "BRESCIA" = "SEDE TERRITORIALE DI BRESCIA", 
+                          "BOLOGNA - MODENA - FERRARA" = "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA",
+                          "FORLI' - RAVENNA" = "SEDE TERRITORIALE DI FORLÌ - RAVENNA",
+                          "PIACENZA - PARMA" = "SEDE TERRITORIALE DI PIACENZA - PARMA",
+                          "REGGIO EMILIA" = "SEDE TERRITORIALE DI REGGIO EMILIA"), 
+         Dipartimento = recode (Reparto, "REPARTO VIROLOGIA" = "Dipartimento Tutela e  Salute Animale", 
+                                "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE" = "Dipartimento Tutela e  Salute Animale",
+                                "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO" = "Dipartimento Tutela e  Salute Animale",
+                                "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE" = "Dipartimento Tutela e  Salute Animale", 
+                                "REPARTO PRODUZIONE PRIMARIA" = "Dipartimento Sicurezza Alimentare", 
+                                "REPARTO CONTROLLO ALIMENTI" = "Dipartimento Sicurezza Alimentare",
+                                "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI" = "Dipartimento Sicurezza Alimentare", 
+                                "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)" = "Dipartimento Sicurezza Alimentare", 
+                                "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO" = "Area Territoriale Lombardia",
+                                "SEDE TERRITORIALE DI BRESCIA" = "Area Territoriale Lombardia",
+                                "SEDE TERRITORIALE DI PAVIA" = "Area Territoriale Lombardia",
+                                "SEDE TERRITORIALE DI CREMONA - MANTOVA" = "Area Territoriale Lombardia", 
+                                "SEDE TERRITORIALE DI LODI - MILANO" = "Area Territoriale Lombardia", 
+                                "SEDE TERRITORIALE DI FORLÌ - RAVENNA" = "Area Territoriale Emilia Romagna", 
+                                "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA" = "Area Territoriale Emilia Romagna", 
+                                "SEDE TERRITORIALE DI PIACENZA - PARMA" = "Area Territoriale Emilia Romagna", 
+                                "SEDE TERRITORIALE DI REGGIO EMILIA" = "Area Territoriale Emilia Romagna"))%>% 
+  saveRDS(., file = here("programmazione", "shinyapp", "ai.rds"))
+
+
+
+
+
+
+
+
 
 
 ######################################################################
