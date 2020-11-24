@@ -9,8 +9,15 @@ ui <- dashboardPage(
   dashboardBody(
     fluidRow(
     valueBoxOutput("esami"),
-    valueBoxOutput("ra")
-    )
+    valueBoxOutput("ra"),
+    valueBoxOutput("vp"),
+    valueBoxOutput("ai"),
+    valueBoxOutput("rt"),
+    valueBoxOutput("rfte")
+    ), 
+    hr(),
+    br(), 
+    tableOutput("t")
   )
 )
 
