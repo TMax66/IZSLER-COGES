@@ -16,6 +16,7 @@ library("shinythemes")
 library("rpivotTable")
 library("janitor")
 library("here")
+library("flextable")
 options(scipen = .999)
 dati <- readRDS( here("programmazione", "shinyapp", "dati.rds"))
 dati <- dati %>% 
@@ -92,4 +93,6 @@ ricerca <- pubblicazioni %>%
   # summarise(n.articoli = n()) %>% 
   # pivot_wider(names_from = tipologia, values_from = n.articoli)
 #non si può fare la somma per colonna  perchè gli articoli sono comuni a diversi reparti####
+
+
 

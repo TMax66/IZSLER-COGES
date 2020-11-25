@@ -63,12 +63,23 @@ ra <- reactive(tabella %>%
     )
   })
   
+
+tabDip <- reactive(
+  ricerca %>% 
+    group_by(Dipartimento, tipologia) %>% 
+    count(nr) %>%  
+    summarise(n.articoli = n()) %>% 
+    pivot_wider(names_from = tipologia, values_from = n.articoli) %>% 
+    right_join(tabella[-5, ], by = "Dipartimento") %>% 
+    select(N.esami, FTED, FTEC, FTET, RA, RVP, RAI, RT, "R/FTET", IF, Int, Naz)
+)
   
-  
-output$t <- renderTable({tabella[-5, ]})
-  
-  
- 
+output$t <- renderUI({
+    flextable(tabDip()) %>%
+    theme_booktabs() %>% 
+    htmltools_value()
+})
+
 ric <- reactive({
   ricerca %>% 
   group_by(tipologia) %>% 
@@ -82,5 +93,20 @@ output$IF <- renderValueBox({
         filter(tipologia == "IF") %>% 
         select(n.articoli)), "Articoli pubblicati su riveste peer-review con IF", icon = icon("book"), color = "light-blue")
   })
+
+output$Int <- renderValueBox({
+  valueBox(
+    (ric() %>% 
+       filter(tipologia == "Int") %>% 
+       select(n.articoli)), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
+})
+
+output$Naz <- renderValueBox({
+  valueBox(
+    (ric() %>% 
+       filter(tipologia == "Naz") %>% 
+       select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
+})
+
   
   }

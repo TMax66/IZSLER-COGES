@@ -18,7 +18,9 @@ ui <- dashboardPage(
     valueBoxOutput("ai"),
     valueBoxOutput("rt"),
     valueBoxOutput("rfte"),
-    valueBoxOutput("IF")
+    valueBoxOutput("IF"), 
+    valueBoxOutput("Int"), 
+    valueBoxOutput("Naz")
     ), 
     hr(),
     br(), 
