@@ -82,7 +82,7 @@ output$t <- renderUI({
     fontsize(size=18) %>% 
     fontsize(part = "header", size = 18) %>% 
     line_spacing(space = 2.5) %>% 
-    colformat_num(j = c("N.esami", "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = "," , digits = 2) %>% 
+    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = "," , digits = 2, prefix = "€") %>% 
     autofit() %>% 
     htmltools_value()
 })
