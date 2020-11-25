@@ -1,9 +1,13 @@
 ui <- dashboardPage(
-  dashboardHeader(),
+  dashboardHeader(titleWidth = 300),
   dashboardSidebar(
+    width = 300,
     sidebarMenu(
-      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-      menuItem("Dipartimento Sicurezza Alimentare", tabName = "widgets", icon = icon("th"))
+      menuItem("IZSLER", tabName = "izsler", icon = icon("globe")),
+      menuItem("Dipartimento Sicurezza Alimentare", tabName = "dsa", icon = icon("cog")),
+      menuItem("Dipartimento Tutela e Salute Animale", tabName = "dsa", icon = icon("cog")),
+      menuItem("Area Territoriale Lombardia", tabName = "dsa", icon = icon("cog")),
+      menuItem("Area Territoriale Emilia Romagna", tabName = "dsa", icon = icon("cog"))
     )
   ),
   dashboardBody(
@@ -13,11 +17,15 @@ ui <- dashboardPage(
     valueBoxOutput("vp"),
     valueBoxOutput("ai"),
     valueBoxOutput("rt"),
-    valueBoxOutput("rfte")
+    valueBoxOutput("rfte"),
+    valueBoxOutput("IF")
     ), 
     hr(),
     br(), 
+    
+    fluidRow( 
     tableOutput("t")
+    )
   )
 )
 

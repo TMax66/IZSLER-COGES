@@ -68,7 +68,19 @@ ra <- reactive(tabella %>%
 output$t <- renderTable({tabella[-5, ]})
   
   
-  
-  
+ 
+ric <- reactive({
+  ricerca %>% 
+  group_by(tipologia) %>% 
+  count(nr) %>%
+  summarise(n.articoli = n())
+  })
+
+output$IF <- renderValueBox({
+  valueBox(
+      (ric() %>% 
+        filter(tipologia == "IF") %>% 
+        select(n.articoli)), "Articoli pubblicati su riveste peer-review con IF", icon = icon("book"), color = "light-blue")
+  })
   
   }

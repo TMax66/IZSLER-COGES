@@ -105,7 +105,30 @@ anag19 <- read_excel(here("programmazione", "data", "raw", "Presenti_2019.xls"))
             hprev = sum(hcontr*45.6)) %>%
   saveRDS(., file = here("programmazione", "data", "processed", "hwd19.rds"))
 
-
+ 
+ ###dataset per link a pubblicazioni####
+ # anag19 %>% 
+ #   select("matricola" = CDMATR, 
+ #          "sesso" = SESSO, 
+ #          "dtnasc" = DTNASC, 
+ #          "categoria" = DEMANSP3, 
+ #          "hperc" = PCGIUR, 
+ #          "contratto" = DECOMP) %>% 
+ #   mutate(contratto = recode(contratto, "DIRIGENZA MEDICO/VETERINARIA SSN" = "DIRIGENZA", 
+ #                             "DIRIGENZA S.P.T.A. SSN" = "DIRIGENZA", 
+ #                             "COMPARTO SSN" = "COMPARTO")) %>% 
+ #   mutate(hcontr = ifelse( contratto == "COMPARTO", (36*hperc)/100, (38*hperc)/100)) %>% 
+ #   
+ #   # filter(contratto == "COMPARTO SSN") %>%
+ #   left_join(grusigma, by = "matricola") %>%  
+ #   mutate(matunique = !duplicated(matricola)) %>%  
+ #   filter(matunique == "TRUE") %>% 
+ #   right_join(hwd, by = "Matricola" ) %>% 
+ #   filter(contratto == "DIRIGENZA") %>% 
+ #   select(matricola,Dipartimento, Reparto, Laboratorio, hcontr, hworked ) %>% 
+ #   saveRDS(., file = here("programmazione", "data", "processed", "matrperpubb.rds"))
+   
+   
 
 
 ### Dati di attività e ricavi 2019###
