@@ -77,8 +77,18 @@ tabDip <- reactive(
 output$t <- renderUI({
     flextable(tabDip()) %>%
     theme_booktabs() %>% 
+    color(i = 1, color = "blue", part = "header") %>% 
+    bold( part = "header") %>% 
+    fontsize(size=18) %>% 
+    fontsize(part = "header", size = 18) %>% 
+    line_spacing(space = 2.5) %>% 
+    colformat_num(j = c("N.esami", "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = "," , digits = 2) %>% 
+    autofit() %>% 
     htmltools_value()
 })
+
+
+
 
 ric <- reactive({
   ricerca %>% 
@@ -91,7 +101,7 @@ output$IF <- renderValueBox({
   valueBox(
       (ric() %>% 
         filter(tipologia == "IF") %>% 
-        select(n.articoli)), "Articoli pubblicati su riveste peer-review con IF", icon = icon("book"), color = "light-blue")
+        select(n.articoli)), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
   })
 
 output$Int <- renderValueBox({
