@@ -18,7 +18,7 @@ ra <- reactive(tabella %>%
 
   output$ra <- renderValueBox({
     valueBox(prettyNum(ra(), big.mark = ",") , "Ricavi per attività analitica", icon = icon("euro"),
-      color = "yellow"
+      color = "aqua"
     )
   })
 
@@ -28,7 +28,7 @@ ra <- reactive(tabella %>%
   
   output$vp <- renderValueBox({
     valueBox(prettyNum(vp(), big.mark = ",") , "Ricavi per vendita prodotti", icon = icon("euro"),
-             color = "yellow"
+             color = "aqua"
     )
   })
   
@@ -39,7 +39,7 @@ ra <- reactive(tabella %>%
   
   output$ai <- renderValueBox({
     valueBox(prettyNum(ai(), big.mark = ",") , "Ricavi per attività interna", icon = icon("euro"),
-             color = "yellow"
+             color = "aqua"
     )
   })
   
@@ -49,7 +49,7 @@ ra <- reactive(tabella %>%
   
   output$rt <- renderValueBox({
     valueBox(prettyNum(rt(), big.mark = ",") , "Ricavi totali", icon = icon("euro"),
-             color = "yellow"
+             color = "aqua"
     )
   })
   
@@ -59,7 +59,7 @@ ra <- reactive(tabella %>%
   
   output$rfte <- renderValueBox({
     valueBox(prettyNum(rfte(), big.mark = ",") , "Ricavo per Full Time Equivalente", icon = icon("euro"),
-             color = "yellow"
+             color = "aqua"
     )
   })
   

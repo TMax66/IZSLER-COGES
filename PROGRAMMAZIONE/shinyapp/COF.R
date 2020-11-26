@@ -45,4 +45,14 @@ tabella <- dir %>%
   select(Dipartimento, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
  
-tabella
+
+
+tabella %>% 
+  filter(Dipartimento != "Total") %>% 
+  pivot_longer(!Dipartimento, names_to = "KPI", values_to = "valore") %>% 
+  ggplot( aes( 
+             x = KPI, 
+             y = valore, 
+             fill = factor(KPI)
+        )) + geom_col(width = 1, color = "white")+
+  coord_polar()+ facet_wrap(~Dipartimento)
