@@ -8,7 +8,7 @@ ai <- readRDS( here("programmazione", "shinyapp", "ai.rds"))
 
 dir <- dati %>%
   filter(contratto == "DIRIGENZA") %>%
-  group_by(Dipartimento) %>%
+  group_by(Dipartimento, Reparto) %>%
   summarise(esami = sum(esami),
             ricavi = sum(ricavi),
             FTE_d = round(sum(`FTE-reale`),1))
@@ -16,26 +16,26 @@ dir <- dati %>%
 
 comp <- dati %>%
   filter(contratto == "COMPARTO") %>%
-  group_by(Dipartimento) %>%
+  group_by(Dipartimento, Reparto) %>%
   summarise(esami = sum(esami),
             ricavi = sum(ricavi),
             FTE_c = round(sum(`FTE-reale`),1))
 
 vp <- vp %>% 
-  group_by(Dipartimento) %>% 
+  group_by(Dipartimento, Reparto) %>% 
   summarise(VP = sum(`Vendita Prodotti`))
 
 ai <- ai %>% 
-  group_by(Dipartimento) %>% 
+  group_by(Dipartimento, Reparto) %>% 
   summarise(AI = sum(`Attività Interna`))
 
 
 
 tabella <- dir %>%
   bind_cols((comp %>%
-               select(4)), (vp %>%
-                              select(2)), (ai %>%
-                                             select(2))) %>%
+               select(5)), (vp %>%
+                              select(3)), (ai %>%
+                                             select(3))) %>%
 
   mutate(RT = (ricavi+VP+AI),
          FTE_t = round((FTE_d+FTE_c),1)) %>%
@@ -46,26 +46,9 @@ tabella <- dir %>%
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
  
 
-tabella %>% 
-  filter(Dipartimento != "Total") %>% 
-  mutate(Analisi = round(100*(esami/sum(esami)), 0), 
-         "RA" = round(100*(ricavi/sum(ricavi)),0), 
-         "FTED" = round(100*(FTE_d/sum(FTE_d)), 0), 
-         "FTEC" = round(100*(FTE_c/sum(FTE_c)),0),
-         "RVP" =round(100*(VP/sum(VP)),0), 
-         "RAI" = round(100*(AI/sum(AI)), 0),
-         "RT" = round(100*(RT/sum(RT)),0),
-         "FTET" = round(100*(FTE_t/ sum(FTE_t)), 0),
-         "Ricavo per FTE" = round(100*(`R-FTE`/sum(`R-FTE`)), 0)
-         ) %>% 
-  select(Dipartimento, Analisi, "FTED", "FTEC", "FTET",   "RT", "Ricavo per FTE") %>% 
-  pivot_longer(!Dipartimento, names_to = "KPI", values_to = "valore") %>% 
- mutate(KPI = factor(KPI, levels = c("Analisi", "FTED", "FTEC", "FTET", "RT", "Ricavo per FTE"  ))) %>% 
-  ggplot( aes( 
-             x = KPI, 
-             y = valore, 
-             fill = factor(KPI)
-        )) + geom_col(width = 0.9, color = "white")+
-  coord_polar(theta = "x")+ facet_wrap(~Dipartimento, nrow = 2)+
-  scale_fill_brewer(palette = "Blues")+
-  geom_text(aes(y = valore-10, label = paste0(valore, "%")), color = "black", size=3) 
+
+
+
+
+
+

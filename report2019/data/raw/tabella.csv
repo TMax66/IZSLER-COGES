@@ -1,0 +1,162 @@
+"","settore","prova","tecnica","labs","Esami"
+"1","Alimenti Uomo","Antibiogramma","Diffusione in agar","Laboratorio Diagnostica Generale",1
+"2","Alimenti Uomo","Attività dell'acqua (Aw)","Punto di rugiada","Laboratorio Microbiologia degli Alimenti",135
+"3","Alimenti Uomo","Bacillus cereus presunto","Microbiologica","Laboratorio Microbiologia degli Alimenti",16
+"4","Alimenti Uomo","Campylobacter spp.","Microbiologica","Laboratorio Microbiologia degli Alimenti",2
+"5","Alimenti Uomo","Campylobacter spp.","PCR Real Time","Laboratorio Microbiologia degli Alimenti",85
+"6","Alimenti Uomo","Clostridi anaerobi solfito riduttori (spore e forme vegetative)","Microbiologica","Laboratorio Microbiologia degli Alimenti",3
+"7","Alimenti Uomo","Clostridi anaerobi solfito riduttori (spore)","Microbiologica","Laboratorio Microbiologia degli Alimenti",2
+"8","Alimenti Uomo","Clostridium perfringens","Microbiologica","Laboratorio Microbiologia degli Alimenti",18
+"9","Alimenti Uomo","Coliformi","Microbiologica a 30°C","Laboratorio Microbiologia degli Alimenti",3
+"10","Alimenti Uomo","Coliformi","Microbiologica a 37°C","Laboratorio Microbiologia degli Alimenti",5
+"11","Alimenti Uomo","Coliformi totali acqua","MF (Membrana Filtrante)","Laboratorio Microbiologia degli Alimenti",157
+"12","Alimenti Uomo","Enterobacteriaceae","Microbiologica a 30°C","Laboratorio Microbiologia degli Alimenti",38
+"13","Alimenti Uomo","Enterobacteriaceae","Microbiologica a 37°C","Laboratorio Microbiologia degli Alimenti",465
+"14","Alimenti Uomo","Enterococchi acqua (Streptococchi fecali)","MF (Membrana Filtrante)","Laboratorio Microbiologia degli Alimenti",168
+"15","Alimenti Uomo","Esame batteriologico latte (1 terreno colturale)","Microbiologica","Laboratorio Diagnostica Generale",1
+"16","Alimenti Uomo","Esame batteriologico latte (agar sangue + TKT)","Microbiologica","Laboratorio Diagnostica Generale",1
+"17","Alimenti Uomo","Esame batteriologico latte (ricerca Streptococcus agalactiae)","Microbiologica (TKT)","Laboratorio Microbiologia degli Alimenti",99
+"18","Alimenti Uomo","Esame ispettivo","Ispettiva","Laboratorio Microbiologia degli Alimenti",7
+"19","Alimenti Uomo","Escherichia coli","MF (Membrana Filtrante)","Laboratorio Microbiologia degli Alimenti",169
+"20","Alimenti Uomo","Escherichia coli beta glucuronidasi positivi","Microbiologica","Laboratorio Microbiologia degli Alimenti",459
+"21","Alimenti Uomo","Lieviti","Microbiologica","Laboratorio Microbiologia degli Alimenti",2
+"22","Alimenti Uomo","Listeria monocytogenes","Microbiologica","Laboratorio Microbiologia degli Alimenti",999
+"23","Alimenti Uomo","Listeria monocytogenes","MPN","Laboratorio Microbiologia degli Alimenti",225
+"24","Alimenti Uomo","Listeria monocytogenes","PCR Real Time","Laboratorio Microbiologia degli Alimenti",1043
+"25","Alimenti Uomo","Microrganismi","Microbiologica a 30°C","Laboratorio Microbiologia degli Alimenti",570
+"26","Alimenti Uomo","Microrganismi acqua","Microbiologica a 22°C","Laboratorio Microbiologia degli Alimenti",9
+"27","Alimenti Uomo","Microrganismi acqua","Microbiologica a 36°C","Laboratorio Microbiologia degli Alimenti",9
+"28","Alimenti Uomo","Motivazione di inidoneità campione","Multipla","Laboratorio Diagnostica Generale",0
+"29","Alimenti Uomo","Motivazione di inidoneità campione","Multipla","Laboratorio Microbiologia degli Alimenti",0
+"30","Alimenti Uomo","Motivi di mancata esecuzione di prove richieste","Multipla","Laboratorio Diagnostica Generale",0
+"31","Alimenti Uomo","Motivi di mancata esecuzione di prove richieste","Multipla","Laboratorio Microbiologia degli Alimenti",0
+"32","Alimenti Uomo","Muffe","Microbiologica","Laboratorio Microbiologia degli Alimenti",9
+"33","Alimenti Uomo","Note alle prove","Multipla","Laboratorio Diagnostica Generale",0
+"34","Alimenti Uomo","Note alle prove","Multipla","Laboratorio Microbiologia degli Alimenti",0
+"35","Alimenti Uomo","pH","Potenziometrico","Laboratorio Microbiologia degli Alimenti",146
+"36","Alimenti Uomo","Pseudomonas spp.","Microbiologica","Laboratorio Microbiologia degli Alimenti",1
+"37","Alimenti Uomo","Salmonella spp.","Microbiologica","Laboratorio Microbiologia degli Alimenti",347
+"38","Alimenti Uomo","Salmonella spp.","PCR Real Time","Laboratorio Microbiologia degli Alimenti",1604
+"39","Alimenti Uomo","Sostanze inibenti","Kit pronto uso","Laboratorio Sierologia",1
+"40","Alimenti Uomo","Sostanze inibenti","Microbiologica B. subtilis","Laboratorio Diagnostica Generale",65
+"41","Alimenti Uomo","Sostanze inibenti","Microbiologica B. subtilis","Laboratorio Microbiologia degli Alimenti",20
+"42","Alimenti Uomo","Sostanze inibenti Penicillina/Sulfamidico","Kit+ P.asi e PABA","Laboratorio Microbiologia degli Alimenti",84
+"43","Alimenti Uomo","Stafilococchi coagulasi-positivi","Microbiologica a 37°C","Laboratorio Microbiologia degli Alimenti",501
+"44","Alimenti Uomo","Trichinella","Microscopica (digestione artificiale)","Laboratorio Diagnostica Generale",3232
+"45","Alimenti Uomo","Trichinella (equidi)","Microscopica (digestione artificiale)","Laboratorio Diagnostica Generale",653
+"46","Alimenti Uomo","Trichinella (suidi mac.industriale)","Microscopica (digestione artificiale)","Laboratorio Diagnostica Generale",28448
+"47","Alimenti Zootecnici","Clostridi anaerobi solfito riduttori (spore)","Microbiologica","Laboratorio Microbiologia degli Alimenti",8
+"48","Alimenti Zootecnici","Coliformi totali acqua","MF (Membrana Filtrante)","Laboratorio Microbiologia degli Alimenti",1
+"49","Alimenti Zootecnici","Enterobacteriaceae","Microbiologica a 37°C","Laboratorio Microbiologia degli Alimenti",861
+"50","Alimenti Zootecnici","Enterococchi acqua (Streptococchi fecali)","MF (Membrana Filtrante)","Laboratorio Microbiologia degli Alimenti",1
+"51","Alimenti Zootecnici","Escherichia coli","MF (Membrana Filtrante)","Laboratorio Microbiologia degli Alimenti",1
+"52","Alimenti Zootecnici","Note alle prove","Multipla","Laboratorio Microbiologia degli Alimenti",0
+"53","Alimenti Zootecnici","Salmonella spp.","Microbiologica","Laboratorio Microbiologia degli Alimenti",135
+"54","Alimenti Zootecnici","Salmonella spp.","PCR Real Time","Laboratorio Microbiologia degli Alimenti",772
+"55","Altri Controlli (cosmetici,ambientali..)","Coliformi totali acqua","MF (Membrana Filtrante)","Laboratorio Microbiologia degli Alimenti",1
+"56","Altri Controlli (cosmetici,ambientali..)","Enterococchi acqua (Streptococchi fecali)","MF (Membrana Filtrante)","Laboratorio Microbiologia degli Alimenti",13
+"57","Altri Controlli (cosmetici,ambientali..)","Escherichia coli","MF (Membrana Filtrante)","Laboratorio Microbiologia degli Alimenti",13
+"58","Altri Controlli (cosmetici,ambientali..)","Microrganismi acqua","Microbiologica a 22°C","Laboratorio Microbiologia degli Alimenti",4
+"59","Altri Controlli (cosmetici,ambientali..)","Microrganismi acqua","Microbiologica a 36°C","Laboratorio Microbiologia degli Alimenti",4
+"60","Controlli Interni Sistema Qualità","Attività dell'acqua (Aw)","Punto di rugiada","Laboratorio Microbiologia degli Alimenti",8
+"61","Controlli Interni Sistema Qualità","Bacillus cereus presunto","Microbiologica","Laboratorio Microbiologia degli Alimenti",9
+"62","Controlli Interni Sistema Qualità","BHV1/Rinotracheite Infettiva Bovina: Ab x gE del virus nel latte","ELISA competitiva (kit IDEXX )","Laboratorio Sierologia",5
+"63","Controlli Interni Sistema Qualità","BHV1/Rinotracheite Infettiva Bovina:anticorpi verso gE del virus","ELISA competitiva (kit IDEXX )","Laboratorio Sierologia",40
+"64","Controlli Interni Sistema Qualità","Brucella abortus/melitensis: anticorpi","FdC","Laboratorio Sierologia",45
+"65","Controlli Interni Sistema Qualità","Brucella abortus/melitensis: anticorpi","SAR","Laboratorio Sierologia",158
+"66","Controlli Interni Sistema Qualità","Brucella abortus/melitensis: anticorpi nel latte di bovino","ELISA (kit ID VET)","Laboratorio Sierologia",150
+"67","Controlli Interni Sistema Qualità","BVD: anticorpi anti-NS2-3","ELISA (kit IZS-BS)","Laboratorio Sierologia",40
+"68","Controlli Interni Sistema Qualità","Campylobacter spp.","Microbiologica","Laboratorio Microbiologia degli Alimenti",9
+"69","Controlli Interni Sistema Qualità","Campylobacter spp.","PCR Real Time","Laboratorio Microbiologia degli Alimenti",7
+"70","Controlli Interni Sistema Qualità","Campylobacter spp. - Conta delle colonie","Microbiologica","Laboratorio Microbiologia degli Alimenti",21
+"71","Controlli Interni Sistema Qualità","Clostridi anaerobi solfito riduttori (spore e forme vegetative)","Microbiologica","Laboratorio Microbiologia degli Alimenti",1
+"72","Controlli Interni Sistema Qualità","Clostridi anaerobi solfito riduttori (spore)","Microbiologica","Laboratorio Microbiologia degli Alimenti",8
+"73","Controlli Interni Sistema Qualità","Clostridium perfringens","Microbiologica","Laboratorio Microbiologia degli Alimenti",9
+"74","Controlli Interni Sistema Qualità","Coliformi","Microbiologica a 30°C","Laboratorio Microbiologia degli Alimenti",2
+"75","Controlli Interni Sistema Qualità","Coliformi","Microbiologica a 37°C","Laboratorio Microbiologia degli Alimenti",9
+"76","Controlli Interni Sistema Qualità","Coliformi totali acqua","MF (Membrana Filtrante)","Laboratorio Microbiologia degli Alimenti",11
+"77","Controlli Interni Sistema Qualità","Controllo efficacia trattamento termico","Microbiologica","Laboratorio Microbiologia degli Alimenti",54
+"78","Controlli Interni Sistema Qualità","Enterobacteriaceae","Microbiologica a 37°C","Laboratorio Microbiologia degli Alimenti",11
+"79","Controlli Interni Sistema Qualità","Enterococchi acqua (Streptococchi fecali)","MF (Membrana Filtrante)","Laboratorio Microbiologia degli Alimenti",11
+"80","Controlli Interni Sistema Qualità","Esame batteriologico latte (ricerca Streptococcus agalactiae)","Microbiologica (TKT)","Laboratorio Diagnostica Generale",32
+"81","Controlli Interni Sistema Qualità","Esame batteriologico latte (ricerca Streptococcus agalactiae)","Microbiologica (TKT)","Laboratorio Microbiologia degli Alimenti",4
+"82","Controlli Interni Sistema Qualità","Escherichia coli","MF (Membrana Filtrante)","Laboratorio Microbiologia degli Alimenti",11
+"83","Controlli Interni Sistema Qualità","Escherichia coli beta glucuronidasi positivi","Microbiologica","Laboratorio Microbiologia degli Alimenti",11
+"84","Controlli Interni Sistema Qualità","Lieviti","Microbiologica","Laboratorio Microbiologia degli Alimenti",2
+"85","Controlli Interni Sistema Qualità","Listeria monocytogenes","Microbiologica","Laboratorio Microbiologia degli Alimenti",18
+"86","Controlli Interni Sistema Qualità","Listeria monocytogenes","MPN","Laboratorio Microbiologia degli Alimenti",9
+"87","Controlli Interni Sistema Qualità","Listeria monocytogenes","PCR Real Time","Laboratorio Microbiologia degli Alimenti",6
+"88","Controlli Interni Sistema Qualità","Listeria spp.","Microbiologica","Laboratorio Microbiologia degli Alimenti",1
+"89","Controlli Interni Sistema Qualità","Microrganismi","Microbiologica a 30°C","Laboratorio Microbiologia degli Alimenti",159
+"90","Controlli Interni Sistema Qualità","Microrganismi acqua","Microbiologica a 22°C","Laboratorio Microbiologia degli Alimenti",20
+"91","Controlli Interni Sistema Qualità","Microrganismi acqua","Microbiologica a 36°C","Laboratorio Microbiologia degli Alimenti",9
+"92","Controlli Interni Sistema Qualità","Muffe","Microbiologica","Laboratorio Microbiologia degli Alimenti",2
+"93","Controlli Interni Sistema Qualità","Note alle prove","Multipla","Laboratorio Diagnostica Generale",0
+"94","Controlli Interni Sistema Qualità","pH","Potenziometrico","Laboratorio Microbiologia degli Alimenti",10
+"95","Controlli Interni Sistema Qualità","Pseudomonas spp.","Microbiologica","Laboratorio Microbiologia degli Alimenti",1
+"96","Controlli Interni Sistema Qualità","Pseudomonas spp. presunto","Microbiologica","Laboratorio Microbiologia degli Alimenti",1
+"97","Controlli Interni Sistema Qualità","Salmonella spp.","Microbiologica","Laboratorio Microbiologia degli Alimenti",9
+"98","Controlli Interni Sistema Qualità","Salmonella spp.","PCR Real Time","Laboratorio Microbiologia degli Alimenti",7
+"99","Controlli Interni Sistema Qualità","Sostanze inibenti","Kit pronto uso","Laboratorio Sierologia",80
+"100","Controlli Interni Sistema Qualità","Sostanze inibenti Penicillina/Sulfamidico","Kit+ P.asi e PABA","Laboratorio Microbiologia degli Alimenti",1
+"101","Controlli Interni Sistema Qualità","Stafilococchi coagulasi-positivi","Microbiologica a 37°C","Laboratorio Microbiologia degli Alimenti",42
+"102","Controlli Interni Sistema Qualità","Taylorella equigenitalis/CEM: agente eziologico","Microbiologica","Laboratorio Diagnostica Generale",12
+"103","Controlli Interni Sistema Qualità","Trichinella","Microscopica (digestione artificiale)","Laboratorio Diagnostica Generale",4
+"104","Sanità Animale","Acari della Rogna","Microscopica a fresco KOH","Laboratorio Diagnostica Generale",3
+"105","Sanità Animale","Agalassia contagiosa da Myc.agalactiae: anticorpi","ELISA (kit IDEXX)","Laboratorio Sierologia",4290
+"106","Sanità Animale","Antibiogramma","Diffusione in agar","Laboratorio Diagnostica Generale",432
+"107","Sanità Animale","BHV1/Rinotracheite Infettiva Bovina: Ab x gE del virus nel latte","ELISA competitiva (kit IDEXX )","Laboratorio Sierologia",1750
+"108","Sanità Animale","BHV1/Rinotracheite Infettiva Bovina:anticorpi verso gE del virus","ELISA competitiva (kit IDEXX )","Laboratorio Sierologia",28057
+"109","Sanità Animale","Brucella abortus/melitensis/suis: anticorpi","ELISA competitiva (kit SVANOVIR)","Laboratorio Sierologia",68
+"110","Sanità Animale","Brucella abortus/melitensis: anticorpi","FdC","Laboratorio Sierologia",44792
+"111","Sanità Animale","Brucella abortus/melitensis: anticorpi","SAR","Laboratorio Sierologia",722
+"112","Sanità Animale","Brucella abortus/melitensis: anticorpi nel latte di bovino","ELISA (kit ID VET)","Laboratorio Sierologia",1529
+"113","Sanità Animale","Brucella spp.: agente eziologico","Microbiologica","Laboratorio Diagnostica Generale",35
+"114","Sanità Animale","Brucellosi da B. abortus/melitensis: anticorpi","FdC","Laboratorio Sierologia",8
+"115","Sanità Animale","BVD: anticorpi anti-NS2-3","ELISA (kit IZS-BS)","Laboratorio Sierologia",1312
+"116","Sanità Animale","Campylobacter termotolleranti","Microbiologica","Laboratorio Diagnostica Generale",3
+"117","Sanità Animale","Dermatofiti/Saprolegnia spp.: agente eziologico","Microbiologica","Laboratorio Diagnostica Generale",5
+"118","Sanità Animale","Esame anatomopatologico animali di taglia grande","Anatomopatologica","Laboratorio Diagnostica Generale",3
+"119","Sanità Animale","Esame anatomopatologico animali di taglia medio-grande","Anatomopatologica","Laboratorio Diagnostica Generale",70
+"120","Sanità Animale","Esame anatomopatologico animali di taglia medio-piccola","Anatomopatologica","Laboratorio Diagnostica Generale",220
+"121","Sanità Animale","Esame anatomopatologico animali piccola taglia (all.industriali)","Anatomopatologica","Laboratorio Diagnostica Generale",3065
+"122","Sanità Animale","Esame batteriologico","Microbiologica","Laboratorio Diagnostica Generale",534
+"123","Sanità Animale","Esame batteriologico latte (1 terreno colturale)","Microbiologica","Laboratorio Diagnostica Generale",267
+"124","Sanità Animale","Esame batteriologico latte (agar globuli esculina + BP/RPF)","Microbiologica","Laboratorio Diagnostica Generale",1
+"125","Sanità Animale","Esame batteriologico latte (agar globuli esculina)","Microbiologica","Laboratorio Diagnostica Generale",731
+"126","Sanità Animale","Esame batteriologico latte (agar sangue)","Microbiologica","Laboratorio Diagnostica Generale",536
+"127","Sanità Animale","Esame batteriologico latte (ricerca Stafilococco coagulasi +)","Microbiologica (Baird Parker + RPF modificato)","Laboratorio Diagnostica Generale",1710
+"128","Sanità Animale","Esame batteriologico latte (ricerca Streptococcus agalactiae)","Microbiologica (TKT)","Laboratorio Diagnostica Generale",2036
+"129","Sanità Animale","Esame batteriologico latte (terreno enterobatteri)","Microbiologica","Laboratorio Diagnostica Generale",1
+"130","Sanità Animale","Esame ispettivo","Ispettiva","Laboratorio Diagnostica Generale",35
+"131","Sanità Animale","Esame parassitologico","Microscopica a fresco","Laboratorio Diagnostica Generale",30
+"132","Sanità Animale","Esame parassitologico","Microscopica dopo flottazione","Laboratorio Diagnostica Generale",115
+"133","Sanità Animale","Esame parassitologico","Microscopica dopo sedimentazione","Laboratorio Diagnostica Generale",16
+"134","Sanità Animale","Esame parassitologico con conta","Microscopica (tecnica di Mc Master)","Laboratorio Diagnostica Generale",444
+"135","Sanità Animale","Febbre Q da Coxiella burnetii: anticorpi","ELISA (kit ID VET)","Laboratorio Sierologia",641
+"136","Sanità Animale","Invio ad altri laboratori","Multipla","Laboratorio Diagnostica Generale",0
+"137","Sanità Animale","Invio ad altri laboratori","Multipla","Laboratorio Sierologia",0
+"138","Sanità Animale","Larve di parassiti","Microscopica (tecnica di Baerman)","Laboratorio Diagnostica Generale",223
+"139","Sanità Animale","Leucosi Bovina Enzootica: anticorpi","ELISA (kit IZS-BS)","Laboratorio Sierologia",29569
+"140","Sanità Animale","Motivazione di inidoneità campione","Multipla","Laboratorio Diagnostica Generale",0
+"141","Sanità Animale","Motivazione di inidoneità campione","Multipla","Laboratorio Sierologia",0
+"142","Sanità Animale","Motivi di mancata esecuzione di prove richieste","Multipla","Laboratorio Diagnostica Generale",0
+"143","Sanità Animale","Motivi di mancata esecuzione di prove richieste","Multipla","Laboratorio Sierologia",0
+"144","Sanità Animale","Mycobacterium avium subs paratuberculosis: anticorpi","ELISA conferma (kit ID VET)","Laboratorio Sierologia",65
+"145","Sanità Animale","Mycobacterium avium subs paratuberculosis: anticorpi","ELISA conferma (kit IDEXX)","Laboratorio Sierologia",502
+"146","Sanità Animale","Mycobacterium avium subs paratuberculosis: anticorpi","ELISA screening (kit ID VET)","Laboratorio Sierologia",2449
+"147","Sanità Animale","Mycobacterium avium subs paratuberculosis: anticorpi","ELISA screening (kit IDEXX)","Laboratorio Sierologia",29115
+"148","Sanità Animale","Mycoplasma spp. (latte): agente eziologico","Microbiologica","Laboratorio Diagnostica Generale",4
+"149","Sanità Animale","Mycoplasma spp. (mammiferi): agente eziologico","Microbiologica","Laboratorio Diagnostica Generale",3
+"150","Sanità Animale","Neospora caninum: anticorpi","ELISA (kit ID VET)","Laboratorio Sierologia",3758
+"151","Sanità Animale","Note alle prove","Multipla","Laboratorio Diagnostica Generale",0
+"152","Sanità Animale","Note alle prove","Multipla","Laboratorio Sierologia",0
+"153","Sanità Animale","Oocisti di Cryptosporidium: agente eziologico","Microscopica","Laboratorio Diagnostica Generale",84
+"154","Sanità Animale","Prototheca spp.","Microbiologica","Laboratorio Diagnostica Generale",213
+"155","Sanità Animale","Prototheca spp. campioni latte","Microbiologica","Laboratorio Diagnostica Generale",18
+"156","Sanità Animale","Salmonella spp.","Microbiologica","Laboratorio Diagnostica Generale",177
+"157","Sanità Animale","Salmonella spp. in pool","Microbiologica","Laboratorio Diagnostica Generale",21
+"158","Sanità Animale","Sostanze inibenti","Kit pronto uso","Laboratorio Sierologia",5
+"159","Sanità Animale","Sostanze inibenti","Microbiologica B. subtilis","Laboratorio Diagnostica Generale",58
+"160","Sanità Animale","Taylorella equigenitalis/CEM: agente eziologico","Microbiologica","Laboratorio Diagnostica Generale",246
+"161","Sanità Animale","Trichinella","Microscopica (digestione artificiale)","Laboratorio Diagnostica Generale",913
