@@ -7,7 +7,7 @@ server <- function(input, output, session) {
     select("N.esami"))
   
 output$esami <- renderValueBox({
-    valueBox(prettyNum(es(), big.mark = ","), "N.esami",  icon = icon("flask"),
+    valueBox(prettyNum(es(), big.mark = ","), "N. esami",  icon = icon("flask"),
       color = "blue"
     )
   })
@@ -70,8 +70,8 @@ tabDip <- reactive(
     count(nr) %>%  
     summarise(n.articoli = n()) %>% 
     pivot_wider(names_from = tipologia, values_from = n.articoli) %>% 
-    right_join(tabella[-5, ], by = "Dipartimento") %>% 
-    select(N.esami, FTED, FTEC, FTET, RA, RVP, RAI, RT, "R/FTET", IF, Int, Naz)
+    right_join(tabella, by = "Dipartimento") %>% 
+    select(N.esami, FTED, FTEC, FTET, RA, RVP, RAI, RT, "R/FTET")
 )
   
 output$t <- renderUI({
@@ -79,8 +79,8 @@ output$t <- renderUI({
     theme_booktabs() %>% 
     color(i = 1, color = "blue", part = "header") %>% 
     bold( part = "header") %>% 
-    fontsize(size=18) %>% 
-    fontsize(part = "header", size = 18) %>% 
+    fontsize(size=15) %>% 
+    fontsize(part = "header", size = 15) %>% 
     line_spacing(space = 2.5) %>% 
     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = "," , digits = 2, prefix = "€") %>% 
     autofit() %>% 
@@ -118,5 +118,40 @@ output$Naz <- renderValueBox({
        select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
 })
 
-  
+
+####grafico benchmarking###
+tb <- reactive({tabella %>% 
+  filter(Dipartimento != "Total") %>% 
+  mutate(Analisi = round(100*(N.esami/sum(N.esami)), 0), 
+         "RA" = round(100*(RA/sum(RA)),0), 
+         "FTED" = round(100*(FTED/sum(FTED)), 0), 
+         "FTEC" = round(100*(FTEC/sum(FTEC)),0),
+         "RVP" =round(100*(RVP/sum(RVP)),0), 
+         "RAI" = round(100*(RAI/sum(RAI)), 0),
+         "RT" = round(100*(RT/sum(RT)),0),
+         "FTET" = round(100*(FTET/ sum(FTET)), 0),
+         "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 0)
+  ) %>% 
+  select(Dipartimento, Analisi, "FTED", "FTEC", "FTET",   "RT", "Ricavo per FTE") %>% 
+  pivot_longer(!Dipartimento, names_to = "KPI", values_to = "valore") %>% 
+  mutate(KPI = factor(KPI, levels = c("Analisi", "FTED", "FTEC", "FTET", "RT", "Ricavo per FTE"  )))
+  })
+
+ output$tbd <- renderPlot( {  
+   ggplot(tb(),  aes( 
+    x = KPI, 
+    y = valore, 
+    fill = KPI
+  )) + geom_col(width = 0.9, color = "black")+
+  coord_polar(theta = "x")+ facet_wrap(~Dipartimento, nrow = 1)+
+  scale_fill_brewer(palette = "Blues")+
+  geom_text(aes(y = valore-8, label = paste0(valore, "%")), color = "black", size=3)+
+    theme(legend.position = "blank",
+          panel.background= element_blank(),
+          plot.background = element_blank(), 
+          strip.text.x = element_text(size = 15, colour = "blue"), 
+          axis.text.x = element_text(size = 10, color = "black"))+
+    labs(x = "", y = "")}  , bg = "transparent"
+ )
+
   }

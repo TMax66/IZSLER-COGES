@@ -1,5 +1,5 @@
 ui <- dashboardPage(
-  dashboardHeader(titleWidth = 300),
+  dashboardHeader(title = "IZSLER-KPI", titleWidth = 300),
   dashboardSidebar(
     width = 300,
     sidebarMenu(
@@ -22,11 +22,13 @@ ui <- dashboardPage(
     valueBoxOutput("Int"), 
     valueBoxOutput("Naz")
     ), 
-    hr(),
-    br(), 
-    
+    br(),
     fluidRow( 
     tableOutput("t")
+    ),
+    br(),
+    fluidRow(
+      plotOutput("tbd")
     )
   )
 )
