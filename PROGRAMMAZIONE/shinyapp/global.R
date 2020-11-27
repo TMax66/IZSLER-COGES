@@ -62,7 +62,7 @@ tabella <- dir %>%
 #########################PUBBLICAZIONI###############################################################################
 #####################################################################################################################
 
-pubblicazioni <- read_excel(here("programmazione", "data", "raw", "PPubblicazioni2019.xlsx"))
+pubblicazioni <- read_excel(here("programmazione", "data", "raw", "pubblicazioni2019.xlsx"))
 pubblicazioni$autore <- str_to_lower(pubblicazioni$autore)
 pubblicazioni$autore <- gsub(",.*$", "", pubblicazioni$autore)
 
