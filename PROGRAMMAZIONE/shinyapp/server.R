@@ -199,7 +199,7 @@ Cint <- reactive({
   
 })
 
-output$articoli <- renderTable(Cint())
+output$convegni <- renderTable(Cint())
 
 
 

@@ -25,11 +25,11 @@ ui <- dashboardPage(
         valueBoxOutput("IF")),
     bsModal("P", "Pubblicazioni IF", "clickdiv0",tableOutput("articoli"), size = "large"),
     
-  valueBoxOutput("Int"), 
+  #valueBoxOutput("Int"), 
     
-    # div(id='clickdiv1',
-    #     valueBoxOutput("Int")),
-    # bsModal("cint", "Partecipazione a convegni internazionali", "clickdiv1", tableOutput("articoli"), size = "large"),
+    div(id='clickdiv1',
+        valueBoxOutput("Int")),
+    bsModal("CI", "Partecipazione a convegni internazionali", "clickdiv1", tableOutput("convegni"), size = "large"),
 
     valueBoxOutput("Naz")
     ), 
