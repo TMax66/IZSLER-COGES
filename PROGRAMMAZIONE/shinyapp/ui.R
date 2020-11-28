@@ -20,7 +20,13 @@ ui <- dashboardPage(
     valueBoxOutput("ai"),
     valueBoxOutput("rt"),
     valueBoxOutput("rfte"),
-    valueBoxOutput("IF"), 
+    
+    #valueBoxOutput("IF"), 
+    
+    div(id='clickdiv0',
+        valueBoxOutput("IF")),
+    bsModal("P", "Paper", "clickdiv0",tableOutput("articoli"), size = "large"),
+    
     valueBoxOutput("Int"), 
     valueBoxOutput("Naz")
     ), 
@@ -30,7 +36,11 @@ ui <- dashboardPage(
     ),
     br(),
     fluidRow(
-      plotOutput("tbd")
+      column(1, 
+    radioButtons("ind", "", 
+                c("Dipartimento" = "Dipartimento", "KPI" = "KPI"))),
+      column(11, 
+      plotOutput("tbd"))
     )
   ), 
   

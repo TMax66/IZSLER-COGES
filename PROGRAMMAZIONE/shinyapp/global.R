@@ -17,6 +17,7 @@ library("rpivotTable")
 library("janitor")
 library("here")
 library("flextable")
+library("shinyBS")
 options(scipen = .999)
 dati <- readRDS( here("programmazione", "shinyapp", "dati.rds"))
 dati <- dati %>% 
@@ -83,7 +84,7 @@ repMat <- readRDS( here("programmazione", "data", "processed", "matrperpubb.rds"
 ricerca <- pubblicazioni %>% 
   right_join(matricole, by = "autore") %>%  
   filter(!is.na(nr)) %>% 
-  select(nr, reparto, autore, tipologia, matricola, autori, titinglese, datibiblio) %>% 
+  select(nr, reparto, autore, tipologia, matricola, autori, titinglese, datibiblio,`TITOLO RIVISTA` ) %>% 
   right_join(repMat, by = "matricola") %>% 
   filter(!is.na(nr)) # %>% 
   # mutate(id = seq(1:717)) %>% 
