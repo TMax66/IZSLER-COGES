@@ -2,7 +2,7 @@ server <- function(input, output, session) {
   
 ###Quadro Generale Dashboard#####
   
-  es <- reactive(tabella %>% 
+  es <- reactive(tizsler %>% 
     filter(Dipartimento == "Total") %>% 
     select("N.esami"))
   
@@ -12,7 +12,7 @@ output$esami <- renderValueBox({
     )
   })
   
-ra <- reactive(tabella %>% 
+ra <- reactive(tizsler %>% 
   filter(Dipartimento == "Total") %>% 
   select("RA"))
 
@@ -22,7 +22,7 @@ ra <- reactive(tabella %>%
     )
   })
 
-  vp <- reactive(tabella %>% 
+  vp <- reactive(tizsler %>% 
                    filter(Dipartimento == "Total") %>% 
                    select("RVP"))
   
@@ -33,7 +33,7 @@ ra <- reactive(tabella %>%
   })
   
   
-  ai <- reactive(tabella %>% 
+  ai <- reactive(tizsler %>% 
                    filter(Dipartimento == "Total") %>% 
                    select("RAI"))
   
@@ -43,7 +43,7 @@ ra <- reactive(tabella %>%
     )
   })
   
-  rt <- reactive(tabella %>% 
+  rt <- reactive(tizsler %>% 
                    filter(Dipartimento == "Total") %>% 
                    select("RT"))
   
@@ -53,7 +53,7 @@ ra <- reactive(tabella %>%
     )
   })
   
-  rfte <- reactive(tabella %>% 
+  rfte <- reactive(tizsler %>% 
                    filter(Dipartimento == "Total") %>% 
                    select("R/FTET"))
   
@@ -70,7 +70,7 @@ tabDip <- reactive(
     count(nr) %>%  
     summarise(n.articoli = n()) %>% 
     pivot_wider(names_from = tipologia, values_from = n.articoli) %>% 
-    right_join(tabella, by = "Dipartimento") %>% 
+    right_join(tizsler, by = "Dipartimento") %>% 
     select(N.esami, FTED, FTEC, FTET, RA, RVP, RAI, RT, "R/FTET")
 )
   
@@ -121,7 +121,7 @@ output$Naz <- renderValueBox({
 
 ####grafico benchmarking#########################################
 
-tb <- reactive({tabella %>% 
+tb <- reactive({tizsler %>% 
   filter(Dipartimento != "Total") %>% 
   mutate(Esami = round(100*(N.esami/sum(N.esami)), 1), 
          "RA" = round(100*(RA/sum(RA)),1), 
@@ -200,4 +200,95 @@ paper <- reactive({
  
 output$articoli <- renderTable(paper())
  
-  }
+
+
+####tabella modale convegni####
+
+Cint <- reactive({
+  ricerca %>% filter(tipologia == "Int") %>% 
+    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+    unique()
+  
+})
+
+output$articoli <- renderTable(Cint())
+
+#####DSA#####
+
+es2 <- reactive(tizsler %>% 
+                 filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+                 select("N.esami"))
+
+output$esami2 <- renderValueBox({
+  valueBox(prettyNum(es2(), big.mark = "."), "N. esami",  icon = icon("flask"),
+           color = "blue"
+  )
+})
+
+ra2 <- reactive(tizsler %>% 
+                 filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+                 select("RA"))
+
+output$ra2 <- renderValueBox({
+  valueBox(prettyNum(ra2(), big.mark = ".") , "Ricavi per attività analitica", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+vp2 <- reactive(tizsler %>% 
+                 filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+                 select("RVP"))
+
+output$vp2 <- renderValueBox({
+  valueBox(prettyNum(vp2(), big.mark = ".") , "Ricavi per vendita prodotti", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+
+ai2 <- reactive(tizsler %>% 
+                 filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+                 select("RAI"))
+
+output$ai2 <- renderValueBox({
+  valueBox(prettyNum(ai2(), big.mark = ".") , "Ricavi per attività interna", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+rt2 <- reactive(tizsler %>% 
+                 filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+                 select("RT"))
+
+output$rt2 <- renderValueBox({
+  valueBox(prettyNum(rt2(), big.mark = ".") , "Ricavi totali", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+rfte2 <- reactive(tizsler %>% 
+                   filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+                   select("R/FTET"))
+
+output$rfte2 <- renderValueBox({
+  valueBox(prettyNum(rfte2(), big.mark = ".") , "Ricavo per Full Time Equivalente", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

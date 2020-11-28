@@ -49,10 +49,8 @@ tabella <- dir %>%
   left_join(comp, by = c("Dipartimento", "Reparto", "esami", "ricavi")) %>% 
   left_join(vp, by = c("Dipartimento", "Reparto")) %>% 
   left_join(ai, by = c("Dipartimento", "Reparto")) %>% 
-  group_by(Dipartimento) %>% 
-  summarise_at(c("esami", "ricavi", "FTE_d", "FTE_c", "VP", "AI"), sum)
-  
-  
+  group_by(Dipartimento, Reparto) %>% 
+  summarise_at(c("esami", "ricavi", "FTE_d", "FTE_c", "VP", "AI"), sum) %>% 
   mutate(RT = (ricavi+VP+AI),
          FTE_t = round((FTE_d+FTE_c),1)) %>%
   arrange(desc(esami)) %>%
