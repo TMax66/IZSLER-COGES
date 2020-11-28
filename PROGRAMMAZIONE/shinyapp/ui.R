@@ -56,19 +56,24 @@ ui <- dashboardPage(
         valueBoxOutput("vp2"),
         valueBoxOutput("ai2"),
         valueBoxOutput("rt2"),
-        valueBoxOutput("rfte2")),
+        valueBoxOutput("rfte2"),
       
+      div(id='clickdiv3',
+          valueBoxOutput("IF2")),
+      bsModal("P2", "Pubblicazioni IF", "clickdiv3",tableOutput("articoli2"), size = "large"),
+      
+      valueBoxOutput("Int2"), 
+      valueBoxOutput("Naz2"), ),
       
       br(),
       
       fluidRow( 
         tableOutput("t2")),
-
       
-      
-      
-      
-      
+      br(),
+      fluidRow(
+               plotOutput("tbd2")
+      )
 ), 
 
 

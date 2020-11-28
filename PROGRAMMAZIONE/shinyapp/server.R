@@ -1,8 +1,10 @@
 server <- function(input, output, session) { 
   
 ###Quadro Generale Dashboard#####
+
   
-  es <- reactive(tizsler %>% 
+###value boxes######  
+es <- reactive(tizsler %>% 
     filter(Dipartimento == "Total") %>% 
     select("N.esami"))
   
@@ -62,20 +64,42 @@ ra <- reactive(tizsler %>%
              color = "aqua"
     )
   })
+
+  ric <- reactive({
+    ricerca %>% 
+      group_by(tipologia) %>% 
+      count(nr) %>%
+      summarise(n.articoli = n())
+  })
+  
+  output$IF <- renderValueBox({
+    valueBox(
+      (ric() %>% 
+         filter(tipologia == "IF") %>% 
+         select(n.articoli)), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
+  })
+  
+  output$Int <- renderValueBox({
+    valueBox(
+      (ric() %>% 
+         filter(tipologia == "Int") %>% 
+         select(n.articoli)), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
+  })
+  
+  output$Naz <- renderValueBox({
+    valueBox(
+      (ric() %>% 
+         filter(tipologia == "Naz") %>% 
+         select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
+  })
+  
   
 
-tabDip <- reactive(
-  ricerca %>% 
-    group_by(Dipartimento, tipologia) %>% 
-    count(nr) %>%  
-    summarise(n.articoli = n()) %>% 
-    pivot_wider(names_from = tipologia, values_from = n.articoli) %>% 
-    right_join(tizsler, by = "Dipartimento") %>% 
-    select(N.esami, FTED, FTEC, FTET, RA, RVP, RAI, RT, "R/FTET")
-)
-  
+
+
+###tabella x dipartimenti####
 output$t <- renderUI({
-    flextable(tabDip()) %>%
+    flextable(tizsler) %>%
     theme_booktabs() %>% 
     color(i = 1, color = "blue", part = "header") %>% 
     bold( part = "header") %>% 
@@ -87,39 +111,7 @@ output$t <- renderUI({
     htmltools_value()
 })
 
-
-
-
-ric <- reactive({
-  ricerca %>% 
-  group_by(tipologia) %>% 
-  count(nr) %>%
-  summarise(n.articoli = n())
-  })
-
-output$IF <- renderValueBox({
-  valueBox(
-      (ric() %>% 
-        filter(tipologia == "IF") %>% 
-        select(n.articoli)), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
-  })
-
-output$Int <- renderValueBox({
-  valueBox(
-    (ric() %>% 
-       filter(tipologia == "Int") %>% 
-       select(n.articoli)), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
-})
-
-output$Naz <- renderValueBox({
-  valueBox(
-    (ric() %>% 
-       filter(tipologia == "Naz") %>% 
-       select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
-})
-
-
-####grafico benchmarking#########################################
+####grafici benchmarking#########################################
 
 tb <- reactive({tizsler %>% 
   filter(Dipartimento != "Total") %>% 
@@ -187,10 +179,8 @@ else
       labs(x = "", y = "")
 
 }, bg = "transparent")
-###############################################################################################
- 
 
-####tabella modale pubblicazioni#####
+####tabelle modali pubblicazioni e convegni####################################################
 
 paper <- reactive({
   ricerca %>% filter(tipologia == "IF") %>% 
@@ -200,9 +190,7 @@ paper <- reactive({
  
 output$articoli <- renderTable(paper())
  
-
-
-####tabella modale convegni####
+###tabella modale convegni
 
 Cint <- reactive({
   ricerca %>% filter(tipologia == "Int") %>% 
@@ -213,8 +201,12 @@ Cint <- reactive({
 
 output$articoli <- renderTable(Cint())
 
+
+
+
 #####DSA#####
 
+###value boxes dsa####
 es2 <- reactive(tizsler %>% 
                  filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
                  select("N.esami"))
@@ -276,19 +268,102 @@ output$rfte2 <- renderValueBox({
   )
 })
 
+ric2 <- reactive({
+  ricerca %>%
+    filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+    group_by(tipologia) %>% 
+    count(nr) %>%
+    summarise(n.articoli = n())
+})
+
+output$IF2 <- renderValueBox({
+  valueBox(
+    (ric2() %>% 
+       filter(tipologia == "IF") %>% 
+       select(n.articoli)), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
+})
+
+
+output$Int2 <- renderValueBox({
+  valueBox(
+    (ric2() %>% 
+       filter(tipologia == "Int") %>% 
+       select(n.articoli)), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
+})
+
+output$Naz2 <- renderValueBox({
+  valueBox(
+    (ric2() %>% 
+       filter(tipologia == "Naz") %>% 
+       select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
+})
+
+
+
+#### tabella x reparti dsa######
+output$t2 <- renderUI({
+  flextable(tdsa) %>%
+    theme_booktabs() %>% 
+    color(i = 1, color = "blue", part = "header") %>% 
+    bold( part = "header") %>% 
+    fontsize(size=15) %>% 
+    fontsize(part = "header", size = 15) %>% 
+    line_spacing(space = 2.5) %>% 
+    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
+    autofit() %>% 
+    htmltools_value()
+})
 
 
 
 
 
+#### grafico benchmarking dsa####
+tb2 <- reactive({tdsa %>% 
+    filter(Reparto != "Total") %>% 
+    mutate(Esami = round(100*(N.esami/sum(N.esami)), 1), 
+           "RA" = round(100*(RA/sum(RA)),1), 
+           "FTED" = round(100*(FTED/sum(FTED)),1), 
+           "FTEC" = round(100*(FTEC/sum(FTEC)),1),
+           "RVP" =round(100*(RVP/sum(RVP)),1), 
+           "RAI" = round(100*(RAI/sum(RAI)), 1),
+           "RT" = round(100*(RT/sum(RT)),1),
+           "FTET" = round(100*(FTET/ sum(FTET)), 1),
+           "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
+    ) %>% 
+    select(Reparto, Esami, "FTED", "FTEC", "FTET",   "RT", "Ricavo per FTE") %>% 
+    pivot_longer(!Reparto, names_to = "KPI", values_to = "valore") %>% 
+    mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT", "Ricavo per FTE"  )))
+})
+
+output$tbd2 <- renderPlot({
+  
+  ggplot(tb2(),  aes( 
+    x = KPI, 
+    y = valore, 
+    fill = KPI
+  )) + geom_col(width = 0.9, color = "black")+
+    coord_polar(theta = "x")+ facet_wrap(~Reparto, nrow = 1)+
+    scale_fill_brewer(palette = "Blues")+
+    geom_text(aes(y = valore-8, label = paste0(valore, "%")), color = "black", size=3)+
+    theme(legend.position = "blank",
+          panel.background= element_blank(),
+          plot.background = element_blank(), 
+          strip.text.x = element_text(size = 15, colour = "blue"), 
+          axis.text.x = element_text(size = 10, color = "black"))+
+    labs(x = "", y = "") 
+ 
+}, bg = "transparent")
 
 
+### tabelle modali pubblicazioni e convegni dsa####
+paper2 <- reactive({
+  ricerca %>% filter(tipologia == "IF") %>% 
+    filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+    unique()
+})
 
-
-
-
-
-
-
+output$articoli2 <- renderTable(paper2())
 
 }
