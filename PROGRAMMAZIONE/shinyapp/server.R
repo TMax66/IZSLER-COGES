@@ -214,6 +214,11 @@ Cnaz <- reactive({
 output$nazionali <- renderTable(Cnaz())
 
 
+###tabelle modali percentuali KPI
+
+output$tbw <- renderTable(tb() %>% 
+pivot_wider(names_from = "KPI", values_from = "valore"))
+
 
 
 
@@ -438,6 +443,10 @@ Cnaz2 <- reactive({
 output$nazionali2 <- renderTable(Cnaz2())
 
 
+###tabelle modali percentuali KPI
+
+output$tbw2 <- renderTable(tb2() %>% 
+                            pivot_wider(names_from = "KPI", values_from = "valore"))
 
 
 
@@ -658,6 +667,15 @@ Cnaz3 <- reactive({
 
 output$nazionali3 <- renderTable(Cnaz3())
 
+
+###tabelle modali percentuali KPI
+
+output$tbw3 <- renderTable(tb3() %>% 
+                            pivot_wider(names_from = "KPI", values_from = "valore"))
+
+
+
+
 ###ATLOMB####
 ###value boxes atlomb####
 es4 <- reactive(tizsler %>% 
@@ -870,6 +888,14 @@ Cnaz4 <- reactive({
 output$nazionali4 <- renderTable(Cnaz4())
 
 
+###tabelle modali percentuali KPI
+
+output$tbw4 <- renderTable(tb4() %>% 
+                            pivot_wider(names_from = "KPI", values_from = "valore"))
+
+
+
+
 ###ATER####
 ###value boxes ater####
 es5 <- reactive(tizsler %>% 
@@ -1078,6 +1104,12 @@ Cnaz5 <- reactive({
 })
 
 output$nazionali5 <- renderTable(Cnaz5())
+
+
+###tabelle modali percentuali KPI
+
+output$tbw5 <- renderTable(tb5() %>% 
+                            pivot_wider(names_from = "KPI", values_from = "valore"))
 
 
 }

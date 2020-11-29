@@ -43,11 +43,14 @@ ui <- dashboardPage(
     
     br(),
     fluidRow(
-      column(1, 
+    column(1, 
     radioButtons("ind", "", 
                 c("Dipartimento" = "Dipartimento", "KPI" = "KPI"))),
-      column(11, 
-      plotOutput("tbd"))
+    column(11, 
+             div(id = 'clickdiv00',
+                 plotOutput("tbd")),
+                 bsModal("TW", "",  'clickdiv00', tableOutput("tbw")))
+     
     )
   ), 
 ####Dipartimento Sicurezza Alimentare####
@@ -86,8 +89,11 @@ ui <- dashboardPage(
         column(1, 
                radioButtons("ind2", "", 
                             c("Reparto" = "Reparto", "KPI" = "KPI"))),
+        
         column(11, 
-               plotOutput("tbd2"))
+               div(id = 'clickdiv01',
+                   plotOutput("tbd2")),
+               bsModal("TW2", "",  'clickdiv01', tableOutput("tbw2")))
       )
 ), 
 
@@ -124,8 +130,13 @@ ui <- dashboardPage(
             column(1, 
                    radioButtons("ind3", "", 
                                 c("Reparto" = "Reparto", "KPI" = "KPI"))),
+            
             column(11, 
-                   plotOutput("tbd3"))
+                   div(id = 'clickdiv02',
+                       plotOutput("tbd3")),
+                   bsModal("TW3", "",  'clickdiv02', tableOutput("tbw3")))
+            
+            
           )
   ), 
           
@@ -162,8 +173,14 @@ ui <- dashboardPage(
             column(1, 
                    radioButtons("ind4", "", 
                                 c("Reparto" = "Reparto", "KPI" = "KPI"))),
+            
             column(11, 
-                   plotOutput("tbd4"))
+                   div(id = 'clickdiv03',
+                       plotOutput("tbd4")),
+                   bsModal("TW4", "",  'clickdiv03', tableOutput("tbw4")))
+            
+            
+            
           )
 
           ), 
@@ -201,9 +218,11 @@ ui <- dashboardPage(
                    radioButtons("ind5", "", 
                                 c("Reparto" = "Reparto", "KPI" = "KPI"))),
             column(11, 
-                   plotOutput("tbd5"))
+                   div(id = 'clickdiv04',
+                       plotOutput("tbd5")), 
+                  bsModal("TW5", "",'clickdiv04',tableOutput("tbw5") )
           )
           )
   
-)))
+))))
 
