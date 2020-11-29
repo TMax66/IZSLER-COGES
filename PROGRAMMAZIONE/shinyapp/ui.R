@@ -112,9 +112,6 @@ ui <- dashboardPage(
             div(id='clickdiv8',
                 valueBoxOutput("Naz3")),
             bsModal("CN3", "Partecipazione a convegni nazionali", "clickdiv8", tableOutput("nazionali3"), size = "large"),
-            
-            
-            
           ),
           
           br(),
@@ -132,17 +129,81 @@ ui <- dashboardPage(
           )
   ), 
           
-          
-          
-          
-          
-          
-          
-          
 ###Area Territoriale Lombardia####
-  tabItem(tabName = "lomb"), 
+  tabItem(tabName = "lomb", 
+                  fluidRow(
+                    valueBoxOutput("esami4"),
+                    valueBoxOutput("ra4"),
+                    valueBoxOutput("vp4"),
+                    valueBoxOutput("ai4"),
+                    valueBoxOutput("rt4"),
+                    valueBoxOutput("rfte4"),
+                    
+                    div(id='clickdiv9',
+                        valueBoxOutput("IF4")),
+                    bsModal("P4", "Pubblicazioni IF", "clickdiv9",tableOutput("articoli4"), size = "large"),
+                    
+                    div(id='clickdiv10',
+                        valueBoxOutput("Int4")),
+                    bsModal("CI4", "Partecipazione a convegni internazionali", "clickdiv10", tableOutput("convegni4"), size = "large"),
+                    
+                    div(id='clickdiv11',
+                        valueBoxOutput("Naz4")),
+                    bsModal("CN4", "Partecipazione a convegni nazionali", "clickdiv11", tableOutput("nazionali4"), size = "large"),
+
+                  ),
+          br(),
+          
+          fluidRow( 
+            tableOutput("t4")), 
+          
+          br(),
+          fluidRow(
+            column(1, 
+                   radioButtons("ind4", "", 
+                                c("Reparto" = "Reparto", "KPI" = "KPI"))),
+            column(11, 
+                   plotOutput("tbd4"))
+          )
+
+          ), 
 ###Area Territoriale Emilia Romagna#####
-  tabItem(tabName = "emil")
+  tabItem(tabName = "emil", 
+          fluidRow(
+            valueBoxOutput("esami5"),
+            valueBoxOutput("ra5"),
+            valueBoxOutput("vp5"),
+            valueBoxOutput("ai5"),
+            valueBoxOutput("rt5"),
+            valueBoxOutput("rfte5"),
+            
+            div(id='clickdiv12',
+                valueBoxOutput("IF5")),
+            bsModal("P5", "Pubblicazioni IF", "clickdiv12",tableOutput("articoli5"), size = "large"),
+            
+            div(id='clickdiv13',
+                valueBoxOutput("Int5")),
+            bsModal("CI5", "Partecipazione a convegni internazionali", "clickdiv13", tableOutput("convegni5"), size = "large"),
+            
+            div(id='clickdiv14',
+                valueBoxOutput("Naz5")),
+            bsModal("CN5", "Partecipazione a convegni nazionali", "clickdiv14", tableOutput("nazionali5"), size = "large"),
+            
+          ),
+          br(),
+          
+          fluidRow( 
+            tableOutput("t5")), 
+          
+          br(),
+          fluidRow(
+            column(1, 
+                   radioButtons("ind5", "", 
+                                c("Reparto" = "Reparto", "KPI" = "KPI"))),
+            column(11, 
+                   plotOutput("tbd5"))
+          )
+          )
   
 )))
 

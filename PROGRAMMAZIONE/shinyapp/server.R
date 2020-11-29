@@ -443,7 +443,7 @@ output$nazionali2 <- renderTable(Cnaz2())
 
 ###DTSA####
 
-###value boxes dsa####
+###value boxes dtsa####
 es3 <- reactive(tizsler %>% 
                   filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
                   select("N.esami"))
@@ -537,7 +537,7 @@ output$Naz3 <- renderValueBox({
 
 
 
-#### tabella x reparti dsa######
+#### tabella x reparti dtsa######
 output$t3 <- renderUI({
   flextable(tdtsa) %>%
     theme_booktabs() %>% 
@@ -555,7 +555,7 @@ output$t3 <- renderUI({
 
 
 
-#### grafico benchmarking dsa####
+#### grafico benchmarking dtsa####
 tb3 <- reactive({tdtsa %>% 
     filter(Reparto != "Total") %>% 
     mutate(Esami = round(100*(N.esami/sum(N.esami)), 1), 
@@ -657,6 +657,427 @@ Cnaz3 <- reactive({
 })
 
 output$nazionali3 <- renderTable(Cnaz3())
+
+###ATLOMB####
+###value boxes atlomb####
+es4 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+                  select("N.esami"))
+
+output$esami4 <- renderValueBox({
+  valueBox(prettyNum(es4(), big.mark = "."), "N. esami",  icon = icon("flask"),
+           color = "blue"
+  )
+})
+
+ra4 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+                  select("RA"))
+
+output$ra4 <- renderValueBox({
+  valueBox(prettyNum(ra4(), big.mark = ".") , "Ricavi per attività analitica", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+vp4 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+                  select("RVP"))
+
+output$vp4 <- renderValueBox({
+  valueBox(prettyNum(vp4(), big.mark = ".") , "Ricavi per vendita prodotti", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+
+ai4 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+                  select("RAI"))
+
+output$ai4 <- renderValueBox({
+  valueBox(prettyNum(ai4(), big.mark = ".") , "Ricavi per attività interna", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+rt4 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+                  select("RT"))
+
+output$rt4 <- renderValueBox({
+  valueBox(prettyNum(rt4(), big.mark = ".") , "Ricavi totali", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+rfte4 <- reactive(tizsler %>% 
+                    filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+                    select("R/FTET"))
+
+output$rfte4 <- renderValueBox({
+  valueBox(prettyNum(rfte4(), big.mark = ".") , "Ricavo per Full Time Equivalente", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+ric4 <- reactive({
+  ricerca %>%
+    filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+    group_by(tipologia) %>% 
+    count(nr) %>%
+    summarise(n.articoli = n())
+})
+
+output$IF4 <- renderValueBox({
+  valueBox(
+    (ric4() %>% 
+       filter(tipologia == "IF") %>% 
+       select(n.articoli)), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
+})
+
+
+output$Int4 <- renderValueBox({
+  valueBox(
+    (ric4() %>% 
+       filter(tipologia == "Int") %>% 
+       select(n.articoli)), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
+})
+
+output$Naz4 <- renderValueBox({
+  valueBox(
+    (ric4() %>% 
+       filter(tipologia == "Naz") %>% 
+       select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
+})
+
+
+#### tabella x reparti atlomb######
+output$t4 <- renderUI({
+  flextable(tatlomb) %>%
+    theme_booktabs() %>% 
+    color(i = 1, color = "blue", part = "header") %>% 
+    bold( part = "header") %>% 
+    fontsize(size=15) %>% 
+    fontsize(part = "header", size = 15) %>% 
+    line_spacing(space = 2.5) %>% 
+    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
+    autofit() %>% 
+    htmltools_value()
+})
+
+#### grafico benchmarking dtsa####
+tb4 <- reactive({tatlomb %>% 
+    filter(Reparto != "Total") %>% 
+    mutate(Esami = round(100*(N.esami/sum(N.esami)), 1), 
+           "RA" = round(100*(RA/sum(RA)),1), 
+           "FTED" = round(100*(FTED/sum(FTED)),1), 
+           "FTEC" = round(100*(FTEC/sum(FTEC)),1),
+           "RVP" =round(100*(RVP/sum(RVP)),1), 
+           "RAI" = round(100*(RAI/sum(RAI)), 1),
+           "RT" = round(100*(RT/sum(RT)),1),
+           "FTET" = round(100*(FTET/ sum(FTET)), 1),
+           "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
+    ) %>% 
+    select(Reparto, Esami, "FTED", "FTEC", "FTET",   "RT", "Ricavo per FTE") %>% 
+    pivot_longer(!Reparto, names_to = "KPI", values_to = "valore") %>% 
+    mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT", "Ricavo per FTE"  )))
+})
+
+output$tbd4 <- renderPlot( 
+  
+  if(input$ind4 == "Reparto")
+    
+  {  
+    
+    ggplot(tb4(),  aes( 
+      x = KPI, 
+      y = valore, 
+      fill = KPI
+    )) + geom_col(width = 0.9, color = "black")+
+      coord_polar(theta = "x")+ facet_wrap(~Reparto, nrow = 1)+
+      scale_fill_brewer(palette = "Blues")+
+      geom_text(aes(y = valore-8, label = paste0(valore, "%")), color = "black", size=3)+
+      theme(legend.position = "blank",
+            panel.background= element_blank(),
+            plot.background = element_blank(), 
+            strip.text.x = element_text(size = 12, colour = "blue"), 
+            axis.text.x = element_text(size = 10, color = "black"))+
+      labs(x = "", y = "") 
+    
+  }
+  
+  else
+    
+  {
+    
+    tb4() %>% 
+      mutate(Reparto = recode(Reparto, "SEDE TERRITORIALE DI CREMONA - MANTOVA" = "CR-MN", 
+                              "SEDE TERRITORIALE DI BRESCIA" = "BS", 
+                              "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO" = "BG-BI-SO", 
+                              "SEDE TERRITORIALE DI LODI - MILANO" = "LO-MI", 
+                              "SEDE TERRITORIALE DI PAVIA" = "PV")) %>% 
+      ggplot(aes( 
+        x = Reparto, 
+        y = valore, 
+        fill = Reparto
+      )) + geom_col(width = 0.9, color = "black")+
+      coord_polar(theta = "x")+ facet_wrap(~KPI, nrow = 1)+
+      scale_fill_brewer(palette = "Blues")+
+      geom_text(aes(y = valore-8, label = paste0(valore, "%")), color = "black", size=3)+
+      theme(legend.position = "blank",
+            panel.background= element_blank(),
+            plot.background = element_blank(), 
+            strip.text.x = element_text(size = 15, colour = "blue"), 
+            axis.text.x = element_text(size = 10, color = "black"))+
+      labs(x = "", y = "")
+  }, bg = "transparent")
+
+### tabelle modali pubblicazioni e convegni atlomb####
+paper4 <- reactive({
+  ricerca %>% filter(tipologia == "IF") %>% 
+    filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+    unique()
+})
+
+output$articoli4 <- renderTable(paper4())
+
+
+###tabella modale convegni internazionali
+
+Cint4 <- reactive({
+  ricerca %>% filter(tipologia == "Int") %>% 
+    filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+    unique()
+  
+})
+
+output$convegni4 <- renderTable(Cint4())
+
+
+###tabella modale convegni Nazionali
+
+Cnaz4 <- reactive({
+  ricerca %>% filter(tipologia == "Naz") %>% 
+    filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+    unique()
+  
+})
+
+output$nazionali4 <- renderTable(Cnaz4())
+
+
+###ATER####
+###value boxes ater####
+es5 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+                  select("N.esami"))
+
+output$esami5 <- renderValueBox({
+  valueBox(prettyNum(es5(), big.mark = "."), "N. esami",  icon = icon("flask"),
+           color = "blue"
+  )
+})
+
+ra5 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+                  select("RA"))
+
+output$ra5 <- renderValueBox({
+  valueBox(prettyNum(ra5(), big.mark = ".") , "Ricavi per attività analitica", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+vp5<- reactive(tizsler %>% 
+                  filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+                  select("RVP"))
+
+output$vp5 <- renderValueBox({
+  valueBox(prettyNum(vp4(), big.mark = ".") , "Ricavi per vendita prodotti", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+
+ai5 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+                  select("RAI"))
+
+output$ai5 <- renderValueBox({
+  valueBox(prettyNum(ai4(), big.mark = ".") , "Ricavi per attività interna", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+rt5 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+                  select("RT"))
+
+output$rt5 <- renderValueBox({
+  valueBox(prettyNum(rt5(), big.mark = ".") , "Ricavi totali", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+rfte5 <- reactive(tizsler %>% 
+                    filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+                    select("R/FTET"))
+
+output$rfte5 <- renderValueBox({
+  valueBox(prettyNum(rfte4(), big.mark = ".") , "Ricavo per Full Time Equivalente", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+ric5 <- reactive({
+  ricerca %>%
+    filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+    group_by(tipologia) %>% 
+    count(nr) %>%
+    summarise(n.articoli = n())
+})
+
+output$IF5 <- renderValueBox({
+  valueBox(
+    (ric5() %>% 
+       filter(tipologia == "IF") %>% 
+       select(n.articoli)), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
+})
+
+
+output$Int5 <- renderValueBox({
+  valueBox(
+    (ric5() %>% 
+       filter(tipologia == "Int") %>% 
+       select(n.articoli)), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
+})
+
+output$Naz5 <- renderValueBox({
+  valueBox(
+    (ric5() %>% 
+       filter(tipologia == "Naz") %>% 
+       select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
+})
+
+#### tabella x reparti ater######
+output$t5 <- renderUI({
+  flextable(tater) %>%
+    theme_booktabs() %>% 
+    color(i = 1, color = "blue", part = "header") %>% 
+    bold( part = "header") %>% 
+    fontsize(size=15) %>% 
+    fontsize(part = "header", size = 15) %>% 
+    line_spacing(space = 2.5) %>% 
+    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
+    autofit() %>% 
+    htmltools_value()
+})
+
+#### grafico benchmarking dtsa####
+tb5 <- reactive({tater %>% 
+    filter(Reparto != "Total") %>% 
+    mutate(Esami = round(100*(N.esami/sum(N.esami)), 1), 
+           "RA" = round(100*(RA/sum(RA)),1), 
+           "FTED" = round(100*(FTED/sum(FTED)),1), 
+           "FTEC" = round(100*(FTEC/sum(FTEC)),1),
+           "RVP" =round(100*(RVP/sum(RVP)),1), 
+           "RAI" = round(100*(RAI/sum(RAI)), 1),
+           "RT" = round(100*(RT/sum(RT)),1),
+           "FTET" = round(100*(FTET/ sum(FTET)), 1),
+           "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
+    ) %>% 
+    select(Reparto, Esami, "FTED", "FTEC", "FTET",   "RT", "Ricavo per FTE") %>% 
+    pivot_longer(!Reparto, names_to = "KPI", values_to = "valore") %>% 
+    mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT", "Ricavo per FTE"  )))
+})
+
+output$tbd5 <- renderPlot( 
+  
+  if(input$ind5 == "Reparto")
+    
+  {  
+    
+    ggplot(tb5(),  aes( 
+      x = KPI, 
+      y = valore, 
+      fill = KPI
+    )) + geom_col(width = 0.9, color = "black")+
+      coord_polar(theta = "x")+ facet_wrap(~Reparto, nrow = 1)+
+      scale_fill_brewer(palette = "Blues")+
+      geom_text(aes(y = valore-8, label = paste0(valore, "%")), color = "black", size=3)+
+      theme(legend.position = "blank",
+            panel.background= element_blank(),
+            plot.background = element_blank(), 
+            strip.text.x = element_text(size = 12, colour = "blue"), 
+            axis.text.x = element_text(size = 10, color = "black"))+
+      labs(x = "", y = "") 
+    
+  }
+  
+  else
+    
+  {
+    
+    tb5() %>% 
+      mutate(Reparto = recode(Reparto, "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA" = "BO-MO-FE", 
+                              "SEDE TERRITORIALE DI FORLÌ - RAVENNA" = "FO-RA", 
+                              "SEDE TERRITORIALE DI PIACENZA - PARMA" = "PC-PR", 
+                              "SEDE TERRITORIALE DI REGGIO EMILIA" = "RE")) %>% 
+      ggplot(aes( 
+        x = Reparto, 
+        y = valore, 
+        fill = Reparto
+      )) + geom_col(width = 0.9, color = "black")+
+      coord_polar(theta = "x")+ facet_wrap(~KPI, nrow = 1)+
+      scale_fill_brewer(palette = "Blues")+
+      geom_text(aes(y = valore-8, label = paste0(valore, "%")), color = "black", size=3)+
+      theme(legend.position = "blank",
+            panel.background= element_blank(),
+            plot.background = element_blank(), 
+            strip.text.x = element_text(size = 15, colour = "blue"), 
+            axis.text.x = element_text(size = 10, color = "black"))+
+      labs(x = "", y = "")
+  }, bg = "transparent")
+
+### tabelle modali pubblicazioni e convegni ater####
+paper5 <- reactive({
+  ricerca %>% filter(tipologia == "IF") %>% 
+    filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+    unique()
+})
+
+output$articoli5 <- renderTable(paper5())
+
+
+###tabella modale convegni internazionali
+
+Cint5 <- reactive({
+  ricerca %>% filter(tipologia == "Int") %>% 
+    filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+    unique()
+  
+})
+
+output$convegni5 <- renderTable(Cint5())
+
+
+###tabella modale convegni Nazionali
+
+Cnaz5 <- reactive({
+  ricerca %>% filter(tipologia == "Naz") %>% 
+    filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+    unique()
+  
+})
+
+output$nazionali5 <- renderTable(Cnaz5())
 
 
 }
