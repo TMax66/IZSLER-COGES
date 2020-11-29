@@ -77,8 +77,18 @@ tdsa <- tabella %>%
   mutate("R-FTE" = round(RT/FTE_t,0) ) %>% 
   select(Reparto, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
-
-
+####DTSA#####___________________________________________________________________
+tdtsa <- tabella %>% 
+  filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+  group_by(Reparto) %>% 
+  summarise_at(c("esami", "ricavi", "FTE_d", "FTE_c", "VP", "AI"), sum) %>% 
+  mutate(RT = (ricavi+VP+AI),
+         FTE_t = round((FTE_d+FTE_c),1)) %>%
+  arrange(desc(esami)) %>%
+  adorn_totals(where = "row") %>%
+  mutate("R-FTE" = round(RT/FTE_t,0) ) %>% 
+  select(Reparto, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
+         "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
 
 
 
@@ -141,7 +151,7 @@ repMat <- readRDS( here("programmazione", "data", "processed", "matrperpubb.rds"
 ricerca <- pubblicazioni %>% 
   right_join(matricole, by = "autore") %>%  
   filter(!is.na(nr)) %>% 
-  select(nr, reparto, autore, tipologia, matricola, autori, titinglese, datibiblio,`TITOLO RIVISTA`, convegno ) %>% 
+  select(nr, reparto, autore, tipologia, matricola, autori, titinglese, datibiblio,`TITOLO RIVISTA`, convegno, titoriginale) %>% 
   right_join(repMat, by = "matricola") %>% 
   filter(!is.na(nr)) # %>% 
   # mutate(id = seq(1:717)) %>% 

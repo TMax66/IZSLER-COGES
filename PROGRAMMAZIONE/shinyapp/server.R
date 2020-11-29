@@ -190,7 +190,7 @@ paper <- reactive({
  
 output$articoli <- renderTable(paper())
  
-###tabella modale convegni
+###tabella modale convegni internazionali
 
 Cint <- reactive({
   ricerca %>% filter(tipologia == "Int") %>% 
@@ -200,6 +200,22 @@ Cint <- reactive({
 })
 
 output$convegni <- renderTable(Cint())
+
+
+###tabella modale convegni Nazionali
+
+Cnaz <- reactive({
+  ricerca %>% filter(tipologia == "Naz") %>% 
+    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+    unique()
+  
+})
+
+output$nazionali <- renderTable(Cnaz())
+
+
+
+
 
 
 
@@ -336,7 +352,11 @@ tb2 <- reactive({tdsa %>%
     mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT", "Ricavo per FTE"  )))
 })
 
-output$tbd2 <- renderPlot({
+output$tbd2 <- renderPlot( 
+  
+  if(input$ind2 == "Reparto")
+  
+  {  
   
   ggplot(tb2(),  aes( 
     x = KPI, 
@@ -349,10 +369,35 @@ output$tbd2 <- renderPlot({
     theme(legend.position = "blank",
           panel.background= element_blank(),
           plot.background = element_blank(), 
-          strip.text.x = element_text(size = 15, colour = "blue"), 
+          strip.text.x = element_text(size = 12, colour = "blue"), 
           axis.text.x = element_text(size = 10, color = "black"))+
     labs(x = "", y = "") 
  
+}
+
+else
+
+{
+  
+  tb2() %>% 
+    mutate(Reparto = recode(Reparto, "REPARTO PRODUZIONE PRIMARIA" = "RPP", 
+                                 "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI" = "RChAM", 
+                                 "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)" = "RChAB", 
+                                 "REPARTO CONTROLLO ALIMENTI" = "RCA")) %>% 
+    ggplot(aes( 
+      x = Reparto, 
+      y = valore, 
+      fill = Reparto
+    )) + geom_col(width = 0.9, color = "black")+
+    coord_polar(theta = "x")+ facet_wrap(~KPI, nrow = 1)+
+    scale_fill_brewer(palette = "Blues")+
+    geom_text(aes(y = valore-8, label = paste0(valore, "%")), color = "black", size=3)+
+    theme(legend.position = "blank",
+          panel.background= element_blank(),
+          plot.background = element_blank(), 
+          strip.text.x = element_text(size = 15, colour = "blue"), 
+          axis.text.x = element_text(size = 10, color = "black"))+
+    labs(x = "", y = "")
 }, bg = "transparent")
 
 
@@ -365,5 +410,253 @@ paper2 <- reactive({
 })
 
 output$articoli2 <- renderTable(paper2())
+
+
+###tabella modale convegni internazionali
+
+Cint2 <- reactive({
+  ricerca %>% filter(tipologia == "Int") %>% 
+    filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+    unique()
+  
+})
+
+output$convegni2 <- renderTable(Cint2())
+
+
+###tabella modale convegni Nazionali
+
+Cnaz2 <- reactive({
+  ricerca %>% filter(tipologia == "Naz") %>% 
+    filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+    unique()
+  
+})
+
+output$nazionali2 <- renderTable(Cnaz2())
+
+
+
+
+
+###DTSA####
+
+###value boxes dsa####
+es3 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+                  select("N.esami"))
+
+output$esami3 <- renderValueBox({
+  valueBox(prettyNum(es3(), big.mark = "."), "N. esami",  icon = icon("flask"),
+           color = "blue"
+  )
+})
+
+ra3 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+                  select("RA"))
+
+output$ra3 <- renderValueBox({
+  valueBox(prettyNum(ra3(), big.mark = ".") , "Ricavi per attività analitica", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+vp3 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+                  select("RVP"))
+
+output$vp3 <- renderValueBox({
+  valueBox(prettyNum(vp3(), big.mark = ".") , "Ricavi per vendita prodotti", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+
+ai3 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+                  select("RAI"))
+
+output$ai3 <- renderValueBox({
+  valueBox(prettyNum(ai3(), big.mark = ".") , "Ricavi per attività interna", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+rt3 <- reactive(tizsler %>% 
+                  filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+                  select("RT"))
+
+output$rt3 <- renderValueBox({
+  valueBox(prettyNum(rt3(), big.mark = ".") , "Ricavi totali", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+rfte3 <- reactive(tizsler %>% 
+                    filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+                    select("R/FTET"))
+
+output$rfte3 <- renderValueBox({
+  valueBox(prettyNum(rfte3(), big.mark = ".") , "Ricavo per Full Time Equivalente", icon = icon("euro"),
+           color = "aqua"
+  )
+})
+
+ric3 <- reactive({
+  ricerca %>%
+    filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+    group_by(tipologia) %>% 
+    count(nr) %>%
+    summarise(n.articoli = n())
+})
+
+output$IF3 <- renderValueBox({
+  valueBox(
+    (ric3() %>% 
+       filter(tipologia == "IF") %>% 
+       select(n.articoli)), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
+})
+
+
+output$Int3 <- renderValueBox({
+  valueBox(
+    (ric3() %>% 
+       filter(tipologia == "Int") %>% 
+       select(n.articoli)), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
+})
+
+output$Naz3 <- renderValueBox({
+  valueBox(
+    (ric3() %>% 
+       filter(tipologia == "Naz") %>% 
+       select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
+})
+
+
+
+#### tabella x reparti dsa######
+output$t3 <- renderUI({
+  flextable(tdtsa) %>%
+    theme_booktabs() %>% 
+    color(i = 1, color = "blue", part = "header") %>% 
+    bold( part = "header") %>% 
+    fontsize(size=15) %>% 
+    fontsize(part = "header", size = 15) %>% 
+    line_spacing(space = 2.5) %>% 
+    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
+    autofit() %>% 
+    htmltools_value()
+})
+
+
+
+
+
+#### grafico benchmarking dsa####
+tb3 <- reactive({tdtsa %>% 
+    filter(Reparto != "Total") %>% 
+    mutate(Esami = round(100*(N.esami/sum(N.esami)), 1), 
+           "RA" = round(100*(RA/sum(RA)),1), 
+           "FTED" = round(100*(FTED/sum(FTED)),1), 
+           "FTEC" = round(100*(FTEC/sum(FTEC)),1),
+           "RVP" =round(100*(RVP/sum(RVP)),1), 
+           "RAI" = round(100*(RAI/sum(RAI)), 1),
+           "RT" = round(100*(RT/sum(RT)),1),
+           "FTET" = round(100*(FTET/ sum(FTET)), 1),
+           "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
+    ) %>% 
+    select(Reparto, Esami, "FTED", "FTEC", "FTET",   "RT", "Ricavo per FTE") %>% 
+    pivot_longer(!Reparto, names_to = "KPI", values_to = "valore") %>% 
+    mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT", "Ricavo per FTE"  )))
+})
+
+output$tbd3 <- renderPlot( 
+  
+  if(input$ind3 == "Reparto")
+    
+  {  
+    
+    ggplot(tb3(),  aes( 
+      x = KPI, 
+      y = valore, 
+      fill = KPI
+    )) + geom_col(width = 0.9, color = "black")+
+      coord_polar(theta = "x")+ facet_wrap(~Reparto, nrow = 1)+
+      scale_fill_brewer(palette = "Blues")+
+      geom_text(aes(y = valore-8, label = paste0(valore, "%")), color = "black", size=3)+
+      theme(legend.position = "blank",
+            panel.background= element_blank(),
+            plot.background = element_blank(), 
+            strip.text.x = element_text(size = 12, colour = "blue"), 
+            axis.text.x = element_text(size = 10, color = "black"))+
+      labs(x = "", y = "") 
+    
+  }
+  
+  else
+    
+  {
+    
+    tb3() %>% 
+      mutate(Reparto = recode(Reparto, "REPARTO VIROLOGIA" = "RVIR", 
+                              "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE" = "RVVPB", 
+                              "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO" = "RPCB", 
+                              "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE" = "RTBA")) %>% 
+      ggplot(aes( 
+        x = Reparto, 
+        y = valore, 
+        fill = Reparto
+      )) + geom_col(width = 0.9, color = "black")+
+      coord_polar(theta = "x")+ facet_wrap(~KPI, nrow = 1)+
+      scale_fill_brewer(palette = "Blues")+
+      geom_text(aes(y = valore-8, label = paste0(valore, "%")), color = "black", size=3)+
+      theme(legend.position = "blank",
+            panel.background= element_blank(),
+            plot.background = element_blank(), 
+            strip.text.x = element_text(size = 15, colour = "blue"), 
+            axis.text.x = element_text(size = 10, color = "black"))+
+      labs(x = "", y = "")
+  }, bg = "transparent")
+
+
+### tabelle modali pubblicazioni e convegni dsa####
+paper3 <- reactive({
+  ricerca %>% filter(tipologia == "IF") %>% 
+    filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+    unique()
+})
+
+output$articoli3 <- renderTable(paper3())
+
+
+###tabella modale convegni internazionali
+
+Cint3 <- reactive({
+  ricerca %>% filter(tipologia == "Int") %>% 
+    filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+    unique()
+  
+})
+
+output$convegni3 <- renderTable(Cint3())
+
+
+###tabella modale convegni Nazionali
+
+Cnaz3 <- reactive({
+  ricerca %>% filter(tipologia == "Naz") %>% 
+    filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+    unique()
+  
+})
+
+output$nazionali3 <- renderTable(Cnaz3())
+
 
 }
