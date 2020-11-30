@@ -5,7 +5,7 @@ server <- function(input, output, session) {
   
 ###value boxes######  
 es <- reactive(tizsler %>% 
-    filter(Dipartimento == "Total") %>% 
+    filter(Dipartimento == "Totale") %>% 
     select("N.esami"))
   
 output$esami <- renderValueBox({
@@ -15,7 +15,7 @@ output$esami <- renderValueBox({
   })
   
 ra <- reactive(tizsler %>% 
-  filter(Dipartimento == "Total") %>% 
+  filter(Dipartimento == "Totale") %>% 
   select("RA"))
 
   output$ra <- renderValueBox({
@@ -25,7 +25,7 @@ ra <- reactive(tizsler %>%
   })
 
   vp <- reactive(tizsler %>% 
-                   filter(Dipartimento == "Total") %>% 
+                   filter(Dipartimento == "Totale") %>% 
                    select("RVP"))
   
   output$vp <- renderValueBox({
@@ -36,7 +36,7 @@ ra <- reactive(tizsler %>%
   
   
   ai <- reactive(tizsler %>% 
-                   filter(Dipartimento == "Total") %>% 
+                   filter(Dipartimento == "Totale") %>% 
                    select("RAI"))
   
   output$ai <- renderValueBox({
@@ -46,7 +46,7 @@ ra <- reactive(tizsler %>%
   })
   
   rt <- reactive(tizsler %>% 
-                   filter(Dipartimento == "Total") %>% 
+                   filter(Dipartimento == "Totale") %>% 
                    select("RT"))
   
   output$rt <- renderValueBox({
@@ -56,7 +56,7 @@ ra <- reactive(tizsler %>%
   })
   
   rfte <- reactive(tizsler %>% 
-                   filter(Dipartimento == "Total") %>% 
+                   filter(Dipartimento == "Totale") %>% 
                    select("R/FTET"))
   
   output$rfte <- renderValueBox({
@@ -99,6 +99,7 @@ ra <- reactive(tizsler %>%
 
 ###tabella x dipartimenti####
 output$t <- renderUI({
+  border <- officer::fp_border()
     flextable(tizsler) %>%
     theme_booktabs() %>% 
     color(i = 1, color = "blue", part = "header") %>% 
@@ -108,13 +109,15 @@ output$t <- renderUI({
     line_spacing(space = 2.5) %>% 
     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
     autofit() %>% 
+    color(j= "R/FTET", color = "red", part = "all") %>% 
+    vline(j= "RT", border = border, part = "all") %>% 
     htmltools_value()
 })
 
 ####grafici benchmarking#########################################
 
 tb <- reactive({tizsler %>% 
-  filter(Dipartimento != "Total") %>% 
+  filter(Dipartimento != "Totale") %>% 
   mutate(Esami = round(100*(N.esami/sum(N.esami)), 1), 
          "RA" = round(100*(RA/sum(RA)),1), 
          "FTED" = round(100*(FTED/sum(FTED)),1), 
@@ -122,12 +125,12 @@ tb <- reactive({tizsler %>%
          "RVP" =round(100*(RVP/sum(RVP)),1), 
          "RAI" = round(100*(RAI/sum(RAI)), 1),
          "RT" = round(100*(RT/sum(RT)),1),
-         "FTET" = round(100*(FTET/ sum(FTET)), 1),
-         "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
+         "FTET" = round(100*(FTET/ sum(FTET)), 1)
+         # "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
   ) %>% 
-  select(Dipartimento, Esami, "FTED", "FTEC", "FTET",   "RT", "Ricavo per FTE") %>% 
+  select(Dipartimento, Esami, "FTED", "FTEC", "FTET",   "RT") %>% 
   pivot_longer(!Dipartimento, names_to = "KPI", values_to = "valore") %>% 
-  mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT", "Ricavo per FTE"  )))
+  mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT")))
   })
 
 
@@ -323,6 +326,7 @@ output$Naz2 <- renderValueBox({
 
 #### tabella x reparti dsa######
 output$t2 <- renderUI({
+  border <- officer::fp_border()
   flextable(tdsa) %>%
     theme_booktabs() %>% 
     color(i = 1, color = "blue", part = "header") %>% 
@@ -332,6 +336,8 @@ output$t2 <- renderUI({
     line_spacing(space = 2.5) %>% 
     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
     autofit() %>% 
+    color(j= "R/FTET", color = "red", part = "all") %>%
+    vline(j= "RT", border = border, part = "all") %>%
     htmltools_value()
 })
 
@@ -341,7 +347,7 @@ output$t2 <- renderUI({
 
 #### grafico benchmarking dsa####
 tb2 <- reactive({tdsa %>% 
-    filter(Reparto != "Total") %>% 
+    filter(Reparto != "Totale") %>% 
     mutate(Esami = round(100*(N.esami/sum(N.esami)), 1), 
            "RA" = round(100*(RA/sum(RA)),1), 
            "FTED" = round(100*(FTED/sum(FTED)),1), 
@@ -349,12 +355,12 @@ tb2 <- reactive({tdsa %>%
            "RVP" =round(100*(RVP/sum(RVP)),1), 
            "RAI" = round(100*(RAI/sum(RAI)), 1),
            "RT" = round(100*(RT/sum(RT)),1),
-           "FTET" = round(100*(FTET/ sum(FTET)), 1),
-           "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
+           "FTET" = round(100*(FTET/ sum(FTET)), 1) 
+           # "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
     ) %>% 
-    select(Reparto, Esami, "FTED", "FTEC", "FTET",   "RT", "Ricavo per FTE") %>% 
+    select(Reparto, Esami, "FTED", "FTEC", "FTET",   "RT") %>% 
     pivot_longer(!Reparto, names_to = "KPI", values_to = "valore") %>% 
-    mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT", "Ricavo per FTE"  )))
+    mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT"  )))
 })
 
 output$tbd2 <- renderPlot( 
@@ -548,6 +554,7 @@ output$Naz3 <- renderValueBox({
 
 #### tabella x reparti dtsa######
 output$t3 <- renderUI({
+  border <- officer::fp_border()
   flextable(tdtsa) %>%
     theme_booktabs() %>% 
     color(i = 1, color = "blue", part = "header") %>% 
@@ -557,6 +564,8 @@ output$t3 <- renderUI({
     line_spacing(space = 2.5) %>% 
     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
     autofit() %>% 
+    color(j= "R/FTET", color = "red", part = "all") %>% 
+    vline(j= "RT", border = border, part = "all") %>% 
     htmltools_value()
 })
 
@@ -566,7 +575,7 @@ output$t3 <- renderUI({
 
 #### grafico benchmarking dtsa####
 tb3 <- reactive({tdtsa %>% 
-    filter(Reparto != "Total") %>% 
+    filter(Reparto != "Totale") %>% 
     mutate(Esami = round(100*(N.esami/sum(N.esami)), 1), 
            "RA" = round(100*(RA/sum(RA)),1), 
            "FTED" = round(100*(FTED/sum(FTED)),1), 
@@ -574,12 +583,12 @@ tb3 <- reactive({tdtsa %>%
            "RVP" =round(100*(RVP/sum(RVP)),1), 
            "RAI" = round(100*(RAI/sum(RAI)), 1),
            "RT" = round(100*(RT/sum(RT)),1),
-           "FTET" = round(100*(FTET/ sum(FTET)), 1),
-           "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
+           "FTET" = round(100*(FTET/ sum(FTET)), 1) 
+           # "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
     ) %>% 
-    select(Reparto, Esami, "FTED", "FTEC", "FTET",   "RT", "Ricavo per FTE") %>% 
+    select(Reparto, Esami, "FTED", "FTEC", "FTET",   "RT" ) %>% 
     pivot_longer(!Reparto, names_to = "KPI", values_to = "valore") %>% 
-    mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT", "Ricavo per FTE"  )))
+    mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT")))
 })
 
 output$tbd3 <- renderPlot( 
@@ -772,6 +781,7 @@ output$Naz4 <- renderValueBox({
 
 #### tabella x reparti atlomb######
 output$t4 <- renderUI({
+  border <- officer::fp_border()
   flextable(tatlomb) %>%
     theme_booktabs() %>% 
     color(i = 1, color = "blue", part = "header") %>% 
@@ -781,12 +791,14 @@ output$t4 <- renderUI({
     line_spacing(space = 2.5) %>% 
     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
     autofit() %>% 
+    color(j= "R/FTET", color = "red", part = "all") %>% 
+    vline(j= "RT", border = border, part = "all") %>% 
     htmltools_value()
 })
 
 #### grafico benchmarking dtsa####
 tb4 <- reactive({tatlomb %>% 
-    filter(Reparto != "Total") %>% 
+    filter(Reparto != "Totale") %>% 
     mutate(Esami = round(100*(N.esami/sum(N.esami)), 1), 
            "RA" = round(100*(RA/sum(RA)),1), 
            "FTED" = round(100*(FTED/sum(FTED)),1), 
@@ -794,12 +806,12 @@ tb4 <- reactive({tatlomb %>%
            "RVP" =round(100*(RVP/sum(RVP)),1), 
            "RAI" = round(100*(RAI/sum(RAI)), 1),
            "RT" = round(100*(RT/sum(RT)),1),
-           "FTET" = round(100*(FTET/ sum(FTET)), 1),
-           "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
+           "FTET" = round(100*(FTET/ sum(FTET)), 1) 
+           # "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
     ) %>% 
-    select(Reparto, Esami, "FTED", "FTEC", "FTET",   "RT", "Ricavo per FTE") %>% 
+    select(Reparto, Esami, "FTED", "FTEC", "FTET",   "RT" ) %>% 
     pivot_longer(!Reparto, names_to = "KPI", values_to = "valore") %>% 
-    mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT", "Ricavo per FTE"  )))
+    mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT"  )))
 })
 
 output$tbd4 <- renderPlot( 
@@ -923,7 +935,7 @@ vp5<- reactive(tizsler %>%
                   select("RVP"))
 
 output$vp5 <- renderValueBox({
-  valueBox(prettyNum(vp4(), big.mark = ".") , "Ricavi per vendita prodotti", icon = icon("euro"),
+  valueBox(prettyNum(vp5(), big.mark = ".") , "Ricavi per vendita prodotti", icon = icon("euro"),
            color = "aqua"
   )
 })
@@ -934,7 +946,7 @@ ai5 <- reactive(tizsler %>%
                   select("RAI"))
 
 output$ai5 <- renderValueBox({
-  valueBox(prettyNum(ai4(), big.mark = ".") , "Ricavi per attività interna", icon = icon("euro"),
+  valueBox(prettyNum(ai5(), big.mark = ".") , "Ricavi per attività interna", icon = icon("euro"),
            color = "aqua"
   )
 })
@@ -954,7 +966,7 @@ rfte5 <- reactive(tizsler %>%
                     select("R/FTET"))
 
 output$rfte5 <- renderValueBox({
-  valueBox(prettyNum(rfte4(), big.mark = ".") , "Ricavo per Full Time Equivalente", icon = icon("euro"),
+  valueBox(prettyNum(rfte5(), big.mark = ".") , "Ricavo per Full Time Equivalente", icon = icon("euro"),
            color = "aqua"
   )
 })
@@ -991,6 +1003,7 @@ output$Naz5 <- renderValueBox({
 
 #### tabella x reparti ater######
 output$t5 <- renderUI({
+  border <- officer::fp_border()
   flextable(tater) %>%
     theme_booktabs() %>% 
     color(i = 1, color = "blue", part = "header") %>% 
@@ -1000,12 +1013,14 @@ output$t5 <- renderUI({
     line_spacing(space = 2.5) %>% 
     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
     autofit() %>% 
+    color(j= "R/FTET", color = "red", part = "all") %>% 
+    vline(j= "RT", border = border, part = "all") %>% 
     htmltools_value()
 })
 
 #### grafico benchmarking dtsa####
 tb5 <- reactive({tater %>% 
-    filter(Reparto != "Total") %>% 
+    filter(Reparto != "Totale") %>% 
     mutate(Esami = round(100*(N.esami/sum(N.esami)), 1), 
            "RA" = round(100*(RA/sum(RA)),1), 
            "FTED" = round(100*(FTED/sum(FTED)),1), 
@@ -1013,12 +1028,12 @@ tb5 <- reactive({tater %>%
            "RVP" =round(100*(RVP/sum(RVP)),1), 
            "RAI" = round(100*(RAI/sum(RAI)), 1),
            "RT" = round(100*(RT/sum(RT)),1),
-           "FTET" = round(100*(FTET/ sum(FTET)), 1),
-           "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
+           "FTET" = round(100*(FTET/ sum(FTET)), 1) 
+           # "Ricavo per FTE" = round(100*(`R/FTET`/sum(`R/FTET`)), 1)
     ) %>% 
-    select(Reparto, Esami, "FTED", "FTEC", "FTET",   "RT", "Ricavo per FTE") %>% 
+    select(Reparto, Esami, "FTED", "FTEC", "FTET",   "RT" ) %>% 
     pivot_longer(!Reparto, names_to = "KPI", values_to = "valore") %>% 
-    mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT", "Ricavo per FTE"  )))
+    mutate(KPI = factor(KPI, levels = c("Esami", "FTED", "FTEC", "FTET", "RT"  )))
 })
 
 output$tbd5 <- renderPlot( 

@@ -52,7 +52,7 @@ tizsler <- tabella %>%
   mutate(RT = (ricavi+VP+AI),
          FTE_t = round((FTE_d+FTE_c),1)) %>%
   arrange(desc(esami)) %>%
-  adorn_totals(where = "row") %>%
+  adorn_totals(where = "row", name = "Totale") %>%
   mutate("R-FTE" = round(RT/FTE_t,0) ) %>%
   select(Dipartimento, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
@@ -64,7 +64,7 @@ tdsa <- tabella %>%
   mutate(RT = (ricavi+VP+AI),
          FTE_t = round((FTE_d+FTE_c),1)) %>%
   arrange(desc(esami)) %>%
-  adorn_totals(where = "row") %>%
+  adorn_totals(where = "row", name = "Totale") %>%
   mutate("R-FTE" = round(RT/FTE_t,0) ) %>% 
   select(Reparto, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
@@ -76,7 +76,7 @@ tdtsa <- tabella %>%
   mutate(RT = (ricavi+VP+AI),
          FTE_t = round((FTE_d+FTE_c),1)) %>%
   arrange(desc(esami)) %>%
-  adorn_totals(where = "row") %>%
+  adorn_totals(where = "row", name = "Totale") %>%
   mutate("R-FTE" = round(RT/FTE_t,0) ) %>% 
   select(Reparto, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
@@ -90,7 +90,7 @@ tatlomb <- tabella %>%
   mutate(RT = (ricavi+VP+AI),
          FTE_t = round((FTE_d+FTE_c),1)) %>%
   arrange(desc(esami)) %>%
-  adorn_totals(where = "row") %>%
+  adorn_totals(where = "row",name = "Totale") %>%
   mutate("R-FTE" = round(RT/FTE_t,0) ) %>% 
   select(Reparto, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
@@ -104,7 +104,7 @@ tater <- tabella %>%
   mutate(RT = (ricavi+VP+AI),
          FTE_t = round((FTE_d+FTE_c),1)) %>%
   arrange(desc(esami)) %>%
-  adorn_totals(where = "row") %>%
+  adorn_totals(where = "row", name = "Totale") %>%
   mutate("R-FTE" = round(RT/FTE_t,0) ) %>% 
   select(Reparto, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
