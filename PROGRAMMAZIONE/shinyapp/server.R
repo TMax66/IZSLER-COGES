@@ -111,6 +111,22 @@ output$t <- renderUI({
     autofit() %>% 
     color(j= "R/FTET", color = "red", part = "all") %>% 
     vline(j= "RT", border = border, part = "all") %>% 
+      footnote(i=1, j=3:10, 
+               value = as_paragraph(
+                 c("Full Time Equivalenti Dirigenza",
+                   "Full Time Equivalenti Comparto", 
+                   "Full Time Equivalenti Totale",
+                   "Ricavo da Analisi", 
+                   "Ricavo Vendita Prodotti", 
+                   "Ricavo Attività Interna",
+                   "Ricavo Totale", 
+                   "Ricavo per Full Equivalenti Totale"
+                   )
+                 ),
+                 ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
+                 part = "header", inline = T
+               ) %>% 
+      fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
     htmltools_value()
 })
 
@@ -338,6 +354,22 @@ output$t2 <- renderUI({
     autofit() %>% 
     color(j= "R/FTET", color = "red", part = "all") %>%
     vline(j= "RT", border = border, part = "all") %>%
+    footnote(i=1, j=3:10, 
+             value = as_paragraph(
+               c("Full Time Equivalenti Dirigenza",
+                 "Full Time Equivalenti Comparto", 
+                 "Full Time Equivalenti Totale",
+                 "Ricavo da Analisi", 
+                 "Ricavo Vendita Prodotti", 
+                 "Ricavo Attività Interna",
+                 "Ricavo Totale", 
+                 "Ricavo per Full Equivalenti Totale"
+               )
+             ),
+             ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
+             part = "header", inline = T
+    ) %>%
+    fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
     htmltools_value()
 })
 
@@ -565,7 +597,23 @@ output$t3 <- renderUI({
     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
     autofit() %>% 
     color(j= "R/FTET", color = "red", part = "all") %>% 
-    vline(j= "RT", border = border, part = "all") %>% 
+    vline(j= "RT", border = border, part = "all") %>%   
+    footnote(i=1, j=3:10, 
+             value = as_paragraph(
+               c("Full Time Equivalenti Dirigenza",
+                 "Full Time Equivalenti Comparto", 
+                 "Full Time Equivalenti Totale",
+                 "Ricavo da Analisi", 
+                 "Ricavo Vendita Prodotti", 
+                 "Ricavo Attività Interna",
+                 "Ricavo Totale", 
+                 "Ricavo per Full Equivalenti Totale"
+               )
+             ),
+             ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
+             part = "header", inline = T
+    ) %>%
+    fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
     htmltools_value()
 })
 
@@ -793,6 +841,22 @@ output$t4 <- renderUI({
     autofit() %>% 
     color(j= "R/FTET", color = "red", part = "all") %>% 
     vline(j= "RT", border = border, part = "all") %>% 
+    footnote(i=1, j=3:10, 
+             value = as_paragraph(
+               c("Full Time Equivalenti Dirigenza",
+                 "Full Time Equivalenti Comparto", 
+                 "Full Time Equivalenti Totale",
+                 "Ricavo da Analisi", 
+                 "Ricavo Vendita Prodotti", 
+                 "Ricavo Attività Interna",
+                 "Ricavo Totale", 
+                 "Ricavo per Full Equivalenti Totale"
+               )
+             ),
+             ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
+             part = "header", inline = T
+    ) %>%
+    fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
     htmltools_value()
 })
 
@@ -1015,6 +1079,22 @@ output$t5 <- renderUI({
     autofit() %>% 
     color(j= "R/FTET", color = "red", part = "all") %>% 
     vline(j= "RT", border = border, part = "all") %>% 
+    footnote(i=1, j=3:10, 
+             value = as_paragraph(
+               c("Full Time Equivalenti Dirigenza",
+                 "Full Time Equivalenti Comparto", 
+                 "Full Time Equivalenti Totale",
+                 "Ricavo da Analisi", 
+                 "Ricavo Vendita Prodotti", 
+                 "Ricavo Attività Interna",
+                 "Ricavo Totale", 
+                 "Ricavo per Full Equivalenti Totale"
+               )
+             ),
+             ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
+             part = "header", inline = T
+    ) %>%
+    fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
     htmltools_value()
 })
 
