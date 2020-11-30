@@ -1,5 +1,5 @@
 ui <- dashboardPage(
-  dashboardHeader(title = "IZSLER-KPI", titleWidth = 300),
+  dashboardHeader(title = "IZSLER-Indicatori di Performances", titleWidth = 400),
   dashboardSidebar(
     width = 300,
     sidebarMenu(
@@ -45,7 +45,7 @@ ui <- dashboardPage(
     fluidRow(
     column(1, 
     radioButtons("ind", "", 
-                c("Dipartimento" = "Dipartimento", "KPI" = "KPI"))),
+                c("Dipartimento" = "Dipartimento", "IP" = "IP"))),
     column(11, 
              div(id = 'clickdiv00',
                  plotOutput("tbd")),
@@ -88,7 +88,7 @@ ui <- dashboardPage(
       fluidRow(
         column(1, 
                radioButtons("ind2", "", 
-                            c("Reparto" = "Reparto", "KPI" = "KPI"))),
+                            c("Reparto" = "Reparto", "IP" = "IP"))),
         
         column(11, 
                div(id = 'clickdiv01',
@@ -129,7 +129,7 @@ ui <- dashboardPage(
           fluidRow(
             column(1, 
                    radioButtons("ind3", "", 
-                                c("Reparto" = "Reparto", "KPI" = "KPI"))),
+                                c("Reparto" = "Reparto", "IP" = "IP"))),
             
             column(11, 
                    div(id = 'clickdiv02',
@@ -172,7 +172,7 @@ ui <- dashboardPage(
           fluidRow(
             column(1, 
                    radioButtons("ind4", "", 
-                                c("Reparto" = "Reparto", "KPI" = "KPI"))),
+                                c("Reparto" = "Reparto", "IP" = "IP"))),
             
             column(11, 
                    div(id = 'clickdiv03',
@@ -216,7 +216,7 @@ ui <- dashboardPage(
           fluidRow(
             column(1, 
                    radioButtons("ind5", "", 
-                                c("Reparto" = "Reparto", "KPI" = "KPI"))),
+                                c("Reparto" = "Reparto", "IP" = "IP"))),
             column(11, 
                    div(id = 'clickdiv04',
                        plotOutput("tbd5")), 

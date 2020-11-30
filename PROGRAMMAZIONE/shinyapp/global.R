@@ -10,11 +10,18 @@ library("flextable")
 library("shinyBS")
 library("officer")
 options(scipen = .999)
-dati <- readRDS( here("programmazione", "shinyapp", "dati.rds"))
+# dati <- readRDS( here("programmazione", "shinyapp", "dati.rds"))
+# dati <- dati %>% 
+#   mutate(across(where(is.numeric), function(x) round(x, 2)))
+# vp <- readRDS( here("programmazione", "shinyapp", "vp.rds"))
+# ai <- readRDS( here("programmazione", "shinyapp", "ai.rds"))
+
+dati <- readRDS("dati.rds")
 dati <- dati %>% 
   mutate(across(where(is.numeric), function(x) round(x, 2)))
-vp <- readRDS( here("programmazione", "shinyapp", "vp.rds"))
-ai <- readRDS( here("programmazione", "shinyapp", "ai.rds"))
+vp <- readRDS("vp.rds")
+ai <- readRDS("ai.rds")
+
 
 
 dir <- dati %>%
@@ -114,7 +121,7 @@ tater <- tabella %>%
 #####################################################################################################################
 
 
-ricerca <- readRDS(here("programmazione", "shinyapp", "ricerca.rds"))
+# ricerca <- readRDS(here("programmazione", "shinyapp", "ricerca.rds"))
 
-
+ricerca <- readRDS("ricerca.rds")
 
