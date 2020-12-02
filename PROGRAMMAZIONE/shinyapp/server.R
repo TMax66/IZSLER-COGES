@@ -65,32 +65,65 @@ ra <- reactive(tizsler %>%
     )
   })
 
-  ric <- reactive({
-    ricerca %>% 
-      group_by(tipologia) %>% 
-      count(nr) %>%
-      summarise(n.articoli = n())
-  })
+  # ric <- reactive({
+  #   ricerca %>% 
+  #     group_by(tipologia) %>% 
+  #     count(nr) %>%
+  #     summarise(n.articoli = n())
+  # })
+  
+  
+  # ric <- reactive({
+  #   ricerca %>% 
+  #   filter(IF == IF) %>% 
+  #     group_by(nr) %>% 
+  #     count(nr) %>% 
+  #     select(nr) %>% 
+  #     nrow()
+  # })
+  
   
   output$IF <- renderValueBox({
     valueBox(
-      (ric() %>% 
-         filter(tipologia == "IF") %>% 
-         select(n.articoli)), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
+      (ricerca %>% 
+         filter(IF == "IF") %>% 
+         group_by(nr) %>% 
+         count(nr) %>% 
+         select(nr) %>% 
+         nrow()),  "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
   })
+  
   
   output$Int <- renderValueBox({
     valueBox(
-      (ric() %>% 
-         filter(tipologia == "Int") %>% 
-         select(n.articoli)), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
+      (ricerca %>% 
+         filter(INT == "Int") %>% 
+         group_by(nr) %>% 
+         count(nr) %>% 
+         select(nr) %>% 
+         nrow()
+        # ric() %>% 
+        #  filter(tipologia == "Int") %>% 
+        #  select(n.articoli)
+        ), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
   })
   
   output$Naz <- renderValueBox({
     valueBox(
-      (ric() %>% 
-         filter(tipologia == "Naz") %>% 
-         select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
+      (ricerca %>% 
+         filter(NAZ == "Naz") %>% 
+         group_by(nr) %>% 
+         count(nr) %>% 
+         select(nr) %>% 
+         nrow()
+        
+        
+        # ric() %>% 
+        #  filter(tipologia == "Naz") %>% 
+        #  select(n.articoli))
+      
+      
+      ), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
   })
   
   
@@ -200,7 +233,7 @@ else
 ####tabelle modali pubblicazioni e convegni####################################################
 
 paper <- reactive({
-  ricerca %>% filter(tipologia == "IF") %>% 
+  ricerca %>% filter(IF == "IF") %>% 
     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
     unique()
 })
@@ -210,7 +243,7 @@ output$articoli <- renderTable(paper())
 ###tabella modale convegni internazionali
 
 Cint <- reactive({
-  ricerca %>% filter(tipologia == "Int") %>% 
+  ricerca %>% filter(INT == "Int") %>% 
     select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
     unique()
   
@@ -222,7 +255,7 @@ output$convegni <- renderTable(Cint())
 ###tabella modale convegni Nazionali
 
 Cnaz <- reactive({
-  ricerca %>% filter(tipologia == "Naz") %>% 
+  ricerca %>% filter(NAZ == "Naz") %>% 
     select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
     unique()
   

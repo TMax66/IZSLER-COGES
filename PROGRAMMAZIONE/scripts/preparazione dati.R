@@ -12,14 +12,10 @@ library("flextable")
 
 #### PREPARAZIONE DATI ####
 
-### dati di attività (origine da cartella dati attività 2019 vedi in scripts attività.R)####
-
-
-### dati presenze matricole 2019 ####
+ 
+### dati presenza matricole 2019 - CARTELLINO ####
 hwd <- read_excel(here("programmazione", "data", "raw", "PresenzePersonale2019_12Ott2020.xlsx"))
-
 hwd$CDC <- ifelse(hwd$CodiceCDC %in% c(5502, 5501), "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)", hwd$CDC)
-
 hwd <- hwd %>% 
   filter(is.na(CodiceProgetto)) %>% 
   mutate(Dipartimento = recode (Reparto, "REPARTO VIROLOGIA" = "Dipartimento Tutela e  Salute Animale", 
@@ -56,34 +52,14 @@ hwd <- hwd %>%
   filter(str_detect(Dipartimento, paste(c("Dipartimento", "Area"),collapse = '|')) ) %>% 
   filter(Dipartimento != "Dipartimento Amministrativo")
 
-
-###dati conversione matricole gru-sigma##
+###dati conversione matricole gru-sigma####
 grusigma <- read_excel(here("programmazione", "data", "raw", "MatricoleSigmaGRU.xlsx"))
 grusigma <- grusigma %>% 
   select("matricola" = Matricola, "Matricola" = MatricolaSigma)
-### dati dei presenti nel 2019 -anagrafica con dati contrattuali ####
+
+### dati-anagrafica con dati contrattuali degli attivi nel 2019 ####
 anag19 <- read_excel(here("programmazione", "data", "raw", "Presenti_2019.xls"))
-
-# anag19 %>% 
-#   select("matricola" = CDMATR, 
-#          "sesso" = SESSO, 
-#          "dtnasc" = DTNASC, 
-#          "categoria" = DEMANSP3, 
-#          "hperc" = PCGIUR, 
-#          "contratto" = DECOMP) %>% 
-#   mutate(hcontr = ifelse( contratto == "COMPARTO SSN", (36*hperc)/100, (38*hperc)/100)) %>% 
-#   # filter(contratto == "COMPARTO SSN") %>%
-#   left_join(grusigma, by = "matricola") %>% 
-#   right_join(hwd, by = "Matricola" ) %>% 
-#   group_by(Dipartimento, Reparto, Laboratorio) %>% 
-#   summarise(hworked= sum(hworked), 
-#             hprev = sum(hcontr*45.6)) %>% 
-#   saveRDS(., file = here("programmazione", "data", "processed", "hwd19.rds"))
-
-
-
-
- anag19 %>% 
+anag19 %>% 
   select("matricola" = CDMATR, 
          "sesso" = SESSO, 
          "dtnasc" = DTNASC, 
@@ -107,26 +83,26 @@ anag19 <- read_excel(here("programmazione", "data", "raw", "Presenti_2019.xls"))
 
  
  ###dataset per link a pubblicazioni####
- # anag19 %>% 
- #   select("matricola" = CDMATR, 
- #          "sesso" = SESSO, 
- #          "dtnasc" = DTNASC, 
- #          "categoria" = DEMANSP3, 
- #          "hperc" = PCGIUR, 
- #          "contratto" = DECOMP) %>% 
- #   mutate(contratto = recode(contratto, "DIRIGENZA MEDICO/VETERINARIA SSN" = "DIRIGENZA", 
- #                             "DIRIGENZA S.P.T.A. SSN" = "DIRIGENZA", 
- #                             "COMPARTO SSN" = "COMPARTO")) %>% 
- #   mutate(hcontr = ifelse( contratto == "COMPARTO", (36*hperc)/100, (38*hperc)/100)) %>% 
- #   
- #   # filter(contratto == "COMPARTO SSN") %>%
- #   left_join(grusigma, by = "matricola") %>%  
- #   mutate(matunique = !duplicated(matricola)) %>%  
- #   filter(matunique == "TRUE") %>% 
- #   right_join(hwd, by = "Matricola" ) %>% 
- #   filter(contratto == "DIRIGENZA") %>% 
- #   select(matricola,Dipartimento, Reparto, Laboratorio, hcontr, hworked ) %>% 
- #   saveRDS(., file = here("programmazione", "data", "processed", "matrperpubb.rds"))
+ anag19 %>%
+   select("matricola" = CDMATR,
+          "sesso" = SESSO,
+          "dtnasc" = DTNASC,
+          "categoria" = DEMANSP3,
+          "hperc" = PCGIUR,
+          "contratto" = DECOMP) %>%
+   mutate(contratto = recode(contratto, "DIRIGENZA MEDICO/VETERINARIA SSN" = "DIRIGENZA",
+                             "DIRIGENZA S.P.T.A. SSN" = "DIRIGENZA",
+                             "COMPARTO SSN" = "COMPARTO")) %>%
+   mutate(hcontr = ifelse( contratto == "COMPARTO", (36*hperc)/100, (38*hperc)/100)) %>%
+
+   # filter(contratto == "COMPARTO SSN") %>%
+   left_join(grusigma, by = "matricola") %>%
+   mutate(matunique = !duplicated(matricola)) %>%
+   filter(matunique == "TRUE") %>%
+   right_join(hwd, by = "Matricola" ) %>%
+   filter(contratto == "DIRIGENZA") %>%
+   select(matricola,Dipartimento, Reparto, Laboratorio, hcontr, hworked ) %>%
+   saveRDS(., file = here("programmazione", "data", "processed", "matrperpubb.rds"))
    
    
 

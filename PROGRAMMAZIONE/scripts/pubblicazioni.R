@@ -23,24 +23,7 @@ matricole <- matricole %>%
 matricole$autore <- str_c(matricole$cognome, matricole$nome, sep=", ")
 matricole$autore <- gsub(",.*$", "", matricole$autore)
 
-repMat <- readRDS( here("programmazione", "data", "processed", "matrperpubb.rds"))
-
-
-# pubblicazioni %>% 
-#   right_join(matricole, by = "autore") %>%  
-#   filter(!is.na(nr)) %>% 
-#   select(nr, reparto, autore, tipologia, matricola, autori, biblio) %>% 
-#   right_join(repMat, by = "matricola") %>% 
-#   filter(!is.na(nr)) %>% 
-#   # mutate(id = seq(1:717)) %>% 
-#   # pivot_wider(names_from = autore, values_from = autore)
-#   group_by(Dipartimento, tipologia) %>% 
-#   count(nr) %>%  
-#   summarise(n.articoli = n()) %>% 
-#   pivot_wider(names_from = tipologia, values_from = n.articoli)
-#   #non si può fare la somma per colonna  perchè gli articoli sono comuni a diversi reparti####
-
-
+repMat <- readRDS( here("programmazione", "data", "processed", "matrperpubb.rds")) # carico i dati delle matricole per dip/rep/lab vedi preparazione dati.R in script
 
 
 pubblicazioni %>% 

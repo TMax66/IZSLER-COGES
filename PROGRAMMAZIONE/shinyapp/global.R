@@ -125,3 +125,9 @@ tater <- tabella %>%
 
 ricerca <- readRDS("ricerca.rds")
 
+ricerca <- ricerca %>% 
+  mutate(IF = ifelse(tipologia == "IF ; Int" | tipologia == "IF",  "IF", NA), 
+         INT = ifelse(tipologia == "IF ; Int" | tipologia == "Int",  "Int", NA ), 
+         NAZ = ifelse(tipologia == "Naz", "Naz", NA), 
+         Oth = ifelse(tipologia == "Others" , "Others", NA))
+
