@@ -8,6 +8,7 @@ ui <- dashboardPage(
       menuItem("Dipartimento Tutela e Salute Animale", tabName = "dsa", icon = icon("cog")),
       menuItem("Area Territoriale Lombardia", tabName = "lomb", icon = icon("cog")),
       menuItem("Area Territoriale Emilia Romagna", tabName = "emil", icon = icon("cog"))
+      # menuItem("Note", tabName = "help", icon = icon("cog"))
     )
   ),
   dashboardBody(
@@ -224,5 +225,14 @@ ui <- dashboardPage(
           )
           )
   
-))))
+) 
+# , 
+
+###Note####_____________________________________________________________________
+# tabItem(tabName = "help", 
+#         includeHTML("intro.html")
+#         )
+
+
+)))
 

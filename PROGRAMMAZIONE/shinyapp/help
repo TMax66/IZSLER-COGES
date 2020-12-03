@@ -1,0 +1,39 @@
+NOTE
+
+Fonte dati:
+
+-N.esami
+-Ricavi da attività analitica,
+-Ricavi da Vendita Prodotti 
+_Ricavi da Attività Interna
+
+derivano dalla tabella Riepilogo 2019 del Controllo di Gestione.
+E' esculso dal conteggio il laboratorio Analisi del rischio e epidemiologia genomica che è in staff alla Direzione Sanitaria e non è associato a nessun Dipartimento.
+
+
+Calcolo del Full Time Equivalente e fonte dati
+
+FTE è il rapporto tra (numeratore) il tempo effettivamente lavorato in un anno e  (denominatore) il tempo in ore previste dal contratto per un operatore a tempo pieno
+ 
+DENOMINATORI: 
+Comparto: 36 h settimanali x 45.6 settimane /anno = 1641.6 h 
+Dirigenza: 38 h settimanali x 45.6 settimane / anno = 1732,8 h
+ 
+
+NUMERATORI: 
+dipendono dal livello di aggregazione Dipartimento/Reparto/Laboratorio e dal tipo di contratto.
+sia per comparto che dirigenza è la SOMMA delle ore/anno di tutto il personale presente nel 2019 ( del livello di aggregazione considerato )
+ 
+Quindi ad esempio per il Laboratorio : Sede Territoriale di BG
+ 
+N. personale full time comparto presenti nel 2019= 9   quindi 9x1641= 14776,2 ore/anno
+N. personale  part-time comparto presenti nel 2019= 1   quindi 1x (25h sett x 45.6sett) = 1140 ore/anno
+N. personale full time dirigenza presenti nel 2019 = 3   quindi 3x1732,8 = 5198.4
+ 
+Nel 2019 il personale presente  era di 13 unità.
+ 
+Da cui
+FTE-previste per il comparto = (14776,2+1140)/1641.6 = 9.69
+FTE-previste per la dirigenza = (5198.4)/1732.8 = 3
+Complessivamente per il 2019 erano previsti da contratto  12.69 FTE
+ 

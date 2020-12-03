@@ -131,19 +131,67 @@ ra <- reactive(tizsler %>%
 
 
 ###tabella x dipartimenti####
+# output$t <- renderUI({
+#   border <- officer::fp_border()
+#     flextable(tizsler) %>%
+#     theme_booktabs() %>% 
+#     color(i = 1, color = "blue", part = "header") %>% 
+#     bold( part = "header") %>% 
+#     fontsize(size=15) %>% 
+#     fontsize(part = "header", size = 15) %>% 
+#     line_spacing(space = 2.5) %>% 
+#     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
+#     autofit() %>% 
+#     color(j= "R/FTET", color = "red", part = "all") %>% 
+#     vline(j= "RT", border = border, part = "all") %>% 
+#       footnote(i=1, j=3:10,
+#                value = as_paragraph(
+#                  c("Full Time Equivalenti Dirigenza",
+#                    "Full Time Equivalenti Comparto",
+#                    "Full Time Equivalenti Totale",
+#                    "Ricavo da Analisi",
+#                    "Ricavo Vendita Prodotti",
+#                    "Ricavo Attività Interna",
+#                    "Ricavo Totale",
+#                    "Ricavo per Full Equivalenti Totale")
+#                  ),
+#                  ref_symbols = c("a","b","c","d","e","f","g","h"),
+#                  part = "header", inline = T) %>%
+#       fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
+#     htmltools_value()
+# })
+  
 output$t <- renderUI({
-  border <- officer::fp_border()
-    flextable(tizsler) %>%
-    theme_booktabs() %>% 
-    color(i = 1, color = "blue", part = "header") %>% 
-    bold( part = "header") %>% 
-    fontsize(size=15) %>% 
-    fontsize(part = "header", size = 15) %>% 
-    line_spacing(space = 2.5) %>% 
-    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
-    autofit() %>% 
-    color(j= "R/FTET", color = "red", part = "all") %>% 
-    vline(j= "RT", border = border, part = "all") %>% 
+    border <- officer::fp_border()
+    flextable(
+      (tizsler %>% 
+         left_join(
+           (ricerca %>% 
+              filter(IF == IF) %>%  
+              count(Dipartimento, nr) %>% 
+              group_by(Dipartimento) %>% 
+              count(nr) %>% 
+              summarise("Pubblicazioni" = sum(n)) %>% 
+              bind_rows(data.frame("Pubblicazioni" =(ricerca %>% 
+                                             filter(IF == "IF") %>% 
+                                             group_by(nr) %>% 
+                                             count(nr) %>% 
+                                             select(nr) %>% 
+                                             nrow()))) %>% 
+              replace_na(list(Dipartimento ="Totale"))), by = "Dipartimento")) %>% 
+        filter(Dipartimento != "Totale")
+              ) %>%
+      theme_booktabs() %>% 
+      color(i = 1, color = "blue", part = "header") %>% 
+      bold( part = "header") %>% 
+      fontsize(size=15) %>% 
+      fontsize(part = "header", size = 15) %>% 
+      line_spacing(space = 2.5) %>% 
+      colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
+      autofit() %>% 
+      color(j= "R/FTET", color = "red", part = "all") %>% 
+      color(j= "Pubblicazioni",color = "red", part = "all" ) %>% 
+      vline(j= "RT", border = border, part = "all") %>% 
       footnote(i=1, j=3:10,
                value = as_paragraph(
                  c("Full Time Equivalenti Dirigenza",
@@ -154,12 +202,21 @@ output$t <- renderUI({
                    "Ricavo Attività Interna",
                    "Ricavo Totale",
                    "Ricavo per Full Equivalenti Totale")
-                 ),
-                 ref_symbols = c("a","b","c","d","e","f","g","h"),
-                 part = "header", inline = T) %>%
+               ),
+               ref_symbols = c("a","b","c","d","e","f","g","h"),
+               part = "header", inline = T) %>%
       fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
-    htmltools_value()
-})
+      htmltools_value()
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 ####grafici benchmarking#########################################
 
@@ -338,43 +395,100 @@ output$rfte2 <- renderValueBox({
            color = "aqua"
   )
 })
-
-ric2 <- reactive({
-  ricerca %>%
-    filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
-    group_by(tipologia) %>% 
-    count(nr) %>%
-    summarise(n.articoli = n())
-})
+# 
+# ric2 <- reactive({
+#   ricerca %>%
+#     filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+#     group_by(tipologia) %>% 
+#     count(nr) %>%
+#     summarise(n.articoli = n())
+# })
 
 output$IF2 <- renderValueBox({
   valueBox(
-    (ric2() %>% 
-       filter(tipologia == "IF") %>% 
-       select(n.articoli)), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
+    (ricerca %>% 
+       filter(IF == "IF" & Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+       group_by(nr) %>% 
+       count(nr) %>% 
+       nrow()), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
 })
 
 
 output$Int2 <- renderValueBox({
   valueBox(
-    (ric2() %>% 
-       filter(tipologia == "Int") %>% 
-       select(n.articoli)), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
+    (ricerca %>% 
+       filter(INT == "Int" & Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+       group_by(nr) %>% 
+       count(nr) %>% 
+       nrow()), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
 })
 
 output$Naz2 <- renderValueBox({
   valueBox(
-    (ric2() %>% 
-       filter(tipologia == "Naz") %>% 
-       select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
+    (ricerca %>% 
+       filter(NAZ == "Naz" & Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+       group_by(nr) %>% 
+       count(nr) %>% 
+       nrow()), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
 })
 
 
 
 #### tabella x reparti dsa######
+
+# output$t2 <- renderUI({
+#   border <- officer::fp_border()
+#   flextable(tdsa) %>%
+#     theme_booktabs() %>% 
+#     color(i = 1, color = "blue", part = "header") %>% 
+#     bold( part = "header") %>% 
+#     fontsize(size=15) %>% 
+#     fontsize(part = "header", size = 15) %>% 
+#     line_spacing(space = 2.5) %>% 
+#     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
+#     autofit() %>% 
+#     color(j= "R/FTET", color = "red", part = "all") %>%
+#     vline(j= "RT", border = border, part = "all") %>%
+#     footnote(i=1, j=3:10, 
+#              value = as_paragraph(
+#                c("Full Time Equivalenti Dirigenza",
+#                  "Full Time Equivalenti Comparto", 
+#                  "Full Time Equivalenti Totale",
+#                  "Ricavo da Analisi", 
+#                  "Ricavo Vendita Prodotti", 
+#                  "Ricavo Attività Interna",
+#                  "Ricavo Totale", 
+#                  "Ricavo per Full Equivalenti Totale"
+#                )
+#              ),
+#              ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
+#              part = "header", inline = T
+#     ) %>%
+#     fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
+#     htmltools_value()
+# })
+
+
 output$t2 <- renderUI({
   border <- officer::fp_border()
-  flextable(tdsa) %>%
+  flextable(
+    (tdsa %>% 
+       left_join(
+         (ricerca %>% 
+            filter(IF == IF & Dipartimento == "Dipartimento Sicurezza Alimentare") %>%  
+            count(Reparto, nr) %>% 
+            group_by(Reparto) %>% 
+            count(nr) %>% 
+            summarise("Pubblicazioni" = sum(n)) %>% 
+            bind_rows(data.frame("Pubblicazioni" =(ricerca %>% 
+                                                     filter(IF == "IF" & Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+                                                     group_by(nr) %>% 
+                                                     count(nr) %>% 
+                                                     select(nr) %>% 
+                                                     nrow()))) %>% 
+            replace_na(list(Reparto ="Totale"))), by = "Reparto")) %>% 
+      filter(Reparto != "Totale")
+  ) %>%
     theme_booktabs() %>% 
     color(i = 1, color = "blue", part = "header") %>% 
     bold( part = "header") %>% 
@@ -383,26 +497,27 @@ output$t2 <- renderUI({
     line_spacing(space = 2.5) %>% 
     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
     autofit() %>% 
-    color(j= "R/FTET", color = "red", part = "all") %>%
-    vline(j= "RT", border = border, part = "all") %>%
-    footnote(i=1, j=3:10, 
+    color(j= "R/FTET", color = "red", part = "all") %>% 
+    color(j= "Pubblicazioni",color = "red", part = "all" ) %>% 
+    vline(j= "RT", border = border, part = "all") %>% 
+    footnote(i=1, j=3:10,
              value = as_paragraph(
                c("Full Time Equivalenti Dirigenza",
-                 "Full Time Equivalenti Comparto", 
+                 "Full Time Equivalenti Comparto",
                  "Full Time Equivalenti Totale",
-                 "Ricavo da Analisi", 
-                 "Ricavo Vendita Prodotti", 
+                 "Ricavo da Analisi",
+                 "Ricavo Vendita Prodotti",
                  "Ricavo Attività Interna",
-                 "Ricavo Totale", 
-                 "Ricavo per Full Equivalenti Totale"
-               )
+                 "Ricavo Totale",
+                 "Ricavo per Full Equivalenti Totale")
              ),
-             ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
-             part = "header", inline = T
-    ) %>%
+             ref_symbols = c("a","b","c","d","e","f","g","h"),
+             part = "header", inline = T) %>%
     fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
     htmltools_value()
 })
+
+
 
 
 
@@ -476,9 +591,15 @@ else
 
 
 ### tabelle modali pubblicazioni e convegni dsa####
+# paper2 <- reactive({
+#   ricerca %>% filter(tipologia == "IF") %>% 
+#     filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+#     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+#     unique()
+# })
+
 paper2 <- reactive({
-  ricerca %>% filter(tipologia == "IF") %>% 
-    filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+  ricerca %>% filter(IF == "IF" & Dipartimento == "Dipartimento Sicurezza Alimentare" ) %>% 
     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
     unique()
 })
@@ -488,12 +609,19 @@ output$articoli2 <- renderTable(paper2())
 
 ###tabella modale convegni internazionali
 
+# Cint2 <- reactive({
+#   ricerca %>% filter(tipologia == "Int") %>% 
+#     filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+#     select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+#     unique()
+#   
+# })
+
+
 Cint2 <- reactive({
-  ricerca %>% filter(tipologia == "Int") %>% 
-    filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
-    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+  ricerca %>% filter(INT == "Int" & Dipartimento == "Dipartimento Sicurezza Alimentare" ) %>% 
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
     unique()
-  
 })
 
 output$convegni2 <- renderTable(Cint2())
@@ -501,12 +629,18 @@ output$convegni2 <- renderTable(Cint2())
 
 ###tabella modale convegni Nazionali
 
+# Cnaz2 <- reactive({
+#   ricerca %>% filter(tipologia == "Naz") %>% 
+#     filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+#     select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+#     unique()
+#   
+# })
+
 Cnaz2 <- reactive({
-  ricerca %>% filter(tipologia == "Naz") %>% 
-    filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
-    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+  ricerca %>% filter(NAZ == "Naz" & Dipartimento == "Dipartimento Sicurezza Alimentare" ) %>% 
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
     unique()
-  
 })
 
 output$nazionali2 <- renderTable(Cnaz2())
@@ -583,42 +717,98 @@ output$rfte3 <- renderValueBox({
   )
 })
 
-ric3 <- reactive({
-  ricerca %>%
-    filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
-    group_by(tipologia) %>% 
-    count(nr) %>%
-    summarise(n.articoli = n())
-})
+# ric3 <- reactive({
+#   ricerca %>%
+#     filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+#     group_by(tipologia) %>% 
+#     count(nr) %>%
+#     summarise(n.articoli = n())
+# })
 
 output$IF3 <- renderValueBox({
   valueBox(
-    (ric3() %>% 
-       filter(tipologia == "IF") %>% 
-       select(n.articoli)), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
+    (ricerca %>% 
+       filter(IF == "IF" & Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+       group_by(nr) %>% 
+       count(nr) %>% 
+       nrow()), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
 })
 
 
 output$Int3 <- renderValueBox({
   valueBox(
-    (ric3() %>% 
-       filter(tipologia == "Int") %>% 
-       select(n.articoli)), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
+    (ricerca %>% 
+       filter(INT == "Int" & Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+       group_by(nr) %>% 
+       count(nr) %>% 
+       nrow()), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
 })
 
 output$Naz3 <- renderValueBox({
   valueBox(
-    (ric3() %>% 
-       filter(tipologia == "Naz") %>% 
-       select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
+    (ricerca %>% 
+       filter(NAZ == "Naz" & Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+       group_by(nr) %>% 
+       count(nr) %>% 
+       nrow()), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
 })
 
 
 
 #### tabella x reparti dtsa######
+# output$t3 <- renderUI({
+#   border <- officer::fp_border()
+#   flextable(tdtsa) %>%
+#     theme_booktabs() %>% 
+#     color(i = 1, color = "blue", part = "header") %>% 
+#     bold( part = "header") %>% 
+#     fontsize(size=15) %>% 
+#     fontsize(part = "header", size = 15) %>% 
+#     line_spacing(space = 2.5) %>% 
+#     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
+#     autofit() %>% 
+#     color(j= "R/FTET", color = "red", part = "all") %>% 
+#     vline(j= "RT", border = border, part = "all") %>%   
+#     footnote(i=1, j=3:10, 
+#              value = as_paragraph(
+#                c("Full Time Equivalenti Dirigenza",
+#                  "Full Time Equivalenti Comparto", 
+#                  "Full Time Equivalenti Totale",
+#                  "Ricavo da Analisi", 
+#                  "Ricavo Vendita Prodotti", 
+#                  "Ricavo Attività Interna",
+#                  "Ricavo Totale", 
+#                  "Ricavo per Full Equivalenti Totale"
+#                )
+#              ),
+#              ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
+#              part = "header", inline = T
+#     ) %>%
+#     fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
+#     htmltools_value()
+# })
+
+
 output$t3 <- renderUI({
   border <- officer::fp_border()
-  flextable(tdtsa) %>%
+  flextable(
+    (tdtsa %>% 
+       left_join(
+         (ricerca %>% 
+            filter(IF == IF & Dipartimento == "Dipartimento Tutela e  Salute Animale") %>%  
+            count(Reparto, nr) %>% 
+            group_by(Reparto) %>% 
+            count(nr) %>% 
+            summarise("Pubblicazioni" = sum(n)) %>% 
+            bind_rows(data.frame("Pubblicazioni" =(ricerca %>% 
+                                                     filter(IF == "IF" & Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+                                                     group_by(nr) %>% 
+                                                     count(nr) %>% 
+                                                     select(nr) %>% 
+                                                     nrow()))) %>% 
+            replace_na(list(Reparto ="Totale"))), by = "Reparto"))%>% 
+      filter(Reparto != "Totale")
+  ) %>%
     theme_booktabs() %>% 
     color(i = 1, color = "blue", part = "header") %>% 
     bold( part = "header") %>% 
@@ -628,25 +818,26 @@ output$t3 <- renderUI({
     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
     autofit() %>% 
     color(j= "R/FTET", color = "red", part = "all") %>% 
-    vline(j= "RT", border = border, part = "all") %>%   
-    footnote(i=1, j=3:10, 
+    color(j= "Pubblicazioni",color = "red", part = "all" ) %>% 
+    vline(j= "RT", border = border, part = "all") %>% 
+    footnote(i=1, j=3:10,
              value = as_paragraph(
                c("Full Time Equivalenti Dirigenza",
-                 "Full Time Equivalenti Comparto", 
+                 "Full Time Equivalenti Comparto",
                  "Full Time Equivalenti Totale",
-                 "Ricavo da Analisi", 
-                 "Ricavo Vendita Prodotti", 
+                 "Ricavo da Analisi",
+                 "Ricavo Vendita Prodotti",
                  "Ricavo Attività Interna",
-                 "Ricavo Totale", 
-                 "Ricavo per Full Equivalenti Totale"
-               )
+                 "Ricavo Totale",
+                 "Ricavo per Full Equivalenti Totale")
              ),
-             ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
-             part = "header", inline = T
-    ) %>%
+             ref_symbols = c("a","b","c","d","e","f","g","h"),
+             part = "header", inline = T) %>%
     fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
     htmltools_value()
 })
+
+
 
 
 
@@ -720,9 +911,16 @@ output$tbd3 <- renderPlot(
 
 
 ### tabelle modali pubblicazioni e convegni dsa####
+
+# paper3 <- reactive({
+#   ricerca %>% filter(tipologia == "IF") %>% 
+#     filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+#     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+#     unique()
+# })
+
 paper3 <- reactive({
-  ricerca %>% filter(tipologia == "IF") %>% 
-    filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+  ricerca %>% filter(IF == "IF" & Dipartimento == "Dipartimento Tutela e  Salute Animale" ) %>% 
     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
     unique()
 })
@@ -732,26 +930,40 @@ output$articoli3 <- renderTable(paper3())
 
 ###tabella modale convegni internazionali
 
+# Cint3 <- reactive({
+#   ricerca %>% filter(tipologia == "Int") %>% 
+#     filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+#     select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+#     unique()
+#   
+# })
+
 Cint3 <- reactive({
-  ricerca %>% filter(tipologia == "Int") %>% 
-    filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
-    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+  ricerca %>% filter(INT == "Int" & Dipartimento == "Dipartimento Tutela e  Salute Animale" ) %>% 
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
     unique()
-  
 })
+
 
 output$convegni3 <- renderTable(Cint3())
 
 
 ###tabella modale convegni Nazionali
 
+# Cnaz3 <- reactive({
+#   ricerca %>% filter(tipologia == "Naz") %>% 
+#     filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
+#     select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+#     unique()
+#   
+# })
+
 Cnaz3 <- reactive({
-  ricerca %>% filter(tipologia == "Naz") %>% 
-    filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
-    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+  ricerca %>% filter(NAZ == "Naz" & Dipartimento == "Dipartimento Tutela e  Salute Animale" ) %>% 
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
     unique()
-  
 })
+
 
 output$nazionali3 <- renderTable(Cnaz3())
 
@@ -827,41 +1039,96 @@ output$rfte4 <- renderValueBox({
   )
 })
 
-ric4 <- reactive({
-  ricerca %>%
-    filter(Dipartimento == "Area Territoriale Lombardia") %>% 
-    group_by(tipologia) %>% 
-    count(nr) %>%
-    summarise(n.articoli = n())
-})
+# ric4 <- reactive({
+#   ricerca %>%
+#     filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+#     group_by(tipologia) %>% 
+#     count(nr) %>%
+#     summarise(n.articoli = n())
+# })
 
 output$IF4 <- renderValueBox({
   valueBox(
-    (ric4() %>% 
-       filter(tipologia == "IF") %>% 
-       select(n.articoli)), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
+    (ricerca %>% 
+       filter(IF == "IF" & Dipartimento == "Area Territoriale Lombardia") %>% 
+       group_by(nr) %>% 
+       count(nr) %>% 
+       nrow()), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
 })
 
 
 output$Int4 <- renderValueBox({
   valueBox(
-    (ric4() %>% 
-       filter(tipologia == "Int") %>% 
-       select(n.articoli)), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
+    (ricerca %>% 
+       filter(INT == "Int" & Dipartimento == "Area Territoriale Lombardia") %>% 
+       group_by(nr) %>% 
+       count(nr) %>% 
+       nrow()), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
 })
 
 output$Naz4 <- renderValueBox({
   valueBox(
-    (ric4() %>% 
-       filter(tipologia == "Naz") %>% 
-       select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
+    (ricerca %>% 
+       filter(NAZ == "Naz" & Dipartimento == "Area Territoriale Lombardia") %>% 
+       group_by(nr) %>% 
+       count(nr) %>% 
+       nrow()), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
 })
 
 
 #### tabella x reparti atlomb######
+# output$t4 <- renderUI({
+#   border <- officer::fp_border()
+#   flextable(tatlomb) %>%
+#     theme_booktabs() %>% 
+#     color(i = 1, color = "blue", part = "header") %>% 
+#     bold( part = "header") %>% 
+#     fontsize(size=15) %>% 
+#     fontsize(part = "header", size = 15) %>% 
+#     line_spacing(space = 2.5) %>% 
+#     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
+#     autofit() %>% 
+#     color(j= "R/FTET", color = "red", part = "all") %>% 
+#     vline(j= "RT", border = border, part = "all") %>% 
+#     footnote(i=1, j=3:10, 
+#              value = as_paragraph(
+#                c("Full Time Equivalenti Dirigenza",
+#                  "Full Time Equivalenti Comparto", 
+#                  "Full Time Equivalenti Totale",
+#                  "Ricavo da Analisi", 
+#                  "Ricavo Vendita Prodotti", 
+#                  "Ricavo Attività Interna",
+#                  "Ricavo Totale", 
+#                  "Ricavo per Full Equivalenti Totale"
+#                )
+#              ),
+#              ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
+#              part = "header", inline = T
+#     ) %>%
+#     fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
+#     htmltools_value()
+# })
+
 output$t4 <- renderUI({
   border <- officer::fp_border()
-  flextable(tatlomb) %>%
+  flextable(
+    (tatlomb %>% 
+       left_join(
+         (ricerca %>% 
+            filter(IF == IF & Dipartimento == "Area Territoriale Lombardia") %>%  
+            count(Reparto, nr) %>% 
+            group_by(Reparto) %>% 
+            count(nr) %>% 
+            summarise("Pubblicazioni" = sum(n)) %>% 
+            bind_rows(data.frame("Pubblicazioni" =(ricerca %>% 
+                                                     filter(IF == "IF" & Dipartimento == "Area Territoriale Lombardia") %>% 
+                                                     group_by(nr) %>% 
+                                                     count(nr) %>% 
+                                                     select(nr) %>% 
+                                                     nrow()))) %>% 
+            replace_na(list(Reparto ="Totale"))), by = "Reparto")) %>% 
+      filter(Reparto != "Totale")
+  ) %>%
     theme_booktabs() %>% 
     color(i = 1, color = "blue", part = "header") %>% 
     bold( part = "header") %>% 
@@ -871,25 +1138,34 @@ output$t4 <- renderUI({
     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
     autofit() %>% 
     color(j= "R/FTET", color = "red", part = "all") %>% 
+    color(j= "Pubblicazioni",color = "red", part = "all" ) %>% 
     vline(j= "RT", border = border, part = "all") %>% 
-    footnote(i=1, j=3:10, 
+    footnote(i=1, j=3:10,
              value = as_paragraph(
                c("Full Time Equivalenti Dirigenza",
-                 "Full Time Equivalenti Comparto", 
+                 "Full Time Equivalenti Comparto",
                  "Full Time Equivalenti Totale",
-                 "Ricavo da Analisi", 
-                 "Ricavo Vendita Prodotti", 
+                 "Ricavo da Analisi",
+                 "Ricavo Vendita Prodotti",
                  "Ricavo Attività Interna",
-                 "Ricavo Totale", 
-                 "Ricavo per Full Equivalenti Totale"
-               )
+                 "Ricavo Totale",
+                 "Ricavo per Full Equivalenti Totale")
              ),
-             ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
-             part = "header", inline = T
-    ) %>%
+             ref_symbols = c("a","b","c","d","e","f","g","h"),
+             part = "header", inline = T) %>%
     fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
     htmltools_value()
 })
+
+
+
+
+
+
+
+
+
+
 
 #### grafico benchmarking dtsa####
 tb4 <- reactive({tatlomb %>% 
@@ -959,24 +1235,38 @@ output$tbd4 <- renderPlot(
   }, bg = "transparent")
 
 ### tabelle modali pubblicazioni e convegni atlomb####
+
+# paper4 <- reactive({
+#   ricerca %>% filter(tipologia == "IF") %>% 
+#     filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+#     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+#     unique()
+# })
+
 paper4 <- reactive({
-  ricerca %>% filter(tipologia == "IF") %>% 
-    filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+  ricerca %>% filter(IF == "IF" & Dipartimento == "Area Territoriale Lombardia" ) %>% 
     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
     unique()
 })
+
 
 output$articoli4 <- renderTable(paper4())
 
 
 ###tabella modale convegni internazionali
 
+# Cint4 <- reactive({
+#   ricerca %>% filter(tipologia == "Int") %>% 
+#     filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+#     select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+#     unique()
+#   
+# })
+
 Cint4 <- reactive({
-  ricerca %>% filter(tipologia == "Int") %>% 
-    filter(Dipartimento == "Area Territoriale Lombardia") %>% 
-    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+  ricerca %>% filter(INT == "INT" & Dipartimento == "Area Territoriale Lombardia" ) %>% 
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
     unique()
-  
 })
 
 output$convegni4 <- renderTable(Cint4())
@@ -984,14 +1274,19 @@ output$convegni4 <- renderTable(Cint4())
 
 ###tabella modale convegni Nazionali
 
-Cnaz4 <- reactive({
-  ricerca %>% filter(tipologia == "Naz") %>% 
-    filter(Dipartimento == "Area Territoriale Lombardia") %>% 
-    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
-    unique()
-  
-})
+# Cnaz4 <- reactive({
+#   ricerca %>% filter(tipologia == "Naz") %>% 
+#     filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+#     select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+#     unique()
+#   
+# })
 
+Cnaz4 <- reactive({
+  ricerca %>% filter(NAZ == "Naz" & Dipartimento == "Area Territoriale Lombardia" ) %>% 
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+    unique()
+})
 output$nazionali4 <- renderTable(Cnaz4())
 
 
@@ -1066,40 +1361,95 @@ output$rfte5 <- renderValueBox({
   )
 })
 
-ric5 <- reactive({
-  ricerca %>%
-    filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
-    group_by(tipologia) %>% 
-    count(nr) %>%
-    summarise(n.articoli = n())
-})
+# ric5 <- reactive({
+#   ricerca %>%
+#     filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+#     group_by(tipologia) %>% 
+#     count(nr) %>%
+#     summarise(n.articoli = n())
+# })
 
 output$IF5 <- renderValueBox({
   valueBox(
-    (ric5() %>% 
-       filter(tipologia == "IF") %>% 
-       select(n.articoli)), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
+    (ricerca %>% 
+       filter(IF == "IF" & Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+       group_by(nr) %>% 
+       count(nr) %>% 
+       nrow()), "Articoli pubblicati su riviste peer-review con IF", icon = icon("book"), color = "light-blue")
 })
 
 
 output$Int5 <- renderValueBox({
   valueBox(
-    (ric5() %>% 
-       filter(tipologia == "Int") %>% 
-       select(n.articoli)), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
+    (ricerca %>% 
+       filter(INT == "Int" & Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+       group_by(nr) %>% 
+       count(nr) %>% 
+       nrow()), "Lavori presentati a convegni internazionali", icon = icon("book"), color = "light-blue")
 })
 
 output$Naz5 <- renderValueBox({
   valueBox(
-    (ric5() %>% 
-       filter(tipologia == "Naz") %>% 
-       select(n.articoli)), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
+    (ricerca %>% 
+       filter(NAZ == "Naz" & Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+       group_by(nr) %>% 
+       count(nr) %>% 
+       nrow()), "Lavori presentati a convegni nazionali", icon = icon("book"), color = "light-blue")
 })
 
 #### tabella x reparti ater######
+# output$t5 <- renderUI({
+#   border <- officer::fp_border()
+#   flextable(tater) %>%
+#     theme_booktabs() %>% 
+#     color(i = 1, color = "blue", part = "header") %>% 
+#     bold( part = "header") %>% 
+#     fontsize(size=15) %>% 
+#     fontsize(part = "header", size = 15) %>% 
+#     line_spacing(space = 2.5) %>% 
+#     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
+#     autofit() %>% 
+#     color(j= "R/FTET", color = "red", part = "all") %>% 
+#     vline(j= "RT", border = border, part = "all") %>% 
+#     footnote(i=1, j=3:10, 
+#              value = as_paragraph(
+#                c("Full Time Equivalenti Dirigenza",
+#                  "Full Time Equivalenti Comparto", 
+#                  "Full Time Equivalenti Totale",
+#                  "Ricavo da Analisi", 
+#                  "Ricavo Vendita Prodotti", 
+#                  "Ricavo Attività Interna",
+#                  "Ricavo Totale", 
+#                  "Ricavo per Full Equivalenti Totale"
+#                )
+#              ),
+#              ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
+#              part = "header", inline = T
+#     ) %>%
+#     fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
+#     htmltools_value()
+# })
+
 output$t5 <- renderUI({
   border <- officer::fp_border()
-  flextable(tater) %>%
+  flextable(
+    (tater%>% 
+       left_join(
+         (ricerca %>% 
+            filter(IF == IF & Dipartimento == "Area Territoriale Emilia Romagna") %>%  
+            count(Reparto, nr) %>% 
+            group_by(Reparto) %>% 
+            count(nr) %>% 
+            summarise("Pubblicazioni" = sum(n)) %>% 
+            bind_rows(data.frame("Pubblicazioni" =(ricerca %>% 
+                                                     filter(IF == "IF" & Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+                                                     group_by(nr) %>% 
+                                                     count(nr) %>% 
+                                                     select(nr) %>% 
+                                                     nrow()))) %>% 
+            replace_na(list(Reparto ="Totale"))), by = "Reparto")) %>% 
+      filter(Reparto != "Totale")
+  ) %>%
     theme_booktabs() %>% 
     color(i = 1, color = "blue", part = "header") %>% 
     bold( part = "header") %>% 
@@ -1109,25 +1459,28 @@ output$t5 <- renderUI({
     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
     autofit() %>% 
     color(j= "R/FTET", color = "red", part = "all") %>% 
+    color(j= "Pubblicazioni",color = "red", part = "all" ) %>% 
     vline(j= "RT", border = border, part = "all") %>% 
-    footnote(i=1, j=3:10, 
+    footnote(i=1, j=3:10,
              value = as_paragraph(
                c("Full Time Equivalenti Dirigenza",
-                 "Full Time Equivalenti Comparto", 
+                 "Full Time Equivalenti Comparto",
                  "Full Time Equivalenti Totale",
-                 "Ricavo da Analisi", 
-                 "Ricavo Vendita Prodotti", 
+                 "Ricavo da Analisi",
+                 "Ricavo Vendita Prodotti",
                  "Ricavo Attività Interna",
-                 "Ricavo Totale", 
-                 "Ricavo per Full Equivalenti Totale"
-               )
+                 "Ricavo Totale",
+                 "Ricavo per Full Equivalenti Totale")
              ),
-             ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
-             part = "header", inline = T
-    ) %>%
+             ref_symbols = c("a","b","c","d","e","f","g","h"),
+             part = "header", inline = T) %>%
     fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
     htmltools_value()
 })
+
+
+
+
 
 #### grafico benchmarking dtsa####
 tb5 <- reactive({tater %>% 
@@ -1196,9 +1549,16 @@ output$tbd5 <- renderPlot(
   }, bg = "transparent")
 
 ### tabelle modali pubblicazioni e convegni ater####
+
+# paper5 <- reactive({
+#   ricerca %>% filter(tipologia == "IF") %>% 
+#     filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+#     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+#     unique()
+# })
+
 paper5 <- reactive({
-  ricerca %>% filter(tipologia == "IF") %>% 
-    filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+  ricerca %>% filter(IF == "IF" & Dipartimento == "Area Territoriale Emilia Romagna" ) %>% 
     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
     unique()
 })
@@ -1208,12 +1568,18 @@ output$articoli5 <- renderTable(paper5())
 
 ###tabella modale convegni internazionali
 
+# Cint5 <- reactive({
+#   ricerca %>% filter(tipologia == "Int") %>% 
+#     filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+#     select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+#     unique()
+#   
+# })
+
 Cint5 <- reactive({
-  ricerca %>% filter(tipologia == "Int") %>% 
-    filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
-    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+  ricerca %>% filter(INT == "Int" & Dipartimento == "Area Territoriale Emilia Romagna" ) %>% 
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
     unique()
-  
 })
 
 output$convegni5 <- renderTable(Cint5())
@@ -1221,12 +1587,18 @@ output$convegni5 <- renderTable(Cint5())
 
 ###tabella modale convegni Nazionali
 
+# Cnaz5 <- reactive({
+#   ricerca %>% filter(tipologia == "Naz") %>% 
+#     filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
+#     select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+#     unique()
+#   
+# })
+
 Cnaz5 <- reactive({
-  ricerca %>% filter(tipologia == "Naz") %>% 
-    filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
-    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
+  ricerca %>% filter(NAZ == "Naz" & Dipartimento == "Area Territoriale Emilia Romagna" ) %>% 
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
     unique()
-  
 })
 
 output$nazionali5 <- renderTable(Cnaz5())
