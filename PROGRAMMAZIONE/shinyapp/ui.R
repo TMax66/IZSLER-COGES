@@ -46,7 +46,7 @@ ui <- dashboardPage(
     fluidRow(
     column(1, 
     radioButtons("ind", "", 
-                c("Dipartimento" = "Dipartimento", "IP" = "IP"))),
+                c("IP" = "IP","Dipartimento" = "Dipartimento" ))),
     column(11, 
              div(id = 'clickdiv00',
                  plotOutput("tbd")),
@@ -89,7 +89,7 @@ ui <- dashboardPage(
       fluidRow(
         column(1, 
                radioButtons("ind2", "", 
-                            c("Reparto" = "Reparto", "IP" = "IP"))),
+                            c( "IP" = "IP","Reparto" = "Reparto"))),
         
         column(11, 
                div(id = 'clickdiv01',
@@ -130,7 +130,7 @@ ui <- dashboardPage(
           fluidRow(
             column(1, 
                    radioButtons("ind3", "", 
-                                c("Reparto" = "Reparto", "IP" = "IP"))),
+                                c( "IP" = "IP","Reparto" = "Reparto"))),
             
             column(11, 
                    div(id = 'clickdiv02',
@@ -173,7 +173,7 @@ ui <- dashboardPage(
           fluidRow(
             column(1, 
                    radioButtons("ind4", "", 
-                                c("Reparto" = "Reparto", "IP" = "IP"))),
+                                c( "IP" = "IP","Reparto" = "Reparto"))),
             
             column(11, 
                    div(id = 'clickdiv03',
@@ -217,7 +217,7 @@ ui <- dashboardPage(
           fluidRow(
             column(1, 
                    radioButtons("ind5", "", 
-                                c("Reparto" = "Reparto", "IP" = "IP"))),
+                                c( "IP" = "IP","Reparto" = "Reparto"))),
             column(11, 
                    div(id = 'clickdiv04',
                        plotOutput("tbd5")), 

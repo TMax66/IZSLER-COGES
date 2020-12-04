@@ -291,8 +291,9 @@ else
 
 paper <- reactive({
   ricerca %>% filter(IF == "IF") %>% 
-    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
-    unique()
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese, "IF" = impf) %>%
+    unique() %>% 
+    arrange(desc(IF))
 })
  
 output$articoli <- renderTable(paper())
@@ -600,8 +601,9 @@ else
 
 paper2 <- reactive({
   ricerca %>% filter(IF == "IF" & Dipartimento == "Dipartimento Sicurezza Alimentare" ) %>% 
-    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
-    unique()
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese, "IF" = impf) %>%
+    unique() %>% 
+    arrange(desc(IF))
 })
 
 output$articoli2 <- renderTable(paper2())
@@ -921,8 +923,9 @@ output$tbd3 <- renderPlot(
 
 paper3 <- reactive({
   ricerca %>% filter(IF == "IF" & Dipartimento == "Dipartimento Tutela e  Salute Animale" ) %>% 
-    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
-    unique()
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese, "IF" = impf) %>%
+    unique() %>% 
+    arrange(desc(IF))
 })
 
 output$articoli3 <- renderTable(paper3())
@@ -1245,8 +1248,9 @@ output$tbd4 <- renderPlot(
 
 paper4 <- reactive({
   ricerca %>% filter(IF == "IF" & Dipartimento == "Area Territoriale Lombardia" ) %>% 
-    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
-    unique()
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese, "IF" = impf) %>%
+    unique() %>% 
+    arrange(desc(IF))
 })
 
 
@@ -1559,8 +1563,9 @@ output$tbd5 <- renderPlot(
 
 paper5 <- reactive({
   ricerca %>% filter(IF == "IF" & Dipartimento == "Area Territoriale Emilia Romagna" ) %>% 
-    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
-    unique()
+    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese, "IF" = impf) %>%
+    unique() %>% 
+    arrange(desc(IF))
 })
 
 output$articoli5 <- renderTable(paper5())
