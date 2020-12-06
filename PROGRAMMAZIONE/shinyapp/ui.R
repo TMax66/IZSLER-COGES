@@ -32,8 +32,8 @@ ui <- dashboardPage(
     bsModal("CI", "Partecipazione a convegni internazionali", "clickdiv1", tableOutput("convegni"), size = "large"),
 
     div(id='clickdiv2',
-      valueBoxOutput("Naz")),
-    bsModal("CN", "Partecipazione a convegni nazionali", "clickdiv2", tableOutput("nazionali"), size = "large"),
+      valueBoxOutput("PR")),
+    bsModal("PR", "Progetti di ricerca in corso", "clickdiv2", tableOutput("projr"), size = "large"),
   
     ), 
     
