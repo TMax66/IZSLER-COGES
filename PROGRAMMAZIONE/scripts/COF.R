@@ -98,12 +98,31 @@ pr %>% select(-14, -15) %>%
 ####elenco PR di IZSLER
 pr %>%
   group_by(CodIDIzler, Tipologia, DataInizio, DataFine, Descrizione, RespScient) %>% 
-  summarise(Budget = sum(Budget), nUO = n()) %>%
-  
+  summarise(Budget = sum(Budget), nUO = n()) %>% 
+  ungroup() %>% 
+  group_by(CodIDIzler, Tipologia, DataInizio, DataFine, Descrizione, RespScient, Budget, nUO) %>% 
+  summarise(Durata = as.numeric(DataFine-DataInizio), 
+            R = as.numeric(date("2019-12-31")-date(DataInizio)), 
+            Realizzazione = ifelse(R>Durata, 100, 100*(R/Durata))) %>% 
+  select(-R, -Durata)
 
-  pr$DataFine-pr$DataInizio
 
-as.Date("2019/12/31")-(pr$DataInizio)
+
+, 
+            Durata = as.numeric(DataFine-DataInizio))
+, 
+            R = as.numeric(date("2019-12-31")-date(DataInizio)), 
+            Realizzazione = ifelse(R>Durata, 100, 100*(R/Durata))) %>% View()
+
+
+X <- as.numeric(pr$DataFine-pr$DataInizio)
+
+z<-ymd("2019/12/31")
+
+start <- pr$DataInizio
+end <- "2019-12-31"
+elapsed.time <- pr$DataInizio%--% end
+Y <- as.numeric(as.duration(elapsed.time) / ddays(1))
 
 
 x <- pr %>% select(-14, -15) %>% 

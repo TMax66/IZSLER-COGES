@@ -376,16 +376,23 @@ output$convegni <- renderTable(Cint())
 # 
 # output$nazionali <- renderTable(Cnaz())
 
-Cnaz <- reactive({
-  ricerca %>% filter(NAZ == "Naz") %>% 
-    select("AUTORI" = autori, "CONGRESSO" = convegno, "TITOLO" = titinglese) %>% 
-    unique()
+Prj <- reactive({
+  pr %>%
+    group_by(CodIDIzler, Tipologia, DataInizio, DataFine, Descrizione, RespScient) %>% 
+    summarise(Budget = sum(Budget), nUO = n()) %>% 
+    ungroup() %>% 
+    group_by(CodIDIzler, Tipologia, DataInizio, DataFine, Descrizione, RespScient, Budget, nUO) %>% 
+    summarise(Durata = as.numeric(DataFine-DataInizio), 
+              R = as.numeric(date("2019-12-31")-date(DataInizio)), 
+              Realizzazione = ifelse(R>Durata, 100, 100*(R/Durata))) %>% 
+    mutate(DataInizio = as.character(DataInizio), 
+           DataFine = as.character(DataFine)) %>% 
+    arrange(Realizzazione) %>% 
+    select(-R, -Durata)
   
 })
 
-output$nazionali <- renderTable(Cnaz())
-
-
+output$projr <- renderDataTable(Prj(), options = list(lengthChange = FALSE))
 
 
 

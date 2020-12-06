@@ -33,7 +33,7 @@ ui <- dashboardPage(
 
     div(id='clickdiv2',
       valueBoxOutput("PR")),
-    bsModal("PR", "Progetti di ricerca in corso", "clickdiv2", tableOutput("projr"), size = "large"),
+    bsModal("Prj", "Progetti di ricerca in corso", "clickdiv2", dataTableOutput("projr"), size = "large"),
   
     ), 
     

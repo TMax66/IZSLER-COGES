@@ -9,6 +9,7 @@ library("here")
 library("flextable")
 library("shinyBS")
 library("officer")
+library("DT")
 options(scipen = .999)
 # dati <- readRDS( here("programmazione", "shinyapp", "dati.rds"))
 # dati <- dati %>% 
