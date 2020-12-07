@@ -1,6 +1,6 @@
 server <- function(input, output, session) { 
   
-###Quadro Generale Dashboard#####
+###IZSLER#####
 
   
 ###value boxes######  
@@ -351,7 +351,11 @@ paper <- reactive({
     arrange(desc(IF))
 })
  
-output$articoli <- renderTable(paper())
+output$articoli <- renderDataTable(paper(),server = FALSE, class = 'cell-border stripe', rownames=FALSE,
+                                   extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                                                         searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                                                         buttons = c('excel')))
+
  
 ###tabella modale convegni internazionali
 
@@ -362,7 +366,12 @@ Cint <- reactive({
   
 })
 
-output$convegni <- renderTable(Cint())
+output$convegni <- renderDataTable(Cint(),server = FALSE, class = 'cell-border stripe', rownames=FALSE,
+                                   extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                                                         searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                                                         buttons = c('excel')))
+
+ 
 
 
 ###tabella modale convegni Nazionali
@@ -384,7 +393,8 @@ Prj <- reactive({
     group_by(CodIDIzler, Tipologia, DataInizio, DataFine, Descrizione, RespScient, Budget, nUO) %>% 
     summarise(Durata = as.numeric(DataFine-DataInizio), 
               R = as.numeric(date("2019-12-31")-date(DataInizio)), 
-              Realizzazione = ifelse(R>Durata, 100, 100*(R/Durata))) %>% 
+              Realizzazione = ifelse(R>Durata, 100, 100*(R/Durata)),
+              Realizzazione = paste(round(Realizzazione, 0), "%") )%>% 
     mutate(DataInizio = as.character(DataInizio), 
            DataFine = as.character(DataFine)) %>% 
     arrange(Realizzazione) %>% 
@@ -392,7 +402,14 @@ Prj <- reactive({
   
 })
 
-output$projr <- renderDataTable(Prj(), options = list(lengthChange = FALSE))
+output$projr <- renderDataTable(Prj(), server = FALSE, class = 'cell-border stripe', rownames=FALSE,
+                                extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                                                      searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                                                      buttons = c('excel')))
+
+
+# %>%
+#     formatRound(columns = "Realizzazione", 1)
 
 
 
@@ -681,8 +698,10 @@ paper2 <- reactive({
     arrange(desc(IF))
 })
 
-output$articoli2 <- renderTable(paper2())
-
+output$articoli2 <- renderDataTable(paper2(),server = FALSE, class = 'cell-border stripe', rownames=FALSE,
+                                extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                                                      searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                                                      buttons = c('excel')))
 
 ###tabella modale convegni internazionali
 
@@ -701,7 +720,10 @@ Cint2 <- reactive({
     unique()
 })
 
-output$convegni2 <- renderTable(Cint2())
+output$convegni2 <- renderDataTable(Cint2(),server = FALSE, class = 'cell-border stripe', rownames=FALSE,
+                                extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                                                      searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                                                      buttons = c('excel')))
 
 
 ###tabella modale convegni Nazionali
@@ -714,13 +736,13 @@ output$convegni2 <- renderTable(Cint2())
 #   
 # })
 
-Cnaz2 <- reactive({
-  ricerca %>% filter(NAZ == "Naz" & Dipartimento == "Dipartimento Sicurezza Alimentare" ) %>% 
-    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
-    unique()
-})
-
-output$nazionali2 <- renderTable(Cnaz2())
+# Cnaz2 <- reactive({
+#   ricerca %>% filter(NAZ == "Naz" & Dipartimento == "Dipartimento Sicurezza Alimentare" ) %>% 
+#     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+#     unique()
+# })
+# 
+# output$nazionali2 <- renderTable(Cnaz2())
 
 
 ###tabelle modali percentuali KPI
@@ -1003,7 +1025,10 @@ paper3 <- reactive({
     arrange(desc(IF))
 })
 
-output$articoli3 <- renderTable(paper3())
+output$articoli3 <- renderDataTable(paper3(),server = FALSE, class = 'cell-border stripe', rownames=FALSE,
+                                extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                                                      searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                                                      buttons = c('excel')))
 
 
 ###tabella modale convegni internazionali
@@ -1023,7 +1048,10 @@ Cint3 <- reactive({
 })
 
 
-output$convegni3 <- renderTable(Cint3())
+output$convegni3 <- renderDataTable(Cint3(),server = FALSE, class = 'cell-border stripe', rownames=FALSE,
+                                extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                                                      searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                                                      buttons = c('excel')))
 
 
 ###tabella modale convegni Nazionali
@@ -1036,14 +1064,14 @@ output$convegni3 <- renderTable(Cint3())
 #   
 # })
 
-Cnaz3 <- reactive({
-  ricerca %>% filter(NAZ == "Naz" & Dipartimento == "Dipartimento Tutela e  Salute Animale" ) %>% 
-    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
-    unique()
-})
-
-
-output$nazionali3 <- renderTable(Cnaz3())
+# Cnaz3 <- reactive({
+#   ricerca %>% filter(NAZ == "Naz" & Dipartimento == "Dipartimento Tutela e  Salute Animale" ) %>% 
+#     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+#     unique()
+# })
+# 
+# 
+# output$nazionali3 <- renderTable(Cnaz3())
 
 
 ###tabelle modali percentuali KPI
@@ -1329,7 +1357,10 @@ paper4 <- reactive({
 })
 
 
-output$articoli4 <- renderTable(paper4())
+output$articoli4 <- renderDataTable(paper4(),server = FALSE, class = 'cell-border stripe', rownames=FALSE,
+                                extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                                                      searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                                                      buttons = c('excel')))
 
 
 ###tabella modale convegni internazionali
@@ -1348,7 +1379,10 @@ Cint4 <- reactive({
     unique()
 })
 
-output$convegni4 <- renderTable(Cint4())
+output$convegni4 <- renderDataTable(Cint4(),server = FALSE, class = 'cell-border stripe', rownames=FALSE,
+                                extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                                                      searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                                                      buttons = c('excel')))
 
 
 ###tabella modale convegni Nazionali
@@ -1361,12 +1395,12 @@ output$convegni4 <- renderTable(Cint4())
 #   
 # })
 
-Cnaz4 <- reactive({
-  ricerca %>% filter(NAZ == "Naz" & Dipartimento == "Area Territoriale Lombardia" ) %>% 
-    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
-    unique()
-})
-output$nazionali4 <- renderTable(Cnaz4())
+# Cnaz4 <- reactive({
+#   ricerca %>% filter(NAZ == "Naz" & Dipartimento == "Area Territoriale Lombardia" ) %>% 
+#     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+#     unique()
+# })
+# output$nazionali4 <- renderTable(Cnaz4())
 
 
 ###tabelle modali percentuali KPI
@@ -1643,7 +1677,10 @@ paper5 <- reactive({
     arrange(desc(IF))
 })
 
-output$articoli5 <- renderTable(paper5())
+output$articoli5 <- renderDataTable(paper5(),server = FALSE, class = 'cell-border stripe', rownames=FALSE,
+                                extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                                                      searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                                                      buttons = c('excel')))
 
 
 ###tabella modale convegni internazionali
@@ -1662,7 +1699,10 @@ Cint5 <- reactive({
     unique()
 })
 
-output$convegni5 <- renderTable(Cint5())
+output$convegni5 <- renderDataTable(Cint5(),server = FALSE, class = 'cell-border stripe', rownames=FALSE,
+                                extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                                                      searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                                                      buttons = c('excel')))
 
 
 ###tabella modale convegni Nazionali
@@ -1675,13 +1715,13 @@ output$convegni5 <- renderTable(Cint5())
 #   
 # })
 
-Cnaz5 <- reactive({
-  ricerca %>% filter(NAZ == "Naz" & Dipartimento == "Area Territoriale Emilia Romagna" ) %>% 
-    select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
-    unique()
-})
-
-output$nazionali5 <- renderTable(Cnaz5())
+# Cnaz5 <- reactive({
+#   ricerca %>% filter(NAZ == "Naz" & Dipartimento == "Area Territoriale Emilia Romagna" ) %>% 
+#     select("AUTORI" = autori, "JOURNAL" = `TITOLO RIVISTA`, "TITOLO" = titinglese) %>% 
+#     unique()
+# })
+# 
+# output$nazionali5 <- renderTable(Cnaz5())
 
 
 ###tabelle modali percentuali KPI

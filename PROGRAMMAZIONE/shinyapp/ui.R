@@ -12,6 +12,11 @@ ui <- dashboardPage(
     )
   ),
   dashboardBody(
+    tags$head(tags$style(HTML('
+                        .modal-lg {
+                        width: 1500px;
+                        }
+                      '))),
   tabItems(
 #####IZSLER#####
     tabItem( tabName = "izsler", 
@@ -25,11 +30,11 @@ ui <- dashboardPage(
     
     div(id='clickdiv0',
         valueBoxOutput("IF")),
-    bsModal("P", "Pubblicazioni IF", "clickdiv0",tableOutput("articoli"), size = "large"),
+    bsModal("P", "Pubblicazioni IF", "clickdiv0",dataTableOutput("articoli"), size = "large"),
     
     div(id='clickdiv1',
         valueBoxOutput("Int")),
-    bsModal("CI", "Partecipazione a convegni internazionali", "clickdiv1", tableOutput("convegni"), size = "large"),
+    bsModal("CI", "Partecipazione a convegni internazionali", "clickdiv1", dataTableOutput("convegni"), size = "large"),
 
     div(id='clickdiv2',
       valueBoxOutput("PR")),

@@ -10,6 +10,7 @@ library("flextable")
 library("shinyBS")
 library("officer")
 library("DT")
+library("lubridate")
 options(scipen = .999)
 # dati <- readRDS( here("programmazione", "shinyapp", "dati.rds"))
 # dati <- dati %>% 
