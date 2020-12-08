@@ -10,160 +10,34 @@ library("flextable")
 library("shinyBS")
 library("officer")
 
-pr <- read_excel(here("programmazione", "data", "raw", "DatiProgettiUO.xlsx"))
-repMat <- readRDS( here("programmazione", "data", "processed", "matrperpubb.rds")) # carico i dati delle matricole per dip/rep/lab vedi preparazione dati.R in script
+library(fmsb)
 
-tizsler %>% 
-  left_join(
-    (ricerca %>% 
-       filter(IF == IF) %>%  
-       count(Dipartimento, nr) %>% 
-       group_by(Dipartimento) %>% 
-       count(nr) %>% 
-       summarise("Pubblicazioni" = sum(n)) %>% 
-       bind_rows(data.frame("Pubblicazioni" =(ricerca %>% 
-                                                filter(IF == "IF") %>% 
-                                                group_by(nr) %>% 
-                                                count(nr) %>% 
-                                                select(nr) %>% 
-                                                nrow()))) %>% 
-       replace_na(list(Dipartimento ="Totale"))), by = "Dipartimento") %>% 
-  left_join(
-    (pr %>% 
-       
-      
-      
-      
-    )
-    
-    
-    
-  )
+radar <- data.frame(
+  Pubblicazioni = c(1.25, 0.51,1.24,1.47),
+  Progetti = c(1.91, 1.41, 2.32, 3.65), 
+  RFTE = c(1.27, 0.91, 1.00, 0.83), 
+  Esami = c(0.35, 0.31, 0.20, 0.13), 
+  FTED = c(0.2, 0.27, 0.27, 0.25), 
+  FTEC = c(0.25, 0.24, 0.22, 0.28), 
+  FTET = c(0.24, 0.25, 0.23, 0.28), 
+  RT = c(0.31, 0.23, 0.23, 0.23)
+)  
+rownames(radar) <- c("DSA","ATLOM", "ATER", "DTSA")
+radar <- rbind(c(4,4,4,1,1,1,1,1) , rep(0,8) , radar)
 
 
+colors_border=c( rgb(0.2,0.5,0.5,0.9), rgb(0.8,0.2,0.5,0.9) , rgb(0.7,0.5,0.1,0.9) )
+colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4) , rgb(0.7,0.5,0.1,0.4) )
 
 
- 
+radarchart( radar  ,
+            #custom polygon
+            #pcol=colors_border , pfcol=colors_in , plwd=4 , plty=1,
+            #custom the grid
+            cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,4,1), cglwd=0.8,
+            #custom labels
+            #vlcex=0.8 
+)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-###calcola per dipartimento/reparto/tipologia e codiceprg il numero di u.o. partecipanti e il budget
-
-pr %>% select(-14, -15) %>% 
-  mutate("Stato" = ifelse(DataFine < as.Date("2019-01-01"), "Archiviato", "Attivo")) %>% 
-  filter(Stato == "Attivo" & DataInizio <= as.Date("2019-12-31")) %>% 
-  mutate("Statoanno" = ifelse(DataFine <=as.Date("2019-12-31"), "Concluso", "Aperto")) %>%
-  left_join(repMat, by = c("MatrRSUO" = "matricola")) %>%
-  saveRDS(here("programmazione", "shinyapp", "prj.rds"))
-  
-  
-  pr %>% 
-  group_by(Tipologia) %>% 
-  summarise(n = nlevels(factor(Codice)), 
-            Bdg = sum(Budget)) %>% 
-  janitor::adorn_totals(where = "row") #<<---- cosi calcola il numero di progetti per tipologia di tutto l'istituto
-
-  
-  pr %>% 
-    summarise(n = nlevels(factor(Codice)))
-  
-  
-  pr %>% 
-    group_by(Dipartimento) %>% 
-    summarise(n=nlevels(factor(Codice))) %>% 
-    filter(!is.na(Dipartimento))
-  
-  
-
-####elenco PR di IZSLER
-pr %>%
-  group_by(CodIDIzler, Tipologia, DataInizio, DataFine, Descrizione, RespScient) %>% 
-  summarise(Budget = sum(Budget), nUO = n()) %>% 
-  ungroup() %>% 
-  group_by(CodIDIzler, Tipologia, DataInizio, DataFine, Descrizione, RespScient, Budget, nUO) %>% 
-  summarise(Durata = as.numeric(DataFine-DataInizio), 
-            R = as.numeric(date("2019-12-31")-date(DataInizio)), 
-            Realizzazione = ifelse(R>Durata, 100, 100*(R/Durata))) %>% 
-  select(-R, -Durata)
-
-
-
-, 
-            Durata = as.numeric(DataFine-DataInizio))
-, 
-            R = as.numeric(date("2019-12-31")-date(DataInizio)), 
-            Realizzazione = ifelse(R>Durata, 100, 100*(R/Durata))) %>% View()
-
-
-X <- as.numeric(pr$DataFine-pr$DataInizio)
-
-z<-ymd("2019/12/31")
-
-start <- pr$DataInizio
-end <- "2019-12-31"
-elapsed.time <- pr$DataInizio%--% end
-Y <- as.numeric(as.duration(elapsed.time) / ddays(1))
-
-
-x <- pr %>% select(-14, -15) %>% 
-  mutate("Stato" = ifelse(DataFine < as.Date("2019-01-01"), "Archiviato", "Attivo")) %>% 
-  filter(Stato == "Attivo" & DataInizio <= as.Date("2019-12-31")) %>% 
-  mutate("Statoanno" = ifelse(DataFine <=as.Date("2019-12-31"), "Concluso", "Aperto")) %>%
-left_join(repMat, by = c("MatrRSUO" = "matricola")) %>%
-  
-  pr %>% 
-group_by(Dipartimento, Reparto, Tipologia, Codice, CodIDIzler) %>% 
-  summarise(NUO= n(), 
-            BudgetA = sum(Budget), 
-            nproj = nlevels(factor(Codice)))%>%
-  group_by(Dipartimento) %>% 
-  summarise(BDG = sum(BudgetA), 
-            n = sum(nproj)) %>% View()
-            
-#######
-
-pr %>% select(-14, -15) %>% 
-  mutate("Stato" = ifelse(DataFine < as.Date("2019-01-01"), "Archiviato", "Attivo")) %>% 
-  filter(Stato == "Attivo" & DataInizio <= as.Date("2019-12-31")) %>% 
-  mutate("Statoanno" = ifelse(DataFine <=as.Date("2019-12-31"), "Concluso", "Aperto")) %>%
-  left_join(repMat, by = c("MatrRSUO" = "matricola")) %>%
-  group_by(Tipologia) %>% 
-  summarise(n = nlevels(factor(Codice)), 
-            Bdg = sum(Budget)) %>% 
-  janitor::adorn_totals(where = "row") #<<---- cosi calcola il numero di progetti per tipologia di tutto l'istituto
-
-
-
-pr %>% select(-14, -15) %>% 
-    mutate("Stato" = ifelse(DataFine < as.Date("2019-01-01"), "Archiviato", "Attivo")) %>% 
-    filter(Stato == "Attivo" & DataInizio <= as.Date("2019-12-31")) %>% 
-    mutate("Statoanno" = ifelse(DataFine <=as.Date("2019-12-31"), "Concluso", "Aperto")) %>%
-    left_join(repMat, by = c("MatrRSUO" = "matricola")) %>%
-    group_by(Dipartimento, Reparto, Tipologia, CodIDIzler) %>% View()
-
-
-
-!duplicated(x$Codice)
-
-#############################
- 
+# Add a legend
+legend(x=1, y=0.7, legend = rownames(radar[-c(1,2),]), bty = "n", colors = pcol, pch=16 , cex=0.8, pt.cex=1)
