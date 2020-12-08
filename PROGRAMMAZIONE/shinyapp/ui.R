@@ -7,8 +7,8 @@ ui <- dashboardPage(
       menuItem("Dipartimento Sicurezza Alimentare", tabName = "dsalim", icon = icon("cog")),
       menuItem("Dipartimento Tutela e Salute Animale", tabName = "dsa", icon = icon("cog")),
       menuItem("Area Territoriale Lombardia", tabName = "lomb", icon = icon("cog")),
-      menuItem("Area Territoriale Emilia Romagna", tabName = "emil", icon = icon("cog"))
-      # menuItem("Note", tabName = "help", icon = icon("cog"))
+      menuItem("Area Territoriale Emilia Romagna", tabName = "emil", icon = icon("cog")),
+      menuItem("Note", tabName = "help", icon = icon("cog"))
     )
   ),
   dashboardBody(
@@ -122,7 +122,7 @@ ui <- dashboardPage(
             
             div(id='clickdiv7',
                 valueBoxOutput("Int3")),
-            bsModal("CI3", "Partecipazione a convegni internazionali", "clickdiv7", tableOutput("convegni3"), size = "large"),
+            bsModal("CI3", "Partecipazione a convegni internazionali", "clickdiv7", dataTableOutput("convegni3"), size = "large"),
             
             div(id='clickdiv8',
                 valueBoxOutput("PR3")),
@@ -174,7 +174,7 @@ ui <- dashboardPage(
                     
                     div(id='clickdiv11',
                         valueBoxOutput("PR4")),
-                    bsModal("Prj4", "Partecipazione a convegni nazionali", "clickdiv11", dataTableOutput("projr4"), size = "large"),
+                    bsModal("Prj4", "Progetti di ricerca", "clickdiv11", dataTableOutput("projr4"), size = "large"),
                     
                     
                     
@@ -224,7 +224,7 @@ ui <- dashboardPage(
             
             div(id='clickdiv14',
                 valueBoxOutput("PR5")),
-            bsModal("Prj5", "Partecipazione a convegni nazionali", "clickdiv14", dataTableOutput("projr5"), size = "large"),
+            bsModal("Prj5", "Progetti di ricerca", "clickdiv14", dataTableOutput("projr5"), size = "large"),
             
             
             # div(id='clickdiv14',
@@ -250,12 +250,12 @@ ui <- dashboardPage(
           )
   
 ) 
-# , 
+ , 
 
-###Note####_____________________________________________________________________
-# tabItem(tabName = "help", 
-#         includeHTML("intro.html")
-#         )
+##Note####_____________________________________________________________________
+tabItem(tabName = "help",
+        includeHTML("note.html")
+        )
 
 
 )))
