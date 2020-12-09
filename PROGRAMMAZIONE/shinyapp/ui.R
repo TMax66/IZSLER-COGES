@@ -118,7 +118,7 @@ ui <- dashboardPage(
             
             div(id='clickdiv6',
                 valueBoxOutput("IF3")),
-            bsModal("P3", "Pubblicazioni IF", "clickdiv6",tableOutput("articoli3"), size = "large"),
+            bsModal("P3", "Pubblicazioni IF", "clickdiv6",dataTableOutput("articoli3"), size = "large"),
             
             div(id='clickdiv7',
                 valueBoxOutput("Int3")),
