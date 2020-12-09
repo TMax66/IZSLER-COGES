@@ -4,11 +4,11 @@ ui <- dashboardPage(
     width = 300,
     sidebarMenu(
       menuItem("IZSLER", tabName = "izsler", icon = icon("globe")),
-      menuItem("Dipartimento Sicurezza Alimentare", tabName = "dsalim", icon = icon("cog")),
-      menuItem("Dipartimento Tutela e Salute Animale", tabName = "dsa", icon = icon("cog")),
-      menuItem("Area Territoriale Lombardia", tabName = "lomb", icon = icon("cog")),
-      menuItem("Area Territoriale Emilia Romagna", tabName = "emil", icon = icon("cog")),
-      menuItem("Note", tabName = "help", icon = icon("cog"))
+      menuItem("Dipartimento Sicurezza Alimentare", tabName = "dsalim", icon = icon("sitemap")),
+      menuItem("Dipartimento Tutela e Salute Animale", tabName = "dsa", icon = icon("sitemap")),
+      menuItem("Area Territoriale Lombardia", tabName = "lomb", icon = icon("sitemap")),
+      menuItem("Area Territoriale Emilia Romagna", tabName = "emil", icon = icon("sitemap")),
+      menuItem("Note", tabName = "help", icon = icon("book"))
     )
   ),
   dashboardBody(

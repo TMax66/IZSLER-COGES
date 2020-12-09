@@ -96,8 +96,10 @@ ra <- reactive(tizsler %>%
     valueBox(
       (  pr %>% 
            summarise(n = nlevels(factor(Codice)))
-      ), "Progetti di ricerca in corso ", icon = icon("book"), color = "light-blue")
+      ), "Progetti di ricerca in corso ", icon = icon("user-graduate"), color = "light-blue")
   })
+
+###tabella x dipartimenti####
 
   output$t <- renderUI({
     border <- officer::fp_border()
@@ -376,9 +378,10 @@ output$PR2 <- renderValueBox({
     (  pr %>% 
          filter(Dipartimento=="Dipartimento Sicurezza Alimentare") %>% 
          summarise(n = nlevels(factor(Codice)))
-    ), "Progetti di ricerca in corso ", icon = icon("book"), color = "light-blue")
+    ), "Progetti di ricerca in corso ", icon = icon("user-graduate"), color = "light-blue")
 })
 
+###tabella x reparti dsa####
 output$t2 <- renderUI({
   border <- officer::fp_border()
   flextable(
@@ -648,7 +651,7 @@ output$PR3 <- renderValueBox({
     (  pr %>% 
          filter(Dipartimento=="Dipartimento Tutela e  Salute Animale") %>% 
          summarise(n = nlevels(factor(Codice)))
-    ), "Progetti di ricerca in corso ", icon = icon("book"), color = "light-blue")
+    ), "Progetti di ricerca in corso ", icon = icon("user-graduate"), color = "light-blue")
 })
 
 # output$Naz3 <- renderValueBox({
@@ -1058,7 +1061,7 @@ output$PR4 <- renderValueBox({
     (  pr %>% 
          filter(Dipartimento=="Area Territoriale Lombardia") %>% 
          summarise(n = nlevels(factor(Codice)))
-    ), "Progetti di ricerca in corso ", icon = icon("book"), color = "light-blue")
+    ), "Progetti di ricerca in corso ", icon = icon("user-graduate"), color = "light-blue")
 })
 
 
@@ -1478,7 +1481,7 @@ output$PR5 <- renderValueBox({
     (  pr %>% 
          filter(Dipartimento=="Area Territoriale Emilia Romagna") %>% 
          summarise(n = nlevels(factor(Codice)))
-    ), "Progetti di ricerca in corso ", icon = icon("book"), color = "light-blue")
+    ), "Progetti di ricerca in corso ", icon = icon("user-graduate"), color = "light-blue")
 })
 
 # output$Naz5 <- renderValueBox({
