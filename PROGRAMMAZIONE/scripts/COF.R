@@ -9,8 +9,7 @@ library("here")
 library("flextable")
 library("shinyBS")
 library("officer")
-
-library(fmsb)
+library("fmsb")
 
 radar <- data.frame(
   Pubblicazioni = c(1.25, 0.51,1.24,1.47),
@@ -39,5 +38,6 @@ radarchart( radar  ,
             #vlcex=0.8 
 )
 
+
 # Add a legend
-legend(x=1, y=0.7, legend = rownames(radar[-c(1,2),]), bty = "n", colors = pcol, pch=16 , cex=0.8, pt.cex=1)
+legend(x=1, y=0.7, legend = rownames(radar[-c(1,2),]), bty = "n", , pch=16 , cex=0.8, pt.cex=1)
