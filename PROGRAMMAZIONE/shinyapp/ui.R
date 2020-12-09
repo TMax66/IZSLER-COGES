@@ -55,7 +55,7 @@ ui <- dashboardPage(
     column(11, 
              div(id = 'clickdiv00',
                  plotOutput("tbd")),
-                 bsModal("TW", "",  'clickdiv00', tableOutput("tbw")))
+                 bsModal("TW", "Distribuzione percentuale degli Indicatori di performance  tra i Dipartimenti",  'clickdiv00', tableOutput("tbw")))
      
     )
   ), 
@@ -102,7 +102,7 @@ ui <- dashboardPage(
         column(11, 
                div(id = 'clickdiv01',
                    plotOutput("tbd2")),
-               bsModal("TW2", "",  'clickdiv01', tableOutput("tbw2")))
+               bsModal("TW2", "Distribuzione percentuale degli Indicatori di performance  tra i Reparti",  'clickdiv01', tableOutput("tbw2")))
       )
 ), 
 
@@ -148,7 +148,7 @@ ui <- dashboardPage(
             column(11, 
                    div(id = 'clickdiv02',
                        plotOutput("tbd3")),
-                   bsModal("TW3", "",  'clickdiv02', tableOutput("tbw3")))
+                   bsModal("TW3", "Distribuzione percentuale degli Indicatori di performance  tra i Reparti",  'clickdiv02', tableOutput("tbw3")))
             
             
           )
@@ -197,7 +197,7 @@ ui <- dashboardPage(
             column(11, 
                    div(id = 'clickdiv03',
                        plotOutput("tbd4")),
-                   bsModal("TW4", "",  'clickdiv03', tableOutput("tbw4")))
+                   bsModal("TW4", "Distribuzione percentuale degli Indicatori di performance  tra i Reparti",  'clickdiv03', tableOutput("tbw4")))
             
             
             
@@ -245,7 +245,7 @@ ui <- dashboardPage(
             column(11, 
                    div(id = 'clickdiv04',
                        plotOutput("tbd5")), 
-                  bsModal("TW5", "",'clickdiv04',tableOutput("tbw5") )
+                  bsModal("TW5", "Distribuzione percentuale degli Indicatori di performance  tra i Reparti",'clickdiv04',tableOutput("tbw5") )
           )
           )
   
