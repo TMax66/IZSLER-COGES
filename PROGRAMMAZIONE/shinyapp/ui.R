@@ -7,11 +7,16 @@ ui <- dashboardPage(
       menuItem("Dipartimento Sicurezza Alimentare", tabName = "dsalim", icon = icon("cog")),
       menuItem("Dipartimento Tutela e Salute Animale", tabName = "dsa", icon = icon("cog")),
       menuItem("Area Territoriale Lombardia", tabName = "lomb", icon = icon("cog")),
-      menuItem("Area Territoriale Emilia Romagna", tabName = "emil", icon = icon("cog"))
-      # menuItem("Note", tabName = "help", icon = icon("cog"))
+      menuItem("Area Territoriale Emilia Romagna", tabName = "emil", icon = icon("cog")),
+      menuItem("Note", tabName = "help", icon = icon("cog"))
     )
   ),
   dashboardBody(
+    tags$head(tags$style(HTML('
+                        .modal-lg {
+                        width: 1500px;
+                        }
+                      '))),
   tabItems(
 #####IZSLER#####
     tabItem( tabName = "izsler", 
@@ -25,15 +30,15 @@ ui <- dashboardPage(
     
     div(id='clickdiv0',
         valueBoxOutput("IF")),
-    bsModal("P", "Pubblicazioni IF", "clickdiv0",tableOutput("articoli"), size = "large"),
+    bsModal("P", "Pubblicazioni IF", "clickdiv0",dataTableOutput("articoli"), size = "large"),
     
     div(id='clickdiv1',
         valueBoxOutput("Int")),
-    bsModal("CI", "Partecipazione a convegni internazionali", "clickdiv1", tableOutput("convegni"), size = "large"),
+    bsModal("CI", "Partecipazione a convegni internazionali", "clickdiv1", dataTableOutput("convegni"), size = "large"),
 
     div(id='clickdiv2',
-      valueBoxOutput("Naz")),
-    bsModal("CN", "Partecipazione a convegni nazionali", "clickdiv2", tableOutput("nazionali"), size = "large"),
+      valueBoxOutput("PR")),
+    bsModal("Prj", "Progetti di ricerca in corso", "clickdiv2", dataTableOutput("projr"), size = "large"),
   
     ), 
     
@@ -66,17 +71,20 @@ ui <- dashboardPage(
       
       div(id='clickdiv3',
           valueBoxOutput("IF2")),
-      bsModal("P2", "Pubblicazioni IF", "clickdiv3",tableOutput("articoli2"), size = "large"),
+      bsModal("P2", "Pubblicazioni IF", "clickdiv3",dataTableOutput("articoli2"), size = "large"),
       
       div(id='clickdiv4',
           valueBoxOutput("Int2")),
-      bsModal("CI2", "Partecipazione a convegni internazionali", "clickdiv4", tableOutput("convegni2"), size = "large"),
+      bsModal("CI2", "Partecipazione a convegni internazionali", "clickdiv4", dataTableOutput("convegni2"), size = "large"),
       
       div(id='clickdiv5',
-          valueBoxOutput("Naz2")),
-      bsModal("CN2", "Partecipazione a convegni nazionali", "clickdiv5", tableOutput("nazionali2"), size = "large"),
+          valueBoxOutput("PR2")),
+      bsModal("Prj2", "Progetti di Ricerca", "clickdiv5", dataTableOutput("projr2"), size = "large"),
       
-      
+      # div(id='clickdiv5',
+      #     valueBoxOutput("Naz2")),
+      # bsModal("CN2", "Partecipazione a convegni nazionali", "clickdiv5", tableOutput("nazionali2"), size = "large"),
+      # 
       
       ),
       
@@ -114,12 +122,17 @@ ui <- dashboardPage(
             
             div(id='clickdiv7',
                 valueBoxOutput("Int3")),
-            bsModal("CI3", "Partecipazione a convegni internazionali", "clickdiv7", tableOutput("convegni3"), size = "large"),
+            bsModal("CI3", "Partecipazione a convegni internazionali", "clickdiv7", dataTableOutput("convegni3"), size = "large"),
             
             div(id='clickdiv8',
-                valueBoxOutput("Naz3")),
-            bsModal("CN3", "Partecipazione a convegni nazionali", "clickdiv8", tableOutput("nazionali3"), size = "large"),
-          ),
+                valueBoxOutput("PR3")),
+            bsModal("Prj3", "Progetti di ricerca", "clickdiv8", dataTableOutput("projr3"), size = "large"),
+          
+            
+            # div(id='clickdiv8',
+            #     valueBoxOutput("Naz3")),
+            # bsModal("CN3", "Partecipazione a convegni nazionali", "clickdiv8", tableOutput("nazionali3"), size = "large"),
+            ),
           
           br(),
           
@@ -153,15 +166,21 @@ ui <- dashboardPage(
                     
                     div(id='clickdiv9',
                         valueBoxOutput("IF4")),
-                    bsModal("P4", "Pubblicazioni IF", "clickdiv9",tableOutput("articoli4"), size = "large"),
+                    bsModal("P4", "Pubblicazioni IF", "clickdiv9",dataTableOutput("articoli4"), size = "large"),
                     
                     div(id='clickdiv10',
                         valueBoxOutput("Int4")),
-                    bsModal("CI4", "Partecipazione a convegni internazionali", "clickdiv10", tableOutput("convegni4"), size = "large"),
+                    bsModal("CI4", "Partecipazione a convegni internazionali", "clickdiv10", dataTableOutput("convegni4"), size = "large"),
                     
                     div(id='clickdiv11',
-                        valueBoxOutput("Naz4")),
-                    bsModal("CN4", "Partecipazione a convegni nazionali", "clickdiv11", tableOutput("nazionali4"), size = "large"),
+                        valueBoxOutput("PR4")),
+                    bsModal("Prj4", "Progetti di ricerca", "clickdiv11", dataTableOutput("projr4"), size = "large"),
+                    
+                    
+                    
+                    # div(id='clickdiv11',
+                    #     valueBoxOutput("Naz4")),
+                    # bsModal("CN4", "Partecipazione a convegni nazionali", "clickdiv11", tableOutput("nazionali4"), size = "large"),
 
                   ),
           br(),
@@ -197,16 +216,21 @@ ui <- dashboardPage(
             
             div(id='clickdiv12',
                 valueBoxOutput("IF5")),
-            bsModal("P5", "Pubblicazioni IF", "clickdiv12",tableOutput("articoli5"), size = "large"),
+            bsModal("P5", "Pubblicazioni IF", "clickdiv12", dataTableOutput("articoli5"), size = "large"),
             
             div(id='clickdiv13',
                 valueBoxOutput("Int5")),
-            bsModal("CI5", "Partecipazione a convegni internazionali", "clickdiv13", tableOutput("convegni5"), size = "large"),
+            bsModal("CI5", "Partecipazione a convegni internazionali", "clickdiv13", dataTableOutput("convegni5"), size = "large"),
             
             div(id='clickdiv14',
-                valueBoxOutput("Naz5")),
-            bsModal("CN5", "Partecipazione a convegni nazionali", "clickdiv14", tableOutput("nazionali5"), size = "large"),
+                valueBoxOutput("PR5")),
+            bsModal("Prj5", "Progetti di ricerca", "clickdiv14", dataTableOutput("projr5"), size = "large"),
             
+            
+            # div(id='clickdiv14',
+            #     valueBoxOutput("Naz5")),
+            # bsModal("CN5", "Partecipazione a convegni nazionali", "clickdiv14", tableOutput("nazionali5"), size = "large"),
+            # 
           ),
           br(),
           
@@ -226,12 +250,12 @@ ui <- dashboardPage(
           )
   
 ) 
-# , 
+ , 
 
-###Note####_____________________________________________________________________
-# tabItem(tabName = "help", 
-#         includeHTML("intro.html")
-#         )
+##Note####_____________________________________________________________________
+tabItem(tabName = "help",
+        includeHTML("note.html")
+        )
 
 
 )))

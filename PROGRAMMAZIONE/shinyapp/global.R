@@ -9,6 +9,8 @@ library("here")
 library("flextable")
 library("shinyBS")
 library("officer")
+library("DT")
+library("lubridate")
 options(scipen = .999)
 # dati <- readRDS( here("programmazione", "shinyapp", "dati.rds"))
 # dati <- dati %>% 
@@ -23,7 +25,7 @@ vp <- readRDS("vp.rds")
 ai <- readRDS("ai.rds")
 
 
-
+###INDICATORI DI PERFORMANCES#######
 dir <- dati %>%
   filter(contratto == "DIRIGENZA") %>%
   group_by(Dipartimento, Reparto) %>%
@@ -116,10 +118,8 @@ tater <- tabella %>%
   select(Reparto, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
 
-#####################################################################################################################
+ 
 #########################PUBBLICAZIONI###############################################################################
-#####################################################################################################################
-
 
 # ricerca <- readRDS(here("programmazione", "shinyapp", "ricerca.rds"))
 
@@ -130,4 +130,8 @@ ricerca <- ricerca %>%
          INT = ifelse(tipologia == "IF ; Int" | tipologia == "Int",  "Int", NA ), 
          NAZ = ifelse(tipologia == "Naz", "Naz", NA), 
          Oth = ifelse(tipologia == "Others" , "Others", NA))
+
+#######################PROGETTI DI RICERCA#####################################
+
+pr <- readRDS("prj.rds")
 

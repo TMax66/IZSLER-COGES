@@ -78,7 +78,7 @@ anag19 %>%
   right_join(hwd, by = "Matricola" ) %>%  
   group_by(Dipartimento, Reparto, Laboratorio, contratto) %>% 
   summarise(hworked= sum(hworked), 
-            hprev = sum(hcontr*45.6)) %>%
+            hprev = sum(hcontr*47.4)) %>%
   saveRDS(., file = here("programmazione", "data", "processed", "hwd19.rds"))
 
  
@@ -195,8 +195,8 @@ att19 %>%
                               "Virologia" = "LABORATORIO DI VIROLOGIA E SIEROLOGIA SPECIALIZZATA, MICROSCOPIA ELETTRONICA", 
                               "Virus Vescicolari e Produzioni Biotecnologiche" = "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE")) %>% 
   left_join(., hwd19, by = c("Reparto", "Laboratorio")) %>% 
-   mutate("FTE-previsto" = ifelse(contratto == "DIRIGENZA", hprev/(38*45.6), hprev/(36*45.6)),
-         "FTE-reale" = ifelse(contratto == "DIRIGENZA", hworked/(38*45.6), hworked/(36*45.6))) %>% 
+   mutate("FTE-previsto" = ifelse(contratto == "DIRIGENZA", hprev/(38*47.4), hprev/(36*47.4)),
+         "FTE-reale" = ifelse(contratto == "DIRIGENZA", hworked/(38*47.4), hworked/(36*47.4))) %>% 
          # "%tempo-utilizzato" = 100*(hworked/hprev),
          # "tempo-medio esame" = hworked/esami,
          # "RxFTEr" = ricavi/`FTE-reale`) %>%
@@ -300,40 +300,41 @@ vp %>%
 
 
 
-###tabella per documento piano performance####
-dir <- dati %>% 
-  filter(contratto == "DIRIGENZA") %>% 
-  group_by(Dipartimento) %>% 
-  summarise(esami = sum(esami), 
-            ricavi = sum(ricavi),
-            FTE_d = round(sum(`FTE-reale`),1))
-  
-
-comp <- dati %>% 
-  filter(contratto == "COMPARTO") %>% 
-  group_by(Dipartimento) %>% 
-  summarise(esami = sum(esami), 
-            ricavi = sum(ricavi),
-            FTE_c = round(sum(`FTE-reale`),1))
-
-tabella <- dir %>% 
-  bind_cols((comp %>% 
-              select(4)), (vp %>% 
-                             select(2)), (ai %>% 
-                                            select(2))) %>% 
-  
-  mutate(RT = (ricavi+VP+AI), 
-         FTE_t = round((FTE_d+FTE_c),1)) %>% 
-  arrange(desc(esami)) %>% 
-  adorn_totals(where = "row") %>% 
-  mutate( "R-FTE" = round(RT/FTE_t,0) ) %>% 
-  select(Dipartimento, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP, 
-         "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")  
+# ###tabella per documento piano performance####
+# dir <- dati %>% 
+#   filter(contratto == "DIRIGENZA") %>% 
+#   group_by(Dipartimento) %>% 
+#   summarise(esami = sum(esami), 
+#             ricavi = sum(ricavi),
+#             FTE_d = round(sum(`FTE-reale`),1))
+#   
+# 
+# comp <- dati %>% 
+#   filter(contratto == "COMPARTO") %>% 
+#   group_by(Dipartimento) %>% 
+#   summarise(esami = sum(esami), 
+#             ricavi = sum(ricavi),
+#             FTE_c = round(sum(`FTE-reale`),1))
+# 
+# tabella <- dir %>% 
+#   bind_cols((comp %>% 
+#               select(4)), (vp %>% 
+#                              select(2)), (ai %>% 
+#                                             select(2))) %>% 
+#   
+#   mutate(RT = (ricavi+VP+AI), 
+#          FTE_t = round((FTE_d+FTE_c),1)) %>% 
+#   arrange(desc(esami)) %>% 
+#   adorn_totals(where = "row") %>% 
+#   mutate( "R-FTE" = round(RT/FTE_t,0) ) %>% 
+#   select(Dipartimento, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP, 
+#          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")  
+#  
+# 
+# ft <- flextable(tabella)
+# ft <- autofit(ft)
+# print(ft, preview = "docx")
+# 
+# 
+# 
  
-
-ft <- flextable(tabella)
-ft <- autofit(ft)
-print(ft, preview = "docx")
-
-
-
