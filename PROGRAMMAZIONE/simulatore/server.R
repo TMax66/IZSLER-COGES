@@ -1,10 +1,6 @@
 server<-function(input, output) {
-  
-  
-  
-    
 
-  df <- reactive(
+df <- reactive(
     
     data.frame(
       RT = input$rt,
@@ -29,24 +25,26 @@ server<-function(input, output) {
              
              VARRFTEr = 100*((RFTEr-RFTEt)/RFTEt), 
              VARRFTEr2 = 100*((RFTEr-RFTEprog)/RFTEprog),
+             
+             TN = 100, 
+             
+             RisN = (VARRFTEr*100)/VARrfte
 
              )  
-      
-    
-  
-    
   )
-
 output$tb <- renderTable(df() %>% 
                            
-                           select(RT, FTE, FTEp, RFTEt, RFTEprog, VARrfte)
+                           select("Ricavo Totale Previsto" = RT, "FTE disponibili" = FTE, 
+                                  
+                                "FTE programmato" = FTEp, "Ricavo per FTE teorico" =RFTEt, 
+                                
+                                "Ricavo per FTE programmato" =RFTEprog, Target=VARrfte, "Target Normalizzato" = TN)
                          
                          )
-  
-  
 output$tb2 <- renderTable(df() %>% 
                            
-                           select(VarRT, VarFT, RFTEr, VARRFTEr, VARRFTEr2)
+                           select("Ricavo Totale" = VarRT, "FTE" =VarFT, "Ricavo per FTE" = RFTEr, 
+                                  Risultato=VARRFTEr, "Risultato Normalizzato" = RisN)
                          
 )
 
