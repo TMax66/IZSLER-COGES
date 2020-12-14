@@ -1,10 +1,6 @@
 server<-function(input, output) {
-  
-  
-  
-    
 
-  df <- reactive(
+df <- reactive(
     
     data.frame(
       RT = input$rt,
@@ -31,19 +27,12 @@ server<-function(input, output) {
              VARRFTEr2 = 100*((RFTEr-RFTEprog)/RFTEprog),
 
              )  
-      
-    
-  
-    
   )
-
 output$tb <- renderTable(df() %>% 
                            
                            select(RT, FTE, FTEp, RFTEt, RFTEprog, VARrfte)
                          
                          )
-  
-  
 output$tb2 <- renderTable(df() %>% 
                            
                            select(VarRT, VarFT, RFTEr, VARRFTEr, VARRFTEr2)
