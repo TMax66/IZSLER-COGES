@@ -24,7 +24,8 @@ ui<-navbarPage("",
                 ), 
                mainPanel(
                  tableOutput("tb"),
-                 br(),br(),br()
+                 br(),br(),br(), 
+                 tableOutput("tb2")
                )
              )
     )

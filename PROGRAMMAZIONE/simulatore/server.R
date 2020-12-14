@@ -1,6 +1,7 @@
 server<-function(input, output) {
   
   
+  
     
 
   df <- reactive(
@@ -16,38 +17,38 @@ server<-function(input, output) {
         
              RFTEt = RT/FTE, 
              
-             RFTEprog = RT/(FTE-FTEp), 
+             RFTEprog = RT/(FTEp), 
              
              VARrfte = 100*((RFTEprog-RFTEt)/RFTEt), 
-             
              
              VarRT = RT+(RT*vRT),
              
              VarFT = FTEp+(FTEp*vFTE),
              
-             RFTEr = VarRT/VarFT
+             RFTEr = VarRT/VarFT, 
              
-             ) %>% 
-      select(RT, FTE, FTEp, RFTEt, RFTEprog, VARrfte)
+             VARRFTEr = 100*((RFTEr-RFTEt)/RFTEt), 
+             VARRFTEr2 = 100*((RFTEr-RFTEprog)/RFTEprog),
+
+             )  
+      
     
   
     
   )
 
-output$tb <- renderTable(df())
+output$tb <- renderTable(df() %>% 
+                           
+                           select(RT, FTE, FTEp, RFTEt, RFTEprog, VARrfte)
+                         
+                         )
   
   
-# t <- reactive(
-#     data.frame(
-#     "rfter" = input$rt/input$fted, 
-#     "rftep" = input$rt/(input$fted-(input$fted*rid()))
-#   ) %>% 
-#     mutate(variaz = 100*((rftep-rfter)/rfter))
-#   )
-#     
-#   output$tb <- renderTable(t())
-#    
-  
+output$tb2 <- renderTable(df() %>% 
+                           
+                           select(VarRT, VarFT, RFTEr, VARRFTEr, VARRFTEr2)
+                         
+)
 
   
  
