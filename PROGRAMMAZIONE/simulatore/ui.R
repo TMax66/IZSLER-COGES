@@ -1,7 +1,8 @@
-ui<-navbarPage("",
-    theme = shinytheme("cerulean"),
+ui<-fluidPage(theme = shinytheme("cerulean"),
+               titlePanel(" "),
+ 
            
-    tabPanel("",
+     
              sidebarLayout(
                sidebarPanel("", 
                 
@@ -23,13 +24,23 @@ ui<-navbarPage("",
                 sliderInput("Vfte", "Variazione percentuale del FTE disponibile ", min=-15, max= 15,  value = 0),
                 ), 
                mainPanel(
-                 tableOutput("tb"),
+                 
+                 wellPanel(
+                   fluidRow(   
+                     column(3, offset= 2, 
+                   h3("Programmazione"),
+                 tableOutput("tb")))),
                  br(),br(),br(), 
-                 tableOutput("tb2")
+                 
+                 wellPanel(
+                   h3("Verifica dei risultati"),
+                   tableOutput("tb2")
+                 )
+                
                )
              )
     )
-)
+ 
    
              
 
