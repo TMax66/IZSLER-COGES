@@ -23,12 +23,13 @@ df <- reactive(
              
              RFTEr = VarRT/VarFT, 
              
-             VARRFTEr = 100*((RFTEr-RFTEt)/RFTEt), 
-             VARRFTEr2 = 100*((RFTEr-RFTEprog)/RFTEprog),
+             VARRFTEr = ifelse(rid == 0, "", 100*((RFTEr-RFTEt)/RFTEt)), 
              
              TN = 100, 
              
-             RisN = (VARRFTEr*100)/VARrfte
+             RisN = ifelse(rid==0, "",
+               
+               (VARRFTEr*100)/VARrfte)
 
              )  
   )

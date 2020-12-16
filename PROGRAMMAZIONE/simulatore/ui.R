@@ -28,7 +28,7 @@ ui<-fluidPage(theme = shinytheme("cerulean"),
                 h3("Verifica"),
                 sliderInput("Vrt", "Variazione percentuale del Ricavo Totale previsto", min=-50, max= 50,  value = 0),
                 br(), 
-                sliderInput("Vfte", "Variazione percentuale del FTE programmato ", min=-15, max= 15,  value = 0)),
+                sliderInput("Vfte", "Variazione percentuale del FTE programmato ", min=-50, max= 50,  value = 0)),
                 
                 column(8, 
                    tableOutput("tb2") )))
