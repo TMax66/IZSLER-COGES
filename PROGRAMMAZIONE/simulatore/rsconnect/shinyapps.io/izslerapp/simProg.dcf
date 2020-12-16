@@ -1,0 +1,12 @@
+name: simProg
+title: simProg
+username:
+account: izslerapp
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3409016
+bundleId: 3997890
+url: https://izslerapp.shinyapps.io/simProg/
+when: 1608140982.50971
+asMultiple: FALSE
+asStatic: FALSE
