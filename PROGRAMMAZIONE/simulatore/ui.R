@@ -1,11 +1,11 @@
 ui<-fluidPage(theme = shinytheme("cerulean"),
-               titlePanel(" "),
+               titlePanel("Strumento di programmazione "),
  
            
      
-             sidebarLayout(
-               sidebarPanel("", 
-                
+                wellPanel(
+                    fluidRow( 
+                        column(4,  
                 h3("Programmazione"),            
                 numericInput("rt", "Ricavo Totale previsto",  value = "1000000"), 
                 br(), 
@@ -13,32 +13,28 @@ ui<-fluidPage(theme = shinytheme("cerulean"),
                 br(), 
                 # numericInput("ftet", "Full Time Equivalenti teorico",  value = ""), 
                 # br(),
-                sliderInput("pc", "percentuale FTE allocata agli obiettivi", min=0, max= 50,  value = "0"), 
+                sliderInput("pc", "percentuale FTE allocata agli obiettivi", min=0, max= 50,  value = "0")), 
                 
-                hr(),
-                br(),
+                column(8, 
+                       tableOutput("tb")  
+                    
+                ))),
                 
+                br(),br(),br(),
+                
+                wellPanel(
+                    fluidRow(
+                        column(4, 
                 h3("Verifica"),
                 sliderInput("Vrt", "Variazione percentuale del Ricavo Totale previsto", min=-50, max= 50,  value = 0),
                 br(), 
-                sliderInput("Vfte", "Variazione percentuale del FTE disponibile ", min=-15, max= 15,  value = 0),
-                ), 
-               mainPanel(
-                 
-                 wellPanel(
-                   fluidRow(   
-                     column(3, offset= 2, 
-                   h3("Programmazione"),
-                 tableOutput("tb")))),
-                 br(),br(),br(), 
-                 
-                 wellPanel(
-                   h3("Verifica dei risultati"),
-                   tableOutput("tb2")
-                 )
+                sliderInput("Vfte", "Variazione percentuale del FTE programmato ", min=-15, max= 15,  value = 0)),
                 
-               )
-             )
+                column(8, 
+                   tableOutput("tb2") )))
+                
+
+             
     )
  
    
