@@ -33,6 +33,7 @@ df <- reactive(
 
              )  
   )
+
 output$tb <- renderTable(df() %>% 
                            
                            select("Ricavo Totale Previsto" = RT, "FTE disponibili" = FTE, 
@@ -42,12 +43,12 @@ output$tb <- renderTable(df() %>%
                                 "Ricavo per FTE programmato" =RFTEprog, Target=VARrfte, "Target Normalizzato" = TN)
                          
                          )
-output$tb2 <- renderTable(df() %>% 
-                           
-                           select("Ricavo Totale" = VarRT, "FTE" =VarFT, "Ricavo per FTE" = RFTEr, 
-                                  Risultato=VARRFTEr, "Risultato Normalizzato" = RisN)
-                         
-)
+# output$tb2 <- renderTable(df() %>% 
+#                            
+#                            select("Ricavo Totale" = VarRT, "FTE" =VarFT, "Ricavo per FTE" = RFTEr, 
+#                                   Risultato=VARRFTEr, "Risultato Normalizzato" = RisN)
+#                          
+# )
 
   
  
