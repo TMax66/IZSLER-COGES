@@ -255,12 +255,12 @@ ui <- dashboardPage(
 ) 
  , 
 
-##Note####______________________________________________________________________
+##Note#### 
 tabItem(tabName = "help",
         includeHTML("note.html")
         ), 
 
-##Programmazione####____________________________________________________________
+##Programmazione#### 
 tabItem(tabName = "progr", 
         
         wellPanel(
@@ -276,7 +276,7 @@ tabItem(tabName = "progr",
                    sliderInput("pc", "percentuale FTE allocata agli obiettivi", min=0, max= 50,  value = "0")), 
             
             column(8, 
-                   tableOutput("tb")  
+                   # tableOutput("tb")  
                    
             ))), 
         br(),br(),br(),
@@ -290,7 +290,8 @@ tabItem(tabName = "progr",
                    sliderInput("Vfte", "Variazione percentuale del FTE programmato ", min=-50, max= 50,  value = 0)),
             
             column(8, 
-                   tableOutput("tb2") )))
+                   # tableOutput("tb2") 
+            )))
         
 )
 
