@@ -1829,31 +1829,64 @@ df <- reactive(
     )  
 )
 
-output$tb <- renderTable(df() %>% 
-                           
-                           select("Ricavo Totale Previsto" = RT, "FTE disponibili" = FTE, 
-                                  
-                                  "FTE programmato" = FTEp, "Ricavo per FTE teorico" =RFTEt, 
-                                  
-                                  "Ricavo per FTE programmato" =RFTEprog, Target=VARrfte, "Target Normalizzato" = TN)
-                         
-)
-output$tb2 <- renderTable(df() %>%
+# output$tb <- renderTable(df() %>% 
+#                            
+#                            select("Ricavo Totale Previsto" = RT, "FTE disponibili" = FTE, 
+#                                   
+#                                   "FTE programmato" = FTEp, "Ricavo per FTE teorico" =RFTEt, 
+#                                   
+#                                   "Ricavo per FTE programmato" =RFTEprog, Target=VARrfte, "Target Normalizzato" = TN)
+#                          
+# )
+# output$tb2 <- renderTable(df() %>%
+# 
+#                             select("Ricavo Totale" = VarRT, "FTE" =VarFT, "Ricavo per FTE" = RFTEr,
+#                                    Risultato=VARRFTEr, "Risultato Normalizzato" = RisN)
+# 
+# )
 
-                            select("Ricavo Totale" = VarRT, "FTE" =VarFT, "Ricavo per FTE" = RFTEr,
-                                   Risultato=VARRFTEr, "Risultato Normalizzato" = RisN)
-
-)
-
-
-
-
-
+output$rfteT <- renderValueBox({
+  valueBox( (df() %>% 
+               mutate(RFTEt= round(RFTEt, 2)) %>% 
+               select(RFTEt)), "Ricavo per FTE teorico",  icon = icon("euro"),
+            color = "blue"
+  )
+})
 
 
+output$ftep <- renderValueBox({
+  valueBox( (df() %>% 
+               select(FTEp)), "FTE programmati per l'attività istituzionale",  icon = icon("flask"),
+           color = "blue"
+  )
+})
 
 
+output$rfteP <- renderValueBox({
+  valueBox( (df() %>% 
+               mutate(RFTEprog= round(RFTEprog, 2)) %>% 
+               select(RFTEprog)), "Ricavo per FTE programmato",  icon = icon("euro"),
+            color = "aqua"
+  )
+})
 
+
+output$target <- renderValueBox({
+  valueBox( (df() %>% 
+               mutate(VARrfte= round(VARrfte, 2)) %>%
+               select(VARrfte)), "Target: variazione % attesa del RFTE",  icon = icon("euro"),
+            color = "red"
+  )
+})
+
+
+output$rtot <- renderValueBox({
+  valueBox( (df() %>% 
+               mutate(VarRT= round(VarRT, 2)) %>%
+               select(VarRT)), "Ricavo Totale ",  icon = icon("euro"),
+            color = "blue"
+  )
+})
 
 
 
