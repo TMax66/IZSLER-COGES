@@ -297,8 +297,10 @@ tabItem(tabName = "progr",
                    sliderInput("Vfte", "Variazione percentuale del FTE programmato ", min=-50, max= 50,  value = 0)),
             
             column(9, 
-                   valueBoxOutput("rtot")
-                   
+                   valueBoxOutput("rtot"),
+                   valueBoxOutput("fteR"), 
+                   valueBoxOutput("rfteR"),
+                   valueBoxOutput("target2")
                    
                    
                    # tableOutput("tb2") 

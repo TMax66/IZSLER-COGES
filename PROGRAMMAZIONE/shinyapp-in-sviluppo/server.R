@@ -1,4 +1,5 @@
 server <- function(input, output, session) { 
+
   
 ###IZSLER#####
 
@@ -1874,7 +1875,7 @@ output$rfteP <- renderValueBox({
 output$target <- renderValueBox({
   valueBox( (df() %>% 
                mutate(VARrfte= round(VARrfte, 2)) %>%
-               select(VARrfte)), "Target: variazione % attesa del RFTE",  icon = icon("euro"),
+               select(VARrfte)), "Variazione % attesa del RFTE",  icon = icon("euro"),
             color = "red"
   )
 })
@@ -1888,9 +1889,31 @@ output$rtot <- renderValueBox({
   )
 })
 
+output$fteR <- renderValueBox({
+  valueBox( (df() %>% 
+               mutate(VarFT= round(VarFT, 2)) %>%
+               select(VarFT)), "FTE erogati ",  icon = icon("flask"),
+            color = "blue"
+  )
+})
 
+output$rfteR <- renderValueBox({
+  valueBox( (df() %>% 
+               mutate(RFTEr= round(RFTEr, 2)) %>%
+               select(RFTEr)), "Ricavo per FTE erogati ",  icon = icon("euro"),
+            color = "blue"
+  )
+})
 
-
+output$target2 <- renderValueBox({
+  valueBox( (df() %>% 
+               mutate(VARRFTEr= as.numeric(VARRFTEr)) %>% 
+               mutate(VARRFTEr = round(VARRFTEr, 2)) %>%
+               mutate(VARRFTEr= ifelse(is.na(VARRFTEr), 0, VARRFTEr)) %>% 
+               select(VARRFTEr)), "Variazione % Ricavo per FTE ",  icon = icon("euro"),
+            color = "red"
+  )
+})
 
 
 }
