@@ -1825,7 +1825,7 @@ df <- reactive(
            
            RisN = ifelse(rid==0, "",
                          
-                         (VARRFTEr*100)/VARrfte)
+                         (VARRFTEr)/VARrfte)
            
     )  
 )
@@ -1914,6 +1914,17 @@ output$target2 <- renderValueBox({
             color = "red"
   )
 })
+
+output$risn <- renderValueBox({
+  valueBox( (df() %>% 
+               mutate(RisN = as.numeric(RisN, 1)) %>% 
+               mutate(RisN = ifelse(is.na(RisN), 0, RisN)) %>% 
+               mutate(RisN = round(RisN, 1)) %>% 
+               select(RisN)), "Indice efficienza",  icon = icon("euro"),
+            color = "red"
+  )
+})
+
 
 
 }
