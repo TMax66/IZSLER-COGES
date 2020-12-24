@@ -24,6 +24,16 @@ dati <- dati %>%
   mutate(across(where(is.numeric), function(x) round(x, 2)))
 vp <- readRDS("vp.rds")
 ai <- readRDS("ai.rds")
+ricerca <- readRDS("ricerca.rds")
+ricerca <- ricerca %>% 
+  mutate(IF = ifelse(tipologia == "IF ; Int" | tipologia == "IF",  "IF", NA), 
+         INT = ifelse(tipologia == "IF ; Int" | tipologia == "Int",  "Int", NA ), 
+         NAZ = ifelse(tipologia == "Naz", "Naz", NA), 
+         Oth = ifelse(tipologia == "Others" , "Others", NA))
+
+pr <- readRDS("prj.rds")
+
+
 
 
 ###INDICATORI DI PERFORMANCES#######
@@ -209,17 +219,17 @@ Tater <- tater %>%
  
 #########################PUBBLICAZIONI###############################################################################
 
-# ricerca <- readRDS(here("programmazione", "shinyapp", "ricerca.rds"))
+#ricerca <- readRDS(here("programmazione", "shinyapp", "ricerca.rds"))
 
-ricerca <- readRDS("ricerca.rds")
+#ricerca <- readRDS("ricerca.rds")
 
-ricerca <- ricerca %>% 
-  mutate(IF = ifelse(tipologia == "IF ; Int" | tipologia == "IF",  "IF", NA), 
-         INT = ifelse(tipologia == "IF ; Int" | tipologia == "Int",  "Int", NA ), 
-         NAZ = ifelse(tipologia == "Naz", "Naz", NA), 
-         Oth = ifelse(tipologia == "Others" , "Others", NA))
+# ricerca <- ricerca %>% 
+#   mutate(IF = ifelse(tipologia == "IF ; Int" | tipologia == "IF",  "IF", NA), 
+#          INT = ifelse(tipologia == "IF ; Int" | tipologia == "Int",  "Int", NA ), 
+#          NAZ = ifelse(tipologia == "Naz", "Naz", NA), 
+#          Oth = ifelse(tipologia == "Others" , "Others", NA))
 
 #######################PROGETTI DI RICERCA#####################################
 
-pr <- readRDS("prj.rds")
+#pr <- readRDS("prj.rds")
 

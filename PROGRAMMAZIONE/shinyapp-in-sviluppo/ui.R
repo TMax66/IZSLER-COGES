@@ -57,6 +57,8 @@ ui <- dashboardPage(
     column(1, 
     radioButtons("ind", "", 
                 c("IP" = "IP","Dipartimento" = "Dipartimento" ))),
+   
+   
     column(11, 
              div(id = 'clickdiv00',
                  plotOutput("tbd")),
