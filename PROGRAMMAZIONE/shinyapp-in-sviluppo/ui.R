@@ -48,7 +48,9 @@ ui <- dashboardPage(
     br(),
     
     fluidRow( 
+      div(id='radar1',  
     tableOutput("t")),
+    bsModal("R1", "IZSLER: profilo indicatori di performances", "radar1", plotOutput("radarIZSLER"), size = "large")),
     
     br(),
     fluidRow(
@@ -94,7 +96,9 @@ ui <- dashboardPage(
       br(),
       
       fluidRow( 
-        tableOutput("t2")),
+        div(id='radar2',  
+            tableOutput("t2")),
+        bsModal("R2", "Dipartimento Sicurezza Alimentare: profilo indicatori di performances", "radar2", plotOutput("radarDSA"), size = "large")), 
       
       br(),
       fluidRow(
@@ -140,7 +144,14 @@ ui <- dashboardPage(
           br(),
           
           fluidRow( 
-            tableOutput("t3")),
+            div(id='radar3',  
+                tableOutput("t3")),
+            bsModal("R3", "Dipartimento Tutela Salute Animale: profilo indicatori di performances", "radar3", plotOutput("radarDTSA"), size = "large")), 
+          
+          
+          
+          
+          
           
           br(),
           fluidRow(
@@ -189,7 +200,10 @@ ui <- dashboardPage(
           br(),
           
           fluidRow( 
-            tableOutput("t4")), 
+            div(id='radar4',  
+                tableOutput("t4")),
+            bsModal("R4", "Area Territoriale Lombardia: profilo indicatori di performances", "radar4", plotOutput("radarATLOMB"), size = "large")), 
+          
           
           br(),
           fluidRow(
@@ -236,9 +250,11 @@ ui <- dashboardPage(
             # 
           ),
           br(),
-          
           fluidRow( 
-            tableOutput("t5")), 
+            div(id='radar5',  
+                tableOutput("t5")),
+            bsModal("R5", "Area Territoriale Emilia Romagna: profilo indicatori di performances", "radar5", plotOutput("radarATER"), size = "large")), 
+          
           
           br(),
           fluidRow(

@@ -105,22 +105,24 @@ ra <- reactive(tizsler %>%
   output$t <- renderUI({
     border <- officer::fp_border()
     flextable(
-      (tizsler %>%
-         filter(Dipartimento != "Totale") %>% 
-         left_join(
-           (ricerca %>%
-              filter(IF == IF) %>%
-              count(Dipartimento, nr) %>%
-              group_by(Dipartimento) %>%
-              count(nr) %>%
-              summarise("Pubblicazioni" = sum(n))), by = "Dipartimento") %>% 
-         left_join(
-           (pr %>% 
-             group_by(Dipartimento) %>% 
-             summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
-             filter(!is.na(Dipartimento))),  by = "Dipartimento")
-  
-    ))%>%
+    #   (tizsler %>%
+    #      filter(Dipartimento != "Totale") %>% 
+    #      left_join(
+    #        (ricerca %>%
+    #           filter(IF == IF) %>%
+    #           count(Dipartimento, nr) %>%
+    #           group_by(Dipartimento) %>%
+    #           count(nr) %>%
+    #           summarise("Pubblicazioni" = sum(n))), by = "Dipartimento") %>% 
+    #      left_join(
+    #        (pr %>% 
+    #          group_by(Dipartimento) %>% 
+    #          summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
+    #          filter(!is.na(Dipartimento))),  by = "Dipartimento")
+    # 
+    # )
+    Tizsler
+    )%>%
       theme_booktabs() %>%
       color(i = 1, color = "blue", part = "header") %>%
       bold( part = "header") %>%
@@ -285,6 +287,43 @@ output$tbw <- renderTable(tb() %>%
 pivot_wider(names_from = "KPI", values_from = "valore"))
 
 
+####radar plot modale####
+
+radar <- reactive({
+ df<-data.frame(
+  Pubblicazioni = Tizsler$Pubblicazioni/Tizsler$FTED,
+  Progetti = Tizsler$`Progetti di Ricerca`/Tizsler$FTED, 
+  RFTE = Tizsler$`R/FTET`/((sum(Tizsler$RT)/sum(Tizsler$FTET))),
+  Esami = Tizsler$N.esami/sum(Tizsler$N.esami),
+  FTED = Tizsler$FTED/sum(Tizsler$FTED),
+  FTEC = Tizsler$FTEC/sum(Tizsler$FTEC),
+  FTET = Tizsler$FTET/sum(Tizsler$FTET),
+  RT = Tizsler$RT/sum(Tizsler$RT))
+rownames(df) <- Tizsler$Dipartimento
+df <- rbind(c(4,4,4,1,1,1,1,1) , rep(0,8) , df)
+})
+
+output$radarIZSLER <-renderPlot({   
+colors_in=c( "red", "blue", "green", "black")
+radarchart( radar()  ,
+            #custom polygon
+            pcol=colors_in , plwd=1 , plty=1,
+            #custom the grid
+            cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,4,1), cglwd=0.8,
+            #custom labels
+            #vlcex=0.8
+)
+legend(x=1.5, y=0.7, legend = rownames(radar()[-c(1,2),]), col = colors_in,  bty = "n", pch=16 , cex=0.8, pt.cex=1)
+})
+
+
+
+
+
+
+
+
+
 
 
 
@@ -386,22 +425,24 @@ output$PR2 <- renderValueBox({
 output$t2 <- renderUI({
   border <- officer::fp_border()
   flextable(
-    (tdsa %>%
-       filter(Reparto != "Totale") %>% 
-       left_join(
-         (ricerca %>%
-            filter(IF == IF) %>%
-            count(Reparto, nr) %>%
-            group_by(Reparto) %>%
-            count(nr) %>%
-            summarise("Pubblicazioni" = sum(n))), by = "Reparto") %>% 
-       left_join(
-         (pr %>% 
-            group_by(Reparto) %>% 
-            summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
-            filter(!is.na(Reparto))),  by = "Reparto")
-     
-    ))%>%
+    # (tdsa %>%
+    #    filter(Reparto != "Totale") %>% 
+    #    left_join(
+    #      (ricerca %>%
+    #         filter(IF == IF) %>%
+    #         count(Reparto, nr) %>%
+    #         group_by(Reparto) %>%
+    #         count(nr) %>%
+    #         summarise("Pubblicazioni" = sum(n))), by = "Reparto") %>% 
+    #    left_join(
+    #      (pr %>% 
+    #         group_by(Reparto) %>% 
+    #         summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
+    #         filter(!is.na(Reparto))),  by = "Reparto")
+    #  
+    # )
+    Tdsa
+    )%>%
     theme_booktabs() %>%
     color(i = 1, color = "blue", part = "header") %>%
     bold( part = "header") %>%
@@ -554,6 +595,39 @@ output$projr2 <- renderDataTable(Prj2(), server = FALSE, class = 'cell-border st
 output$tbw2 <- renderTable(tb2() %>% 
                             pivot_wider(names_from = "KPI", values_from = "valore"))
 
+####radar plot modale####
+radar2 <- reactive({
+  df<-data.frame(
+    Pubblicazioni = Tdsa$Pubblicazioni/Tdsa$FTED,
+    Progetti = Tdsa$`Progetti di Ricerca`/Tdsa$FTED, 
+    RFTE = Tdsa$`R/FTET`/((sum(Tdsa$RT)/sum(Tdsa$FTET))),
+    Esami = Tdsa$N.esami/sum(Tdsa$N.esami),
+    FTED = Tdsa$FTED/sum(Tdsa$FTED),
+    FTEC = Tdsa$FTEC/sum(Tdsa$FTEC),
+    FTET = Tdsa$FTET/sum(Tdsa$FTET),
+    RT = Tdsa$RT/sum(Tdsa$RT))
+  rownames(df) <- Tdsa$Reparto
+  df <- rbind(c(4,5,4,1,1,1,1,1) , rep(0,8) , df)
+})
+
+output$radarDSA <-renderPlot({   
+  colors_in=c( "red", "blue", "green", "black")
+  radarchart( radar2()  ,
+              #custom polygon
+              pcol=colors_in , plwd=1 , plty=1,
+              #custom the grid
+              cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,4,1), cglwd=0.8,
+              #custom labels
+              #vlcex=0.8
+  )
+  legend(x=1.5, y=0.7, legend = rownames(radar2()[-c(1,2),]), col = colors_in,  bty = "n", pch=16 , cex=0.8, pt.cex=1)
+})
+
+
+
+
+
+
 
 
 ###DTSA####
@@ -665,108 +739,27 @@ output$PR3 <- renderValueBox({
 # })
 
 
-
 #### tabella x reparti dtsa######
-# output$t3 <- renderUI({
-#   border <- officer::fp_border()
-#   flextable(tdtsa) %>%
-#     theme_booktabs() %>% 
-#     color(i = 1, color = "blue", part = "header") %>% 
-#     bold( part = "header") %>% 
-#     fontsize(size=15) %>% 
-#     fontsize(part = "header", size = 15) %>% 
-#     line_spacing(space = 2.5) %>% 
-#     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
-#     autofit() %>% 
-#     color(j= "R/FTET", color = "red", part = "all") %>% 
-#     vline(j= "RT", border = border, part = "all") %>%   
-#     footnote(i=1, j=3:10, 
-#              value = as_paragraph(
-#                c("Full Time Equivalenti Dirigenza",
-#                  "Full Time Equivalenti Comparto", 
-#                  "Full Time Equivalenti Totale",
-#                  "Ricavo da Analisi", 
-#                  "Ricavo Vendita Prodotti", 
-#                  "Ricavo Attività Interna",
-#                  "Ricavo Totale", 
-#                  "Ricavo per Full Equivalenti Totale"
-#                )
-#              ),
-#              ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
-#              part = "header", inline = T
-#     ) %>%
-#     fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
-#     htmltools_value()
-# })
-
-
-# output$t3 <- renderUI({
-#   border <- officer::fp_border()
-#   flextable(
-#     (tdtsa %>% 
-#        left_join(
-#          (ricerca %>% 
-#             filter(IF == IF & Dipartimento == "Dipartimento Tutela e  Salute Animale") %>%  
-#             count(Reparto, nr) %>% 
-#             group_by(Reparto) %>% 
-#             count(nr) %>% 
-#             summarise("Pubblicazioni" = sum(n)) %>% 
-#             bind_rows(data.frame("Pubblicazioni" =(ricerca %>% 
-#                                                      filter(IF == "IF" & Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
-#                                                      group_by(nr) %>% 
-#                                                      count(nr) %>% 
-#                                                      select(nr) %>% 
-#                                                      nrow()))) %>% 
-#             replace_na(list(Reparto ="Totale"))), by = "Reparto"))%>% 
-#       filter(Reparto != "Totale")
-#   ) %>%
-#     theme_booktabs() %>% 
-#     color(i = 1, color = "blue", part = "header") %>% 
-#     bold( part = "header") %>% 
-#     fontsize(size=15) %>% 
-#     fontsize(part = "header", size = 15) %>% 
-#     line_spacing(space = 2.5) %>% 
-#     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
-#     autofit() %>% 
-#     color(j= "R/FTET", color = "red", part = "all") %>% 
-#     color(j= "Pubblicazioni",color = "red", part = "all" ) %>% 
-#     vline(j= "RT", border = border, part = "all") %>% 
-#     footnote(i=1, j=3:10,
-#              value = as_paragraph(
-#                c("Full Time Equivalenti Dirigenza",
-#                  "Full Time Equivalenti Comparto",
-#                  "Full Time Equivalenti Totale",
-#                  "Ricavo da Analisi",
-#                  "Ricavo Vendita Prodotti",
-#                  "Ricavo Attività Interna",
-#                  "Ricavo Totale",
-#                  "Ricavo per Full Equivalenti Totale")
-#              ),
-#              ref_symbols = c("a","b","c","d","e","f","g","h"),
-#              part = "header", inline = T) %>%
-#     fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
-#     htmltools_value()
-# })
 
 output$t3 <- renderUI({
   border <- officer::fp_border()
-  flextable(
-    (tdtsa %>%
-       filter(Reparto != "Totale") %>% 
-       left_join(
-         (ricerca %>%
-            filter(IF == IF) %>%
-            count(Reparto, nr) %>%
-            group_by(Reparto) %>%
-            count(nr) %>%
-            summarise("Pubblicazioni" = sum(n))), by = "Reparto") %>% 
-       left_join(
-         (pr %>% 
-            group_by(Reparto) %>% 
-            summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
-            filter(!is.na(Reparto))),  by = "Reparto")
-     
-    ))%>%
+  flextable(Tdtsa
+    # (tdtsa %>%
+    #    filter(Reparto != "Totale") %>% 
+    #    left_join(
+    #      (ricerca %>%
+    #         filter(IF == IF) %>%
+    #         count(Reparto, nr) %>%
+    #         group_by(Reparto) %>%
+    #         count(nr) %>%
+    #         summarise("Pubblicazioni" = sum(n))), by = "Reparto") %>% 
+    #    left_join(
+    #      (pr %>% 
+    #         group_by(Reparto) %>% 
+    #         summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
+    #         filter(!is.na(Reparto))),  by = "Reparto")
+    #  
+    )%>%
     theme_booktabs() %>%
     color(i = 1, color = "blue", part = "header") %>%
     bold( part = "header") %>%
@@ -964,6 +957,34 @@ output$projr3 <- renderDataTable(Prj3(), server = FALSE, class = 'cell-border st
 output$tbw3 <- renderTable(tb3() %>% 
                             pivot_wider(names_from = "KPI", values_from = "valore"))
 
+####radar plot modale####
+
+radar3 <- reactive({
+  df<-data.frame(
+    Pubblicazioni = Tdtsa$Pubblicazioni/Tdtsa$FTED,
+    Progetti = Tdtsa$`Progetti di Ricerca`/Tdtsa$FTED, 
+    RFTE = Tdtsa$`R/FTET`/((sum(Tdtsa$RT)/sum(Tdtsa$FTET))),
+    Esami = Tdtsa$N.esami/sum(Tdtsa$N.esami),
+    FTED = Tdtsa$FTED/sum(Tdtsa$FTED),
+    FTEC = Tdtsa$FTEC/sum(Tdtsa$FTEC),
+    FTET = Tdtsa$FTET/sum(Tdtsa$FTET),
+    RT = Tdtsa$RT/sum(Tdtsa$RT))
+  rownames(df) <- Tdtsa$Reparto
+  df <- rbind(c(4,7,4,1,1,1,1,1) , rep(0,8) , df)
+})
+
+output$radarDTSA <-renderPlot({   
+  colors_in=c( "red", "blue", "green", "black")
+  radarchart( radar3()  ,
+              #custom polygon
+              pcol=colors_in , plwd=1 , plty=1,
+              #custom the grid
+              cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,4,1), cglwd=0.8,
+              #custom labels
+              #vlcex=0.8
+  )
+  legend(x=1.5, y=0.7, legend = rownames(radar3()[-c(1,2),]), col = colors_in,  bty = "n", pch=16 , cex=0.8, pt.cex=1)
+})
 
 
 
@@ -1079,59 +1100,30 @@ output$PR4 <- renderValueBox({
 
 
 #### tabella x reparti atlomb######
-# output$t4 <- renderUI({
-#   border <- officer::fp_border()
-#   flextable(tatlomb) %>%
-#     theme_booktabs() %>% 
-#     color(i = 1, color = "blue", part = "header") %>% 
-#     bold( part = "header") %>% 
-#     fontsize(size=15) %>% 
-#     fontsize(part = "header", size = 15) %>% 
-#     line_spacing(space = 2.5) %>% 
-#     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
-#     autofit() %>% 
-#     color(j= "R/FTET", color = "red", part = "all") %>% 
-#     vline(j= "RT", border = border, part = "all") %>% 
-#     footnote(i=1, j=3:10, 
-#              value = as_paragraph(
-#                c("Full Time Equivalenti Dirigenza",
-#                  "Full Time Equivalenti Comparto", 
-#                  "Full Time Equivalenti Totale",
-#                  "Ricavo da Analisi", 
-#                  "Ricavo Vendita Prodotti", 
-#                  "Ricavo Attività Interna",
-#                  "Ricavo Totale", 
-#                  "Ricavo per Full Equivalenti Totale"
-#                )
-#              ),
-#              ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
-#              part = "header", inline = T
-#     ) %>%
-#     fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
-#     htmltools_value()
-# })
+
 
 
 
 output$t4 <- renderUI({
   border <- officer::fp_border()
-  flextable(
-    (tatlomb %>%
-       filter(Reparto != "Totale") %>% 
-       left_join(
-         (ricerca %>%
-            filter(IF == IF) %>%
-            count(Reparto, nr) %>%
-            group_by(Reparto) %>%
-            count(nr) %>%
-            summarise("Pubblicazioni" = sum(n))), by = "Reparto") %>% 
-       left_join(
-         (pr %>% 
-            group_by(Reparto) %>% 
-            summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
-            filter(!is.na(Reparto))),  by = "Reparto")
-     
-    ))%>%
+  flextable(Tatlomb
+    # (tatlomb %>%
+    #    filter(Reparto != "Totale") %>% 
+    #    left_join(
+    #      (ricerca %>%
+    #         filter(IF == IF) %>%
+    #         count(Reparto, nr) %>%
+    #         group_by(Reparto) %>%
+    #         count(nr) %>%
+    #         summarise("Pubblicazioni" = sum(n))), by = "Reparto") %>% 
+    #    left_join(
+    #      (pr %>% 
+    #         group_by(Reparto) %>% 
+    #         summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
+    #         filter(!is.na(Reparto))),  by = "Reparto")
+    #  
+    # )
+    )%>%
     theme_booktabs() %>%
     color(i = 1, color = "blue", part = "header") %>%
     bold( part = "header") %>%
@@ -1385,6 +1377,38 @@ output$tbw4 <- renderTable(tb4() %>%
                             pivot_wider(names_from = "KPI", values_from = "valore"))
 
 
+####radar plot modale####
+
+radar4 <- reactive({
+  df<-data.frame(
+    Pubblicazioni = Tatlomb$Pubblicazioni/Tatlomb$FTED,
+    Progetti = Tatlomb$`Progetti di Ricerca`/Tatlomb$FTED, 
+    RFTE = Tatlomb$`R/FTET`/((sum(Tatlomb$RT)/sum(Tatlomb$FTET))),
+    Esami = Tatlomb$N.esami/sum(Tatlomb$N.esami),
+    FTED = Tatlomb$FTED/sum(Tatlomb$FTED),
+    FTEC = Tatlomb$FTEC/sum(Tatlomb$FTEC),
+    FTET = Tatlomb$FTET/sum(Tatlomb$FTET),
+    RT = Tatlomb$RT/sum(Tatlomb$RT))
+  rownames(df) <- Tatlomb$Reparto
+  df <- rbind(c(4,5.5,4,1,1,1,1,1) , rep(0,8) , df)
+})
+
+output$radarATLOMB <-renderPlot({   
+  colors_in=c( "red", "blue", "green", "black", "brown")
+  radarchart( radar4()  ,
+              #custom polygon
+              pcol=colors_in , plwd=1 , plty=1,
+              #custom the grid
+              cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,4,1), cglwd=0.8,
+              #custom labels
+              #vlcex=0.8
+  )
+  legend(x=1.5, y=0.7, legend = rownames(radar4()[-c(1,2),]), col = colors_in,  bty = "n", pch=16 , cex=0.8, pt.cex=1)
+})
+
+
+
+
 
 
 ###ATER####
@@ -1495,57 +1519,27 @@ output$PR5 <- renderValueBox({
 # })
 
 #### tabella x reparti ater######
-# output$t5 <- renderUI({
-#   border <- officer::fp_border()
-#   flextable(tater) %>%
-#     theme_booktabs() %>% 
-#     color(i = 1, color = "blue", part = "header") %>% 
-#     bold( part = "header") %>% 
-#     fontsize(size=15) %>% 
-#     fontsize(part = "header", size = 15) %>% 
-#     line_spacing(space = 2.5) %>% 
-#     colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>% 
-#     autofit() %>% 
-#     color(j= "R/FTET", color = "red", part = "all") %>% 
-#     vline(j= "RT", border = border, part = "all") %>% 
-#     footnote(i=1, j=3:10, 
-#              value = as_paragraph(
-#                c("Full Time Equivalenti Dirigenza",
-#                  "Full Time Equivalenti Comparto", 
-#                  "Full Time Equivalenti Totale",
-#                  "Ricavo da Analisi", 
-#                  "Ricavo Vendita Prodotti", 
-#                  "Ricavo Attività Interna",
-#                  "Ricavo Totale", 
-#                  "Ricavo per Full Equivalenti Totale"
-#                )
-#              ),
-#              ref_symbols = c("a","b", "c","d", "e", "f", "g","h"), 
-#              part = "header", inline = T
-#     ) %>%
-#     fontsize( i = NULL, j = NULL, size = 13, part = "footer") %>% 
-#     htmltools_value()
-# })
 
 output$t5 <- renderUI({
   border <- officer::fp_border()
-  flextable(
-    (tater %>%
-       filter(Reparto != "Totale") %>% 
-       left_join(
-         (ricerca %>%
-            filter(IF == IF) %>%
-            count(Reparto, nr) %>%
-            group_by(Reparto) %>%
-            count(nr) %>%
-            summarise("Pubblicazioni" = sum(n))), by = "Reparto") %>% 
-       left_join(
-         (pr %>% 
-            group_by(Reparto) %>% 
-            summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
-            filter(!is.na(Reparto))),  by = "Reparto")
-     
-    ))%>%
+  flextable(Tater
+    # (tater %>%
+    #    filter(Reparto != "Totale") %>% 
+    #    left_join(
+    #      (ricerca %>%
+    #         filter(IF == IF) %>%
+    #         count(Reparto, nr) %>%
+    #         group_by(Reparto) %>%
+    #         count(nr) %>%
+    #         summarise("Pubblicazioni" = sum(n))), by = "Reparto") %>% 
+    #    left_join(
+    #      (pr %>% 
+    #         group_by(Reparto) %>% 
+    #         summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
+    #         filter(!is.na(Reparto))),  by = "Reparto")
+    #  
+    # )
+    )%>%
     theme_booktabs() %>%
     color(i = 1, color = "blue", part = "header") %>%
     bold( part = "header") %>%
@@ -1791,6 +1785,42 @@ output$projr5 <- renderDataTable(Prj5(), server = FALSE, class = 'cell-border st
 
 output$tbw5 <- renderTable(tb5() %>% 
                             pivot_wider(names_from = "KPI", values_from = "valore"))
+
+
+
+####radar plot modale####
+
+radar5 <- reactive({
+  df<-data.frame(
+    Pubblicazioni = Tater$Pubblicazioni/Tater$FTED,
+    Progetti = Tater$`Progetti di Ricerca`/Tater$FTED, 
+    RFTE = Tater$`R/FTET`/((sum(Tater$RT)/sum(Tater$FTET))),
+    Esami = Tater$N.esami/sum(Tater$N.esami),
+    FTED = Tater$FTED/sum(Tater$FTED),
+    FTEC = Tater$FTEC/sum(Tater$FTEC),
+    FTET = Tater$FTET/sum(Tater$FTET),
+    RT = Tater$RT/sum(Tater$RT))
+  rownames(df) <- Tater$Reparto
+  df <- rbind(c(4,8,4,1,1,1,1,1) , rep(0,8) , df)
+})
+
+output$radarATER <-renderPlot({   
+  colors_in=c( "red", "blue", "green", "black")
+  radarchart( radar5()  ,
+              #custom polygon
+              pcol=colors_in , plwd=1 , plty=1,
+              #custom the grid
+              cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,4,1), cglwd=0.8,
+              #custom labels
+              #vlcex=0.8
+  )
+  legend(x=1.5, y=0.7, legend = rownames(radar5()[-c(1,2),]), col = colors_in,  bty = "n", pch=16 , cex=0.8, pt.cex=1)
+})
+
+
+
+
+
 
 
 
