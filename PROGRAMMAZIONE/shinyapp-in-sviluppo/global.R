@@ -33,9 +33,6 @@ ricerca <- ricerca %>%
 
 pr <- readRDS("prj.rds")
 
-
-
-
 ###INDICATORI DI PERFORMANCES#######
 dir <- dati %>%
   filter(contratto == "DIRIGENZA") %>%

@@ -1735,7 +1735,7 @@ output$convegni5 <- renderDataTable(Cint5(),server = FALSE, class = 'cell-border
 
 Prj5 <- reactive({
   pr %>%
-    filter(Dipartimento == "Area Territoriale Lombardia") %>% 
+    filter(Dipartimento == "Area Territoriale Emilia Romagna") %>% 
     group_by(CodIDIzler, Tipologia, DataInizio, DataFine, Descrizione, RespScient) %>% 
     summarise(Budget = sum(Budget), nUO = n()) %>% 
     ungroup() %>% 
@@ -1926,7 +1926,7 @@ output$fteR <- renderValueBox({
             color = "blue"
   )
 })
-
+options(scipen = 999)
 output$rfteR <- renderValueBox({
   valueBox( (df() %>% 
                mutate(RFTEr= round(RFTEr, 2)) %>%
@@ -1940,7 +1940,7 @@ output$target2 <- renderValueBox({
                mutate(VARRFTEr= as.numeric(VARRFTEr)) %>% 
                mutate(VARRFTEr = round(VARRFTEr, 2)) %>%
                mutate(VARRFTEr= ifelse(is.na(VARRFTEr), 0, VARRFTEr)) %>% 
-               select(VARRFTEr)), "Variazione % Ricavo per FTE ",  icon = icon("euro"),
+               select(VARRFTEr)), "Variazione % reale del RFTE ",  icon = icon("euro"),
             color = "red"
   )
 })
@@ -1950,7 +1950,7 @@ output$risn <- renderValueBox({
                mutate(RisN = as.numeric(RisN, 1)) %>% 
                mutate(RisN = ifelse(is.na(RisN), 0, RisN)) %>% 
                mutate(RisN = round(RisN, 1)) %>% 
-               select(RisN)), "Indice efficienza",  icon = icon("euro"),
+               select(RisN)), "Indice di verifica",  icon = icon("euro"),
             color = "red"
   )
 })
