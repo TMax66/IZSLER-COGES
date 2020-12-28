@@ -1945,15 +1945,15 @@ output$target2 <- renderValueBox({
   )
 })
 
-output$risn <- renderValueBox({
-  valueBox( (df() %>% 
-               mutate(RisN = as.numeric(RisN, 1)) %>% 
-               mutate(RisN = ifelse(is.na(RisN), 0, RisN)) %>% 
-               mutate(RisN = round(RisN, 1)) %>% 
-               select(RisN)), "Indice di verifica",  icon = icon("euro"),
-            color = "red"
-  )
-})
+# output$risn <- renderValueBox({
+#   valueBox( (df() %>% 
+#                mutate(RisN = as.numeric(RisN, 1)) %>% 
+#                mutate(RisN = ifelse(is.na(RisN), 0, RisN)) %>% 
+#                mutate(RisN = round(RisN, 1)) %>% 
+#                select(RisN)), "Indicatore di verifica",  icon = icon("euro"),
+#             color = "red"
+#   )
+# })
 
 
 

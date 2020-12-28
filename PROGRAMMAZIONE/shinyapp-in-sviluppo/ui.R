@@ -318,8 +318,8 @@ tabItem(tabName = "progr",
                    valueBoxOutput("rtot"),
                    valueBoxOutput("fteR"), 
                    valueBoxOutput("rfteR"),
-                   valueBoxOutput("target2"), 
-                   valueBoxOutput("risn")
+                   valueBoxOutput("target2")#, 
+                   #valueBoxOutput("risn")
                    
                    
                    # tableOutput("tb2") 
