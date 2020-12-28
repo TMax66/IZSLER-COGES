@@ -8,7 +8,10 @@ ui <- dashboardPage(
       menuItem("Dipartimento Tutela e Salute Animale", tabName = "dsa", icon = icon("sitemap")),
       menuItem("Area Territoriale Lombardia", tabName = "lomb", icon = icon("sitemap")),
       menuItem("Area Territoriale Emilia Romagna", tabName = "emil", icon = icon("sitemap")),
-      menuItem("Note", tabName = "help", icon = icon("book"))
+      menuItem("Note", tabName = "help", icon = icon("book")), 
+      hr(),
+      br(), 
+      menuItem("Strumento di programmazione", tabName = "progr", icon = icon("calculator"))
     )
   ),
   dashboardBody(
@@ -45,13 +48,17 @@ ui <- dashboardPage(
     br(),
     
     fluidRow( 
+      div(id='radar1',  
     tableOutput("t")),
+    bsModal("R1", "IZSLER: profilo indicatori di performances", "radar1", plotOutput("radarIZSLER"), size = "large")),
     
     br(),
     fluidRow(
     column(1, 
     radioButtons("ind", "", 
                 c("IP" = "IP","Dipartimento" = "Dipartimento" ))),
+   
+   
     column(11, 
              div(id = 'clickdiv00',
                  plotOutput("tbd")),
@@ -91,7 +98,9 @@ ui <- dashboardPage(
       br(),
       
       fluidRow( 
-        tableOutput("t2")),
+        div(id='radar2',  
+            tableOutput("t2")),
+        bsModal("R2", "Dipartimento Sicurezza Alimentare: profilo indicatori di performances", "radar2", plotOutput("radarDSA"), size = "large")), 
       
       br(),
       fluidRow(
@@ -137,7 +146,14 @@ ui <- dashboardPage(
           br(),
           
           fluidRow( 
-            tableOutput("t3")),
+            div(id='radar3',  
+                tableOutput("t3")),
+            bsModal("R3", "Dipartimento Tutela Salute Animale: profilo indicatori di performances", "radar3", plotOutput("radarDTSA"), size = "large")), 
+          
+          
+          
+          
+          
           
           br(),
           fluidRow(
@@ -186,7 +202,10 @@ ui <- dashboardPage(
           br(),
           
           fluidRow( 
-            tableOutput("t4")), 
+            div(id='radar4',  
+                tableOutput("t4")),
+            bsModal("R4", "Area Territoriale Lombardia: profilo indicatori di performances", "radar4", plotOutput("radarATLOMB"), size = "large")), 
+          
           
           br(),
           fluidRow(
@@ -233,9 +252,11 @@ ui <- dashboardPage(
             # 
           ),
           br(),
-          
           fluidRow( 
-            tableOutput("t5")), 
+            div(id='radar5',  
+                tableOutput("t5")),
+            bsModal("R5", "Area Territoriale Emilia Romagna: profilo indicatori di performances", "radar5", plotOutput("radarATER"), size = "large")), 
+          
           
           br(),
           fluidRow(
@@ -252,10 +273,60 @@ ui <- dashboardPage(
 ) 
  , 
 
-##Note####_____________________________________________________________________
+##Note#### 
 tabItem(tabName = "help",
         includeHTML("note.html")
-        )
+        ), 
+
+##Programmazione#### 
+tabItem(tabName = "progr", 
+        
+        wellPanel(
+          fluidRow( 
+            column(3,  
+                   h3("Programmazione"),            
+                   numericInput("rt", "Ricavo Totale previsto",  value = "1000000"), 
+                   br(), 
+                   numericInput("fte", "Full Time Equivalenti disponibili ",  value = "100"), 
+                   br(), 
+                   # numericInput("ftet", "Full Time Equivalenti teorico",  value = ""), 
+                   # br(),
+                   sliderInput("pc", "percentuale FTE allocata agli obiettivi", min=0, max= 50,  value = "0")), 
+            
+            column(9, 
+                   valueBoxOutput("rfteT"),
+                   valueBoxOutput("ftep"), 
+                   valueBoxOutput("rfteP"), 
+                   valueBoxOutput("target")
+                  
+                   # tableOutput("tb")  
+                   
+                   
+                   
+            ))), 
+        br(),br(),br(),
+        
+        wellPanel(
+          fluidRow(
+            column(3, 
+                   h3("Verifica"),
+                   sliderInput("Vrt", "Variazione percentuale del Ricavo Totale previsto", min=-50, max= 50,  value = 0),
+                   br(), 
+                   sliderInput("Vfte", "Variazione percentuale del FTE programmato ", min=-50, max= 50,  value = 0)),
+            
+            column(9, 
+                   valueBoxOutput("rtot"),
+                   valueBoxOutput("fteR"), 
+                   valueBoxOutput("rfteR"),
+                   valueBoxOutput("target2")#, 
+                   #valueBoxOutput("risn")
+                   
+                   
+                   # tableOutput("tb2") 
+            )))
+        
+)
+
 
 
 )))

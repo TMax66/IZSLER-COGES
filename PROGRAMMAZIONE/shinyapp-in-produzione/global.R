@@ -11,7 +11,8 @@ library("shinyBS")
 library("officer")
 library("DT")
 library("lubridate")
-options(scipen = .999)
+library("fmsb")
+
 # dati <- readRDS( here("programmazione", "shinyapp", "dati.rds"))
 # dati <- dati %>% 
 #   mutate(across(where(is.numeric), function(x) round(x, 2)))
@@ -23,7 +24,14 @@ dati <- dati %>%
   mutate(across(where(is.numeric), function(x) round(x, 2)))
 vp <- readRDS("vp.rds")
 ai <- readRDS("ai.rds")
+ricerca <- readRDS("ricerca.rds")
+ricerca <- ricerca %>% 
+  mutate(IF = ifelse(tipologia == "IF ; Int" | tipologia == "IF",  "IF", NA), 
+         INT = ifelse(tipologia == "IF ; Int" | tipologia == "Int",  "Int", NA ), 
+         NAZ = ifelse(tipologia == "Naz", "Naz", NA), 
+         Oth = ifelse(tipologia == "Others" , "Others", NA))
 
+pr <- readRDS("prj.rds")
 
 ###INDICATORI DI PERFORMANCES#######
 dir <- dati %>%
@@ -65,6 +73,23 @@ tizsler <- tabella %>%
   mutate("R-FTE" = round(RT/FTE_t,0) ) %>%
   select(Dipartimento, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
+
+
+Tizsler <- tizsler %>%
+  filter(Dipartimento != "Totale") %>% 
+  left_join(
+    (ricerca %>%
+       filter(IF == IF) %>%
+       count(Dipartimento, nr) %>%
+       group_by(Dipartimento) %>%
+       count(nr) %>%
+       summarise("Pubblicazioni" = sum(n))), by = "Dipartimento") %>% 
+  left_join(
+    (pr %>% 
+       group_by(Dipartimento) %>% 
+       summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
+       filter(!is.na(Dipartimento))),  by = "Dipartimento")
+
 ####DSA####_____________________________________________________________________
 tdsa <- tabella %>% 
   filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
@@ -77,6 +102,25 @@ tdsa <- tabella %>%
   mutate("R-FTE" = round(RT/FTE_t,0) ) %>% 
   select(Reparto, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
+
+
+Tdsa <- tdsa %>%
+  filter(Reparto != "Totale") %>% 
+  left_join(
+    (ricerca %>%
+       filter(IF == IF) %>%
+       count(Reparto, nr) %>%
+       group_by(Reparto) %>%
+       count(nr) %>%
+       summarise("Pubblicazioni" = sum(n))), by = "Reparto") %>% 
+  left_join(
+    (pr %>% 
+       group_by(Reparto) %>% 
+       summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
+       filter(!is.na(Reparto))),  by = "Reparto")
+
+
+
 ####DTSA#####___________________________________________________________________
 tdtsa <- tabella %>% 
   filter(Dipartimento == "Dipartimento Tutela e  Salute Animale") %>% 
@@ -89,6 +133,25 @@ tdtsa <- tabella %>%
   mutate("R-FTE" = round(RT/FTE_t,0) ) %>% 
   select(Reparto, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
+
+
+Tdtsa <- tdtsa %>%
+  filter(Reparto != "Totale") %>% 
+  left_join(
+    (ricerca %>%
+       filter(IF == IF) %>%
+       count(Reparto, nr) %>%
+       group_by(Reparto) %>%
+       count(nr) %>%
+       summarise("Pubblicazioni" = sum(n))), by = "Reparto") %>% 
+  left_join(
+    (pr %>% 
+       group_by(Reparto) %>% 
+       summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
+       filter(!is.na(Reparto))),  by = "Reparto")
+
+
+
 
 ####ATLOMB####__________________________________________________________________
 
@@ -104,6 +167,23 @@ tatlomb <- tabella %>%
   select(Reparto, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
 
+
+Tatlomb <- tatlomb %>%
+  filter(Reparto != "Totale") %>% 
+  left_join(
+    (ricerca %>%
+       filter(IF == IF) %>%
+       count(Reparto, nr) %>%
+       group_by(Reparto) %>%
+       count(nr) %>%
+       summarise("Pubblicazioni" = sum(n))), by = "Reparto") %>% 
+  left_join(
+    (pr %>% 
+       group_by(Reparto) %>% 
+       summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
+       filter(!is.na(Reparto))),  by = "Reparto")
+
+
 ####ATER________________________________________________________________________
 
 tater <- tabella %>% 
@@ -118,20 +198,35 @@ tater <- tabella %>%
   select(Reparto, "N.esami" = esami, "FTED" = FTE_d,   "FTEC" = FTE_c, "FTET" = FTE_t, "RA" = ricavi, "RVP" = VP,
          "RAI" = AI, "RT" = RT, "R/FTET" = "R-FTE")
 
+Tater <- tater %>%
+  filter(Reparto != "Totale") %>% 
+  left_join(
+    (ricerca %>%
+       filter(IF == IF) %>%
+       count(Reparto, nr) %>%
+       group_by(Reparto) %>%
+       count(nr) %>%
+       summarise("Pubblicazioni" = sum(n))), by = "Reparto") %>% 
+  left_join(
+    (pr %>% 
+       group_by(Reparto) %>% 
+       summarise("Progetti di Ricerca"=nlevels(factor(Codice))) %>% 
+       filter(!is.na(Reparto))),  by = "Reparto")
+
  
 #########################PUBBLICAZIONI###############################################################################
 
-# ricerca <- readRDS(here("programmazione", "shinyapp", "ricerca.rds"))
+#ricerca <- readRDS(here("programmazione", "shinyapp", "ricerca.rds"))
 
-ricerca <- readRDS("ricerca.rds")
+#ricerca <- readRDS("ricerca.rds")
 
-ricerca <- ricerca %>% 
-  mutate(IF = ifelse(tipologia == "IF ; Int" | tipologia == "IF",  "IF", NA), 
-         INT = ifelse(tipologia == "IF ; Int" | tipologia == "Int",  "Int", NA ), 
-         NAZ = ifelse(tipologia == "Naz", "Naz", NA), 
-         Oth = ifelse(tipologia == "Others" , "Others", NA))
+# ricerca <- ricerca %>% 
+#   mutate(IF = ifelse(tipologia == "IF ; Int" | tipologia == "IF",  "IF", NA), 
+#          INT = ifelse(tipologia == "IF ; Int" | tipologia == "Int",  "Int", NA ), 
+#          NAZ = ifelse(tipologia == "Naz", "Naz", NA), 
+#          Oth = ifelse(tipologia == "Others" , "Others", NA))
 
 #######################PROGETTI DI RICERCA#####################################
 
-pr <- readRDS("prj.rds")
+#pr <- readRDS("prj.rds")
 
