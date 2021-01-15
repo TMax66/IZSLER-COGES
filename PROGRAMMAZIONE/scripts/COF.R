@@ -11,103 +11,69 @@ library("shinyBS")
 library("officer")
 library("fmsb")
 
-###radar izsler
-radar <- data.frame(
-  Pubblicazioni = c(1.25, 0.51,1.24,1.47),
-  Progetti = c(1.91, 1.41, 2.32, 3.65),
-  RFTE = c(1.27, 0.91, 1.00, 0.83),
-  Esami = c(0.35, 0.31, 0.20, 0.13),
-  FTED = c(0.2, 0.27, 0.27, 0.25),
-  FTEC = c(0.25, 0.24, 0.22, 0.28),
-  FTET = c(0.24, 0.25, 0.23, 0.28),
-  RT = c(0.31, 0.23, 0.23, 0.23)
-)
-rownames(radar) <- c("DSA","ATLOM", "ATER", "DTSA")
-radar <- rbind(c(4,4,4,1,1,1,1,1) , rep(0,8) , radar)
+dati21 <- read_excel(here("programmazione", "data", "raw", "presenze2021.xlsx"))
 
 
-#colors_border=c( rgb(0.2,0.5,0.5,0.9), rgb(0.8,0.2,0.5,0.9) , rgb(0.7,0.5,0.1,0.9) )
-colors_in=c( "red", "blue", "green", "black")
+presenze21 <- dati21 %>% 
+  mutate(REPARTO = recode(REPARTO, 
+                          "SEDE TERRITORIALE DI BERGAMO" = "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO",
+                          "SEDE TERRITORIALE DI BINAGO" = "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO", 
+                          "SEDE TERRITORIALE DI SONDRIO" = "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO", 
+                          "SEDE TERRITORIALE DI CREMONA" = "SEDE TERRITORIALE DI CREMONA - MANTOVA",
+                          "SEDE TERRITORIALE DI MANTOVA" = "SEDE TERRITORIALE DI CREMONA - MANTOVA",
+                          "SEDE TERRITORIALE DI LODI" = "SEDE TERRITORIALE DI LODI - MILANO",
+                          "SEDE TERRITORIALE DI MILANO" = "SEDE TERRITORIALE DI LODI - MILANO",
+                          "SEDE TERRITORIALE DI BOLOGNA" = "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA",
+                          "SEDE TERRITORIALE DI MODENA" = "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA",
+                          "SEDE TERRITORIALE DI FERRARA" = "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA",
+                          "SEDE TERRITORIALE DI FORLÌ" = "SEDE TERRITORIALE DI FORLÌ - RAVENNA",
+                          "SEDE TERRITORIALE DI RAVENNA" = "SEDE TERRITORIALE DI FORLÌ - RAVENNA",
+                          "SEDE TERRITORIALE DI PIACENZA" = "SEDE TERRITORIALE DI PIACENZA - PARMA",
+                          "SEDE TERRITORIALE DI PARMA" = "SEDE TERRITORIALE DI PIACENZA - PARMA",
+                          "LABORATORIO CHIMICA APPLICATA ALLE TECNOLOGIE ALIMENTARI" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI", 
+                          "LABORATORIO BATTERIOLOGIA SPECIALIZZATA" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE", 
+                          "LABORATORIO ANALISI GENOMICHE, LABORATORIO DIAGNOSTICA MOLECOLARE, OGM" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE", 
+                          "LABORATORIO RESIDUI" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI", 
+                          "LABORATORIO MANGIMI E TOSSICOLOGIA" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI",
+                          "LABORATORIO DI CONTROLLO DI PRODOTTI BIOLOGICI, FARMACEUTICI E CONVALIDA DI PROCESSI PRODUTTIVI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO",
+                          "LABORATORIO PRODUZIONE TERRENI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO", 
+                          "LABORATORIO BENESSERE ANIMALE, BIOCHIMICA CLINICA, IMMUNOLOGIA VETERINARIA E STABULARI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO", 
+                          "LABORATORIO CONTAMINANTI AMBIENTALI" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI",
+                          "LABORATORIO DI VIROLOGIA E SIEROLOGIA SPECIALIZZATA, MICROSCOPIA ELETTRONICA" = "REPARTO VIROLOGIA",
+                          "LABORATORIO PRODUZIONE VACCINI E REAGENTI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO", 
+                          "LABORATORIO COLTURE CELLULARI, BIOBANCA" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE"
+                          ),
+         Dipartimento = recode (REPARTO, "REPARTO VIROLOGIA" = "Dipartimento Tutela e  Salute Animale", 
+                                "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE" = "Dipartimento Tutela e  Salute Animale",
+                                "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO" = "Dipartimento Tutela e  Salute Animale",
+                                "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE" = "Dipartimento Tutela e  Salute Animale", 
+                                "REPARTO PRODUZIONE PRIMARIA" = "Dipartimento Sicurezza Alimentare", 
+                                "REPARTO CONTROLLO ALIMENTI" = "Dipartimento Sicurezza Alimentare",
+                                "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI" = "Dipartimento Sicurezza Alimentare", 
+                                "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)" = "Dipartimento Sicurezza Alimentare", 
+                                "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO" = "Area Territoriale Lombardia",
+                                "SEDE TERRITORIALE DI BRESCIA" = "Area Territoriale Lombardia",
+                                "SEDE TERRITORIALE DI PAVIA" = "Area Territoriale Lombardia",
+                                "SEDE TERRITORIALE DI CREMONA - MANTOVA" = "Area Territoriale Lombardia", 
+                                "SEDE TERRITORIALE DI LODI - MILANO" = "Area Territoriale Lombardia", 
+                                "SEDE TERRITORIALE DI FORLÌ - RAVENNA" = "Area Territoriale Emilia Romagna", 
+                                "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA" = "Area Territoriale Emilia Romagna", 
+                                "SEDE TERRITORIALE DI PIACENZA - PARMA" = "Area Territoriale Emilia Romagna", 
+                                "SEDE TERRITORIALE DI REGGIO EMILIA" = "Area Territoriale Emilia Romagna"),
+         contr  = ifelse( Dirigente == "N", (36*`Perc Orario`)/100, (38*`Perc Orario`)/100),
+         hcontr =  contr*47.4
+         
+         ) %>% 
+  select(Dipartimento, REPARTO, CENTRO_DI_COSTO, Dirigente, contr, hcontr) %>% 
+  group_by(Dipartimento, REPARTO, CENTRO_DI_COSTO, Dirigente) %>% 
+  summarise(hcontr = sum(hcontr)) %>% 
+              mutate(FTE = ifelse(Dirigente == "S", hcontr/(38*47.4), hcontr/(36*47.4)))
+              
+            
 
 
-radarchart( radar  ,
-            #custom polygon
-            pcol=colors_in , plwd=1 , plty=1,
-            #custom the grid
-            cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,4,1), cglwd=0.8,
-            #custom labels
-            #vlcex=0.8
-)
-legend(x=1.5, y=0.7, legend = rownames(radar[-c(1,2),]), col = colors_in,  bty = "n", pch=16 , cex=0.8, pt.cex=1)
+  
 
+ 
 
-###radar DSA
-radar <- data.frame(
-  Pubblicazioni = c(1.25, 0.51,1.24,1.47),
-  Progetti = c(1.91, 1.41, 2.32, 3.65), 
-  RFTE = c(1.27, 0.91, 1.00, 0.83), 
-  Esami = c(0.35, 0.31, 0.20, 0.13), 
-  FTED = c(0.2, 0.27, 0.27, 0.25), 
-  FTEC = c(0.25, 0.24, 0.22, 0.28), 
-  FTET = c(0.24, 0.25, 0.23, 0.28), 
-  RT = c(0.31, 0.23, 0.23, 0.23)
-)  
-rownames(radar) <- c("DSA","ATLOM", "ATER", "DTSA")
-radar <- rbind(c(4,4,4,1,1,1,1,1) , rep(0,8) , radar)
-
-
-#colors_border=c( rgb(0.2,0.5,0.5,0.9), rgb(0.8,0.2,0.5,0.9) , rgb(0.7,0.5,0.1,0.9) )
-colors_in=c( "red", "blue", "green", "black")
-
-
-radarchart( radar  ,
-            #custom polygon
-            pcol=colors_in , plwd=1 , plty=1,
-            #custom the grid
-            cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,4,1), cglwd=0.8,
-            #custom labels
-            #vlcex=0.8 
-)
-legend(x=1.5, y=0.7, legend = rownames(radar[-c(1,2),]), col = colors_in,  bty = "n", pch=16 , cex=0.8, pt.cex=1)
-
-
-
-
-
-
-
-
-
-
-
-# radar2 <- data.frame(
-#   Pubblicazioni = c(1.25, 0.51,1.24,1.47),
-#   Progetti = c(1.91, 1.41, 2.32, 3.65), 
-#   RFTE = c(1.27, 0.91, 1.00, 0.83)
-# )  
-# rownames(radar2) <- c("DSA","ATLOM", "ATER", "DTSA")
-# radar2 <- rbind(c(4,4,4) , rep(0,3) , radar2)
-# 
-# colors_in=c( "red", "blue", "green", "black")
-# 
-# 
-# radarchart( radar2  ,
-#             #custom polygon
-#             pcol=colors_in , plwd=1 , plty=1,
-#             #custom the grid
-#             cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,4,1), cglwd=0.8,
-#             #custom labels
-#             #vlcex=0.8 
-# )
-# legend(x=1.5, y=0.7, legend = rownames(radar2[-c(1,2),]), col = colors_in,  bty = "n", pch=16 , cex=0.8, pt.cex=1)
-# 
-# 
-
-###############confronto rfteq reale/ rfteq teorico###################
-
-dati <- readRDS(here("programmazione", "shinyapp", "dati.rds"))
-
-
-dati %>% 
-  group_by(Dipartimento) %>% 
-  summarise(pFTEt = sum(`FTE-previsto`))
+ 
