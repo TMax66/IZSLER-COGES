@@ -76,8 +76,12 @@ presenze21 <- dati21 %>%
                                 "SORVEGLIANZA EPIDEMIOLOGICA LOMBARDIA" = "Direzione Sanitaria", 
                                 "U.O. AFFARI GENERALI E LEGALI" = "Direzione Ammninistrativa", 
                                 "U.O. GESTIONE RISORSE UMANE E SVILUPPO COMPETENZE" = "Direzione Ammninistrativa", 
-                                "U.O. GESTIONE SERVIZI CONTABILI" = "Direzione Ammninistrativa"
+                                "U.O. GESTIONE SERVIZI CONTABILI" = "Direzione Ammninistrativa", 
+                                "LABORATORIO DI PROTEOMICA E DIAGNOSTICA TSE" = "Dipartimento Tutela e  Salute Animale"
                                 ),
+         CENTRO_DI_COSTO = recode(CENTRO_DI_COSTO, "LABORATORIO DIAGNOSTICA GENERALE, SIEROLOGIA, BIOLOGIA MOLECOLARE E MICROBIOLOGIA" = "SEDE TERRITORIALE DI PIACENZA",
+                                  "LABORATORIO LATTE" = "SEDE TERRITORIALE DI PIACENZA"),
+         
          contr  = ifelse( Dirigente == "N", (36*`Perc Orario`)/100, (38*`Perc Orario`)/100),
          hcontr =  contr*47.4
          
@@ -85,7 +89,9 @@ presenze21 <- dati21 %>%
   select(Dipartimento, REPARTO, CENTRO_DI_COSTO, Dirigente, contr, hcontr) %>% 
   group_by(Dipartimento, REPARTO, CENTRO_DI_COSTO, Dirigente) %>% 
   summarise(hcontr = sum(hcontr)) %>% 
-              mutate(FTE = ifelse(Dirigente == "S", hcontr/(38*47.4), hcontr/(36*47.4)))
+              mutate(FTE = ifelse(Dirigente == "S", hcontr/(38*47.4), hcontr/(36*47.4))) %>% 
+  group_by(REPARTO, CENTRO_DI_COSTO, Dirigente) %>% 
+  summarise(FTE= sum(FTE))
               
             
 
