@@ -1,0 +1,94 @@
+---
+title: "Performances, Programmazione e Budgeting"
+author: "Dr. Tranquillo Vito"
+date: "27/01/2021"
+output: 
+  beamer_presentation:
+    theme: "Marburg"
+    colortheme: "beaver"
+   
+     
+    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Performances
+
+- Attività:
+     * N.esami
+     * Vendita Prodotti
+     * Attività Interna
+     * Ricavi
+     * N. pubblicazioni "peer-review"
+     * N. progetti di ricerca
+ 
+- Risorse:
+     * Full Time Equivalenti Dirigenza
+     * Full Time Equivalenti Comparto
+     
+- Indicatori:
+     * Ricavo per FTE
+
+
+## Full Time Equivalente
+
+\begin{center}
+FTE è un indicatore utilizzato per confrontare e aiutare a comprendere i carichi di lavoro e la frammentazione di tali carichi,  tra processi, team, reparti, flussi di valore e aziende. Ciò è particolarmente importante negli ambienti in cui i dipendenti lavorano su più processi, sono condivisi tra più team,  lavorano part-time.
+\end{center}
+ 
+1 FTE = <span style="color:blue">**tempo standard di un operatore a tempo pieno**</span>
+ 
+
+- tempo standard : 36 h/sett. x 47.4 sett. lavorative del **personale di comparto** = **1706,4 h/anno**
+
+- tempo standard : 38 h/sett. x 47.4 sett. lavorative del **personale dirigente** = **1801,2 h/anno**
+
+## Full Time Equivalente
+
+- Una persona che lavora 18h in una settimana corrisponde a  18/36 = 0.5 FTE
+<br>
+
+- Una persona che lavora 40 h settimana corrisponde a 40/36 = 1.11 FTE
+<br>
+
+- Due persone che lavorano 18h settimana corrispondono a 2*18/36 = 1 FTE
+<br>
+<br>
+
+$$\text{FTE}_{agg} = \frac{\sum \text{numero ore erogate}_{agg}}{\text{numero di ore standard} }$$
+
+
+
+
+
+
+## Strumento di reporting 
+
+\begin{center}
+https://izslerapp.shinyapps.io/coges/
+\end{center}
+
+
+\begin{center}
+\includegraphics[scale=0.2]{IP.png}
+\end{center}
+
+
+## Programmazione
+
+\begin{center}
+\includegraphics[scale=0.28]{Progr.png}
+\end{center}
+
+## Programmazione
+
+\begin{center}
+\includegraphics[scale=0.20]{pr2.png}
+\end{center}
+
+## Scheda di Budget
+
+
