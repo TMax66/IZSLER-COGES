@@ -1,43 +1,42 @@
 ---
+header-includes:
+  \titlegraphic{\centering \includegraphics[scale=0.3]{logo.png}}
 title: "Performances, Programmazione e Budgeting"
 author: "Dr. Tranquillo Vito"
 date: "27/01/2021"
+ 
+   
 output: 
   beamer_presentation:
-    theme: "Marburg"
+    theme: "Madrid"
     colortheme: "beaver"
-   
-     
+
+
+
     
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
 
 ## Performances
 
 - Attività:
-     * N.esami
+     * Esami
      * Vendita Prodotti
      * Attività Interna
      * Ricavi
-     * N. pubblicazioni "peer-review"
-     * N. progetti di ricerca
+     * Pubblicazioni "peer-review"
+     * Progetti di ricerca
  
 - Risorse:
      * Full Time Equivalenti Dirigenza
      * Full Time Equivalenti Comparto
      
-- Indicatori:
-     * Ricavo per FTE
 
 
 ## Full Time Equivalente
 
-\begin{center}
-FTE è un indicatore utilizzato per confrontare e aiutare a comprendere i carichi di lavoro e la frammentazione di tali carichi,  tra processi, team, reparti, flussi di valore e aziende. Ciò è particolarmente importante negli ambienti in cui i dipendenti lavorano su più processi, sono condivisi tra più team,  lavorano part-time.
-\end{center}
+<!-- \begin{center} -->
+<!-- FTE è un indicatore utilizzato per confrontare e aiutare a comprendere i carichi di lavoro e la frammentazione di tali carichi,  tra processi, team, reparti, flussi di valore e aziende. Ciò è particolarmente importante negli ambienti in cui i dipendenti lavorano su più processi, sono condivisi tra più team,  lavorano part-time. -->
+<!-- \end{center} -->
  
 1 FTE = <span style="color:blue">**tempo standard di un operatore a tempo pieno**</span>
  
@@ -62,9 +61,6 @@ $$\text{FTE}_{agg} = \frac{\sum \text{numero ore erogate}_{agg}}{\text{numero di
 
 
 
-
-
-
 ## Strumento di reporting 
 
 \begin{center}
@@ -73,7 +69,7 @@ https://izslerapp.shinyapps.io/coges/
 
 
 \begin{center}
-\includegraphics[scale=0.2]{IP.png}
+\includegraphics[scale=0.228]{IP.png}
 \end{center}
 
 
@@ -83,12 +79,15 @@ https://izslerapp.shinyapps.io/coges/
 \includegraphics[scale=0.28]{Progr.png}
 \end{center}
 
-## Programmazione
+<!-- ## Programmazione -->
 
-\begin{center}
-\includegraphics[scale=0.20]{pr2.png}
-\end{center}
+<!-- \begin{center} -->
+<!-- \includegraphics[scale=0.20]{pr2.png} -->
+<!-- \end{center} -->
 
 ## Scheda di Budget
 
+\begin{center}
+\includegraphics[scale=0.35]{sb.png}
+\end{center}
 
