@@ -95,9 +95,11 @@ presenze21 <- dati21 %>%
               
             
 
+MatricoleSigmaGRU <- read_excel("programmazione/data/raw/MatricoleSigmaGRU.xlsx")
 
+matricole <- presenze21 %>% 
+  left_join(MatricoleSigmaGRU, by="Matricola")  
   
 
- 
 
- 
+writexl::write_xlsx(matricole, path= "matricole.xlsx")
