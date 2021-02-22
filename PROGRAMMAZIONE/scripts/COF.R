@@ -100,10 +100,17 @@ presenze21 <- dati21 %>%
               
             
 
+<<<<<<< HEAD
 library("writexl")
 
 write_xlsx(presenze21, path = "presenze21.xlsx")  
+=======
+MatricoleSigmaGRU <- read_excel("programmazione/data/raw/MatricoleSigmaGRU.xlsx")
 
- 
+matricole <- presenze21 %>% 
+  left_join(MatricoleSigmaGRU, by="Matricola")  
+  
+>>>>>>> bd9f844488e80abc40179010292850b6baac8bd6
 
- 
+
+writexl::write_xlsx(matricole, path= "matricole.xlsx")
