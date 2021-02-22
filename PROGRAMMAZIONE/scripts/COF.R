@@ -90,13 +90,19 @@ presenze21 <- dati21 %>%
   group_by(Dipartimento, REPARTO, CENTRO_DI_COSTO, Dirigente) %>% 
   summarise(hcontr = sum(hcontr)) %>% 
               mutate(FTE = ifelse(Dirigente == "S", hcontr/(38*47.4), hcontr/(36*47.4))) %>% 
+  select(-hcontr) %>% 
+  pivot_wider(names_from = Dirigente, values_from = FTE)
+  
+  
+  
   group_by(REPARTO, CENTRO_DI_COSTO, Dirigente) %>% 
   summarise(FTE= sum(FTE))
               
             
 
+library("writexl")
 
-  
+write_xlsx(presenze21, path = "presenze21.xlsx")  
 
  
 
