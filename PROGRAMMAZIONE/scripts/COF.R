@@ -100,17 +100,67 @@ presenze21 <- dati21 %>%
               
             
 
-<<<<<<< HEAD
 library("writexl")
 
 write_xlsx(presenze21, path = "presenze21.xlsx")  
-=======
+
 MatricoleSigmaGRU <- read_excel("programmazione/data/raw/MatricoleSigmaGRU.xlsx")
 
 matricole <- presenze21 %>% 
   left_join(MatricoleSigmaGRU, by="Matricola")  
   
->>>>>>> bd9f844488e80abc40179010292850b6baac8bd6
-
 
 writexl::write_xlsx(matricole, path= "matricole.xlsx")
+
+#####################################################################################################################
+
+
+obfted<- read_excel(here("programmazione", "data", "raw", "obiettiviXSB.xlsx"), sheet = "FTEDdipsan")
+
+dt <- obfted %>% 
+  pivot_longer(3:27, names_to = "struttura", values_to = "FTED") %>% 
+  mutate(reparto = recode(struttura, "STBO" = "STBO-FE-MO", 
+                               "STFE" = "STBO-FE-MO", 
+                               "STMO" = "STBO-FE-MO", 
+                               "STPR" = "STBO-PR-PC", 
+                               "STPC" = "STBO-PR-PC",
+                               "STFO" = "STBO-FO-RA", 
+                               "STRA" = "STBO-FO-RA", 
+                               "STBG" = "STBG-BI-SO", 
+                              "STBI" = "STBG-BI-SO", 
+                               "STSO" = "STBG-BI-SO", 
+                          "STLO" = "STBG-LO-MI", 
+                          "STMI" = "STBG-LO-MI", 
+                          "STCR" = "STBG-CR-MN", 
+                          "STMN" = "STBG-CR-MN"), 
+         
+         dipartimento = recode(reparto, "STBO-FE-MO" = "Area Territoriale Emilia Romagna", 
+                               "STBO-PR-PC" = "Area Territoriale Emilia Romagna", 
+                               "STBO-FO-RA" = "Area Territoriale Emilia Romagna", 
+                               "STBO-PR-PC" = "Area Territoriale Emilia Romagna", 
+                               "STRE" = "Area Territoriale Emilia Romagna", 
+                               "STBG-BI-SO" = "Area Territoriale Lombardia", 
+                               "STBG-LO-MI" = "Area Territoriale Lombardia", 
+                               "STBG-CR-MN" = "Area Territoriale Lombardia", 
+                               "STPV" = "Area Territoriale Lombardia", 
+                               "STBS" = "Area Territoriale Lombardia", 
+                               "RPP" = "Dipartimento Sicurezza Alimentare", 
+                               "RCABO" = "Dipartimento Sicurezza Alimentare", 
+                               "RCA" = "Dipartimento Sicurezza Alimentare", 
+                               "RCAM" = "Dipartimento Sicurezza Alimentare", 
+                               "RVIR" = "Dipartimento Tutela Salute Animale", 
+                               "RVVPB" = "Dipartimento Tutela Salute Animale", 
+                               "RTBA" =  "Dipartimento Tutela Salute Animale", 
+                               "RPCMB" = "Dipartimento Tutela Salute Animale"
+                               )
+         )  
+  
+
+dt %>% 
+  filter(dipartimento == "Dipartimento Tutela Salute Animale") %>% 
+  filter(!is.na(FTED)) %>% 
+  group_by(Obiettivo, dipartimento) %>% 
+  summarise(FTED = sum(FTED, na.rm=T)) %>% 
+  View()
+
+  
