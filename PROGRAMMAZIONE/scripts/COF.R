@@ -4,7 +4,7 @@ library("readxl")
 # library("shiny")
 # library("shinydashboard")
 library("here")
-#library("janitor")
+library("janitor")
 library("flextable")
 # library("shinyBS")
 # library("officer")
@@ -211,9 +211,28 @@ dtC <- obftec %>%
 
 dtD %>% 
   right_join(dtC,  by = c( "dipartimento", "reparto", "struttura",   "obcod"))%>% 
+  select(obcod, "Obiettivo" = Obiettivo.x, "Valorizzazione"= Valorizzazione.x, "Dipartimento"=dipartimento, 
+        "Reparto" = reparto, "Struttura"= struttura, FTED, FTEC ) %>%
+  group_by(obcod, Obiettivo, Dipartimento) %>% 
+  summarise(FTED = sum(FTED, na.rm = T), 
+            FTEC = sum(FTEC, na.rm = T)) %>% 
+  na.omit() %>% 
+  #group_by(Obiettivo, Dipartimento) %>% 
+  mutate(FTEDp = 100* prop.table(FTED), 
+         FTECp = 100* prop.table(FTEC) ) %>% 
+
+  #select(-FTED, -FTEC,  -FTECp, -FTEDp) %>% 
+   
+  pivot_wider(id_cols = c(1,2,3,6), names_from = "Dipartimento", values_from = "FTEDp") %>% 
   View()
+ 
   
-  
+
+
+
+
+
+
   
   # filter(dipartimento == "Dipartimento Tutela Salute Animale") %>% 
   # filter(!is.na(FTED)) %>% 
