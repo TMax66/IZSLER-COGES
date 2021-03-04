@@ -129,7 +129,7 @@ ra <- reactive(tizsler %>%
       fontsize(size=15) %>%
       fontsize(part = "header", size = 15) %>%
       line_spacing(space = 2.5) %>%
-      colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>%
+      colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", prefix = "€") %>%
       autofit() %>%
       color(j= "R/FTET", color = "red", part = "all") %>%
       color(j= "Pubblicazioni",color = "red", part = "all" ) %>%
@@ -449,7 +449,7 @@ output$t2 <- renderUI({
     fontsize(size=15) %>%
     fontsize(part = "header", size = 15) %>%
     line_spacing(space = 2.5) %>%
-    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>%
+    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", prefix = "€") %>%
     autofit() %>%
     color(j= "R/FTET", color = "red", part = "all") %>%
     color(j= "Pubblicazioni",color = "red", part = "all" ) %>%
@@ -766,7 +766,7 @@ output$t3 <- renderUI({
     fontsize(size=15) %>%
     fontsize(part = "header", size = 15) %>%
     line_spacing(space = 2.5) %>%
-    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>%
+    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", prefix = "€") %>%
     autofit() %>%
     color(j= "R/FTET", color = "red", part = "all") %>%
     color(j= "Pubblicazioni",color = "red", part = "all" ) %>%
@@ -1130,7 +1130,7 @@ output$t4 <- renderUI({
     fontsize(size=15) %>%
     fontsize(part = "header", size = 15) %>%
     line_spacing(space = 2.5) %>%
-    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>%
+    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", prefix = "€") %>%
     autofit() %>%
     color(j= "R/FTET", color = "red", part = "all") %>%
     color(j= "Pubblicazioni",color = "red", part = "all" ) %>%
@@ -1546,7 +1546,7 @@ output$t5 <- renderUI({
     fontsize(size=15) %>%
     fontsize(part = "header", size = 15) %>%
     line_spacing(space = 2.5) %>%
-    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", digits = 2, prefix = "€") %>%
+    colformat_num(j = c( "RA", "RVP", "RAI", "RT", "R/FTET"), big.mark = ".", decimal.mark = ",", prefix = "€") %>%
     autofit() %>%
     color(j= "R/FTET", color = "red", part = "all") %>%
     color(j= "Pubblicazioni",color = "red", part = "all" ) %>%

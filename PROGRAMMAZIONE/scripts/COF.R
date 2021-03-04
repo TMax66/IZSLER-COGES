@@ -6,238 +6,27 @@ library("readxl")
 library("here")
 library("janitor")
 library("flextable")
+library("ztable")
 # library("shinyBS")
 # library("officer")
 # library("fmsb")
+library("knitr")
 
-dati21 <- read_excel(here("programmazione", "data", "raw", "presenze2021.xlsx"))
-
-
-presenze21 <- dati21 %>% 
-  mutate(REPARTO = recode(REPARTO, 
-                          "SEDE TERRITORIALE DI BERGAMO" = "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO",
-                          "SEDE TERRITORIALE DI BINAGO" = "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO", 
-                          "SEDE TERRITORIALE DI SONDRIO" = "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO", 
-                          "SEDE TERRITORIALE DI CREMONA" = "SEDE TERRITORIALE DI CREMONA - MANTOVA",
-                          "SEDE TERRITORIALE DI MANTOVA" = "SEDE TERRITORIALE DI CREMONA - MANTOVA",
-                          "SEDE TERRITORIALE DI LODI" = "SEDE TERRITORIALE DI LODI - MILANO",
-                          "SEDE TERRITORIALE DI MILANO" = "SEDE TERRITORIALE DI LODI - MILANO",
-                          "SEDE TERRITORIALE DI BOLOGNA" = "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA",
-                          "SEDE TERRITORIALE DI MODENA" = "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA",
-                          "SEDE TERRITORIALE DI FERRARA" = "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA",
-                          "SEDE TERRITORIALE DI FORLÌ" = "SEDE TERRITORIALE DI FORLÌ - RAVENNA",
-                          "SEDE TERRITORIALE DI RAVENNA" = "SEDE TERRITORIALE DI FORLÌ - RAVENNA",
-                          "SEDE TERRITORIALE DI PIACENZA" = "SEDE TERRITORIALE DI PIACENZA - PARMA",
-                          "SEDE TERRITORIALE DI PARMA" = "SEDE TERRITORIALE DI PIACENZA - PARMA",
-                          "LABORATORIO CHIMICA APPLICATA ALLE TECNOLOGIE ALIMENTARI" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI", 
-                          "LABORATORIO BATTERIOLOGIA SPECIALIZZATA" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE", 
-                          "LABORATORIO ANALISI GENOMICHE, LABORATORIO DIAGNOSTICA MOLECOLARE, OGM" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE", 
-                          "LABORATORIO RESIDUI" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI", 
-                          "LABORATORIO MANGIMI E TOSSICOLOGIA" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI",
-                          "LABORATORIO DI CONTROLLO DI PRODOTTI BIOLOGICI, FARMACEUTICI E CONVALIDA DI PROCESSI PRODUTTIVI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO",
-                          "LABORATORIO PRODUZIONE TERRENI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO", 
-                          "LABORATORIO BENESSERE ANIMALE, BIOCHIMICA CLINICA, IMMUNOLOGIA VETERINARIA E STABULARI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO", 
-                          "LABORATORIO CONTAMINANTI AMBIENTALI" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI",
-                          "LABORATORIO DI VIROLOGIA E SIEROLOGIA SPECIALIZZATA, MICROSCOPIA ELETTRONICA" = "REPARTO VIROLOGIA",
-                          "LABORATORIO PRODUZIONE VACCINI E REAGENTI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO", 
-                          "LABORATORIO COLTURE CELLULARI, BIOBANCA" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE"
-                          ),
-         Dipartimento = recode (REPARTO, "REPARTO VIROLOGIA" = "Dipartimento Tutela e  Salute Animale", 
-                                "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE" = "Dipartimento Tutela e  Salute Animale",
-                                "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO" = "Dipartimento Tutela e  Salute Animale",
-                                "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE" = "Dipartimento Tutela e  Salute Animale", 
-                                "REPARTO PRODUZIONE PRIMARIA" = "Dipartimento Sicurezza Alimentare", 
-                                "REPARTO CONTROLLO ALIMENTI" = "Dipartimento Sicurezza Alimentare",
-                                "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI" = "Dipartimento Sicurezza Alimentare", 
-                                "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)" = "Dipartimento Sicurezza Alimentare", 
-                                "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO" = "Area Territoriale Lombardia",
-                                "SEDE TERRITORIALE DI BRESCIA" = "Area Territoriale Lombardia",
-                                "SEDE TERRITORIALE DI PAVIA" = "Area Territoriale Lombardia",
-                                "SEDE TERRITORIALE DI CREMONA - MANTOVA" = "Area Territoriale Lombardia", 
-                                "SEDE TERRITORIALE DI LODI - MILANO" = "Area Territoriale Lombardia", 
-                                "SEDE TERRITORIALE DI FORLÌ - RAVENNA" = "Area Territoriale Emilia Romagna", 
-                                "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA" = "Area Territoriale Emilia Romagna", 
-                                "SEDE TERRITORIALE DI PIACENZA - PARMA" = "Area Territoriale Emilia Romagna", 
-                                "SEDE TERRITORIALE DI REGGIO EMILIA" = "Area Territoriale Emilia Romagna", 
-                                "ANALISI DEL RISCHIO ED EPIDEMIOLOGIA GENOMICA" = "Direzione Sanitaria", 
-                                "CONTROLLO DI GESTIONE" = "Direzione Generale", 
-                                "DIREZIONE AMMINISTRATIVA" = "Direzione Ammninistrativa", 
-                                "DIREZIONE GENERALE" = "Direzione Generale", 
-                                "DIREZIONE SANITARIA" = "Direzione Sanitaria",
-                                "FORMAZIONE E BIBLIOTECA" = "Direzione Sanitaria", 
-                                "GARE CONTRATTI PER ACQUISTO DI BENI E SERVIZI, MAGAZZINO E VENDITE, UFFICIO SERVIZI" = "Direzione Ammninistrativa",
-                                "GESTIONE CENTRALIZZATA DELLE RICHIESTE" = "Direzione Sanitaria", 
-                                "PROGETTAZIONE E DIREZIONE LAVORI MANUTENZIONI" = "Direzione Ammninistrativa", 
-                                "PROGETTI DI RICERCA" = "Direzione Generale", 
-                                "SERVIZIO ASSICURAZIONE QUALITA'" = "Direzione Generale",
-                                "SISTEMI INFORMATIVI" = "Direzione Generale",
-                                "SORVEGLIANZA EPIDEMIOLOGICA EMILIA ROMAGNA" = "Direzione Sanitaria", 
-                                "SORVEGLIANZA EPIDEMIOLOGICA LOMBARDIA" = "Direzione Sanitaria", 
-                                "U.O. AFFARI GENERALI E LEGALI" = "Direzione Ammninistrativa", 
-                                "U.O. GESTIONE RISORSE UMANE E SVILUPPO COMPETENZE" = "Direzione Ammninistrativa", 
-                                "U.O. GESTIONE SERVIZI CONTABILI" = "Direzione Ammninistrativa", 
-                                "LABORATORIO DI PROTEOMICA E DIAGNOSTICA TSE" = "Dipartimento Tutela e  Salute Animale"
-                                ),
-         CENTRO_DI_COSTO = recode(CENTRO_DI_COSTO, "LABORATORIO DIAGNOSTICA GENERALE, SIEROLOGIA, BIOLOGIA MOLECOLARE E MICROBIOLOGIA" = "SEDE TERRITORIALE DI PIACENZA",
-                                  "LABORATORIO LATTE" = "SEDE TERRITORIALE DI PIACENZA"),
-         
-         contr  = ifelse( Dirigente == "N", (36*`Perc Orario`)/100, (38*`Perc Orario`)/100),
-         hcontr =  contr*47.4
-         
-         ) %>% 
-  select(Dipartimento, REPARTO, CENTRO_DI_COSTO, Dirigente, contr, hcontr) %>% 
-  group_by(Dipartimento, REPARTO, CENTRO_DI_COSTO, Dirigente) %>% 
-  summarise(hcontr = sum(hcontr)) %>% 
-              mutate(FTE = ifelse(Dirigente == "S", hcontr/(38*47.4), hcontr/(36*47.4))) %>% 
-  select(-hcontr) %>% 
-  pivot_wider(names_from = Dirigente, values_from = FTE)
+dt <- readRDS( here("programmazione", "shinyapp-in-produzione", "datiSB.rds"))
   
-  
-  
-  group_by(REPARTO, CENTRO_DI_COSTO, Dirigente) %>% 
-  summarise(FTE= sum(FTE))
-              
-            
-
-library("writexl")
-
-write_xlsx(presenze21, path = "presenze21.xlsx")  
-
-MatricoleSigmaGRU <- read_excel("programmazione/data/raw/MatricoleSigmaGRU.xlsx")
-
-matricole <- presenze21 %>% 
-  left_join(MatricoleSigmaGRU, by="Matricola")  
-  
-
-writexl::write_xlsx(matricole, path= "matricole.xlsx")
-
-#####################################################################################################################
-
-
-obfted <- read_excel(here("programmazione", "data", "raw", "obiettiviXSB.xlsx"), sheet = "FTEDdipsan")
-obftec <- read_excel(here("programmazione", "data", "raw", "obiettiviXSB.xlsx"), sheet = "FTECdipsan")
-
-dtD <- obfted %>% 
-  mutate(obcod = paste("OB", seq(1:nrow(.)))) %>% 
-  pivot_longer(3:27, names_to = "struttura", values_to = "FTED") %>% 
-  mutate(reparto = recode(struttura, "STBO" = "STBO-FE-MO", 
-                               "STFE" = "STBO-FE-MO", 
-                               "STMO" = "STBO-FE-MO", 
-                               "STPR" = "STBO-PR-PC", 
-                               "STPC" = "STBO-PR-PC",
-                               "STFO" = "STBO-FO-RA", 
-                               "STRA" = "STBO-FO-RA", 
-                               "STBG" = "STBG-BI-SO", 
-                              "STBI" = "STBG-BI-SO", 
-                               "STSO" = "STBG-BI-SO", 
-                          "STLO" = "STBG-LO-MI", 
-                          "STMI" = "STBG-LO-MI", 
-                          "STCR" = "STBG-CR-MN", 
-                          "STMN" = "STBG-CR-MN"), 
-         
-         dipartimento = recode(reparto, "STBO-FE-MO" = "Area Territoriale Emilia Romagna", 
-                               "STBO-PR-PC" = "Area Territoriale Emilia Romagna", 
-                               "STBO-FO-RA" = "Area Territoriale Emilia Romagna", 
-                               "STBO-PR-PC" = "Area Territoriale Emilia Romagna", 
-                               "STRE" = "Area Territoriale Emilia Romagna", 
-                               "STBG-BI-SO" = "Area Territoriale Lombardia", 
-                               "STBG-LO-MI" = "Area Territoriale Lombardia", 
-                               "STBG-CR-MN" = "Area Territoriale Lombardia", 
-                               "STPV" = "Area Territoriale Lombardia", 
-                               "STBS" = "Area Territoriale Lombardia", 
-                               "RPP" = "Dipartimento Sicurezza Alimentare", 
-                               "RCABO" = "Dipartimento Sicurezza Alimentare", 
-                               "RCA" = "Dipartimento Sicurezza Alimentare", 
-                               "RCAM" = "Dipartimento Sicurezza Alimentare", 
-                               "RVIR" = "Dipartimento Tutela Salute Animale", 
-                               "RVVPB" = "Dipartimento Tutela Salute Animale", 
-                               "RTBA" =  "Dipartimento Tutela Salute Animale", 
-                               "RPCMB" = "Dipartimento Tutela Salute Animale"
-                               )
-         )  
-  
-
-
-
-
-
-dtC <- obftec %>% 
-  mutate(obcod = paste("OB", seq(1:nrow(.)))) %>% 
-  pivot_longer(3:27, names_to = "struttura", values_to = "FTEC") %>% 
-  mutate(reparto = recode(struttura, "STBO" = "STBO-FE-MO", 
-                          "STFE" = "STBO-FE-MO", 
-                          "STMO" = "STBO-FE-MO", 
-                          "STPR" = "STBO-PR-PC", 
-                          "STPC" = "STBO-PR-PC",
-                          "STFO" = "STBO-FO-RA", 
-                          "STRA" = "STBO-FO-RA", 
-                          "STBG" = "STBG-BI-SO", 
-                          "STBI" = "STBG-BI-SO", 
-                          "STSO" = "STBG-BI-SO", 
-                          "STLO" = "STBG-LO-MI", 
-                          "STMI" = "STBG-LO-MI", 
-                          "STCR" = "STBG-CR-MN", 
-                          "STMN" = "STBG-CR-MN"), 
-         
-         dipartimento = recode(reparto, "STBO-FE-MO" = "Area Territoriale Emilia Romagna", 
-                               "STBO-PR-PC" = "Area Territoriale Emilia Romagna", 
-                               "STBO-FO-RA" = "Area Territoriale Emilia Romagna", 
-                               "STBO-PR-PC" = "Area Territoriale Emilia Romagna", 
-                               "STRE" = "Area Territoriale Emilia Romagna", 
-                               "STBG-BI-SO" = "Area Territoriale Lombardia", 
-                               "STBG-LO-MI" = "Area Territoriale Lombardia", 
-                               "STBG-CR-MN" = "Area Territoriale Lombardia", 
-                               "STPV" = "Area Territoriale Lombardia", 
-                               "STBS" = "Area Territoriale Lombardia", 
-                               "RPP" = "Dipartimento Sicurezza Alimentare", 
-                               "RCABO" = "Dipartimento Sicurezza Alimentare", 
-                               "RCA" = "Dipartimento Sicurezza Alimentare", 
-                               "RCAM" = "Dipartimento Sicurezza Alimentare", 
-                               "RVIR" = "Dipartimento Tutela Salute Animale", 
-                               "RVVPB" = "Dipartimento Tutela Salute Animale", 
-                               "RTBA" =  "Dipartimento Tutela Salute Animale", 
-                               "RPCMB" = "Dipartimento Tutela Salute Animale"
-         )
-  )  
-
-
-
-
-
-
-
-
-
-
-dtD %>% 
-  right_join(dtC,  by = c( "dipartimento", "reparto", "struttura",   "obcod"))%>% 
-  select(obcod, "Obiettivo" = Obiettivo.x, "Valorizzazione"= Valorizzazione.x, "Dipartimento"=dipartimento, 
-        "Reparto" = reparto, "Struttura"= struttura, FTED, FTEC ) %>%
-  group_by(obcod, Obiettivo, Dipartimento) %>% 
-  summarise(FTED = sum(FTED, na.rm = T), 
-            FTEC = sum(FTEC, na.rm = T)) %>% 
-  na.omit() %>% 
-  #group_by(Obiettivo, Dipartimento) %>% 
+dt %>% 
+  group_by( Dipartimento) %>% 
   mutate(FTEDp = 100* prop.table(FTED), 
-         FTECp = 100* prop.table(FTEC) ) %>% 
-
-  #select(-FTED, -FTEC,  -FTECp, -FTEDp) %>% 
-   
-  pivot_wider(id_cols = c(1,2,3,6), names_from = "Dipartimento", values_from = "FTEDp") %>% 
-  View()
- 
-  
-
-
-
-
-
-
-  
-  # filter(dipartimento == "Dipartimento Tutela Salute Animale") %>% 
-  # filter(!is.na(FTED)) %>% 
-  # group_by(Obiettivo, dipartimento) %>% 
-  # summarise(FTED = sum(FTED, na.rm=T)) %>% 
-  # View()
-
+         FTECp = 100* prop.table(FTEC) ) %>%  
+  #group_by(Dipartimento, Valorizzazione) %>% 
+  #summarise(FTEDp = sum(FTEDp)) %>% 
+   pivot_wider(id_cols = 1:4, 
+               names_from = "Dipartimento", values_from = "FTEDp") %>% 
+    mutate(total = rowSums(across(where(is.numeric))))%>% 
+    filter(total > 0.00000000) %>% 
+    arrange(desc(Valorizzazione)) %>% 
+    select(-total, -Valorizzazione, -Obiettivo) %>% 
+    column_to_rownames(var = "obcod") %>% 
+    ztable() %>% 
+    makeHeatmap(palette="Blues") %>% print(caption="Table 4. Heatmap Table")
   
