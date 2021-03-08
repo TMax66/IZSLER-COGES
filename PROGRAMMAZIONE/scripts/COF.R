@@ -25,8 +25,8 @@ dt %>%
     mutate(total = rowSums(across(where(is.numeric))))%>% 
     filter(total > 0.00000000) %>% 
     arrange(desc(Valorizzazione)) %>% 
-    select(-total, -Valorizzazione, -Obiettivo) %>% 
-    column_to_rownames(var = "obcod") %>% 
+    select(-total, -Valorizzazione) %>% 
+    column_to_rownames(var = "obcod") %>% View()
     ztable() %>% 
     makeHeatmap(palette="Blues") %>% print(caption="Table 4. Heatmap Table")
   

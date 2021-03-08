@@ -327,10 +327,13 @@ tabItem(tabName = "help",
 #         
 # )
 
-tabItem(tabName = "progr") 
+tabItem(tabName = "progr", 
 
+        radioButtons("DC", "", 
+                     c("FTE-Dirigenza" = "FTED","FTE-Comparto" = "FTEC" )), 
+        dataTableOutput("progFTE")
 
-
+)
 
 
 
