@@ -16,17 +16,21 @@ dt <- readRDS( here("programmazione", "shinyapp-in-produzione", "datiSB.rds"))
   
 dt %>% 
   group_by( Dipartimento) %>% 
-  mutate(FTEDp = 100* prop.table(FTED), 
-         FTECp = 100* prop.table(FTEC) ) %>%  
-  #group_by(Dipartimento, Valorizzazione) %>% 
-  #summarise(FTEDp = sum(FTEDp)) %>% 
-   pivot_wider(id_cols = 1:4, 
-               names_from = "Dipartimento", values_from = "FTEDp") %>% 
+  mutate(FTEDp = prop.table(FTED), 
+         FTECp = prop.table(FTEC) ) %>% 
+  group_by(Dipartimento, Valorizzazione) %>% 
+  summarise(FTEDp = sum(FTEDp)) %>%
+  pivot_wider(names_from = "Dipartimento", values_from = "FTEDp") %>% 
     mutate(total = rowSums(across(where(is.numeric))))%>% 
-    filter(total > 0.00000000) %>% 
     arrange(desc(Valorizzazione)) %>% 
-    select(-total, -Valorizzazione) %>% 
-    column_to_rownames(var = "obcod") %>% View()
-    ztable() %>% 
-    makeHeatmap(palette="Blues") %>% print(caption="Table 4. Heatmap Table")
-  
+    select(-total, ) %>% 
+    View() 
+    
+x <- dt%>% 
+  group_by( Dipartimento) %>% 
+  mutate(FTEDp = prop.table(FTED), 
+         FTECp = prop.table(FTEC) ) %>% 
+  group_by(Dipartimento, "Obiettivi Valorizzati" = Valorizzazione) %>%
+  summarise(FTEDp = sum(FTEDp)) %>%
+  pivot_wider(names_from = "Dipartimento", values_from = "FTEDp") %>%  
+  arrange(desc(`Obiettivi Valorizzati`)) 

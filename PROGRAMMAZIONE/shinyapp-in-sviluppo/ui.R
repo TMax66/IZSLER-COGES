@@ -328,9 +328,17 @@ tabItem(tabName = "help",
 # )
 
 tabItem(tabName = "progr", 
+        
+        h3(
+          HTML("<center>", "Distribuzione % Full Time Equivalenti per Dipartimento","</center>")
+        ),
+        #h3("Distribuzione % dei FTE per Dipartimento"), 
 
         radioButtons("DC", "", 
                      c("FTE-Dirigenza" = "FTED","FTE-Comparto" = "FTEC" )), 
+        hr(), 
+        dataTableOutput("progFTEv"), 
+        hr(),
         dataTableOutput("progFTE")
 
 )

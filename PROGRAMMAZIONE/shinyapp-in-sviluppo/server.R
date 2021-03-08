@@ -1828,6 +1828,46 @@ output$radarATER <-renderPlot({
 
 dtProg <- readRDS( here("programmazione", "shinyapp-in-sviluppo", "datiSB.rds"))
 
+output$progFTEv <- renderDataTable(
+  datatable(
+    if(input$DC == "FTED")
+    { 
+      dtProg %>% 
+        group_by( Dipartimento) %>% 
+        mutate(FTEDp = prop.table(FTED), 
+               FTECp = prop.table(FTEC) ) %>% 
+        group_by(Dipartimento, "Obiettivi Valorizzati" = Valorizzazione) %>% 
+        summarise(FTEDp = sum(FTEDp)) %>%
+        pivot_wider(names_from = "Dipartimento", values_from = "FTEDp") %>%  
+        arrange(desc(`Obiettivi Valorizzati`)) 
+    
+    }
+    
+    else
+    { 
+      dtProg %>% 
+        group_by( Dipartimento) %>% 
+        mutate(FTEDp = prop.table(FTED), 
+               FTECp = prop.table(FTEC) ) %>% 
+        group_by(Dipartimento, "Obiettivi Valorizzati" = Valorizzazione) %>% 
+        summarise(FTECp = sum(FTECp)) %>%
+        pivot_wider(names_from = "Dipartimento", values_from = "FTECp") %>%  
+        arrange(desc(`Obiettivi Valorizzati`)) 
+      
+    }, 
+    class = 'cell-border stripe', rownames=FALSE, 
+    extensions = 'Buttons',options = list(dom="t", pageLength = 10,
+                                          paging = TRUE,autoWidth = TRUE
+                                           ) 
+    
+  ) %>% formatPercentage(2:5, 2)
+
+  )
+
+
+
+
+
 output$progFTE <- renderDataTable(
 
 datatable(   
@@ -1878,6 +1918,15 @@ if(input$DC == "FTED")
 
 
 }
+
+
+
+
+
+
+
+
+
 
 # df <- reactive(
 #   
