@@ -16,6 +16,7 @@ ui <- dashboardPage(
       menuItem("Area Territoriale Lombardia", tabName = "lomb", icon = icon("sitemap")),
       menuItem("Area Territoriale Emilia Romagna", tabName = "emil", icon = icon("sitemap")),
       menuItem("Note", tabName = "help", icon = icon("book")), 
+      menuItem("Programmazione 2021", "tabName"= "pr21"),
       hr(),
       br()
     )
@@ -333,21 +334,21 @@ tabItem(tabName = "help",
 #         
 # )
 
-tabItem(tabName = "progr21", 
-        
-        h3(
-          HTML("<center>", "Distribuzione % Full Time Equivalenti per Dipartimento","</center>")
-        ),
-        #h3("Distribuzione % dei FTE per Dipartimento"), 
-
-        radioButtons("DC", "", 
-                     c("FTE-Dirigenza" = "FTED","FTE-Comparto" = "FTEC" )), 
-        hr(), 
-        dataTableOutput("progFTEv"), 
-        hr(),
-        dataTableOutput("progFTE")
-
-)
+# tabItem(tabName = "progr21", 
+#         
+#         h3(
+#           HTML("<center>", "Distribuzione % Full Time Equivalenti per Dipartimento","</center>")
+#         ),
+#         #h3("Distribuzione % dei FTE per Dipartimento"), 
+# 
+#         radioButtons("DC", "", 
+#                      c("FTE-Dirigenza" = "FTED","FTE-Comparto" = "FTEC" )), 
+#         hr(), 
+#         dataTableOutput("progFTEv"), 
+#         hr(),
+#         dataTableOutput("progFTE")
+# 
+# ),
 
 # , 
 # 
@@ -356,7 +357,7 @@ tabItem(tabName = "progr21",
 #         h3(
 #           HTML("<center>", "Distribuzione % Full Time Equivalenti per Dipartimento","</center>")
 #         ),
-#         #h3("Distribuzione % dei FTE per Dipartimento"), 
+# 
 #         
 #         radioButtons("DC", "", 
 #                      c("FTE-Dirigenza" = "FTED","FTE-Comparto" = "FTEC" )), 
@@ -367,7 +368,31 @@ tabItem(tabName = "progr21",
 #         
 # )
 
-
+tabItem(tabName = "pr21", 
+        fluidRow(
+          tabBox(
+            title = "Programmazione 2021",
+            # The id lets us use input$tabset1 on the server to find the current tab
+            id = "tabset1", width = "400px", height = "100%",
+            tabPanel("IZSLER", 
+                     h3(
+                       HTML("<center>", "Distribuzione % Full Time Equivalenti per Dipartimento","</center>")
+                     ),
+                     
+                     radioButtons("DC", "", 
+                                  c("FTE-Dirigenza" = "FTED","FTE-Comparto" = "FTEC" )), 
+                     hr(), 
+                     dataTableOutput("progFTEv"), 
+                     hr(),
+                     dataTableOutput("progFTE")),
+            tabPanel("DSA"), 
+            tabPanel("DTSA"), 
+            tabPanel("ATLOMB"), 
+            tabPanel("ATER")
+          )
+        
+        
+        ))
 
 
 
