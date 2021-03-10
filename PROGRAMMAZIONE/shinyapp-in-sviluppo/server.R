@@ -1833,6 +1833,9 @@ output$progFTEv <- renderDataTable(
     if(input$DC == "FTED")
     { 
       dtProg %>% 
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento) %>% 
+        summarise(FTED = sum(FTED, na.rm = T), 
+                  FTEC = sum(FTEC, na.rm = T)) %>% 
         group_by( Dipartimento) %>% 
         mutate(FTEDp = prop.table(FTED), 
                FTECp = prop.table(FTEC) ) %>% 
@@ -1846,6 +1849,9 @@ output$progFTEv <- renderDataTable(
     else
     { 
       dtProg %>% 
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento) %>% 
+        summarise(FTED = sum(FTED, na.rm = T), 
+                  FTEC = sum(FTEC, na.rm = T)) %>% 
         group_by( Dipartimento) %>% 
         mutate(FTEDp = prop.table(FTED), 
                FTECp = prop.table(FTEC) ) %>% 
@@ -1874,6 +1880,9 @@ datatable(
 if(input$DC == "FTED")
   {  
     dtProg %>% 
+    group_by(obcod, Obiettivo, Valorizzazione, Dipartimento) %>% 
+    summarise(FTED = sum(FTED, na.rm = T), 
+              FTEC = sum(FTEC, na.rm = T)) %>% 
     group_by( Dipartimento) %>% 
     mutate(FTEDp = prop.table(FTED), 
            FTECp = prop.table(FTEC) ) %>%  
@@ -1892,6 +1901,9 @@ if(input$DC == "FTED")
   else
     
   { dtProg %>% 
+      group_by(obcod, Obiettivo, Valorizzazione, Dipartimento) %>% 
+      summarise(FTED = sum(FTED, na.rm = T), 
+                FTEC = sum(FTEC, na.rm = T)) %>% 
       group_by( Dipartimento) %>% 
       mutate(FTEDp = prop.table(FTED), 
              FTECp = prop.table(FTEC) ) %>%  

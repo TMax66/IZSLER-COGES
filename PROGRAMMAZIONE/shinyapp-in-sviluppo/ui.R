@@ -3,15 +3,21 @@ ui <- dashboardPage(
   dashboardSidebar(
     width = 300,
     sidebarMenu(
-      menuItem("IZSLER", tabName = "izsler", icon = icon("globe")),
-      menuItem("Dipartimento Sicurezza Alimentare", tabName = "dsalim", icon = icon("sitemap")),
+      menuItem("IZSLER", tabName = "Izsler", icon = icon("globe"), 
+               menuSubItem("Indicatori di Performance 2019", tabName = "izsler"), 
+               menuSubItem('Programmazione 2021', tabName = 'progr21')),
+      
+      menuItem("Dipartimento Sicurezza Alimentare", tabName = "Dsalim", icon = icon("sitemap"), 
+               menuSubItem("Indicatori di Performance 2019", tabName = "dsalim"), 
+               menuSubItem('Programmazione 2021', tabName = 'dsaprogr21')),
+      
+      # menuItem("Dipartimento Sicurezza Alimentare", tabName = "dsalim", icon = icon("sitemap")),
       menuItem("Dipartimento Tutela e Salute Animale", tabName = "dsa", icon = icon("sitemap")),
       menuItem("Area Territoriale Lombardia", tabName = "lomb", icon = icon("sitemap")),
       menuItem("Area Territoriale Emilia Romagna", tabName = "emil", icon = icon("sitemap")),
       menuItem("Note", tabName = "help", icon = icon("book")), 
       hr(),
-      br(), 
-      menuItem("Programmazione 2021", tabName = "progr", icon = icon("calculator"))
+      br()
     )
   ),
   dashboardBody(
@@ -278,7 +284,7 @@ tabItem(tabName = "help",
         includeHTML("note.html")
         ), 
 
-##Programmazione#### 
+##Programmazione#
 # tabItem(tabName = "progr", 
 #         
 #         wellPanel(
@@ -327,7 +333,7 @@ tabItem(tabName = "help",
 #         
 # )
 
-tabItem(tabName = "progr", 
+tabItem(tabName = "progr21", 
         
         h3(
           HTML("<center>", "Distribuzione % Full Time Equivalenti per Dipartimento","</center>")
@@ -342,6 +348,26 @@ tabItem(tabName = "progr",
         dataTableOutput("progFTE")
 
 )
+
+# , 
+# 
+# tabItem(tabName = "dsaprogr21", 
+#         
+#         h3(
+#           HTML("<center>", "Distribuzione % Full Time Equivalenti per Dipartimento","</center>")
+#         ),
+#         #h3("Distribuzione % dei FTE per Dipartimento"), 
+#         
+#         radioButtons("DC", "", 
+#                      c("FTE-Dirigenza" = "FTED","FTE-Comparto" = "FTEC" )), 
+#         hr(), 
+#         dataTableOutput("progFTEv"), 
+#         hr(),
+#         dataTableOutput("progFTE")
+#         
+# )
+
+
 
 
 
