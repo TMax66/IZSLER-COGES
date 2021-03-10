@@ -106,13 +106,14 @@ dtx <- dtD %>%
          "Reparto" = reparto, "Struttura"= struttura, FTED, FTEC )
 
 dtx %>% 
-  group_by(obcod, Obiettivo, Valorizzazione, Dipartimento) %>% 
+  group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>% 
   summarise(FTED = sum(FTED, na.rm = T), 
             FTEC = sum(FTEC, na.rm = T)) %>% 
-  group_by( Dipartimento) %>% 
+  filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>% 
+  group_by(Reparto) %>% 
   mutate(FTEDp = prop.table(FTED), 
          FTECp = prop.table(FTEC) ) %>% 
-  group_by(Dipartimento, "Obiettivi Valorizzati" = Valorizzazione) %>% 
+  group_by(Reparto, "Obiettivi Valorizzati" = Valorizzazione) %>% 
   summarise(FTEDp = sum(FTEDp)) %>%
-  pivot_wider(names_from = "Dipartimento", values_from = "FTEDp") %>%  
+  pivot_wider(names_from = "Reparto", values_from = "FTEDp") %>%  
   arrange(desc(`Obiettivi Valorizzati`)) 
