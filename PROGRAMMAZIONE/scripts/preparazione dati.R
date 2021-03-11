@@ -391,8 +391,8 @@ vp %>%
 dtD %>% 
    right_join(dtC,  by = c( "dipartimento", "reparto", "struttura",   "obcod"))%>% 
    select(obcod, "Obiettivo" = Obiettivo.x, "Valorizzazione"= Valorizzazione.x, "Dipartimento"=dipartimento, 
-          "Reparto" = reparto, "Struttura"= struttura, FTED, FTEC ) %>% 
-  saveRDS(., file = here("programmazione", "shinyapp-in-produzione", "datiSB.rds"))
+          "Reparto" = reparto, "Struttura"= struttura, FTED, FTEC ) %>%
+saveRDS(., file = here("programmazione", "shinyapp-in-produzione", "datiSB.rds"))
    
  
   
