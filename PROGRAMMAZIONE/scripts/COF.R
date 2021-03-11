@@ -83,7 +83,7 @@ dtProg %>%
 dtProg %>% 
   group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>% 
   summarise(FTED = sum(FTED, na.rm = T), 
-            FTEC = sum(FTEC, na.rm = T)) %>% 
+            FTEC = sum(FTEC, na.rm = T)) %>% View()
   filter(Dipartimento == "Dipartimento Sicurezza Alimentare") %>%
   group_by(Reparto) %>%
   mutate(FTEDp = prop.table(FTED), 
@@ -93,5 +93,5 @@ dtProg %>%
   mutate(total = rowSums(across(where(is.numeric))))%>% 
   filter(total > 0.00000000) %>% 
   arrange(desc(Valorizzazione)) %>% 
-  select(-total) %>% 
-  column_to_rownames(var = "obcod")  
+  select(-total, -Dipartimento) %>% 
+  column_to_rownames(var = "obcod")  %>% View()

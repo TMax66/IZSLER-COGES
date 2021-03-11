@@ -1995,7 +1995,7 @@ output$dsaFTE <- renderDataTable(
         mutate(total = rowSums(across(where(is.numeric))))%>% 
         filter(total > 0.00000000) %>% 
         arrange(desc(Valorizzazione)) %>% 
-        select(-total) %>% 
+        select(-total, -Dipartimento) %>% 
         column_to_rownames(var = "obcod")
       
     }
@@ -2015,7 +2015,7 @@ output$dsaFTE <- renderDataTable(
         mutate(total = rowSums(across(where(is.numeric))))%>% 
         filter(total > 0.00000000) %>% 
         arrange(desc(Valorizzazione)) %>% 
-        select(-total) %>% 
+        select(-total, -Dipartimento) %>% 
         column_to_rownames(var = "obcod")  
       
     },
@@ -2031,8 +2031,300 @@ output$dsaFTE <- renderDataTable(
 
 
 
+##ftedtsa####
+#dtProg <- readRDS( here("programmazione", "shinyapp-in-sviluppo", "datiSB.rds"))
+
+output$dtsaFTEv <- renderDataTable(
+  datatable(
+    if(input$DC3 == "FTED2")
+    {
+      dtProg %>%
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>%
+        summarise(FTED = sum(FTED, na.rm = T),
+                  FTEC = sum(FTEC, na.rm = T)) %>%
+        filter(Dipartimento == "Dipartimento Tutela Salute Animale") %>%
+        group_by(Reparto) %>%
+        mutate(FTEDp = prop.table(FTED),
+               FTECp = prop.table(FTEC) ) %>%
+        group_by(Reparto, "Obiettivi Valorizzati" = Valorizzazione) %>%
+        summarise(FTEDp = sum(FTEDp)) %>%
+        pivot_wider(names_from = "Reparto", values_from = "FTEDp") %>%
+        arrange(desc(`Obiettivi Valorizzati`))
+      
+    }
+    
+    else
+    {
+      dtProg %>%
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>%
+        summarise(FTED = sum(FTED, na.rm = T),
+                  FTEC = sum(FTEC, na.rm = T)) %>%
+        filter(Dipartimento == "Dipartimento Tutela Salute Animale") %>%
+        group_by(Reparto) %>%
+        mutate(FTEDp = prop.table(FTED),
+               FTECp = prop.table(FTEC) ) %>%
+        group_by(Reparto, "Obiettivi Valorizzati" = Valorizzazione) %>%
+        summarise(FTECp = sum(FTECp)) %>%
+        pivot_wider(names_from = "Reparto", values_from = "FTECp") %>%
+        arrange(desc(`Obiettivi Valorizzati`))
+      
+    },
+    class = 'cell-border stripe', rownames=FALSE,
+    extensions = 'Buttons',options = list(dom="t", pageLength = 10,
+                                          paging = TRUE,autoWidth = TRUE
+    )
+    
+  ) %>% formatPercentage(2:5, 2)
+  
+)
+
+output$dtsaFTE <- renderDataTable(
+  
+  datatable(   
+    if(input$DC3 == "FTED2")
+    {  
+      dtProg %>% 
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>% 
+        summarise(FTED = sum(FTED, na.rm = T), 
+                  FTEC = sum(FTEC, na.rm = T)) %>% 
+        filter(Dipartimento == "Dipartimento Tutela Salute Animale") %>%
+        group_by(Reparto) %>%
+        mutate(FTEDp = prop.table(FTED), 
+               FTECp = prop.table(FTEC) ) %>%  
+        pivot_wider(id_cols = 1:5, 
+                    names_from = "Reparto", values_from = "FTEDp") %>% 
+        mutate(total = rowSums(across(where(is.numeric))))%>% 
+        filter(total > 0.00000000) %>% 
+        arrange(desc(Valorizzazione)) %>% 
+        select(-total, -Dipartimento) %>% 
+        column_to_rownames(var = "obcod")
+      
+    }
+    
+    else
+      
+    { dtProg %>% 
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>% 
+        summarise(FTED = sum(FTED, na.rm = T), 
+                  FTEC = sum(FTEC, na.rm = T)) %>% 
+        filter(Dipartimento == "Dipartimento Tutela Salute Animale") %>%
+        group_by(Reparto) %>%
+        mutate(FTEDp = prop.table(FTED), 
+               FTECp = prop.table(FTEC) ) %>%  
+        pivot_wider(id_cols = 1:5, 
+                    names_from = "Reparto", values_from = "FTECp") %>% 
+        mutate(total = rowSums(across(where(is.numeric))))%>% 
+        filter(total > 0.00000000) %>% 
+        arrange(desc(Valorizzazione)) %>% 
+        select(-total, -Dipartimento) %>% 
+        column_to_rownames(var = "obcod")  
+      
+    },
+    
+    # server = FALSE, 
+    class = 'cell-border stripe', rownames=FALSE,
+    extensions = 'Buttons',options = list(dom="Brftip", pageLength = 10,
+                                          paging = TRUE,autoWidth = TRUE,
+                                          buttons = c('excel')) 
+    
+  ) %>% formatPercentage(3:6, 2)
+)
+
+#fteater####
+output$aterFTEv <- renderDataTable(
+  datatable(
+    if(input$DC4 == "FTED3")
+    {
+      dtProg %>%
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>%
+        summarise(FTED = sum(FTED, na.rm = T),
+                  FTEC = sum(FTEC, na.rm = T)) %>%
+        filter(Dipartimento == "Area Territoriale Emilia Romagna") %>%
+        group_by(Reparto) %>%
+        mutate(FTEDp = prop.table(FTED),
+               FTECp = prop.table(FTEC) ) %>%
+        group_by(Reparto, "Obiettivi Valorizzati" = Valorizzazione) %>%
+        summarise(FTEDp = sum(FTEDp)) %>%
+        pivot_wider(names_from = "Reparto", values_from = "FTEDp") %>%
+        arrange(desc(`Obiettivi Valorizzati`))
+      
+    }
+    
+    else
+    {
+      dtProg %>%
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>%
+        summarise(FTED = sum(FTED, na.rm = T),
+                  FTEC = sum(FTEC, na.rm = T)) %>%
+        filter(Dipartimento == "Area Territoriale Emilia Romagna") %>%
+        group_by(Reparto) %>%
+        mutate(FTEDp = prop.table(FTED),
+               FTECp = prop.table(FTEC) ) %>%
+        group_by(Reparto, "Obiettivi Valorizzati" = Valorizzazione) %>%
+        summarise(FTECp = sum(FTECp)) %>%
+        pivot_wider(names_from = "Reparto", values_from = "FTECp") %>%
+        arrange(desc(`Obiettivi Valorizzati`))
+      
+    },
+    class = 'cell-border stripe', rownames=FALSE,
+    extensions = 'Buttons',options = list(dom="t", pageLength = 10,
+                                          paging = TRUE,autoWidth = TRUE
+    )
+    
+  ) %>% formatPercentage(2:5, 2)
+  
+)
+
+output$aterFTE <- renderDataTable(
+  
+  datatable(   
+    if(input$DC4 == "FTED3")
+    {  
+      dtProg %>% 
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>% 
+        summarise(FTED = sum(FTED, na.rm = T), 
+                  FTEC = sum(FTEC, na.rm = T)) %>% 
+        filter(Dipartimento == "Area Territoriale Emilia Romagna") %>%
+        group_by(Reparto) %>%
+        mutate(FTEDp = prop.table(FTED), 
+               FTECp = prop.table(FTEC) ) %>%  
+        pivot_wider(id_cols = 1:5, 
+                    names_from = "Reparto", values_from = "FTEDp") %>% 
+        mutate(total = rowSums(across(where(is.numeric))))%>% 
+        filter(total > 0.00000000) %>% 
+        arrange(desc(Valorizzazione)) %>% 
+        select(-total, -Dipartimento) %>% 
+        column_to_rownames(var = "obcod")
+      
+    }
+    
+    else
+      
+    { dtProg %>% 
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>% 
+        summarise(FTED = sum(FTED, na.rm = T), 
+                  FTEC = sum(FTEC, na.rm = T)) %>% 
+        filter(Dipartimento == "Area Territoriale Emilia Romagna") %>%
+        group_by(Reparto) %>%
+        mutate(FTEDp = prop.table(FTED), 
+               FTECp = prop.table(FTEC) ) %>%  
+        pivot_wider(id_cols = 1:5, 
+                    names_from = "Reparto", values_from = "FTECp") %>% 
+        mutate(total = rowSums(across(where(is.numeric))))%>% 
+        filter(total > 0.00000000) %>% 
+        arrange(desc(Valorizzazione)) %>% 
+        select(-total, -Dipartimento) %>% 
+        column_to_rownames(var = "obcod")  
+      
+    },
+    
+    # server = FALSE, 
+    class = 'cell-border stripe', rownames=FALSE,
+    extensions = 'Buttons',options = list(dom="Brftip", pageLength = 10,
+                                          paging = TRUE,autoWidth = TRUE,
+                                          buttons = c('excel')) 
+    
+  ) %>% formatPercentage(3:6, 2)
+)
 
 
+
+#fteatlom####
+output$atlomFTEv <- renderDataTable(
+  datatable(
+    if(input$DC5 == "FTED4")
+    {
+      dtProg %>%
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>%
+        summarise(FTED = sum(FTED, na.rm = T),
+                  FTEC = sum(FTEC, na.rm = T)) %>%
+        filter(Dipartimento == "Area Territoriale Lombardia") %>%
+        group_by(Reparto) %>%
+        mutate(FTEDp = prop.table(FTED),
+               FTECp = prop.table(FTEC) ) %>%
+        group_by(Reparto, "Obiettivi Valorizzati" = Valorizzazione) %>%
+        summarise(FTEDp = sum(FTEDp)) %>%
+        pivot_wider(names_from = "Reparto", values_from = "FTEDp") %>%
+        arrange(desc(`Obiettivi Valorizzati`))
+      
+    }
+    
+    else
+    {
+      dtProg %>%
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>%
+        summarise(FTED = sum(FTED, na.rm = T),
+                  FTEC = sum(FTEC, na.rm = T)) %>%
+        filter(Dipartimento == "Area Territoriale Lombardia") %>%
+        group_by(Reparto) %>%
+        mutate(FTEDp = prop.table(FTED),
+               FTECp = prop.table(FTEC) ) %>%
+        group_by(Reparto, "Obiettivi Valorizzati" = Valorizzazione) %>%
+        summarise(FTECp = sum(FTECp)) %>%
+        pivot_wider(names_from = "Reparto", values_from = "FTECp") %>%
+        arrange(desc(`Obiettivi Valorizzati`))
+      
+    },
+    class = 'cell-border stripe', rownames=FALSE,
+    extensions = 'Buttons',options = list(dom="t", pageLength = 10,
+                                          paging = TRUE,autoWidth = TRUE
+    )
+    
+  ) %>% formatPercentage(2:5, 2)
+  
+)
+
+output$atlomFTE <- renderDataTable(
+  
+  datatable(   
+    if(input$DC5 == "FTED4")
+    {  
+      dtProg %>% 
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>% 
+        summarise(FTED = sum(FTED, na.rm = T), 
+                  FTEC = sum(FTEC, na.rm = T)) %>% 
+        filter(Dipartimento == "Area Territoriale Lombardia") %>%
+        group_by(Reparto) %>%
+        mutate(FTEDp = prop.table(FTED), 
+               FTECp = prop.table(FTEC) ) %>%  
+        pivot_wider(id_cols = 1:5, 
+                    names_from = "Reparto", values_from = "FTEDp") %>% 
+        mutate(total = rowSums(across(where(is.numeric))))%>% 
+        filter(total > 0.00000000) %>% 
+        arrange(desc(Valorizzazione)) %>% 
+        select(-total, -Dipartimento) %>% 
+        column_to_rownames(var = "obcod")
+      
+    }
+    
+    else
+      
+    { dtProg %>% 
+        group_by(obcod, Obiettivo, Valorizzazione, Dipartimento, Reparto) %>% 
+        summarise(FTED = sum(FTED, na.rm = T), 
+                  FTEC = sum(FTEC, na.rm = T)) %>% 
+        filter(Dipartimento == "Area Territoriale Lombardia") %>%
+        group_by(Reparto) %>%
+        mutate(FTEDp = prop.table(FTED), 
+               FTECp = prop.table(FTEC) ) %>%  
+        pivot_wider(id_cols = 1:5, 
+                    names_from = "Reparto", values_from = "FTECp") %>% 
+        mutate(total = rowSums(across(where(is.numeric))))%>% 
+        filter(total > 0.00000000) %>% 
+        arrange(desc(Valorizzazione)) %>% 
+        select(-total, -Dipartimento) %>% 
+        column_to_rownames(var = "obcod")  
+      
+    },
+    
+    # server = FALSE, 
+    class = 'cell-border stripe', rownames=FALSE,
+    extensions = 'Buttons',options = list(dom="Brftip", pageLength = 10,
+                                          paging = TRUE,autoWidth = TRUE,
+                                          buttons = c('excel')) 
+    
+  ) %>% formatPercentage(3:6, 2)
+)
 }
 
 

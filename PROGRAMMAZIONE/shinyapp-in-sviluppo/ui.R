@@ -389,9 +389,41 @@ tabItem(tabName = "pr21",
                      dataTableOutput("dsaFTEv"), 
                      hr(),
                      dataTableOutput("dsaFTE")),
-            tabPanel("DTSA"), 
-            tabPanel("ATLOMB"), 
-            tabPanel("ATER")
+            tabPanel("DTSA", 
+                     h3(
+                       HTML("<center>", "Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                     ),
+                     
+                     radioButtons("DC3", "",
+                                  c("FTE-Dirigenza" = "FTED2","FTE-Comparto" = "FTEC2" )),
+                     hr(),
+                     dataTableOutput("dtsaFTEv"), 
+                     hr(),
+                     dataTableOutput("dtsaFTE")),
+           tabPanel("ATLOMB", 
+                    h3(
+                      HTML("<center>", "Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                    ),
+                    
+                    radioButtons("DC5", "",
+                                 c("FTE-Dirigenza" = "FTED4","FTE-Comparto" = "FTEC4" )),
+                    hr(),
+                    dataTableOutput("atlomFTEv"), 
+                    hr(),
+                    dataTableOutput("atlomFTE")), 
+           
+            tabPanel("ATER", 
+                     h3(
+                       HTML("<center>", "Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                     ),
+                     
+                     radioButtons("DC4", "",
+                                  c("FTE-Dirigenza" = "FTED3","FTE-Comparto" = "FTEC3" )),
+                     hr(),
+                     dataTableOutput("aterFTEv"), 
+                     hr(),
+                     dataTableOutput("aterFTE")
+                     )
           )
         
         
