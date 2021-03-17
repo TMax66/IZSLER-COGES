@@ -1826,7 +1826,7 @@ output$radarATER <-renderPlot({
 
 ###PROGRAMMAZIONE####
 #ftedipa####
-dtProg <- readRDS( here("programmazione", "shinyapp-in-produzione", "datiSB.rds"))
+dtProg <- readRDS("datiSB.rds")
 
 output$progFTEv <- renderDataTable(
   datatable(
