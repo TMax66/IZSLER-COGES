@@ -372,7 +372,7 @@ tabItem(tabName = "pr21",
             id = "tabset1", width = "400px", height = "100%",
             tabPanel("IZSLER", 
                      h3(
-                       HTML("<center>", "Distribuzione % Full Time Equivalenti per Dipartimento","</center>")
+                       HTML("<center>", "IZSLER: Distribuzione % Full Time Equivalenti per Dipartimento","</center>")
                      ),
                      
                      radioButtons("DC", "", 
@@ -381,9 +381,36 @@ tabItem(tabName = "pr21",
                      dataTableOutput("progFTEv"), 
                      hr(),
                      dataTableOutput("progFTE")),
+            
+            tabPanel("DIRSAN", 
+                     h3(
+                       HTML("<center>", "DIREZIONE SANITARIA: Distribuzione % Full Time Equivalenti ","</center>")
+                     ),
+                     
+                     radioButtons("DC6", "",
+                                  c("FTE-Dirigenza" = "FTED5","FTE-Comparto" = "FTEC5" )),
+                     hr(),
+                     dataTableOutput("dirsanFTEv"), 
+                     hr(),
+                     dataTableOutput("dirsanFTE")), 
+            
+            tabPanel("DIPAMM", 
+                     h3(
+                       HTML("<center>", "DIPARTIMENTO AMMINISTRATIVO: Distribuzione % Full Time Equivalenti ","</center>")
+                     ),
+                     
+                     radioButtons("DC7", "",
+                                  c("FTE-Dirigenza" = "FTED6","FTE-Comparto" = "FTEC6" )),
+                     hr(),
+                     dataTableOutput("dipamFTEv"), 
+                     hr(),
+                     dataTableOutput("dipamFTE")), 
+            
+            
+            
             tabPanel("DSA",
                      h3(
-                       HTML("<center>", "Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                       HTML("<center>", "DIPARTIMENTO SICUREZZA ALIMENTARE: Distribuzione % Full Time Equivalenti per Reparto","</center>")
                      ),
 
                      radioButtons("DC2", "",
@@ -394,7 +421,7 @@ tabItem(tabName = "pr21",
                      dataTableOutput("dsaFTE")),
             tabPanel("DTSA", 
                      h3(
-                       HTML("<center>", "Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                       HTML("<center>", "DIPARTIMENTO TUTELA SALUTE ANIMALE: Distribuzione % Full Time Equivalenti per Reparto","</center>")
                      ),
                      
                      radioButtons("DC3", "",
@@ -405,7 +432,7 @@ tabItem(tabName = "pr21",
                      dataTableOutput("dtsaFTE")),
            tabPanel("ATLOMB", 
                     h3(
-                      HTML("<center>", "Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                      HTML("<center>", "DIPARTIMENTO AREA TERRITORIALE LOMBARDIA: Distribuzione % Full Time Equivalenti per Reparto","</center>")
                     ),
                     
                     radioButtons("DC5", "",
@@ -417,7 +444,7 @@ tabItem(tabName = "pr21",
            
             tabPanel("ATER", 
                      h3(
-                       HTML("<center>", "Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                       HTML("<center>", "DIPARTIMENTO AREA TERRITORIALE EMILIA ROMAGNA: Distribuzione % Full Time Equivalenti per Reparto","</center>")
                      ),
                      
                      radioButtons("DC4", "",
@@ -425,31 +452,10 @@ tabItem(tabName = "pr21",
                      hr(),
                      dataTableOutput("aterFTEv"), 
                      hr(),
-                     dataTableOutput("aterFTE")), 
+                     dataTableOutput("aterFTE"))
            
-           tabPanel("DIRSAN", 
-                    h3(
-                      HTML("<center>", "Distribuzione % Full Time Equivalenti ","</center>")
-                    ),
-                    
-                    radioButtons("DC6", "",
-                                 c("FTE-Dirigenza" = "FTED5","FTE-Comparto" = "FTEC5" )),
-                    hr(),
-                    dataTableOutput("dirsanFTEv"), 
-                    hr(),
-                    dataTableOutput("dirsanFTE")), 
+          
            
-           tabPanel("DIPAMM", 
-                    h3(
-                      HTML("<center>", "Distribuzione % Full Time Equivalenti ","</center>")
-                    ),
-                    
-                    radioButtons("DC7", "",
-                                 c("FTE-Dirigenza" = "FTED6","FTE-Comparto" = "FTEC6" )),
-                    hr(),
-                    dataTableOutput("dipamFTEv"), 
-                    hr(),
-                    dataTableOutput("dipamFTE"))
            
            
            
