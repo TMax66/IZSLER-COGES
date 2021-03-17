@@ -406,17 +406,19 @@ vp %>%
                                 "SERVCONT" = "Dipartimento Amministrativo"
           )
    )  
- 
-dtD %>% 
+
+ dtD %>% 
    right_join(dtC,  by = c( "dipartimento", "reparto", "struttura",   "obcod"))%>% 
    select(obcod, "Obiettivo" = Obiettivo.x, "Valorizzazione"= Valorizzazione.x, "Dipartimento"=dipartimento, 
-<<<<<<< HEAD
-          "Reparto" = reparto, "Struttura"= struttura, FTED, FTEC ) %>%   
+          "Reparto" = reparto, "Struttura"= struttura, FTED, FTEC ) %>% 
+   mutate(Dipartimento = factor(Dipartimento, levels = c("Direzione Sanitaria", 
+                                                         "Dipartimento Amministrativo", 
+                                                         "Dipartimento Sicurezza Alimentare", 
+                                                         "Dipartimento Tutela Salute Animale", 
+                                                         "Area Territoriale Lombardia", 
+                                                         "Area Territoriale Emilia Romagna"))) %>% 
   saveRDS(., file = here("programmazione", "shinyapp-in-produzione", "datiSB.rds"))
-=======
-          "Reparto" = reparto, "Struttura"= struttura, FTED, FTEC ) %>%
-saveRDS(., file = here("programmazione", "shinyapp-in-produzione", "datiSB.rds"))
->>>>>>> 76417906c73bcdd91f06ef58e6bfb9e79e9d38a0
+
    
  
   
