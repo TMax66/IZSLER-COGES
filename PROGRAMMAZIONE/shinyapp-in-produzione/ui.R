@@ -3,15 +3,15 @@ ui <- dashboardPage(
   dashboardSidebar(
     width = 300,
     sidebarMenu(
-      menuItem("IZSLER", tabName = "izsler", icon = icon("globe")),
-      menuItem("Dipartimento Sicurezza Alimentare", tabName = "dsalim", icon = icon("sitemap")),
+      menuItem("IZSLER", tabName = "izsler", icon = icon("globe")), 
+      menuItem("Dipartimento Sicurezza Alimentare", tabName = "dsalim", icon = icon("sitemap")), 
       menuItem("Dipartimento Tutela e Salute Animale", tabName = "dsa", icon = icon("sitemap")),
       menuItem("Area Territoriale Lombardia", tabName = "lomb", icon = icon("sitemap")),
       menuItem("Area Territoriale Emilia Romagna", tabName = "emil", icon = icon("sitemap")),
       menuItem("Note", tabName = "help", icon = icon("book")), 
+      menuItem("Programmazione 2021", "tabName"= "pr21"),
       hr(),
-      br(), 
-      menuItem("Strumento di programmazione", tabName = "progr", icon = icon("calculator"))
+      br()
     )
   ),
   dashboardBody(
@@ -269,6 +269,9 @@ ui <- dashboardPage(
                   bsModal("TW5", "Distribuzione percentuale degli Indicatori di performance  tra i Reparti",'clickdiv04',tableOutput("tbw5") )
           )
           )
+          
+          
+          
   
 ) 
  , 
@@ -278,54 +281,188 @@ tabItem(tabName = "help",
         includeHTML("note.html")
         ), 
 
-##Programmazione#### 
-tabItem(tabName = "progr", 
-        
-        wellPanel(
-          fluidRow( 
-            column(3,  
-                   h3("Programmazione"),            
-                   numericInput("rt", "Ricavo Totale previsto",  value = "1000000"), 
-                   br(), 
-                   numericInput("fte", "Full Time Equivalenti disponibili ",  value = "100"), 
-                   br(), 
-                   # numericInput("ftet", "Full Time Equivalenti teorico",  value = ""), 
-                   # br(),
-                   sliderInput("pc", "percentuale FTE allocata agli obiettivi", min=0, max= 50,  value = "0")), 
+##Programmazione#
+# tabItem(tabName = "progr", 
+#         
+#         wellPanel(
+#           fluidRow( 
+#             column(3,  
+#                    h3("Programmazione"),            
+#                    numericInput("rt", "Ricavo Totale previsto",  value = "1000000"), 
+#                    br(), 
+#                    numericInput("fte", "Full Time Equivalenti disponibili ",  value = "100"), 
+#                    br(), 
+#                    # numericInput("ftet", "Full Time Equivalenti teorico",  value = ""), 
+#                    # br(),
+#                    sliderInput("pc", "percentuale FTE allocata agli obiettivi", min=0, max= 50,  value = "0")), 
+#             
+#             column(9, 
+#                    valueBoxOutput("rfteT"),
+#                    valueBoxOutput("ftep"), 
+#                    valueBoxOutput("rfteP"), 
+#                    valueBoxOutput("target")
+#                   
+#                    # tableOutput("tb")  
+#                    
+#                    
+#                    
+#             ))), 
+#         br(),br(),br(),
+#         
+#         wellPanel(
+#           fluidRow(
+#             column(3, 
+#                    h3("Verifica"),
+#                    sliderInput("Vrt", "Variazione percentuale del Ricavo Totale previsto", min=-50, max= 50,  value = 0),
+#                    br(), 
+#                    sliderInput("Vfte", "Variazione percentuale del FTE programmato ", min=-50, max= 50,  value = 0)),
+#             
+#             column(9, 
+#                    valueBoxOutput("rtot"),
+#                    valueBoxOutput("fteR"), 
+#                    valueBoxOutput("rfteR"),
+#                    valueBoxOutput("target2")#, 
+#                    #valueBoxOutput("risn")
+#                    
+#                    
+#                    # tableOutput("tb2") 
+#             )))
+#         
+# )
+
+# tabItem(tabName = "progr21", 
+#         
+#         h3(
+#           HTML("<center>", "Distribuzione % Full Time Equivalenti per Dipartimento","</center>")
+#         ),
+#         #h3("Distribuzione % dei FTE per Dipartimento"), 
+# 
+#         radioButtons("DC", "", 
+#                      c("FTE-Dirigenza" = "FTED","FTE-Comparto" = "FTEC" )), 
+#         hr(), 
+#         dataTableOutput("progFTEv"), 
+#         hr(),
+#         dataTableOutput("progFTE")
+# 
+# ),
+
+# , 
+# 
+# tabItem(tabName = "dsaprogr21", 
+#         
+#         h3(
+#           HTML("<center>", "Distribuzione % Full Time Equivalenti per Dipartimento","</center>")
+#         ),
+# 
+#         
+#         radioButtons("DC", "", 
+#                      c("FTE-Dirigenza" = "FTED","FTE-Comparto" = "FTEC" )), 
+#         hr(), 
+#         dataTableOutput("progFTEv"), 
+#         hr(),
+#         dataTableOutput("progFTE")
+#         
+# )
+####PROGRAMMAZIONE####
+tabItem(tabName = "pr21", 
+        fluidRow(
+          tabBox(
+            title = "Programmazione 2021",
+            # The id lets us use input$tabset1 on the server to find the current tab
+            id = "tabset1", width = "400px", height = "100%",
+            tabPanel("IZSLER", 
+                     h3(
+                       HTML("<center>", "IZSLER: Distribuzione % Full Time Equivalenti per Dipartimento","</center>")
+                     ),
+                     
+                     radioButtons("DC", "", 
+                                  c("FTE-Dirigenza" = "FTED","FTE-Comparto" = "FTEC" )), 
+                     hr(), 
+                     dataTableOutput("progFTEv"), 
+                     hr(),
+                     dataTableOutput("progFTE")),
             
-            column(9, 
-                   valueBoxOutput("rfteT"),
-                   valueBoxOutput("ftep"), 
-                   valueBoxOutput("rfteP"), 
-                   valueBoxOutput("target")
-                  
-                   # tableOutput("tb")  
-                   
-                   
-                   
-            ))), 
-        br(),br(),br(),
-        
-        wellPanel(
-          fluidRow(
-            column(3, 
-                   h3("Verifica"),
-                   sliderInput("Vrt", "Variazione percentuale del Ricavo Totale previsto", min=-50, max= 50,  value = 0),
-                   br(), 
-                   sliderInput("Vfte", "Variazione percentuale del FTE programmato ", min=-50, max= 50,  value = 0)),
+            tabPanel("DIRSAN", 
+                     h3(
+                       HTML("<center>", "DIREZIONE SANITARIA: Distribuzione % Full Time Equivalenti ","</center>")
+                     ),
+                     
+                     radioButtons("DC6", "",
+                                  c("FTE-Dirigenza" = "FTED5","FTE-Comparto" = "FTEC5" )),
+                     hr(),
+                     dataTableOutput("dirsanFTEv"), 
+                     hr(),
+                     dataTableOutput("dirsanFTE")), 
             
-            column(9, 
-                   valueBoxOutput("rtot"),
-                   valueBoxOutput("fteR"), 
-                   valueBoxOutput("rfteR"),
-                   valueBoxOutput("target2")#, 
-                   #valueBoxOutput("risn")
-                   
-                   
-                   # tableOutput("tb2") 
-            )))
+            tabPanel("DIPAMM", 
+                     h3(
+                       HTML("<center>", "DIPARTIMENTO AMMINISTRATIVO: Distribuzione % Full Time Equivalenti ","</center>")
+                     ),
+                     
+                     radioButtons("DC7", "",
+                                  c("FTE-Dirigenza" = "FTED6","FTE-Comparto" = "FTEC6" )),
+                     hr(),
+                     dataTableOutput("dipamFTEv"), 
+                     hr(),
+                     dataTableOutput("dipamFTE")), 
+            
+            
+            
+            tabPanel("DSA",
+                     h3(
+                       HTML("<center>", "DIPARTIMENTO SICUREZZA ALIMENTARE: Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                     ),
+
+                     radioButtons("DC2", "",
+                                  c("FTE-Dirigenza" = "FTED1","FTE-Comparto" = "FTEC1" )),
+                     hr(),
+                     dataTableOutput("dsaFTEv"), 
+                     hr(),
+                     dataTableOutput("dsaFTE")),
+            tabPanel("DTSA", 
+                     h3(
+                       HTML("<center>", "DIPARTIMENTO TUTELA SALUTE ANIMALE: Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                     ),
+                     
+                     radioButtons("DC3", "",
+                                  c("FTE-Dirigenza" = "FTED2","FTE-Comparto" = "FTEC2" )),
+                     hr(),
+                     dataTableOutput("dtsaFTEv"), 
+                     hr(),
+                     dataTableOutput("dtsaFTE")),
+           tabPanel("ATLOMB", 
+                    h3(
+                      HTML("<center>", "DIPARTIMENTO AREA TERRITORIALE LOMBARDIA: Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                    ),
+                    
+                    radioButtons("DC5", "",
+                                 c("FTE-Dirigenza" = "FTED4","FTE-Comparto" = "FTEC4" )),
+                    hr(),
+                    dataTableOutput("atlomFTEv"), 
+                    hr(),
+                    dataTableOutput("atlomFTE")), 
+           
+            tabPanel("ATER", 
+                     h3(
+                       HTML("<center>", "DIPARTIMENTO AREA TERRITORIALE EMILIA ROMAGNA: Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                     ),
+                     
+                     radioButtons("DC4", "",
+                                  c("FTE-Dirigenza" = "FTED3","FTE-Comparto" = "FTEC3" )),
+                     hr(),
+                     dataTableOutput("aterFTEv"), 
+                     hr(),
+                     dataTableOutput("aterFTE"))
+           
+          
+           
+           
+           
+           
+          )
         
-)
+        
+        ))
 
 
 
