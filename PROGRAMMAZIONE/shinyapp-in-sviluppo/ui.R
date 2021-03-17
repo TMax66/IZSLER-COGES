@@ -269,6 +269,9 @@ ui <- dashboardPage(
                   bsModal("TW5", "Distribuzione percentuale degli Indicatori di performance  tra i Reparti",'clickdiv04',tableOutput("tbw5") )
           )
           )
+          
+          
+          
   
 ) 
  , 
@@ -422,8 +425,34 @@ tabItem(tabName = "pr21",
                      hr(),
                      dataTableOutput("aterFTEv"), 
                      hr(),
-                     dataTableOutput("aterFTE")
-                     )
+                     dataTableOutput("aterFTE")), 
+           
+           tabPanel("DIRSAN", 
+                    h3(
+                      HTML("<center>", "Distribuzione % Full Time Equivalenti ","</center>")
+                    ),
+                    
+                    radioButtons("DC6", "",
+                                 c("FTE-Dirigenza" = "FTED5","FTE-Comparto" = "FTEC5" )),
+                    hr(),
+                    dataTableOutput("dirsanFTEv"), 
+                    hr(),
+                    dataTableOutput("dirsanFTE")), 
+           
+           tabPanel("DIPAMM", 
+                    h3(
+                      HTML("<center>", "Distribuzione % Full Time Equivalenti ","</center>")
+                    ),
+                    
+                    radioButtons("DC7", "",
+                                 c("FTE-Dirigenza" = "FTED6","FTE-Comparto" = "FTEC6" )),
+                    hr(),
+                    dataTableOutput("dipamFTEv"), 
+                    hr(),
+                    dataTableOutput("dipamFTE"))
+           
+           
+           
           )
         
         
