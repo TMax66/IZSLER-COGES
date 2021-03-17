@@ -1866,7 +1866,7 @@ output$progFTEv <- renderDataTable(
                                           paging = TRUE,autoWidth = TRUE
                                            ) 
     
-  ) %>% formatPercentage(2:5, 2)
+  ) %>% formatPercentage(2:7, 2)
 
   )
 
@@ -1925,7 +1925,7 @@ if(input$DC == "FTED")
                                         paging = TRUE,autoWidth = TRUE,
                                         buttons = c('excel')) 
   
-) %>% formatPercentage(3:6, 2)
+) %>% formatPercentage(3:8, 2)
 )
 
 

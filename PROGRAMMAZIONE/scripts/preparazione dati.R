@@ -306,8 +306,8 @@ vp %>%
  obftec <- read_excel(here("programmazione", "data", "raw", "obiettiviXSB.xlsx"), sheet = "FTECdipsan")
  
  dtD <- obfted %>% 
-   mutate(obcod = paste("OB", seq(1:nrow(.)))) %>% 
-   pivot_longer(3:27, names_to = "struttura", values_to = "FTED") %>% 
+   mutate(obcod = paste("OB", seq(1:nrow(.)))) %>%
+   pivot_longer(3:37, names_to = "struttura", values_to = "FTED") %>% 
    mutate(reparto = recode(struttura, "STBO" = "STBO-FE-MO", 
                            "STFE" = "STBO-FE-MO", 
                            "STMO" = "STBO-FE-MO", 
@@ -340,10 +340,19 @@ vp %>%
                                 "RVIR" = "Dipartimento Tutela Salute Animale", 
                                 "RVVPB" = "Dipartimento Tutela Salute Animale", 
                                 "RTBA" =  "Dipartimento Tutela Salute Animale", 
-                                "RPCMB" = "Dipartimento Tutela Salute Animale"
+                                "RPCMB" = "Dipartimento Tutela Salute Animale", 
+                                "AREG" = "Direzione Sanitaria", 
+                                "SORVEPIDEM" = "Direzione Sanitaria", 
+                                "GESTCENT" = "Direzione Sanitaria", 
+                                "FORMAZIONE" = "Direzione Sanitaria", 
+                                "SAQ" = "Direzione Sanitaria", 
+                                "AFFGENLEG" = "Dipartimento Amministrativo", 
+                                "GESTRISUM" = "Dipartimento Amministrativo", 
+                                "UOTECPAT" = "Dipartimento Amministrativo", 
+                                "PROVV" = "Dipartimento Amministrativo", 
+                                "SERVCONT" = "Dipartimento Amministrativo"
           )
-   )  
- 
+   )   
  
  
  
@@ -351,7 +360,7 @@ vp %>%
  
  dtC <- obftec %>% 
    mutate(obcod = paste("OB", seq(1:nrow(.)))) %>% 
-   pivot_longer(3:27, names_to = "struttura", values_to = "FTEC") %>% 
+   pivot_longer(3:37, names_to = "struttura", values_to = "FTEC") %>% 
    mutate(reparto = recode(struttura, "STBO" = "STBO-FE-MO", 
                            "STFE" = "STBO-FE-MO", 
                            "STMO" = "STBO-FE-MO", 
@@ -384,14 +393,24 @@ vp %>%
                                 "RVIR" = "Dipartimento Tutela Salute Animale", 
                                 "RVVPB" = "Dipartimento Tutela Salute Animale", 
                                 "RTBA" =  "Dipartimento Tutela Salute Animale", 
-                                "RPCMB" = "Dipartimento Tutela Salute Animale"
+                                "RPCMB" = "Dipartimento Tutela Salute Animale",
+                                "AREG" = "Direzione Sanitaria", 
+                                "SORVEPIDEM" = "Direzione Sanitaria", 
+                                "GESTCENT" = "Direzione Sanitaria", 
+                                "FORMAZIONE" = "Direzione Sanitaria", 
+                                "SAQ" = "Direzione Sanitaria", 
+                                "AFFGENLEG" = "Dipartimento Amministrativo", 
+                                "GESTRISUM" = "Dipartimento Amministrativo", 
+                                "UOTECPAT" = "Dipartimento Amministrativo", 
+                                "PROVV" = "Dipartimento Amministrativo", 
+                                "SERVCONT" = "Dipartimento Amministrativo"
           )
    )  
  
 dtD %>% 
    right_join(dtC,  by = c( "dipartimento", "reparto", "struttura",   "obcod"))%>% 
    select(obcod, "Obiettivo" = Obiettivo.x, "Valorizzazione"= Valorizzazione.x, "Dipartimento"=dipartimento, 
-          "Reparto" = reparto, "Struttura"= struttura, FTED, FTEC ) %>% 
+          "Reparto" = reparto, "Struttura"= struttura, FTED, FTEC ) %>%   
   saveRDS(., file = here("programmazione", "shinyapp-in-produzione", "datiSB.rds"))
    
  
