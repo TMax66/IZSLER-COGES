@@ -3,15 +3,8 @@ ui <- dashboardPage(
   dashboardSidebar(
     width = 300,
     sidebarMenu(
-      menuItem("IZSLER", tabName = "Izsler", icon = icon("globe"), 
-               menuSubItem("Indicatori di Performance 2019", tabName = "izsler"), 
-               menuSubItem('Programmazione 2021', tabName = 'progr21')),
-      
-      menuItem("Dipartimento Sicurezza Alimentare", tabName = "Dsalim", icon = icon("sitemap"), 
-               menuSubItem("Indicatori di Performance 2019", tabName = "dsalim"), 
-               menuSubItem('Programmazione 2021', tabName = 'dsaprogr21')),
-      
-      # menuItem("Dipartimento Sicurezza Alimentare", tabName = "dsalim", icon = icon("sitemap")),
+      menuItem("IZSLER", tabName = "izsler", icon = icon("globe")), 
+      menuItem("Dipartimento Sicurezza Alimentare", tabName = "dsalim", icon = icon("sitemap")), 
       menuItem("Dipartimento Tutela e Salute Animale", tabName = "dsa", icon = icon("sitemap")),
       menuItem("Area Territoriale Lombardia", tabName = "lomb", icon = icon("sitemap")),
       menuItem("Area Territoriale Emilia Romagna", tabName = "emil", icon = icon("sitemap")),
@@ -367,7 +360,7 @@ tabItem(tabName = "help",
 #         dataTableOutput("progFTE")
 #         
 # )
-
+####PROGRAMMAZIONE####
 tabItem(tabName = "pr21", 
         fluidRow(
           tabBox(
@@ -385,10 +378,52 @@ tabItem(tabName = "pr21",
                      dataTableOutput("progFTEv"), 
                      hr(),
                      dataTableOutput("progFTE")),
-            tabPanel("DSA"), 
-            tabPanel("DTSA"), 
-            tabPanel("ATLOMB"), 
-            tabPanel("ATER")
+            tabPanel("DSA",
+                     h3(
+                       HTML("<center>", "Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                     ),
+
+                     radioButtons("DC2", "",
+                                  c("FTE-Dirigenza" = "FTED1","FTE-Comparto" = "FTEC1" )),
+                     hr(),
+                     dataTableOutput("dsaFTEv"), 
+                     hr(),
+                     dataTableOutput("dsaFTE")),
+            tabPanel("DTSA", 
+                     h3(
+                       HTML("<center>", "Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                     ),
+                     
+                     radioButtons("DC3", "",
+                                  c("FTE-Dirigenza" = "FTED2","FTE-Comparto" = "FTEC2" )),
+                     hr(),
+                     dataTableOutput("dtsaFTEv"), 
+                     hr(),
+                     dataTableOutput("dtsaFTE")),
+           tabPanel("ATLOMB", 
+                    h3(
+                      HTML("<center>", "Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                    ),
+                    
+                    radioButtons("DC5", "",
+                                 c("FTE-Dirigenza" = "FTED4","FTE-Comparto" = "FTEC4" )),
+                    hr(),
+                    dataTableOutput("atlomFTEv"), 
+                    hr(),
+                    dataTableOutput("atlomFTE")), 
+           
+            tabPanel("ATER", 
+                     h3(
+                       HTML("<center>", "Distribuzione % Full Time Equivalenti per Reparto","</center>")
+                     ),
+                     
+                     radioButtons("DC4", "",
+                                  c("FTE-Dirigenza" = "FTED3","FTE-Comparto" = "FTEC3" )),
+                     hr(),
+                     dataTableOutput("aterFTEv"), 
+                     hr(),
+                     dataTableOutput("aterFTE")
+                     )
           )
         
         

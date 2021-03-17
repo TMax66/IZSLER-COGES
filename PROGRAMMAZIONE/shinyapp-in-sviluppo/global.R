@@ -214,6 +214,10 @@ Tater <- tater %>%
        filter(!is.na(Reparto))),  by = "Reparto")
 
  
+
+
+
+
 #########################PUBBLICAZIONI###############################################################################
 
 #ricerca <- readRDS(here("programmazione", "shinyapp", "ricerca.rds"))
