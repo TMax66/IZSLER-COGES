@@ -5,8 +5,8 @@ account: izslerapp
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3071979
-bundleId: 4358605
+bundleId: 4362919
 url: https://izslerapp.shinyapps.io/coges/
-when: 1615987125.80575
+when: 1616060155.40392
 asMultiple: FALSE
 asStatic: FALSE
