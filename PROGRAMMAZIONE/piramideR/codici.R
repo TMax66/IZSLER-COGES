@@ -13,6 +13,8 @@ library("DT")
 library("lubridate")
 library("fmsb")
 
+
+###Pubblicazioni####
 pubblicazioni <- read_excel(here("programmazione", "data", "raw", "pubblicazioni2019.xlsx"))
 pubblicazioni$autore <- str_to_lower(pubblicazioni$autore)
 pubblicazioni$autore <- gsub(",.*$", "", pubblicazioni$autore)
@@ -59,13 +61,12 @@ ricerca %>%
             sumIF = sum(impf, na.rm = TRUE))
 
 
+##Progetti di ricerca####
 
 pr <- read_excel(here("programmazione", "data", "raw", "DatiProgettiUO.xlsx"))
 repMat <- readRDS( here("programmazione", "data", "processed", "matrperpubb.rds")) # carico i dati delle matricole per dip/rep/lab vedi preparazione dati.R in script
 
-
-repMat %>% 
-  select(- Laboratorio) %>% View()
+## andare allo script di preparazione repMat ed eliminare la variabile Laboratorio che duplica le colonne dopo il join con pr
 
 ###calcola per dipartimento/reparto/tipologia e codiceprg il numero di u.o. partecipanti e il budget
 
@@ -73,14 +74,9 @@ pr %>% select(-14, -15) %>%
   mutate("Stato" = ifelse(DataFine < as.Date("2019-01-01"), "Archiviato", "Attivo")) %>% 
   filter(Stato == "Attivo" & DataInizio <= as.Date("2019-12-31")) %>% 
   mutate("Statoanno" = ifelse(DataFine <=as.Date("2019-12-31"), "Concluso", "Aperto")) %>%
-  left_join(repMat, by = c("MatrRSUO" = "matricola")) %>%
-  
-
-
-    
-pr %>% 
+  left_join(repMat, by = c("MatrRSUO" = "matricola")) %>% 
   filter(Statoanno == "Aperto") %>% 
-       group_by(Dipartimento) %>% 
+       group_by(Dipartimento) %>% View()
   summarise(Bdg = sum(Budget), 
             MBdg = mean(Budget, na.rm = T),
             MdBdg = median(Budget, na.rm = T), 
