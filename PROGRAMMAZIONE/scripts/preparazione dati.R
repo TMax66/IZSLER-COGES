@@ -406,7 +406,7 @@ vp %>%
                                 "SERVCONT" = "Dipartimento Amministrativo"
           )
    )  
-
+ 
  dtD %>% 
    right_join(dtC,  by = c( "dipartimento", "reparto", "struttura",   "obcod"))%>% 
    select(obcod, "Obiettivo" = Obiettivo.x, "Valorizzazione"= Valorizzazione.x, "Dipartimento"=dipartimento, 
@@ -417,10 +417,7 @@ vp %>%
                                                          "Dipartimento Tutela Salute Animale", 
                                                          "Area Territoriale Lombardia", 
                                                          "Area Territoriale Emilia Romagna"))) %>% 
-  saveRDS(., file = here("programmazione", "shinyapp-in-produzione", "datiSB.rds"))
-
-   
- 
+   saveRDS(., file = here("programmazione", "shinyapp-in-produzione", "datiSB.rds"))
   
 
  
