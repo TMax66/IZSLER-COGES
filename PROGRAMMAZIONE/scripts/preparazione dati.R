@@ -516,13 +516,14 @@ library("writexl")
 
 write_xlsx(presenze21, path = "presenze21.xlsx")  
 
-MatricoleSigmaGRU <- read_excel("programmazione/data/raw/MatricoleSigmaGRU.xlsx")
-
-matricole <- presenze21 %>% 
-  left_join(MatricoleSigmaGRU, by="Matricola")  
-
-
-writexl::write_xlsx(matricole, path= "matricole.xlsx")
+###codice per legare matricole sigma a gru####
+# MatricoleSigmaGRU <- read_excel("programmazione/data/raw/MatricoleSigmaGRU.xlsx")
+# 
+# matricole <- presenze21 %>% 
+#   left_join(MatricoleSigmaGRU, by="Matricola")  
+# 
+# 
+# writexl::write_xlsx(matricole, path= "matricole.xlsx")
  
 # ###tabella per documento piano performance##
 # dir <- dati %>% 
