@@ -17,9 +17,9 @@ library("fmsb")
 pr <- read_excel(here("programmazione", "piramideR", "pr2020.xlsx"))
 
 
-#anag <- readRDS(here("programmazione", "data", "processed", "ANAGRAFE.rds"))
+anag <- readRDS(here("programmazione", "data", "processed", "ANAGRAFE.rds"))
 
-pr <- pr %>% 
+prj <- pr %>% 
   #select(-14, -15) %>% 
   # mutate("Stato" = ifelse(DataFine < as.Date("2020-01-01"), "Archiviato", "Attivo")) %>% 
   # filter(Stato == "Attivo" & DataInizio <= as.Date("2020-12-31")) %>% 
@@ -31,11 +31,11 @@ pr <- pr %>%
 
 ###calcola per dipartimento/reparto/tipologia e codiceprg il numero di u.o. partecipanti e il budget
 
-pr %>%
-  mutate("Stato" = ifelse(DataFine < as.Date("2000-01-01"), "Archiviato", "Attivo")) %>% 
-  filter(Stato == "Attivo" & DataInizio <= as.Date("2000-12-31")) %>% 
-  mutate("Statoanno" = ifelse(DataFine <=as.Date("2000-12-31"), "Concluso", "Aperto")) %>%
-filter(Statoanno == "Aperto") %>%  View()
+prj %>%
+  mutate("Stato" = ifelse(DataFine < as.Date("2002-01-01"), "Archiviato", "Attivo")) %>% 
+  filter(Stato == "Attivo" & DataInizio <= as.Date("2002-12-31")) %>% 
+  mutate("Statoanno" = ifelse(DataFine <=as.Date("2002-12-31"), "Concluso", "Aperto")) %>%
+filter(Statoanno == "Aperto") %>% 
   group_by(Dipartimento) %>% 
   summarise(Bdg = sum(Budget), 
             MBdg = mean(Budget, na.rm = T),
