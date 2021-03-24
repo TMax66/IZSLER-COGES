@@ -44,11 +44,72 @@ filter(Statoanno == "Aperto") %>%
             MdBdg = median(Budget, na.rm = T), 
             mdBdg = min(Budget, na.rm = T), 
             mxBdg = max(Budget, na.rm = T), 
-            "Progetti di Ricerca"=nlevels(factor(Codice)))%>% View()
+            "Progetti di Ricerca"=nlevels(factor(Codice)))%>%  
 filter(!is.na(Dipartimento))
 
 
 
+
+
+prj_func <- function(dati, dtf1, dti, dtf2, anno)
+              
+             { prj %>%
+    mutate("Stato" = ifelse(DataFine < as.Date(dtf1), "Archiviato", "Attivo")) %>% 
+    filter(Stato == "Attivo" & DataInizio <= as.Date(dti)) %>% 
+    mutate("Statoanno" = ifelse(DataFine <=as.Date(dtf2), "Concluso", "Aperto")) %>%
+    filter(Statoanno == "Aperto") %>% 
+    group_by(Dipartimento) %>% 
+    summarise(Bdg = sum(Budget), 
+              MBdg = mean(Budget, na.rm = T),
+              MdBdg = median(Budget, na.rm = T), 
+              mdBdg = min(Budget, na.rm = T), 
+              mxBdg = max(Budget, na.rm = T), 
+              "Progetti di Ricerca"=nlevels(factor(Codice)))%>%  
+    mutate(anno = anno) %>% 
+    filter(!is.na(Dipartimento))
+
+  }
+  
+
+prj_func(dati = prj, dtf1 = "2000-01-01", dti = "2000-12-31", dtf2 = "2000-12-31" , anno = 2000)
+
+
+dtf1 <- c("2000-01-01", "2001-01-01","2002-01-01","2003-01-01","2004-01-01","2005-01-01",
+          "2006-01-01","2007-01-01","2008-01-01","2009-01-01","2010-01-01","2011-01-01",
+          "2012-01-01","2013-01-01","2014-01-01","2015-01-01","2016-01-01","2017-01-01","2018-01-01",
+          "2019-01-01","2020-01-01")
+
+
+dtf2 <- c("2000-12-31", "2001-12-31","2002-12-31","2003-12-31","2004-12-31","2005-12-31",
+          "2006-12-31","2007-12-31","2008-12-31","2009-12-31","2010-12-31","2011-12-31",
+          "2012-12-31","2013-12-31","2014-12-31","2015-12-31","2016-12-31","2017-12-31","2018-12-31",
+          "2019-12-31","2020-12-31")
+
+
+dti <-  c("2000-12-31", "2001-12-31","2002-12-31","2003-12-31","2004-12-31","2005-12-31",
+          "2006-12-31","2007-12-31","2008-12-31","2009-12-31","2010-12-31","2011-12-31",
+          "2012-12-31","2013-12-31","2014-12-31","2015-12-31","2016-12-31","2017-12-31","2018-12-31",
+          "2019-12-31","2020-12-31")
+
+anno <- seq(from = 2000, to = 2020, by=1)
+
+x <- data.frame(dtf1, dti,dtf2, anno)
+
+
+z <- list()
+
+for (i in 1:21) { 
+  z[[i]]<- prj_func(dati= prj, dtf1 = x[i, 1], dti = x[i, 2], dtf2 = x[i, 3], anno = x[i, 4])
+           
+}
+
+progetti <- do.call(rbind, z)
+
+
+progetti %>% 
+  ggplot(aes(x=anno, y=MdBdg/1000))+
+  geom_line()+
+  facet_wrap(~Dipartimento)
 
 ###rating ricercatori###
 
