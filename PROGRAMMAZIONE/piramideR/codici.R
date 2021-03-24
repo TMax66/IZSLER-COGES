@@ -13,6 +13,10 @@ library("DT")
 library("lubridate")
 library("fmsb")
 library("readr")
+library("directlabels")
+library("ggrepel")
+library("broom")
+library("forcats")
 
 ##PROGETTI DI RICERCA####
 pr <- read_excel(here("programmazione", "piramideR", "pr2020.xlsx"))
@@ -107,9 +111,46 @@ progetti <- do.call(rbind, z)
 
 
 progetti %>% 
-  ggplot(aes(x=anno, y=MdBdg/1000))+
-  geom_line()+
-  facet_wrap(~Dipartimento)
+  filter(!Dipartimento %in% c("DIREZIONE GENERALE", "DIPARTIMENTO AMMINISTRATIVO")) %>% 
+  mutate(label = abbreviate(Dipartimento)) %>% 
+  ggplot(aes(x=anno, y=`Progetti di Ricerca`, color = label))+
+  geom_line(alpha = 0.5)+
+  geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points")), cex = 0.8)+
+  theme(legend.position = "none")+
+  geom_smooth(se = FALSE, method = glm)
+
+progetti %>% 
+  filter(Dipartimento == "DIPARTIMENTO TUTELA E  SALUTE ANIMALE") %>% 
+  do(fitX = tidy(lm(`Progetti di Ricerca`~ anno, data = .))) %>% 
+  unnest(fitx)
+
+
+
+dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMENTARE", 
+         "AREA TERRITORIALE LOMBARDIA", "AREA TERRITORIALE EMILIA ROMAGNA", "DIREZIONE SANITARIA" )
+
+
+c <-list()
+
+prcoef <- function(dati, dip)
+{  
+c <- coef(lm(`Progetti di Ricerca`~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
+}
+
+for (i in 1:5) { 
+  c[[i]]<- prcoef(dati= progetti, dip[i])
+}
+
+incremento <- data.frame(dip,  do.call(rbind, c))
+
+incremento %>% 
+  select(dip, "coef"= anno) %>% 
+  ggplot(aes(x= reorder(dip, coef), y=coef)) +
+  geom_bar(stat= "identity")+
+  coord_flip()
+
+
+
 
 ###rating ricercatori###
 
