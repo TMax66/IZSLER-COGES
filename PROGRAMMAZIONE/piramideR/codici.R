@@ -17,7 +17,7 @@ library("directlabels")
 library("ggrepel")
 library("broom")
 library("forcats")
-
+library("patchwork")
 ##PROGETTI DI RICERCA####
 pr <- read_excel(here("programmazione", "piramideR", "pr2020.xlsx"))
 
@@ -37,24 +37,6 @@ prj <- pr %>%
 
 ###calcola per dipartimento/reparto/tipologia e codiceprg il numero di u.o. partecipanti e il budget
 
-prj %>%
-  mutate("Stato" = ifelse(DataFine < as.Date("2002-01-01"), "Archiviato", "Attivo")) %>% 
-  filter(Stato == "Attivo" & DataInizio <= as.Date("2002-12-31")) %>% 
-  mutate("Statoanno" = ifelse(DataFine <=as.Date("2002-12-31"), "Concluso", "Aperto")) %>%
-filter(Statoanno == "Aperto") %>% 
-  group_by(Dipartimento) %>% 
-  summarise(Bdg = sum(Budget), 
-            MBdg = mean(Budget, na.rm = T),
-            MdBdg = median(Budget, na.rm = T), 
-            mdBdg = min(Budget, na.rm = T), 
-            mxBdg = max(Budget, na.rm = T), 
-            "Progetti di Ricerca"=nlevels(factor(Codice)))%>%  
-filter(!is.na(Dipartimento))
-
-
-
-
-
 prj_func <- function(dati, dtf1, dti, dtf2, anno)
               
              { prj %>%
@@ -68,88 +50,163 @@ prj_func <- function(dati, dtf1, dti, dtf2, anno)
               MdBdg = median(Budget, na.rm = T), 
               mdBdg = min(Budget, na.rm = T), 
               mxBdg = max(Budget, na.rm = T), 
-              "Progetti di Ricerca"=nlevels(factor(Codice)))%>%  
+              "N.Progetti"=nlevels(factor(Codice)))%>%  
     mutate(anno = anno) %>% 
     filter(!is.na(Dipartimento))
 
   }
   
-
-prj_func(dati = prj, dtf1 = "2000-01-01", dti = "2000-12-31", dtf2 = "2000-12-31" , anno = 2000)
-
-
 dtf1 <- c("2000-01-01", "2001-01-01","2002-01-01","2003-01-01","2004-01-01","2005-01-01",
           "2006-01-01","2007-01-01","2008-01-01","2009-01-01","2010-01-01","2011-01-01",
           "2012-01-01","2013-01-01","2014-01-01","2015-01-01","2016-01-01","2017-01-01","2018-01-01",
           "2019-01-01","2020-01-01")
-
-
 dtf2 <- c("2000-12-31", "2001-12-31","2002-12-31","2003-12-31","2004-12-31","2005-12-31",
           "2006-12-31","2007-12-31","2008-12-31","2009-12-31","2010-12-31","2011-12-31",
           "2012-12-31","2013-12-31","2014-12-31","2015-12-31","2016-12-31","2017-12-31","2018-12-31",
           "2019-12-31","2020-12-31")
-
-
 dti <-  c("2000-12-31", "2001-12-31","2002-12-31","2003-12-31","2004-12-31","2005-12-31",
           "2006-12-31","2007-12-31","2008-12-31","2009-12-31","2010-12-31","2011-12-31",
           "2012-12-31","2013-12-31","2014-12-31","2015-12-31","2016-12-31","2017-12-31","2018-12-31",
           "2019-12-31","2020-12-31")
-
 anno <- seq(from = 2000, to = 2020, by=1)
-
 x <- data.frame(dtf1, dti,dtf2, anno)
-
-
 z <- list()
 
 for (i in 1:21) { 
   z[[i]]<- prj_func(dati= prj, dtf1 = x[i, 1], dti = x[i, 2], dtf2 = x[i, 3], anno = x[i, 4])
            
 }
-
 progetti <- do.call(rbind, z)
 
 
-progetti %>% 
+progetti <- progetti %>% 
   filter(!Dipartimento %in% c("DIREZIONE GENERALE", "DIPARTIMENTO AMMINISTRATIVO")) %>% 
-  mutate(label = abbreviate(Dipartimento)) %>% 
-  ggplot(aes(x=anno, y=`Progetti di Ricerca`, color = label))+
-  geom_line(alpha = 0.5)+
-  geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points")), cex = 0.8)+
-  theme(legend.position = "none")+
-  geom_smooth(se = FALSE, method = glm)
-
-progetti %>% 
-  filter(Dipartimento == "DIPARTIMENTO TUTELA E  SALUTE ANIMALE") %>% 
-  do(fitX = tidy(lm(`Progetti di Ricerca`~ anno, data = .))) %>% 
-  unnest(fitx)
+  mutate(label = abbreviate(Dipartimento))
 
 
+prj_plot <- function(dati, par, par2, metodo)
+{    
+    ggplot(dati, aes(x=anno, y=par, color = label))+
+    geom_line(alpha = 0.3)+
+    geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
+    theme(legend.position = "none")+ labs(y = par2)+
+    geom_smooth(se = FALSE, method = metodo) }
 
-dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMENTARE", 
-         "AREA TERRITORIALE LOMBARDIA", "AREA TERRITORIALE EMILIA ROMAGNA", "DIREZIONE SANITARIA" )
+prog <- prj_plot(dati = progetti, par = progetti$N.Progetti, par2 = "N.progetti in corso", metodo = "glm")
+
+Bdg <- prj_plot(dati = progetti, par = progetti$Bdg, par2 = "Budget complessivo", metodo = "glm")
+
+MdBdg <- prj_plot(dati = progetti, par = progetti$MdBdg, par2 = "Mediana Budget", metodo = "glm")
+
+
+prog/Bdg/MdBdg
+
+
+
+
+
+
+
+
+
+
+
 
 
 c <-list()
+dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMENTARE", 
+         "AREA TERRITORIALE LOMBARDIA", "AREA TERRITORIALE EMILIA ROMAGNA", "DIREZIONE SANITARIA" )
 
-prcoef <- function(dati, dip)
+prcoef <- function(dati, dip, param)
 {  
-c <- coef(lm(`Progetti di Ricerca`~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
+c <- coef(lm(MdBdg~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
 }
 
 for (i in 1:5) { 
   c[[i]]<- prcoef(dati= progetti, dip[i])
 }
 
-incremento <- data.frame(dip,  do.call(rbind, c))
+nprj <- data.frame(dip,  do.call(rbind, c))
+bdgcomp <- data.frame(dip,  do.call(rbind, c))
+mdbdg <- data.frame(dip,  do.call(rbind, c))
 
-incremento %>% 
-  select(dip, "coef"= anno) %>% 
-  ggplot(aes(x= reorder(dip, coef), y=coef)) +
-  geom_bar(stat= "identity")+
-  coord_flip()
+PRJ <- data.frame("npr"=nprj, "bdg"=bdgcomp[,2], "Mbdg"=mdbdg[,2] )
+
+cbind(PRJ, scale(PRJ[, 2:4]))
 
 
+# nprj <- incremento %>% 
+#   select(dip, "coef"= anno) %>% 
+#   ggplot(aes(x= reorder(dip, coef), y=coef)) +
+#   geom_bar(stat= "identity")+
+#   coord_flip()
+
+
+
+####NUOVI PROGETTI#####
+prj_func2 <- function(dati, dtf1, dti,  anno)
+  { prj %>%
+    filter(DataInizio >= as.Date(dtf1) & DataInizio <=as.Date(dti)) %>% 
+    group_by(Dipartimento) %>% 
+    summarise(Bdg = sum(Budget), 
+              MBdg = mean(Budget, na.rm = T),
+              MdBdg = median(Budget, na.rm = T), 
+              mdBdg = min(Budget, na.rm = T), 
+              mxBdg = max(Budget, na.rm = T), 
+              "N.Progetti"=nlevels(factor(Codice)))%>% 
+    mutate(anno = anno) %>% 
+    filter(!is.na(Dipartimento))
+  
+}
+
+zz <- list()
+
+for (i in 1:21) { 
+  zz[[i]]<- prj_func2(dati= prj, dtf1 = x[i, 1], dti = x[i, 2],  anno = x[i, 4])
+  
+}
+newP <- do.call(rbind, zz)
+
+newP <- newP %>% filter(!Dipartimento %in% c("DIREZIONE GENERALE", "DIPARTIMENTO AMMINISTRATIVO")) %>% 
+  mutate(label = abbreviate(Dipartimento))
+
+nprj <- prj_plot(dati = newP, par = newP$N.Progetti, par2 = "N. nuovi progetti", metodo = "lm")
+nbdg <- prj_plot(dati = newP, par = newP$Bdg, par2 = "Bdg", metodo = "lm")
+Mnbdg <- prj_plot(dati = newP, par = newP$MdBdg, par2 = "MdBdg", metodo = "lm")
+ 
+nprj/nbdg/Mnbdg
+
+
+
+c <-list()
+dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMENTARE", 
+         "AREA TERRITORIALE LOMBARDIA", "AREA TERRITORIALE EMILIA ROMAGNA", "DIREZIONE SANITARIA" )
+
+prcoef <- function(dati, dip, param)
+{  
+  c <- coef(lm(MdBdg~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
+}
+
+for (i in 1:5) { 
+  c[[i]]<- prcoef(dati= newP, dip[i])
+}
+
+nprj <- data.frame(dip,  do.call(rbind, c))
+bdgcomp <- data.frame(dip,  do.call(rbind, c))
+mdbdg <- data.frame(dip,  do.call(rbind, c))
+
+nPRJ <- data.frame("npr"=nprj, "bdg"=bdgcomp[,2], "Mbdg"=mdbdg[,2] )
+
+
+znPRJ <- cbind(PRJ, scale(PRJ[, 2:4]))
+znPRJ %>% 
+  select(1, 5:7) %>% 
+  rename("Dipartimento" = npr.dip,"Nprj" = npr.anno, "Budget" = bdg, "Mediana Budget" = Mbdg) %>% 
+  mutate(score = rowSums(select(., -1)), 
+         tscore = 50+10*score, 
+         pscore = tscore/sum(tscore), 
+         Npiram = 30*pscore) %>% 
+  arrange(desc(score))
 
 
 ###rating ricercatori###
@@ -358,3 +415,10 @@ x = fct_infreq(Position)
 # "LABORATORIO MANGIMI E TOSSICOLOGIA" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI",
 #"LABORATORIO DI CONTROLLO DI PRODOTTI BIOLOGICI, FARMACEUTICI E CONVALIDA DI PROCESSI PRODUTTIVI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO",
 #"Direttore Sanitario" = "Direzione Sanitaria",
+
+
+
+
+prj %>%
+  filter(DataInizio >= as.Date("2010-01-01") & DataInizio <=as.Date("2010-12-31")) %>% 
+  group_by(Dipartimento) %>% View()

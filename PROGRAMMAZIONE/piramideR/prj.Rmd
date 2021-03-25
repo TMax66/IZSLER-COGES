@@ -1,0 +1,32 @@
+---
+title: ""
+output: html_notebook
+---
+```{r include=FALSE}
+library(knitr)
+```
+
+
+```{r echo=FALSE, fig.height=6, fig.width=4, message=FALSE, warning=FALSE}
+nprj/nbdg/Mnbdg
+```
+
+```{r echo=FALSE}
+nPRJ %>% 
+  rename("Dipartimento" = npr.dip, "Nprj" = npr.anno, "Budget" = bdg, "Mediana Budget" = Mbdg) %>% 
+  knitr::kable(digits = 2, caption = "Coefficenti di regressione")
+```
+
+```{r echo=FALSE}
+
+znPRJ %>% 
+  select(1, 5:7) %>% 
+  rename("Dipartimento" = npr.dip,"Nprj" = npr.anno, "Budget" = bdg, "Mediana Budget" = Mbdg) %>% 
+  mutate(score = rowSums(select(., -1)), 
+         tscore = 50+10*score, 
+         pscore = tscore/sum(tscore), 
+         Npiram = 30*pscore) %>% 
+  arrange(desc(score)) %>% 
+  knitr::kable(digits = 2, caption = "Score standardizzati e distribuzione n. di ricercatori per dipartimento")
+```
+
