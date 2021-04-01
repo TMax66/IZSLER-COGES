@@ -21,8 +21,32 @@ library("patchwork")
 ##PROGETTI DI RICERCA####
 pr <- read_excel(here("programmazione", "piramideR", "pr2020.xlsx"))
 
+# ESTRAZIONE PER MERIALDI_____________________________________________________
+# PRJ <- pr %>% 
+#   select(CodIDIzler, DataInizio, DataFine, Descrizione, Tipologia) %>% 
+#   mutate(Anno = year(DataInizio), 
+#          Durata = year(DataFine)-Anno)%>% 
+#   select(-DataInizio, -DataFine) %>% 
+#   distinct(., CodIDIzler,.keep_all = TRUE) %>% 
+#   writexl::write_xlsx("progetti.xlsx")
+#_____________________________________________________________________________
+
+pub <- read_excel(here("programmazione", "data", "raw",  "pubblicazioni2019.xlsx"))
+
+
+
+
+
+
+
+
 
 anag <- readRDS(here("programmazione", "data", "processed", "ANAGRAFE.rds"))
+
+
+
+
+
 
 
 prj <- pr %>% 
@@ -209,97 +233,101 @@ znPRJ %>%
   arrange(desc(score))
 
 
-###rating ricercatori###
-
+###RATING RICERCATORI ####
 
 ricercatori <- read_csv(here("programmazione",  "piramideR", "ricercatori.csv"))
+ricercatori <- ricercatori[-c(1401:1410),]
 
 ricercatori$Cognome <- gsub(",.*$", "", ricercatori$Name)
 
-ricercatori <- ricercatori %>% 
-  mutate(Cognome = recode("Martin" = "Moreno", 
-                          "Moreno Martin" = "Moreno", 
-                          "Calo" = "Calo'", 
-                          "Cara" = "Carra", 
-                          "Cosciani-Cunico" = "Cosciani Cunico", 
-                          ))
 
 x <- ricercatori %>% 
-  mutate(Cognome = toupper(Cognome)) %>% 
+  mutate(Cognome = toupper(Cognome))
+
+
+
+  
   left_join(
     (anag %>% 
-     select(Dipartimento, REPARTO, Matricola, Cognome) %>% 
+       select(Dipartimento, REPARTO, Matricola, Cognome) %>% 
        na.omit()
     ), 
     by= "Cognome")
 
+ricercatori <- ricercatori %>%
+               mutate(Cognome = recode("Moreno" = "Moreno Martin")
+                          )
 
 
 
-###Pubblicazioni####
-pubblicazioni <- read_excel(here("programmazione", "data", "raw", "pubblicazioni2019.xlsx"))
-pubblicazioni$autore <- str_to_lower(pubblicazioni$autore)
-pubblicazioni$autore <- gsub(",.*$", "", pubblicazioni$autore)
 
 
-matricole <- read_excel(here("programmazione", "data", "raw", "Presenti_2019.xls"))
-matricole <- matricole %>% 
-  filter(DECOMP != "COMPARTO SSN") %>% 
-  select(matricola = "CDMATR", cognome = COGNOME, nome = NOME, reparto) %>% 
-  mutate(cognome = str_to_lower(cognome), 
-         nome = str_to_lower(nome))
 
-matricole$autore <- str_c(matricole$cognome, matricole$nome, sep=", ")
-matricole$autore <- gsub(",.*$", "", matricole$autore)
-
-repMat <- readRDS( here("programmazione", "data", "processed", "matrperpubb.rds")) # carico i dati delle matricole per dip/rep/lab vedi preparazione dati.R in script
-
-
-pubblicazioni %>% 
-  right_join(matricole, by = "autore") %>%  
-  filter(!is.na(nr)) %>% 
-  select(nr, reparto, autore, tipologia, matricola, autori, titinglese, datibiblio,`TITOLO RIVISTA`, convegno, titoriginale, impf ) %>% 
-  right_join(repMat, by = "matricola") %>% 
-  filter(!is.na(nr)) %>% 
-  saveRDS(here("programmazione", "shinyapp", "ricerca.rds"))
-
-ricerca <- readRDS(here("programmazione", "shinyapp-in-produzione",  "ricerca.rds"))
-ricerca <- ricerca %>% 
-  mutate(IF = ifelse(tipologia == "IF ; Int" | tipologia == "IF",  "IF", NA), 
-         INT = ifelse(tipologia == "IF ; Int" | tipologia == "Int",  "Int", NA ), 
-         NAZ = ifelse(tipologia == "Naz", "Naz", NA), 
-         Oth = ifelse(tipologia == "Others" , "Others", NA))
-
- 
-
-ricerca %>%
-  filter(IF == IF) %>%
-  filter (! duplicated(nr)) %>% 
-  group_by(Dipartimento, Reparto) %>% 
-  summarise(IF= mean(impf, na.rm = TRUE),
-            minIF = min(impf, na.rm = TRUE), 
-            maxIF = max(impf, na.rm = TRUE), 
-            MIF = median(impf, na.rm = TRUE),
-            sumIF = sum(impf, na.rm = TRUE), 
-            N.pub = n()) %>% View()
- 
-  #arrange(desc(MIF)) %>% 
-  ggplot(aes(x=Reparto, y=MIF))+
-  geom_bar(stat = "identity")+
-  coord_flip()
-
-
-x = fct_infreq(Position)
-
-       
-       
-       
+# ###PUBBLICAZIONI
+# pubblicazioni <- read_excel(here("programmazione", "data", "raw", "pubblicazioni2019.xlsx"))
+# pubblicazioni$autore <- str_to_lower(pubblicazioni$autore)
+# pubblicazioni$autore <- gsub(",.*$", "", pubblicazioni$autore)
+# 
+# 
+# matricole <- read_excel(here("programmazione", "data", "raw", "Presenti_2019.xls"))
+# matricole <- matricole %>% 
+#   filter(DECOMP != "COMPARTO SSN") %>% 
+#   select(matricola = "CDMATR", cognome = COGNOME, nome = NOME, reparto) %>% 
+#   mutate(cognome = str_to_lower(cognome), 
+#          nome = str_to_lower(nome))
+# 
+# matricole$autore <- str_c(matricole$cognome, matricole$nome, sep=", ")
+# matricole$autore <- gsub(",.*$", "", matricole$autore)
+# 
+# repMat <- readRDS( here("programmazione", "data", "processed", "matrperpubb.rds")) # carico i dati delle matricole per dip/rep/lab vedi preparazione dati.R in script
+# 
+# 
+# pubblicazioni %>% 
+#   right_join(matricole, by = "autore") %>%  
+#   filter(!is.na(nr)) %>% 
+#   select(nr, reparto, autore, tipologia, matricola, autori, titinglese, datibiblio,`TITOLO RIVISTA`, convegno, titoriginale, impf ) %>% 
+#   right_join(repMat, by = "matricola") %>% 
+#   filter(!is.na(nr)) %>% 
+#   saveRDS(here("programmazione", "shinyapp", "ricerca.rds"))
+# 
+# ricerca <- readRDS(here("programmazione", "shinyapp-in-produzione",  "ricerca.rds"))
+# ricerca <- ricerca %>% 
+#   mutate(IF = ifelse(tipologia == "IF ; Int" | tipologia == "IF",  "IF", NA), 
+#          INT = ifelse(tipologia == "IF ; Int" | tipologia == "Int",  "Int", NA ), 
+#          NAZ = ifelse(tipologia == "Naz", "Naz", NA), 
+#          Oth = ifelse(tipologia == "Others" , "Others", NA))
+# 
+#  
+# 
+# ricerca %>%
+#   filter(IF == IF) %>%
+#   filter (! duplicated(nr)) %>% 
+#   group_by(Dipartimento, Reparto) %>% 
+#   summarise(IF= mean(impf, na.rm = TRUE),
+#             minIF = min(impf, na.rm = TRUE), 
+#             maxIF = max(impf, na.rm = TRUE), 
+#             MIF = median(impf, na.rm = TRUE),
+#             sumIF = sum(impf, na.rm = TRUE), 
+#             N.pub = n()) %>% View()
+#  
+#   #arrange(desc(MIF)) %>% 
+#   ggplot(aes(x=Reparto, y=MIF))+
+#   geom_bar(stat = "identity")+
+#   coord_flip()
+# 
+# 
+# x = fct_infreq(Position)
+# 
+#        
+#        
+#        
 
 
 ###codice per anagrafe#####
-# anag <- read_excel(here("programmazione", "piramideR", "anagrafe.xlsx"))
-# # 
-# # 
+anag <- read_excel(here("programmazione", "piramideR", "anagrafe.xlsx"))
+# #
+# #
+
 # anag %>%
 #   mutate(REPARTO = recode(dbo_AD_Anagrafe_GRU.REPARTO,
 #                           "SEDE TERRITORIALE BERGAMO" = "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO",
@@ -309,7 +337,7 @@ x = fct_infreq(Position)
 #                           "SEDE TERRITORIALE DI MANTOVA" = "SEDE TERRITORIALE DI CREMONA - MANTOVA",
 #                           "SEDE TERRITORIALE DI LODI" = "SEDE TERRITORIALE DI LODI - MILANO",
 #                           "SEDE TERRITORIALE DI MILANO" = "SEDE TERRITORIALE DI LODI - MILANO",
-#                           "LAB. DI ISTOLOGIA (MI)" = "SEDE TERRITORIALE DI LODI - MILANO", 
+#                           "LAB. DI ISTOLOGIA (MI)" = "SEDE TERRITORIALE DI LODI - MILANO",
 #                           "SEDE TERRITORIALE DI BOLOGNA" = "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA",
 #                           "SEDE TERRITORIALE DI MODENA" = "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA",
 #                           "SEDE TERRITORIALE DI FERRARA" = "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA",
@@ -320,35 +348,35 @@ x = fct_infreq(Position)
 #                           "LAB. CHIM. APPLICATA ALLE TECNOLOGIE ALIMENTARI" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI",
 #                           "LAB. BATTERIOLOGIA SPECIALIZZATA" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE",
 #                           "LABORATORIO ANALISI GENOMICHE, LABORATORIO DIAGNOSTICA MOLECOLARE, OGM" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE",
-#                           "REP.TECNOLOGIE BIOLOGICHE APPLICATE" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE", 
+#                           "REP.TECNOLOGIE BIOLOGICHE APPLICATE" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE",
 #                           "LAB. DIAGNOSTICA MOLECOLARE E OGM" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE",
-#                           "REP. VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE" = "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE", 
+#                           "REP. VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE" = "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE",
 #                           "LAB. CONTAMINANTI AMBIENTALI (BRESCIA)" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI",
 #                           "LAB. PRODUZIONE TERRENI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO",
 #                           "SERVIZIO PREPARAZIONE TERRENI E REAGENTI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO",
-#                           "REP. PRODUZIONE E CONTR. MAT. BIOLOGICO" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO", 
+#                           "REP. PRODUZIONE E CONTR. MAT. BIOLOGICO" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO",
 #                           "LABORATORIO BENESSERE ANIMALE, BIOCHIMICA CLINICA, IMMUNOLOGIA VETERINARIA E STABULARI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO",
 #                           "LABORATORIO CONTAMINANTI AMBIENTALI" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI",
-#                           "REP. CHIMICA DEGLI ALIMENTI E MANGIMI" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI", 
-#                           "REP. PRODUZIONE PRIMARIA" = "REPARTO PRODUZIONE PRIMARIA", 
-#                           "LAB. CONTAMINANTI AMBIENTALI (BO)" = "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)", 
-#                           "REP. CHIMICO DEGLI ALIMENTI (BOLOGNA)" = "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)", 
-#                           "REP.CONTROLLO DEGLI ALIMENTI" = "REPARTO CONTROLLO ALIMENTI", 
+#                           "REP. CHIMICA DEGLI ALIMENTI E MANGIMI" = "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI",
+#                           "REP. PRODUZIONE PRIMARIA" = "REPARTO PRODUZIONE PRIMARIA",
+#                           "LAB. CONTAMINANTI AMBIENTALI (BO)" = "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)",
+#                           "REP. CHIMICO DEGLI ALIMENTI (BOLOGNA)" = "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)",
+#                           "REP.CONTROLLO DEGLI ALIMENTI" = "REPARTO CONTROLLO ALIMENTI",
 #                           "LAB. VIROLOGIA SIEROLOGIA SPEC. E MICROS. ELETT." = "REPARTO VIROLOGIA",
 #                           "REP. PROD. VACCINI E REAGENTI" = "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO",
-#                           "LAB. PROTEOMICA E DIAGNOSTICA TSE" = "REPARTO VIROLOGIA", 
+#                           "LAB. PROTEOMICA E DIAGNOSTICA TSE" = "REPARTO VIROLOGIA",
 #                           "LABORATORIO COLTURE CELLULARI, BIOBANCA" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE",
 #                           "REP. SUBSTRATI CELLULARI E IMMUNOL.CELL." = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE",
 #                           "REPARTO SUBSTRATI CELLULARI" = "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE",
-#                           "FORMAZIONE" = "FORMAZIONE BIBLIOTECA COMUNICAZIONE", 
-#                           "U.O. GESTIONE ECONOMICO FINANZIARIA" = "U.O. GESTIONE SERVIZI CONTABILI", 
-#                           "U.O. ECONOMICO FINANZIARIA" = "U.O. GESTIONE SERVIZI CONTABILI", 
-#                           "U.O. SERVIZI GENERALI" = "U.O. TECNICO PATRIMONIALE", 
-#                           "U.O. GESTIONE DEL PERSONALE" = "U.O. GESTIONE RISORSE UMANE E SVILUPPO COMPETENZE", 
-#                           "DIREZIONE GENERALE SANITARIA AMMIN.VA" = "Direzione Generale", 
-#                           "CONTROLLO DI GESTIONE" = "Ufficio Controllo di Gestione e Performance", 
-#                           "U.O. PROGETTI DI RICERCA" = "U.O. AFFARI GENERALI E LEGALI", 
-#                           "SERVIZIO ASSICURAZIONE QUALITA' (2)" = "SERVIZIO ASSICURAZIONE QUALITA'", 
+#                           "FORMAZIONE" = "FORMAZIONE BIBLIOTECA COMUNICAZIONE",
+#                           "U.O. GESTIONE ECONOMICO FINANZIARIA" = "U.O. GESTIONE SERVIZI CONTABILI",
+#                           "U.O. ECONOMICO FINANZIARIA" = "U.O. GESTIONE SERVIZI CONTABILI",
+#                           "U.O. SERVIZI GENERALI" = "U.O. TECNICO PATRIMONIALE",
+#                           "U.O. GESTIONE DEL PERSONALE" = "U.O. GESTIONE RISORSE UMANE E SVILUPPO COMPETENZE",
+#                           "DIREZIONE GENERALE SANITARIA AMMIN.VA" = "Direzione Generale",
+#                           "CONTROLLO DI GESTIONE" = "Ufficio Controllo di Gestione e Performance",
+#                           "U.O. PROGETTI DI RICERCA" = "U.O. AFFARI GENERALI E LEGALI",
+#                           "SERVIZIO ASSICURAZIONE QUALITA' (2)" = "SERVIZIO ASSICURAZIONE QUALITA'",
 #                           "FORM.SIS.DOC.C.R.N.FORM.SAN.PUBB.VET." = "FORMAZIONE BIBLIOTECA COMUNICAZIONE"
 #   ),
 #   Dipartimento = recode (REPARTO, "REPARTO VIROLOGIA" = "Dipartimento Tutela e  Salute Animale",
@@ -386,20 +414,20 @@ x = fct_infreq(Position)
 #                          "U.O. GESTIONE SERVIZI CONTABILI" = "Dipartimento Amministrativo",
 #                          "U.O. TECNICO PATRIMONIALE" =  "Dipartimento Amministrativo",
 #                          "U.O. PROVVEDITORATO ECONOMATO E VENDITE" = "Dipartimento Amministrativo",
-#                         
+#
 #   )
-# 
+#
 #   ) %>%
-#   mutate(Dipartimento = toupper(Dipartimento) ) %>% 
+#   mutate(Dipartimento = toupper(Dipartimento) ) %>%
 #   select(Dipartimento, REPARTO, CENTRO_DI_COSTO, Dirigente,
-#          Matricola, Nome, Cognome, InizioRapporto, FineRapporto) %>% 
+#          Matricola, Nome, Cognome, InizioRapporto, FineRapporto) %>%
 # saveRDS(here("programmazione", "data", "processed", "ANAGRAFE.rds"))
-# 
+#
 
 # "Sezione di Bergamo" = "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO",
 # "Sezione di Binago" = "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO",
 # "Sezione di Cremona" = "SEDE TERRITORIALE DI CREMONA - MANTOVA",
-# "Sezione di Mantova" = "SEDE TERRITORIALE DI CREMONA - MANTOVA",    
+# "Sezione di Mantova" = "SEDE TERRITORIALE DI CREMONA - MANTOVA",
 # "Sezione di Lodi" = "SEDE TERRITORIALE DI LODI - MILANO",
 # "Sezione di Milano" = "SEDE TERRITORIALE DI LODI - MILANO",
 # "Sezione di Bologna" = "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA",
