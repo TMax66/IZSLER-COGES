@@ -19,6 +19,9 @@ library("broom")
 library("forcats")
 library("patchwork")
 ##PROGETTI DI RICERCA####
+library("here")
+load(here("programmazione", "piramideR",  "pacchetti.R"))
+
 pr <- read_excel(here("programmazione", "piramideR", "pr2020.xlsx"))
 
 # ESTRAZIONE PER MERIALDI_____________________________________________________
@@ -30,16 +33,6 @@ pr <- read_excel(here("programmazione", "piramideR", "pr2020.xlsx"))
 #   distinct(., CodIDIzler,.keep_all = TRUE) %>% 
 #   writexl::write_xlsx("progetti.xlsx")
 #_____________________________________________________________________________
-
-pub <- read_excel(here("programmazione", "data", "raw",  "pubblicazioni2019.xlsx"))
-
-
-
-
-
-
-
-
 
 anag <- readRDS(here("programmazione", "data", "processed", "ANAGRAFE.rds"))
 
@@ -235,10 +228,17 @@ znPRJ %>%
 
 ###RATING RICERCATORI ####
 
-ricercatori <- read_csv(here("programmazione",  "piramideR", "ricercatori.csv"))
+ricercatori <- read_excel(here("programmazione",  "piramideR", "ricercatori.xlsx"))
+
 ricercatori <- ricercatori[-c(1401:1410),]
 
 ricercatori$Cognome <- gsub(",.*$", "", ricercatori$Name)
+
+ricercatori <- ricercatori %>%
+  mutate(Cognome = recode(Cognome, "Moreno" = "Moreno Martin", 
+                          "Cosciani-Cunico" = "Cosciani Cunico", 
+                          "Cara" = "Carra")
+  ) %>% View()
 
 
 x <- ricercatori %>% 
@@ -255,7 +255,7 @@ x <- ricercatori %>%
     by= "Cognome")
 
 ricercatori <- ricercatori %>%
-               mutate(Cognome = recode("Moreno" = "Moreno Martin")
+               mutate(Cognome = recode(Cognome, "Moreno" = "Moreno Martin")
                           )
 
 
