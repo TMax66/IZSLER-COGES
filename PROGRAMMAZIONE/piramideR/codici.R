@@ -231,7 +231,8 @@ znPRJ %>%
 ricercatori <- read_excel(here("programmazione",  "piramideR", "ricercatori.xlsx"))
 ricercatori <- ricercatori[-c(1259:1268),]
 anag <- readRDS(here("programmazione", "data", "processed", "ANAGRAFE.rds"))
-
+anag <- anag %>% 
+  select(-REPARTO, -CENTRO_DI_COSTO) 
 
 ricercatori$Cognome <- gsub(",.*$", "", ricercatori$Name)
 ricercatori <- ricercatori %>%
@@ -246,16 +247,54 @@ ricercatori <- ricercatori %>%
   mutate(Cognome = toupper(Cognome)) %>% 
   left_join(
     (anag %>% 
-       select(Dipartimento, REPARTO, Matricola, Cognome, Dirigente) %>% 
+       select(Dipartimento, Matricola, Cognome, Dirigente) %>% 
        na.omit()
     ), 
     by= "Cognome")
 
 
+ricercatori %>% 
+  filter(!Dipartimento %in% c("DIREZIONE GENERALE", "DIPARTIMENTO AMMINISTRATIVO", 
+                              "DIREZIONE AMMNINISTRATIVA") & 
+           !is.na(Dipartimento)) %>% 
+  group_by(Dipartimento, Anno =`Publication Year`, Cognome) %>% 
+  summarise(doc = sum(`Web of Science Documents`), 
+            cit = mean(`Times Cited`), 
+            citImp = mean(`Citation Impact`), 
+            NcitImp = mean(`Category Normalized Citation Impact`),
+            Intcoll = sum(`International Collaborations`)) %>% 
+  group_by(Dipartimento, Anno) %>% 
+  summarise(Docs = mean(doc), 
+            Cits = mean(cit), 
+            ImpCits = mean(citImp), 
+            Intcolls = mean(Intcoll), 
+            NcitImps = mean(NcitImp)) %>% 
+  mutate(label = abbreviate(Dipartimento)) %>% View()
+  ggplot(aes(x = Anno, y = NcitImps, color = label))+
+  geom_line(alpha = 0.3)+
+  geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
+  theme(legend.position = "none")+
+  geom_smooth(se = FALSE, method = "lm")
+  
 
 
 
 
+
+  
+  
+  # summarise(Pubblication = sum(`Web of Science Documents`), 
+  #           TotCit = sum(`Times Cited`), 
+  #           IntColl = sum(`International Collaborations` ), 
+  #           NImpCit = median(`Category Normalized Citation Impact`), 
+  #           ImpCit = median(`Citation Impact`)) %>% 
+  # mutate(CitMYear = (TotCit/Pubblication)/(2020-Anno)) %>% 
+  # mutate(label = abbreviate(Dipartimento)) %>% 
+  # ggplot(aes(x = Anno, y = ImpCit, color = label))+
+  # geom_line(alpha = 0.3)+
+  # geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
+  # theme(legend.position = "none")+
+  # geom_smooth(se = FALSE, method = "lm")
 
 
 
