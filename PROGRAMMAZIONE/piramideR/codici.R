@@ -229,34 +229,30 @@ znPRJ %>%
 ###RATING RICERCATORI ####
 
 ricercatori <- read_excel(here("programmazione",  "piramideR", "ricercatori.xlsx"))
+ricercatori <- ricercatori[-c(1259:1268),]
+anag <- readRDS(here("programmazione", "data", "processed", "ANAGRAFE.rds"))
 
-ricercatori <- ricercatori[-c(1401:1410),]
 
 ricercatori$Cognome <- gsub(",.*$", "", ricercatori$Name)
-
 ricercatori <- ricercatori %>%
-  mutate(Cognome = recode(Cognome, "Moreno" = "Moreno Martin", 
+mutate(Cognome = recode(Cognome, "Moreno" = "Moreno Martin", 
+                          "Martin" = "Moreno Martin", 
+                          "Elisabetta" = "Caprai", 
                           "Cosciani-Cunico" = "Cosciani Cunico", 
-                          "Cara" = "Carra")
-  ) %>% View()
+                          ))
 
 
-x <- ricercatori %>% 
-  mutate(Cognome = toupper(Cognome))
-
-
-
-  
+ricercatori <- ricercatori %>% 
+  mutate(Cognome = toupper(Cognome)) %>% 
   left_join(
     (anag %>% 
-       select(Dipartimento, REPARTO, Matricola, Cognome) %>% 
+       select(Dipartimento, REPARTO, Matricola, Cognome, Dirigente) %>% 
        na.omit()
     ), 
     by= "Cognome")
 
-ricercatori <- ricercatori %>%
-               mutate(Cognome = recode(Cognome, "Moreno" = "Moreno Martin")
-                          )
+
+
 
 
 
