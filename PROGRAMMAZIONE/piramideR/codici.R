@@ -36,12 +36,6 @@ pr <- read_excel(here("programmazione", "piramideR", "pr2020.xlsx"))
 
 anag <- readRDS(here("programmazione", "data", "processed", "ANAGRAFE.rds"))
 
-
-
-
-
-
-
 prj <- pr %>% 
   #select(-14, -15) %>% 
   # mutate("Stato" = ifelse(DataFine < as.Date("2020-01-01"), "Archiviato", "Attivo")) %>% 
@@ -49,8 +43,6 @@ prj <- pr %>%
   # mutate("Statoanno" = ifelse(DataFine <=as.Date("2020-12-31"), "Concluso", "Aperto")) %>% 
   mutate(MatrRSUO = ifelse(is.na(MatrRSUO), MatrRS, MatrRSUO)) %>% 
   left_join(anag, by = c("MatrRSUO" = "Matricola"))
-
-
 
 ###calcola per dipartimento/reparto/tipologia e codiceprg il numero di u.o. partecipanti e il budget
 
