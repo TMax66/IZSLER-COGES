@@ -213,7 +213,7 @@ znPRJ %>%
 
 
 ###RATING RICERCATORI ####
-
+##### da Incites ####
 ricercatori <- read_excel(here("programmazione",  "piramideR", "ricercatori.xlsx"))
 ricercatori <- ricercatori[-c(1259:1268),]
 anag <- readRDS(here("programmazione", "data", "processed", "ANAGRAFE.rds"))
@@ -263,8 +263,25 @@ ricercatori %>%
   geom_smooth(se = FALSE, method = "lm")
   
 
+##### da Biblioteca ####
 
-
+  
+  
+  
+##### da WOS ####
+  library(bibliometrix)
+  izsler<- readFiles("wos1izsler.bib","wos2izsler.bib","wos3izsler.bib")
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 
   
