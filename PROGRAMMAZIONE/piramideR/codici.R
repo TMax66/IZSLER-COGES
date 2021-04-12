@@ -264,10 +264,31 @@ ricercatori %>%
   
 
 ##### da Biblioteca ####
+pubblicazioni <- read_excel(here("programmazione", "piramideR", "pub2000-2020.xlsx"))
+pubblicazioni$Cognome <- str_to_lower(pubblicazioni$AU)
+pubblicazioni$Cognome <- gsub(",.*$", "", pubblicazioni$Cognome)
+  
+anag <- readRDS(here("programmazione", "data", "processed", "ANAGRAFE.rds"))
+anag <- anag %>% 
+  select(-REPARTO, -CENTRO_DI_COSTO) 
+
+
+ricercatori <- pubblicazioni %>% 
+  mutate(Cognome = toupper(Cognome)) %>% 
+  left_join(
+    (anag %>% 
+       select(Dipartimento, Matricola, Cognome, Dirigente) %>% 
+       filter(Dirigente == "TRUE") %>% 
+       na.omit()
+    ), 
+    by= "Cognome") %>% View()
+
+
+
+
 
   
-  
-  
+
 ##### da WOS ####
   library(bibliometrix)
   izsler<- readFiles("wos1izsler.bib","wos2izsler.bib","wos3izsler.bib")
