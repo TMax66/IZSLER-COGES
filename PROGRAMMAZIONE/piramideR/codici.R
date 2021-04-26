@@ -50,22 +50,19 @@ dtf1 <- c("2000-01-01", "2001-01-01","2002-01-01","2003-01-01","2004-01-01","200
           "2006-01-01","2007-01-01","2008-01-01","2009-01-01","2010-01-01","2011-01-01",
           "2012-01-01","2013-01-01","2014-01-01","2015-01-01","2016-01-01","2017-01-01","2018-01-01",
           "2019-01-01","2020-01-01")
-dtf2 <- c("2000-12-31", "2001-12-31","2002-12-31","2003-12-31","2004-12-31","2005-12-31",
-          "2006-12-31","2007-12-31","2008-12-31","2009-12-31","2010-12-31","2011-12-31",
-          "2012-12-31","2013-12-31","2014-12-31","2015-12-31","2016-12-31","2017-12-31","2018-12-31",
-          "2019-12-31","2020-12-31")
+
 dti <-  c("2000-12-31", "2001-12-31","2002-12-31","2003-12-31","2004-12-31","2005-12-31",
           "2006-12-31","2007-12-31","2008-12-31","2009-12-31","2010-12-31","2011-12-31",
           "2012-12-31","2013-12-31","2014-12-31","2015-12-31","2016-12-31","2017-12-31","2018-12-31",
           "2019-12-31","2020-12-31")
 anno <- seq(from = 2000, to = 2020, by=1)
-x <- data.frame(dtf1, dti,dtf2, anno)
+x <- data.frame(dtf1, dti, anno)
 
-prj_func <- function(dati, dtf1, dti, dtf2, anno)
+prj_func <- function(dati, dtf1, dti, anno)
              { prj %>%
     mutate("Stato" = ifelse(DataFine < as.Date(dtf1), "Archiviato", "Attivo")) %>% 
-    filter(Stato == "Attivo" & DataInizio <= as.Date(dti)) %>% 
-    # mutate("Statoanno" = ifelse(DataFine <=as.Date(dtf2), "Concluso", "Aperto")) %>%
+    filter(Stato == "Attivo" & DataInizio <= as.Date(dti)) %>%
+    # mutate("Statoanno" = ifelse(DataFine <=as.Date(dtf1), "Concluso", "Aperto")) %>%
     # filter(Statoanno == "Aperto") %>% 
     group_by(Dipartimento) %>% 
     summarise(Bdg = sum(Budget), 
@@ -83,7 +80,7 @@ prj_func <- function(dati, dtf1, dti, dtf2, anno)
 z <- list()
 
 for (i in 1:21) { 
-  z[[i]]<- prj_func(dati= prj, dtf1 = x[i, 1], dti = x[i, 2], dtf2 = x[i, 3], anno = x[i, 4])
+  z[[i]]<- prj_func(dati= prj, dtf1 = x[i, 1], dti = x[i, 2], anno = x[i, 3])
            
 }
 progetti <- do.call(rbind, z)
@@ -118,7 +115,7 @@ dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMEN
 
 prcoef <- function(dati, dip)
 {  
-c <- coef(lm(MdBdg~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
+c <- coef(lm(Bdg~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
 }
 
 for (i in 1:5) { 
@@ -213,7 +210,7 @@ cc <-list()
 dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMENTARE", 
          "AREA TERRITORIALE LOMBARDIA", "AREA TERRITORIALE EMILIA ROMAGNA", "DIREZIONE SANITARIA" )
 
-prcoef <- function(dati, dip, param)
+prcoef <- function(dati, dip)
 {  
   cc <- coef(lm(MdBdg ~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
 }
@@ -222,18 +219,18 @@ for (i in 1:5) {
   cc[[i]]<- prcoef(dati= newP, dip[i])
 }
 
-nprj <- data.frame(dip,  do.call(rbind, cc))
-bdgcomp <- data.frame(dip,  do.call(rbind, cc))
-mdbdg <- data.frame(dip,  do.call(rbind, cc))
+n_nprj <- data.frame(dip,  do.call(rbind, cc))
+n_bdgcomp <- data.frame(dip,  do.call(rbind, cc))
+n_mdbdg <- data.frame(dip,  do.call(rbind, cc))
 
-nPRJ <- data.frame("npr"=nprj, "nbdg"=bdgcomp[,2], "nMdbdg"=mdbdg[,2] )
+nPRJ <- data.frame("npr"=n_nprj, "nbdg"=n_bdgcomp[,2], "nMdbdg"=n_mdbdg[,2] )
 
 
-znPRJ <- cbind(PRJ, scale(PRJ[, 2:4]))
+znPRJ <- cbind(nPRJ, scale(nPRJ[, 2:4]))
 
-znPRJ <- znPRJ %>% select(-2,-3,-4) %>% 
-  rename("npr" = npr.anno, "nbdg" =bdg, "nMdbdg" = Mbdg)
+znPRJ <- znPRJ %>% select(-2,-3,-4)
 
+saveRDS(here("IZSLER-COGES","PROGRAMMAZIONE", "piramideR"), "znPRJ.rds")
 
 znPRJ %>% 
   select(1, 5:7) %>% 
@@ -245,7 +242,7 @@ znPRJ %>%
   arrange(desc(score))
 
 
-
+cbind(PRJ, znPRJ, CIT)
 
 
 
