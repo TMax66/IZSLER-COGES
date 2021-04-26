@@ -20,7 +20,7 @@ library("forcats")
 library("patchwork")
 ##PROGETTI DI RICERCA####
 library("here")
-load(here("programmazione", "piramideR",  "pacchetti.R"))
+#load(here("programmazione", "piramideR",  "pacchetti.R"))
 
 pr <- read_excel(here("programmazione", "piramideR", "pr2020.xlsx"))
 
@@ -47,7 +47,6 @@ prj <- pr %>%
 ###calcola per dipartimento/reparto/tipologia e codiceprg il numero di u.o. partecipanti e il budget
 
 prj_func <- function(dati, dtf1, dti, dtf2, anno)
-              
              { prj %>%
     mutate("Stato" = ifelse(DataFine < as.Date(dtf1), "Archiviato", "Attivo")) %>% 
     filter(Stato == "Attivo" & DataInizio <= as.Date(dti)) %>% 
@@ -135,8 +134,16 @@ mdbdg <- data.frame(dip,  do.call(rbind, c))
 
 PRJ <- data.frame("npr"=nprj, "bdg"=bdgcomp[,2], "Mbdg"=mdbdg[,2] )
 
-cbind(PRJ, scale(PRJ[, 2:4]))
+PRJ <- cbind(PRJ, scale(PRJ[, 2:4]))
 
+PRJ %>% 
+  select(1, 5:7) %>% 
+  rename("Dipartimento" = npr.dip,"Nprj" = npr.anno, "Budget" = bdg, "Mediana Budget" = Mbdg) %>% 
+  mutate(score = rowSums(select(., -1)), 
+         tscore = 50+10*score, 
+         pscore = tscore/sum(tscore), 
+         Npiram = 30*pscore) %>% 
+  arrange(desc(score))
 
 # nprj <- incremento %>% 
 #   select(dip, "coef"= anno) %>% 
@@ -212,6 +219,13 @@ znPRJ %>%
   arrange(desc(score))
 
 
+
+
+
+
+
+
+
 ###RATING RICERCATORI ####
 ##### da Incites ####
 ricercatori <- read_excel(here("programmazione",  "piramideR", "ricercatori.xlsx"))
@@ -239,29 +253,74 @@ ricercatori <- ricercatori %>%
     by= "Cognome")
 
 
-ricercatori %>% 
-  filter(!Dipartimento %in% c("DIREZIONE GENERALE", "DIPARTIMENTO AMMINISTRATIVO", 
-                              "DIREZIONE AMMNINISTRATIVA") & 
-           !is.na(Dipartimento)) %>% 
-  group_by(Dipartimento, Anno =`Publication Year`, Cognome) %>% 
-  summarise(doc = sum(`Web of Science Documents`), 
-            cit = mean(`Times Cited`), 
-            citImp = mean(`Citation Impact`), 
+ric <- ricercatori %>%
+  filter(!Dipartimento %in% c("DIREZIONE GENERALE", "DIPARTIMENTO AMMINISTRATIVO",
+                              "DIREZIONE AMMNINISTRATIVA") &
+           !is.na(Dipartimento)) %>%
+  group_by(Dipartimento, Anno =`Publication Year`, Cognome) %>%
+  summarise(doc = sum(`Web of Science Documents`),
+            cit = mean(`Times Cited`),
+            citImp = mean(`Citation Impact`),
             NcitImp = mean(`Category Normalized Citation Impact`),
-            Intcoll = sum(`International Collaborations`)) %>% 
-  group_by(Dipartimento, Anno) %>% 
-  summarise(Docs = mean(doc), 
-            Cits = mean(cit), 
-            ImpCits = mean(citImp), 
-            Intcolls = mean(Intcoll), 
-            NcitImps = mean(NcitImp)) %>% 
-  mutate(label = abbreviate(Dipartimento)) %>% View()
-  ggplot(aes(x = Anno, y = NcitImps, color = label))+
-  geom_line(alpha = 0.3)+
-  geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
-  theme(legend.position = "none")+
-  geom_smooth(se = FALSE, method = "lm")
+            Intcoll = sum(`International Collaborations`)) %>%
+  group_by(Dipartimento, Anno) %>%
+  summarise(Docs = mean(doc),
+            Cits = mean(cit),
+            ImpCits = mean(citImp),
+            Intcolls = mean(Intcoll),
+            NcitImps = mean(NcitImp)) 
   
+#   mutate(label = abbreviate(Dipartimento)) %>% 
+#   ggplot(aes(x = Anno, y = NcitImps, color = label))+
+#   geom_line(alpha = 0.3)+
+#   geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
+#   theme(legend.position = "none")+
+#   geom_smooth(se = FALSE, method = "lm")
+  
+
+
+
+
+c <-list()
+dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMENTARE", 
+         "AREA TERRITORIALE LOMBARDIA", "AREA TERRITORIALE EMILIA ROMAGNA", "DIREZIONE SANITARIA" )
+
+cit_coef <- function(dati, dip)
+{  
+  c <- coef(lm(NcitImps~Anno, data = subset(dati, dati$Dipartimento == dip)))[2]
+}
+
+for (i in 1:5) { 
+  c[[i]]<- cit_coef(dati= ric, dip[i])
+}
+
+docs <- data.frame(dip,  do.call(rbind, c))
+cits <- data.frame(dip,  do.call(rbind, c))
+impcits <- data.frame(dip,  do.call(rbind, c))
+intcolls <- data.frame(dip,  do.call(rbind, c))
+nimpcits <- data.frame(dip,  do.call(rbind, c))
+
+CIT <- data.frame("Npub"=docs, "Cits"=cits[,2], "Imp"=impcits[,2], "CollInt" = intcolls[,2], "NormImp" = nimpcits[,2] )
+
+CIT <- cbind(CIT, scale(PRJ[, 2:5]))
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ##### da Biblioteca ####
 pubblicazioni <- read_excel(here("programmazione", "piramideR", "pub2000-2020.xlsx"))
