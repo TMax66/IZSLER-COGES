@@ -46,24 +46,6 @@ prj <- pr %>%
 
 ###calcola per dipartimento/reparto/tipologia e codiceprg il numero di u.o. partecipanti e il budget
 
-prj_func <- function(dati, dtf1, dti, dtf2, anno)
-             { prj %>%
-    mutate("Stato" = ifelse(DataFine < as.Date(dtf1), "Archiviato", "Attivo")) %>% 
-    filter(Stato == "Attivo" & DataInizio <= as.Date(dti)) %>% 
-    mutate("Statoanno" = ifelse(DataFine <=as.Date(dtf2), "Concluso", "Aperto")) %>%
-    filter(Statoanno == "Aperto") %>% 
-    group_by(Dipartimento) %>% 
-    summarise(Bdg = sum(Budget), 
-              MBdg = mean(Budget, na.rm = T),
-              MdBdg = median(Budget, na.rm = T), 
-              mdBdg = min(Budget, na.rm = T), 
-              mxBdg = max(Budget, na.rm = T), 
-              "N.Progetti"=nlevels(factor(Codice)))%>%  
-    mutate(anno = anno) %>% 
-    filter(!is.na(Dipartimento))
-
-  }
-  
 dtf1 <- c("2000-01-01", "2001-01-01","2002-01-01","2003-01-01","2004-01-01","2005-01-01",
           "2006-01-01","2007-01-01","2008-01-01","2009-01-01","2010-01-01","2011-01-01",
           "2012-01-01","2013-01-01","2014-01-01","2015-01-01","2016-01-01","2017-01-01","2018-01-01",
@@ -78,6 +60,26 @@ dti <-  c("2000-12-31", "2001-12-31","2002-12-31","2003-12-31","2004-12-31","200
           "2019-12-31","2020-12-31")
 anno <- seq(from = 2000, to = 2020, by=1)
 x <- data.frame(dtf1, dti,dtf2, anno)
+
+prj_func <- function(dati, dtf1, dti, dtf2, anno)
+             { prj %>%
+    mutate("Stato" = ifelse(DataFine < as.Date(dtf1), "Archiviato", "Attivo")) %>% 
+    filter(Stato == "Attivo" & DataInizio <= as.Date(dti)) %>% 
+    # mutate("Statoanno" = ifelse(DataFine <=as.Date(dtf2), "Concluso", "Aperto")) %>%
+    # filter(Statoanno == "Aperto") %>% 
+    group_by(Dipartimento) %>% 
+    summarise(Bdg = sum(Budget), 
+              MBdg = mean(Budget, na.rm = T),
+              MdBdg = median(Budget, na.rm = T), 
+              mdBdg = min(Budget, na.rm = T), 
+              mxBdg = max(Budget, na.rm = T), 
+              "N.Progetti"=nlevels(factor(Codice)))%>%  
+    mutate(anno = anno) %>% 
+    filter(!is.na(Dipartimento))
+
+  }
+  
+
 z <- list()
 
 for (i in 1:21) { 
@@ -92,34 +94,29 @@ progetti <- progetti %>%
   mutate(label = abbreviate(Dipartimento))
 
 
-prj_plot <- function(dati, par, par2, metodo)
-{    
-    ggplot(dati, aes(x=anno, y=par, color = label))+
-    geom_line(alpha = 0.3)+
-    geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
-    theme(legend.position = "none")+ labs(y = par2)+
-    geom_smooth(se = FALSE, method = metodo) }
-
-prog <- prj_plot(dati = progetti, par = progetti$N.Progetti, par2 = "N.progetti in corso", metodo = "glm")
-
-Bdg <- prj_plot(dati = progetti, par = progetti$Bdg, par2 = "Budget complessivo", metodo = "glm")
-
-MdBdg <- prj_plot(dati = progetti, par = progetti$MdBdg, par2 = "Mediana Budget", metodo = "glm")
-
-
-prog/Bdg/MdBdg
-
-
-
-
-
+# prj_plot <- function(dati, par, par2, metodo)
+# {    
+#     ggplot(dati, aes(x=anno, y=par, color = label))+
+#     geom_line(alpha = 0.3)+
+#     geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
+#     theme(legend.position = "none")+ labs(y = par2)+
+#     geom_smooth(se = FALSE, method = metodo) }
+# 
+# prog <- prj_plot(dati = progetti, par = progetti$N.Progetti, par2 = "N.progetti in corso", metodo = "glm")
+# 
+# Bdg <- prj_plot(dati = progetti, par = progetti$Bdg, par2 = "Budget complessivo", metodo = "glm")
+# 
+# MdBdg <- prj_plot(dati = progetti, par = progetti$MdBdg, par2 = "Mediana Budget", metodo = "glm")
+# 
+# 
+# prog/Bdg/MdBdg
 
 
 c <-list()
 dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMENTARE", 
          "AREA TERRITORIALE LOMBARDIA", "AREA TERRITORIALE EMILIA ROMAGNA", "DIREZIONE SANITARIA" )
 
-prcoef <- function(dati, dip, param)
+prcoef <- function(dati, dip)
 {  
 c <- coef(lm(MdBdg~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
 }
@@ -136,14 +133,20 @@ PRJ <- data.frame("npr"=nprj, "bdg"=bdgcomp[,2], "Mbdg"=mdbdg[,2] )
 
 PRJ <- cbind(PRJ, scale(PRJ[, 2:4]))
 
-PRJ %>% 
-  select(1, 5:7) %>% 
-  rename("Dipartimento" = npr.dip,"Nprj" = npr.anno, "Budget" = bdg, "Mediana Budget" = Mbdg) %>% 
-  mutate(score = rowSums(select(., -1)), 
-         tscore = 50+10*score, 
-         pscore = tscore/sum(tscore), 
-         Npiram = 30*pscore) %>% 
-  arrange(desc(score))
+PRJ <- PRJ %>% select(-2, -3, -4)
+
+saveRDS(here("IZSLER-COGES","PROGRAMMAZIONE", "piramideR"), "PRJ.rds")
+
+
+
+# PRJ %>% 
+#   select(1, 5:7) %>% 
+#   rename("Dipartimento" = npr.dip,"Nprj" = npr.anno, "Budget" = bdg, "Mediana Budget" = Mbdg) %>% 
+#   mutate(score = rowSums(select(., -1)), 
+#          tscore = 50+10*score, 
+#          pscore = tscore/sum(tscore), 
+#          Npiram = 30*pscore) %>% 
+#   arrange(desc(score))
 
 # nprj <- incremento %>% 
 #   select(dip, "coef"= anno) %>% 
@@ -154,9 +157,27 @@ PRJ %>%
 
 
 ####NUOVI PROGETTI#####
-prj_func2 <- function(dati, dtf1, dti,  anno)
-  { prj %>%
-    filter(DataInizio >= as.Date(dtf1) & DataInizio <=as.Date(dti)) %>% 
+
+n_prj <- pr %>% 
+  mutate(MatrRSUO = ifelse(is.na(MatrRSUO), MatrRS, MatrRSUO)) %>% 
+  left_join(anag, by = c("MatrRSUO" = "Matricola"))
+
+
+dt1 <- c("2000-01-01", "2001-01-01","2002-01-01","2003-01-01","2004-01-01","2005-01-01",
+          "2006-01-01","2007-01-01","2008-01-01","2009-01-01","2010-01-01","2011-01-01",
+          "2012-01-01","2013-01-01","2014-01-01","2015-01-01","2016-01-01","2017-01-01","2018-01-01",
+          "2019-01-01","2020-01-01")
+
+dt2 <-  c("2000-12-31", "2001-12-31","2002-12-31","2003-12-31","2004-12-31","2005-12-31",
+          "2006-12-31","2007-12-31","2008-12-31","2009-12-31","2010-12-31","2011-12-31",
+          "2012-12-31","2013-12-31","2014-12-31","2015-12-31","2016-12-31","2017-12-31","2018-12-31",
+          "2019-12-31","2020-12-31")
+anno <- seq(from = 2000, to = 2020, by=1)
+xx <- data.frame(dt1, dt2, anno)
+zz <- list()
+prj_func2 <- function(dati, dt1, dt2,  anno)
+  { n_prj %>%
+    filter(DataInizio >= as.Date(dt1) & DataInizio <=as.Date(dt2)) %>% 
     group_by(Dipartimento) %>% 
     summarise(Bdg = sum(Budget), 
               MBdg = mean(Budget, na.rm = T),
@@ -172,43 +193,48 @@ prj_func2 <- function(dati, dtf1, dti,  anno)
 zz <- list()
 
 for (i in 1:21) { 
-  zz[[i]]<- prj_func2(dati= prj, dtf1 = x[i, 1], dti = x[i, 2],  anno = x[i, 4])
+  zz[[i]]<- prj_func2(dati= n_prj, dt1 = xx[i, 1], dt2 = xx[i, 2],  anno = x[i, 3])
   
 }
 newP <- do.call(rbind, zz)
 
-newP <- newP %>% filter(!Dipartimento %in% c("DIREZIONE GENERALE", "DIPARTIMENTO AMMINISTRATIVO")) %>% 
-  mutate(label = abbreviate(Dipartimento))
+# newP <- newP %>% filter(!Dipartimento %in% c("DIREZIONE GENERALE", "DIPARTIMENTO AMMINISTRATIVO")) %>% 
+#   mutate(label = abbreviate(Dipartimento))
+# 
+# nprj <- prj_plot(dati = newP, par = newP$N.Progetti, par2 = "N. nuovi progetti", metodo = "lm")
+# nbdg <- prj_plot(dati = newP, par = newP$Bdg, par2 = "Bdg", metodo = "lm")
+# Mnbdg <- prj_plot(dati = newP, par = newP$MdBdg, par2 = "MdBdg", metodo = "lm")
+#  
+# nprj/nbdg/Mnbdg
 
-nprj <- prj_plot(dati = newP, par = newP$N.Progetti, par2 = "N. nuovi progetti", metodo = "lm")
-nbdg <- prj_plot(dati = newP, par = newP$Bdg, par2 = "Bdg", metodo = "lm")
-Mnbdg <- prj_plot(dati = newP, par = newP$MdBdg, par2 = "MdBdg", metodo = "lm")
- 
-nprj/nbdg/Mnbdg
 
 
-
-c <-list()
+cc <-list()
 dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMENTARE", 
          "AREA TERRITORIALE LOMBARDIA", "AREA TERRITORIALE EMILIA ROMAGNA", "DIREZIONE SANITARIA" )
 
 prcoef <- function(dati, dip, param)
 {  
-  c <- coef(lm(MdBdg~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
+  cc <- coef(lm(MdBdg ~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
 }
 
 for (i in 1:5) { 
-  c[[i]]<- prcoef(dati= newP, dip[i])
+  cc[[i]]<- prcoef(dati= newP, dip[i])
 }
 
-nprj <- data.frame(dip,  do.call(rbind, c))
-bdgcomp <- data.frame(dip,  do.call(rbind, c))
-mdbdg <- data.frame(dip,  do.call(rbind, c))
+nprj <- data.frame(dip,  do.call(rbind, cc))
+bdgcomp <- data.frame(dip,  do.call(rbind, cc))
+mdbdg <- data.frame(dip,  do.call(rbind, cc))
 
-nPRJ <- data.frame("npr"=nprj, "bdg"=bdgcomp[,2], "Mbdg"=mdbdg[,2] )
+nPRJ <- data.frame("npr"=nprj, "nbdg"=bdgcomp[,2], "nMdbdg"=mdbdg[,2] )
 
 
 znPRJ <- cbind(PRJ, scale(PRJ[, 2:4]))
+
+znPRJ <- znPRJ %>% select(-2,-3,-4) %>% 
+  rename("npr" = npr.anno, "nbdg" =bdg, "nMdbdg" = Mbdg)
+
+
 znPRJ %>% 
   select(1, 5:7) %>% 
   rename("Dipartimento" = npr.dip,"Nprj" = npr.anno, "Budget" = bdg, "Mediana Budget" = Mbdg) %>% 
@@ -302,11 +328,14 @@ nimpcits <- data.frame(dip,  do.call(rbind, c))
 
 CIT <- data.frame("Npub"=docs, "Cits"=cits[,2], "Imp"=impcits[,2], "CollInt" = intcolls[,2], "NormImp" = nimpcits[,2] )
 
-CIT <- cbind(CIT, scale(PRJ[, 2:5]))
+CIT <- cbind(CIT, scale(CIT[, 2:6]))
 
-    
-    
+CIT <- CIT %>%  select(-2,-3,-4, -5, -6)
 
+saveRDS(here( "PROGRAMMAZIONE", "piramideR"), "CIT.rds")
+
+
+###database coefreg progetti e citazioni###
 
 
 
