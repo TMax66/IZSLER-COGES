@@ -115,7 +115,7 @@ dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMEN
 
 prcoef <- function(dati, dip)
 {  
-c <- coef(lm(Bdg~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
+c <- coef(lm(MdBdg~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
 }
 
 for (i in 1:5) { 
@@ -130,9 +130,9 @@ PRJ <- data.frame("npr"=nprj, "bdg"=bdgcomp[,2], "Mbdg"=mdbdg[,2] )
 
 PRJ <- cbind(PRJ, scale(PRJ[, 2:4]))
 
-PRJ <- PRJ %>% select(-2, -3, -4)
-
-saveRDS(here("IZSLER-COGES","PROGRAMMAZIONE", "piramideR"), "PRJ.rds")
+PRJ <- PRJ %>% select(-2, -3, -4) %>% 
+saveRDS(., file = here("programmazione", "piramideR", "PRJ.rds"))
+ 
 
 
 
@@ -226,27 +226,10 @@ n_mdbdg <- data.frame(dip,  do.call(rbind, cc))
 nPRJ <- data.frame("npr"=n_nprj, "nbdg"=n_bdgcomp[,2], "nMdbdg"=n_mdbdg[,2] )
 
 
-znPRJ <- cbind(nPRJ, scale(nPRJ[, 2:4]))
+nPRJ <- cbind(nPRJ, scale(nPRJ[, 2:4]))
 
-znPRJ <- znPRJ %>% select(-2,-3,-4)
-
-saveRDS(here("IZSLER-COGES","PROGRAMMAZIONE", "piramideR"), "znPRJ.rds")
-
-znPRJ %>% 
-  select(1, 5:7) %>% 
-  rename("Dipartimento" = npr.dip,"Nprj" = npr.anno, "Budget" = bdg, "Mediana Budget" = Mbdg) %>% 
-  mutate(score = rowSums(select(., -1)), 
-         tscore = 50+10*score, 
-         pscore = tscore/sum(tscore), 
-         Npiram = 30*pscore) %>% 
-  arrange(desc(score))
-
-
-cbind(PRJ, znPRJ, CIT)
-
-
-
-
+nPRJ %>% select(-2,-3,-4) %>% 
+  saveRDS(., file = here("programmazione", "piramideR", "nPRJ.rds"))
 
 
 ###RATING RICERCATORI ####
@@ -327,14 +310,33 @@ CIT <- data.frame("Npub"=docs, "Cits"=cits[,2], "Imp"=impcits[,2], "CollInt" = i
 
 CIT <- cbind(CIT, scale(CIT[, 2:6]))
 
-CIT <- CIT %>%  select(-2,-3,-4, -5, -6)
+CIT %>%  select(-2,-3,-4, -5, -6) %>% 
+saveRDS(., file=here("programmazione" , "piramideR", "CIT.rds"))
 
-saveRDS(here( "PROGRAMMAZIONE", "piramideR"), "CIT.rds")
+
+#######tabella complessiva con i tre indicatori e i valori di z-score#####
+PRJ <- readRDS( here("programmazione", "piramideR", "PRJ.rds"))
+nPRJ <- readRDS( here("programmazione", "piramideR", "nPRJ.rds"))
+CIT <- readRDS( here("programmazione", "piramideR", "CIT.rds"))
+
+
+Dati <- cbind(PRJ, nPRJ[,-1], CIT[, -1])
+
+znPRJ %>% 
+  select(1, 5:7) %>% 
+  rename("Dipartimento" = npr.dip,"Nprj" = npr.anno, "Budget" = bdg, "Mediana Budget" = Mbdg) %>% 
+  mutate(score = rowSums(select(., -1)), 
+         tscore = 50+10*score, 
+         pscore = tscore/sum(tscore), 
+         Npiram = 30*pscore) %>% 
+  arrange(desc(score))
+
+
+cbind(PRJ, znPRJ, CIT)
+
 
 
 ###database coefreg progetti e citazioni###
-
-
 
 
 
