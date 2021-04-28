@@ -321,16 +321,15 @@ CIT <- readRDS( here("programmazione", "piramideR", "CIT.rds"))
 
 
 Dati <- cbind(PRJ, nPRJ[,-1], CIT[, -1])
+names(Dati)[2] <- "Nprj"
 
-znPRJ %>% 
-  select(1, 5:7) %>% 
-  rename("Dipartimento" = npr.dip,"Nprj" = npr.anno, "Budget" = bdg, "Mediana Budget" = Mbdg) %>% 
-  mutate(score = rowSums(select(., -1)), 
+Dati %>%
+  #select(-2, -3, -4) %>% 
+mutate(score = rowSums(select(., -1)), 
          tscore = 50+10*score, 
          pscore = tscore/sum(tscore), 
          Npiram = 30*pscore) %>% 
   arrange(desc(score))
-
 
 cbind(PRJ, znPRJ, CIT)
 
