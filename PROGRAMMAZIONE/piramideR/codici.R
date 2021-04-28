@@ -91,22 +91,22 @@ progetti <- progetti %>%
   mutate(label = abbreviate(Dipartimento))
 
 
-# prj_plot <- function(dati, par, par2, metodo)
-# {    
-#     ggplot(dati, aes(x=anno, y=par, color = label))+
-#     geom_line(alpha = 0.3)+
-#     geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
-#     theme(legend.position = "none")+ labs(y = par2)+
-#     geom_smooth(se = FALSE, method = metodo) }
-# 
-# prog <- prj_plot(dati = progetti, par = progetti$N.Progetti, par2 = "N.progetti in corso", metodo = "glm")
-# 
-# Bdg <- prj_plot(dati = progetti, par = progetti$Bdg, par2 = "Budget complessivo", metodo = "glm")
-# 
-# MdBdg <- prj_plot(dati = progetti, par = progetti$MdBdg, par2 = "Mediana Budget", metodo = "glm")
-# 
-# 
-# prog/Bdg/MdBdg
+prj_plot <- function(dati, par, par2, metodo)
+{
+    ggplot(dati, aes(x=anno, y=par, color = label))+
+    geom_line(alpha = 0.3)+
+    geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
+    theme(legend.position = "none")+ labs(y = par2)+
+    geom_smooth(se = FALSE, method = metodo) }
+
+prog <- prj_plot(dati = progetti, par = progetti$N.Progetti, par2 = "N.progetti in corso", metodo = "glm")
+
+Bdg <- prj_plot(dati = progetti, par = progetti$Bdg, par2 = "Budget complessivo", metodo = "glm")
+
+MdBdg <- prj_plot(dati = progetti, par = progetti$MdBdg, par2 = "Mediana Budget", metodo = "glm")
+
+
+prog/Bdg/MdBdg
 
 
 c <-list()
@@ -136,17 +136,17 @@ saveRDS(., file = here("programmazione", "piramideR", "PRJ.rds"))
 
 
 
-# PRJ %>% 
-#   select(1, 5:7) %>% 
-#   rename("Dipartimento" = npr.dip,"Nprj" = npr.anno, "Budget" = bdg, "Mediana Budget" = Mbdg) %>% 
-#   mutate(score = rowSums(select(., -1)), 
-#          tscore = 50+10*score, 
-#          pscore = tscore/sum(tscore), 
-#          Npiram = 30*pscore) %>% 
+# PRJ %>%
+#   select(1, 5:7) %>%
+#   rename("Dipartimento" = npr.dip,"Nprj" = npr.anno, "Budget" = bdg, "Mediana Budget" = Mbdg) %>%
+#   mutate(score = rowSums(select(., -1)),
+#          tscore = 50+10*score,
+#          pscore = tscore/sum(tscore),
+#          Npiram = 30*pscore) %>%
 #   arrange(desc(score))
 
-# nprj <- incremento %>% 
-#   select(dip, "coef"= anno) %>% 
+# nprj <- incremento %>%
+#   select(dip, "coef"= anno) %>%
 #   ggplot(aes(x= reorder(dip, coef), y=coef)) +
 #   geom_bar(stat= "identity")+
 #   coord_flip()
@@ -326,6 +326,7 @@ names(Dati)[2] <- "Nprj"
 Dati %>%
   #select(-2, -3, -4) %>% 
 mutate(score = rowSums(select(., -1)), 
+       quant = quantile(score), 
          tscore = 50+10*score, 
          pscore = tscore/sum(tscore), 
          Npiram = 30*pscore) %>% 
