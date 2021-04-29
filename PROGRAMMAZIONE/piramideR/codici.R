@@ -94,10 +94,10 @@ progetti <- progetti %>%
 prj_plot <- function(dati, par, par2, metodo)
 {
     ggplot(dati, aes(x=anno, y=par, color = label))+
-    geom_line(alpha = 0.3)+
+    geom_line( )+
     geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
     theme(legend.position = "none")+ labs(y = par2)+
-    geom_smooth(se = FALSE, method = metodo) }
+    geom_line(stat="smooth", alpha=0.3, se = FALSE, method = metodo) }
 
 prog <- prj_plot(dati = progetti, par = progetti$N.Progetti, par2 = "N.progetti in corso", metodo = "glm")
 
@@ -323,20 +323,27 @@ CIT <- readRDS( here("programmazione", "piramideR", "CIT.rds"))
 Dati <- cbind(PRJ, nPRJ[,-1], CIT[, -1])
 names(Dati)[2] <- "Nprj"
 
-Dati %>%
-  #select(-2, -3, -4) %>% 
+x<- Dati %>%
+  select(-9, -10) %>% 
 mutate(score = rowSums(select(., -1)), 
-       quant = quantile(score), 
-         tscore = 50+10*score, 
-         pscore = tscore/sum(tscore), 
-         Npiram = 30*pscore) %>% 
+      # tscore = 50+10*score, 
+       #   pscore = tscore/sum(tscore), 
+       #   Npiram = 30*pscore
+       ) %>% 
   arrange(desc(score))
 
 cbind(PRJ, znPRJ, CIT)
 
 
 
-###database coefreg progetti e citazioni###
+z <- max(x$score)-rev(x$score)
+y <- 28*(z/sum(z))
+
+
+
+
+
+  ###database coefreg progetti e citazioni###
 
 
 
