@@ -1828,7 +1828,7 @@ output$radarATER <-renderPlot({
 #ftedipa####
 dtProg <- readRDS("datiSB.rds")
 
-output$progFTEv <- renderDataTable(
+output$progFTEv <- renderDataTable(server = FALSE, 
   datatable(
     if(input$DC == "FTED")
     { 
@@ -1874,7 +1874,7 @@ output$progFTEv <- renderDataTable(
 
 
 
-output$progFTE <- renderDataTable(
+output$progFTE <- renderDataTable( server = FALSE, 
 
 datatable(   
 if(input$DC == "FTED")
@@ -1931,7 +1931,7 @@ if(input$DC == "FTED")
 ##ftedsa####
 #dtProg <- readRDS( here("programmazione", "shinyapp-in-sviluppo", "datiSB.rds"))
 
-output$dsaFTEv <- renderDataTable(
+output$dsaFTEv <- renderDataTable(server =  FALSE, 
   datatable(
     if(input$DC2 == "FTED1")
     {
@@ -1975,7 +1975,7 @@ output$dsaFTEv <- renderDataTable(
 
 )
 
-output$dsaFTE <- renderDataTable(
+output$dsaFTE <- renderDataTable( server =  FALSE, 
   
   datatable(   
     if(input$DC2 == "FTED1")
@@ -2034,7 +2034,7 @@ output$dsaFTE <- renderDataTable(
 ##ftedtsa####
 #dtProg <- readRDS( here("programmazione", "shinyapp-in-sviluppo", "datiSB.rds"))
 
-output$dtsaFTEv <- renderDataTable(
+output$dtsaFTEv <- renderDataTable(server =  FALSE, 
   datatable(
     if(input$DC3 == "FTED2")
     {
@@ -2078,7 +2078,7 @@ output$dtsaFTEv <- renderDataTable(
   
 )
 
-output$dtsaFTE <- renderDataTable(
+output$dtsaFTE <- renderDataTable(server =  FALSE,
   
   datatable(   
     if(input$DC3 == "FTED2")
@@ -2131,7 +2131,7 @@ output$dtsaFTE <- renderDataTable(
 )
 
 #fteater####
-output$aterFTEv <- renderDataTable(
+output$aterFTEv <- renderDataTable(server =  FALSE,
   datatable(
     if(input$DC4 == "FTED3")
     {
@@ -2175,7 +2175,7 @@ output$aterFTEv <- renderDataTable(
   
 )
 
-output$aterFTE <- renderDataTable(
+output$aterFTE <- renderDataTable(server =  FALSE,
   
   datatable(   
     if(input$DC4 == "FTED3")
@@ -2230,7 +2230,7 @@ output$aterFTE <- renderDataTable(
 
 
 #fteatlom####
-output$atlomFTEv <- renderDataTable(
+output$atlomFTEv <- renderDataTable(server =  FALSE,
   datatable(
     if(input$DC5 == "FTED4")
     {
@@ -2274,7 +2274,7 @@ output$atlomFTEv <- renderDataTable(
   
 )
 
-output$atlomFTE <- renderDataTable(
+output$atlomFTE <- renderDataTable(server =  FALSE,
   
   datatable(   
     if(input$DC5 == "FTED4")
@@ -2330,7 +2330,7 @@ output$atlomFTE <- renderDataTable(
 
 
 ###ftedirsan####
-output$dirsanFTEv <- renderDataTable(
+output$dirsanFTEv <- renderDataTable(server =  FALSE,
   datatable(
     if(input$DC6 == "FTED5")
     {
@@ -2374,7 +2374,7 @@ output$dirsanFTEv <- renderDataTable(
   
 )
 
-output$dirsanFTE <- renderDataTable(
+output$dirsanFTE <- renderDataTable(server =  FALSE,
   
   datatable(   
     if(input$DC6 == "FTED5")
@@ -2427,7 +2427,7 @@ output$dirsanFTE <- renderDataTable(
 )
 
 ###ftedipam####
-output$dipamFTEv <- renderDataTable(
+output$dipamFTEv <- renderDataTable(server =  FALSE,
   datatable(
     if(input$DC7 == "FTED6")
     {
@@ -2473,7 +2473,7 @@ output$dipamFTEv <- renderDataTable(
   
 )
 
-output$dipamFTE <- renderDataTable(
+output$dipamFTE <- renderDataTable(server =  FALSE,
   
   datatable(   
     if(input$DC7 == "FTED6")
