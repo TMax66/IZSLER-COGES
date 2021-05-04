@@ -94,10 +94,12 @@ progetti <- progetti %>%
 prj_plot <- function(dati, par, par2, metodo)
 {
     ggplot(dati, aes(x=anno, y=par, color = label))+
-    geom_line( )+
+    geom_line(alpha=0.2 )+
     geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
     theme(legend.position = "none")+ labs(y = par2)+
-    geom_line(stat="smooth", alpha=0.3, se = FALSE, method = metodo) }
+    geom_line(stat="smooth", se = FALSE, method = metodo)+
+    scale_colour_manual(values = c("black", "blue", "brown", "green", "red"))
+  }
 
 prog <- prj_plot(dati = progetti, par = progetti$N.Progetti, par2 = "N.progetti in corso", metodo = "glm")
 
@@ -109,13 +111,16 @@ MdBdg <- prj_plot(dati = progetti, par = progetti$MdBdg, par2 = "Mediana Budget"
 prog/Bdg/MdBdg
 
 
+
+
+
 c <-list()
 dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMENTARE", 
          "AREA TERRITORIALE LOMBARDIA", "AREA TERRITORIALE EMILIA ROMAGNA", "DIREZIONE SANITARIA" )
 
 prcoef <- function(dati, dip)
 {  
-c <- coef(lm(MdBdg~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
+c <- coef(lm(N.Progetti~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
 }
 
 for (i in 1:5) { 
@@ -332,20 +337,28 @@ mutate(score = rowSums(select(., -1)),
        ) %>% 
   arrange(desc(score))
 
-cbind(PRJ, znPRJ, CIT)
 
 
+###grafico differenze### 
 
+
+line <- tibble("score" = x$score, y = rep (0, 5))
+
+ggplot(line, aes(x= score, y= y))+
+  geom_point()
+
+###distribuzione piramidati####
 z <- max(x$score)-rev(x$score)
-y <- 28*(z/sum(z))
+y <- 30*(z/sum(z))
 
+z
 
 
 
 
   ###database coefreg progetti e citazioni###
 
-
+x
 
 
 
@@ -599,7 +612,33 @@ anag <- read_excel(here("programmazione", "piramideR", "anagrafe.xlsx"))
 
 
 
+# 
+# prj %>%
+#   filter(DataInizio >= as.Date("2010-01-01") & DataInizio <=as.Date("2010-12-31")) %>% 
+#   group_by(Dipartimento) %>% View()
 
-prj %>%
-  filter(DataInizio >= as.Date("2010-01-01") & DataInizio <=as.Date("2010-12-31")) %>% 
-  group_by(Dipartimento) %>% View()
+
+  ###grafici prove di codice#####
+  
+  ggplot(progetti, aes(x=anno, y=N.Progetti, color = label))+
+    geom_line(alpha = 0.4 )+ geom_point(alpha = 0.4)+
+    # geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
+    labs(y = "N.progetti")+
+    geom_line(stat="smooth", se = FALSE, size=1.2, method = "lm")+
+    scale_colour_manual(values = c("black", "blue", "brown", "green", "red"))
+  
+  
+  progetti %>% 
+    group_by(anno) %>% 
+    summarise(N.proj = sum(N.Progetti)) %>% 
+    ggplot(aes(x=anno, y=N.proj))+
+    geom_line(alpha = 0.4 )+ geom_point(alpha = 0.4)+
+    # geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
+    labs(y = "N.prpgetti")+
+    geom_line(stat="smooth", se = FALSE, size=1.2, method = "lm")+
+    scale_colour_manual(values = c("black", "blue", "brown", "green", "red"))
+  
+  coef(lm(N.Progetti~anno, data = progetti)
+  )      
+  
+
