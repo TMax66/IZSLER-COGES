@@ -18,9 +18,9 @@ library("ggrepel")
 library("broom")
 library("forcats")
 library("patchwork")
+library("hrbrthemes")
 ##PROGETTI DI RICERCA####
-library("here")
-#load(here("programmazione", "piramideR",  "pacchetti.R"))
+
 
 pr <- read_excel(here("programmazione", "piramideR", "pr2020.xlsx"))
 
@@ -88,15 +88,17 @@ progetti <- do.call(rbind, z)
 
 progetti <- progetti %>% 
   filter(!Dipartimento %in% c("DIREZIONE GENERALE", "DIPARTIMENTO AMMINISTRATIVO")) %>% 
-  mutate(label = abbreviate(Dipartimento))
+  mutate(Dip = abbreviate(Dipartimento))
 
 
 prj_plot <- function(dati, par, par2, metodo)
 {
-    ggplot(dati, aes(x=anno, y=par, color = label))+
+    ggplot(dati, aes(x=anno, y=par, color = Dip))+
     geom_line(alpha=0.2 )+
-    geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
-    theme(legend.position = "none")+ labs(y = par2)+
+    #geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
+    #theme(legend.position = "none")+ 
+    theme_ipsum_rc()+
+    labs(y = par2)+
     geom_line(stat="smooth", se = FALSE, method = metodo)+
     scale_colour_manual(values = c("black", "blue", "brown", "green", "red"))
   }
@@ -120,7 +122,7 @@ dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMEN
 
 prcoef <- function(dati, dip)
 {  
-c <- coef(lm(N.Progetti~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
+c <- coef(lm(MdBdg~ anno, data = subset(dati, dati$Dipartimento == dip)))[2]
 }
 
 for (i in 1:5) { 
@@ -132,10 +134,26 @@ bdgcomp <- data.frame(dip,  do.call(rbind, c))
 mdbdg <- data.frame(dip,  do.call(rbind, c))
 
 PRJ <- data.frame("npr"=nprj, "bdg"=bdgcomp[,2], "Mbdg"=mdbdg[,2] )
+names(PRJ) <- c("Dipartimento", "N.progetti", "Budget complessivo", "Mediana Budget")
 
-PRJ <- cbind(PRJ, scale(PRJ[, 2:4]))
+library(knitr)
+library(kableExtra)
+PRJ %>% 
+  knitr::kable(digits = 2, caption = "Coefficienti di regressione") %>%
+  kable_styling() %>%
+  save_kable(file = "table_1.png", zoom = 1.5)
+  
 
-PRJ <- PRJ %>% select(-2, -3, -4) %>% 
+sPRJ <- cbind(PRJ, scale(PRJ[, 2:4]))
+
+sPRJ <- sPRJ %>% select(-2, -3, -4)#%>% 
+sPRJ %>% 
+  knitr::kable(digits = 2, caption = "Coefficienti di regressione") %>%
+  kable_styling() %>% 
+  save_kable(file = "table_2.png", zoom = 1.5)
+
+
+
 saveRDS(., file = here("programmazione", "piramideR", "PRJ.rds"))
  
 
@@ -182,10 +200,7 @@ prj_func2 <- function(dati, dt1, dt2,  anno)
     filter(DataInizio >= as.Date(dt1) & DataInizio <=as.Date(dt2)) %>% 
     group_by(Dipartimento) %>% 
     summarise(Bdg = sum(Budget), 
-              MBdg = mean(Budget, na.rm = T),
               MdBdg = median(Budget, na.rm = T), 
-              mdBdg = min(Budget, na.rm = T), 
-              mxBdg = max(Budget, na.rm = T), 
               "N.Progetti"=nlevels(factor(Codice)))%>% 
     mutate(anno = anno) %>% 
     filter(!is.na(Dipartimento))
@@ -200,14 +215,14 @@ for (i in 1:21) {
 }
 newP <- do.call(rbind, zz)
 
-# newP <- newP %>% filter(!Dipartimento %in% c("DIREZIONE GENERALE", "DIPARTIMENTO AMMINISTRATIVO")) %>% 
-#   mutate(label = abbreviate(Dipartimento))
-# 
-# nprj <- prj_plot(dati = newP, par = newP$N.Progetti, par2 = "N. nuovi progetti", metodo = "lm")
-# nbdg <- prj_plot(dati = newP, par = newP$Bdg, par2 = "Bdg", metodo = "lm")
-# Mnbdg <- prj_plot(dati = newP, par = newP$MdBdg, par2 = "MdBdg", metodo = "lm")
-#  
-# nprj/nbdg/Mnbdg
+newP <- newP %>% filter(!Dipartimento %in% c("DIREZIONE GENERALE", "DIPARTIMENTO AMMINISTRATIVO")) %>%
+  mutate(Dip = abbreviate(Dipartimento))
+
+nprj <- prj_plot(dati = newP, par = newP$N.Progetti, par2 = "N. nuovi progetti", metodo = "lm")
+nbdg <- prj_plot(dati = newP, par = newP$Bdg, par2 = "Bdg", metodo = "lm")
+Mnbdg <- prj_plot(dati = newP, par = newP$MdBdg, par2 = "MdBdg", metodo = "lm")
+
+nprj/nbdg/Mnbdg
 
 
 
@@ -229,12 +244,27 @@ n_bdgcomp <- data.frame(dip,  do.call(rbind, cc))
 n_mdbdg <- data.frame(dip,  do.call(rbind, cc))
 
 nPRJ <- data.frame("npr"=n_nprj, "nbdg"=n_bdgcomp[,2], "nMdbdg"=n_mdbdg[,2] )
+names(nPRJ) <- c("Dipartimento", "N.progetti", "Budget complessivo", "Mediana Budget")
 
+nPRJ %>% 
+  knitr::kable(digits = 2, caption = "Coefficienti di regressione") %>%
+  kable_styling() %>%
+  save_kable(file = "table_3.png", zoom = 1.5)
 
-nPRJ <- cbind(nPRJ, scale(nPRJ[, 2:4]))
+snPRJ <- cbind(nPRJ, scale(nPRJ[, 2:4]))
 
-nPRJ %>% select(-2,-3,-4) %>% 
+snPRJ <- snPRJ %>% select(-2,-3,-4) #%>% 
+
+snPRJ %>% 
+  knitr::kable(digits = 2, caption = "Coefficienti di regressione") %>%
+  kable_styling() %>%
+  save_kable(file = "table_4.png", zoom = 1.5)
+
   saveRDS(., file = here("programmazione", "piramideR", "nPRJ.rds"))
+
+
+
+
 
 
 ###RATING RICERCATORI ####
@@ -268,29 +298,39 @@ ric <- ricercatori %>%
   filter(!Dipartimento %in% c("DIREZIONE GENERALE", "DIPARTIMENTO AMMINISTRATIVO",
                               "DIREZIONE AMMNINISTRATIVA") &
            !is.na(Dipartimento)) %>%
-  group_by(Dipartimento, Anno =`Publication Year`, Cognome) %>%
+  group_by(Dipartimento, anno =`Publication Year`, Cognome) %>%
   summarise(doc = sum(`Web of Science Documents`),
             cit = mean(`Times Cited`),
             citImp = mean(`Citation Impact`),
             NcitImp = mean(`Category Normalized Citation Impact`),
             Intcoll = sum(`International Collaborations`)) %>%
-  group_by(Dipartimento, Anno) %>%
+  group_by(Dipartimento, anno) %>%
   summarise(Docs = mean(doc),
             Cits = mean(cit),
             ImpCits = mean(citImp),
             Intcolls = mean(Intcoll),
-            NcitImps = mean(NcitImp)) 
+            NcitImps = mean(NcitImp)) %>% 
+  mutate(Dip = abbreviate(Dipartimento))
+
+
+
+
+
+
+
+pdocs <- prj_plot(dati = ric, par = ric$Docs, par2 = "N.pubblicazioni", metodo = "glm")
+
+pcits <- prj_plot(dati = ric, par = ric$Cits, par2 = "Citazioni", metodo = "glm")
+
+pimpcits <- prj_plot(dati = ric, par = ric$ImpCits, par2 = "Impatto Citazionale", metodo = "glm")
+
+Npimpcits <- prj_plot(dati = ric, par = ric$NcitImps, par2 = "Impatto Citazionale Normalizzato", metodo = "glm")
+
+pintcoll <- prj_plot(dati = ric, par = ric$Intcolls, par2 = "Collaborazioni Internazionali", metodo = "glm")
   
-#   mutate(label = abbreviate(Dipartimento)) %>% 
-#   ggplot(aes(x = Anno, y = NcitImps, color = label))+
-#   geom_line(alpha = 0.3)+
-#   geom_dl(aes(label = label), method = list(dl.combine("first.points", "last.points"), cex= 0.6))+
-#   theme(legend.position = "none")+
-#   geom_smooth(se = FALSE, method = "lm")
-  
 
 
-
+pdocs/pcits/pimpcits |Npimpcits/pintcoll
 
 c <-list()
 dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMENTARE", 
@@ -298,7 +338,7 @@ dip <- c("DIPARTIMENTO TUTELA E  SALUTE ANIMALE", "DIPARTIMENTO SICUREZZA ALIMEN
 
 cit_coef <- function(dati, dip)
 {  
-  c <- coef(lm(NcitImps~Anno, data = subset(dati, dati$Dipartimento == dip)))[2]
+  c <- coef(lm(NcitImps~anno, data = subset(dati, dati$Dipartimento == dip)))[2]
 }
 
 for (i in 1:5) { 
@@ -312,10 +352,24 @@ intcolls <- data.frame(dip,  do.call(rbind, c))
 nimpcits <- data.frame(dip,  do.call(rbind, c))
 
 CIT <- data.frame("Npub"=docs, "Cits"=cits[,2], "Imp"=impcits[,2], "CollInt" = intcolls[,2], "NormImp" = nimpcits[,2] )
+names(CIT) <- c("Dipartimento", "N.pubblicazioni", "Citazioni", "Impatto citazionale", "Coll Internazionale", "Impatto cit Norm")
+
+CIT %>% 
+  knitr::kable(digits = 2, caption = "Coefficienti di regressione") %>%
+  kable_styling() %>%
+  save_kable(file = "table_5.png", zoom = 1.5)
+
+
 
 CIT <- cbind(CIT, scale(CIT[, 2:6]))
 
 CIT %>%  select(-2,-3,-4, -5, -6) %>% 
+  knitr::kable(digits = 2, caption = "Coefficienti di regressione") %>%
+  kable_styling() %>%
+  save_kable(file = "table_6.png", zoom = 1.5)
+  
+  
+  
 saveRDS(., file=here("programmazione" , "piramideR", "CIT.rds"))
 
 
@@ -326,16 +380,29 @@ CIT <- readRDS( here("programmazione", "piramideR", "CIT.rds"))
 
 
 Dati <- cbind(PRJ, nPRJ[,-1], CIT[, -1])
-names(Dati)[2] <- "Nprj"
 
-x<- Dati %>%
+names(Dati) <- c("Dip", "Nprj in corso", "Bdg in corso", "MdBdg in corso", "NuoviPrj", "BdgNuoviprj", 
+                  "MdBdgNuoviprj", "Pubs", "Cits", "ImpCits", "CollInt", "ImpCitsNorm")
+
+Dati %>%  
+  knitr::kable(digits = 2, caption = "Z-score") %>%
+  kable_styling() %>%
+  save_kable(file = "table_7.png", zoom = 1.5)
+
+Dati %>%
   select(-9, -10) %>% 
 mutate(score = rowSums(select(., -1)), 
       # tscore = 50+10*score, 
        #   pscore = tscore/sum(tscore), 
        #   Npiram = 30*pscore
+      d = max(score)-rev(score), 
+      peso = d/sum(d)
        ) %>% 
-  arrange(desc(score))
+  arrange(desc(score)) %>% 
+  knitr::kable(digits = 2, caption = "Z-score") %>%
+  kable_styling() %>%
+  save_kable(file = "table_8.png", zoom = 1.5)
+  
 
 
 
@@ -348,7 +415,7 @@ ggplot(line, aes(x= score, y= y))+
   geom_point()
 
 ###distribuzione piramidati####
-z <- max(x$score)-rev(x$score)
+z <- max(x$score)-(x$score)
 y <- 30*(z/sum(z))
 
 z
