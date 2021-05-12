@@ -49,3 +49,5 @@ query <- paste("SELECT", fields, paste("FROM", "SchedaValutazione"))
 SV <- tbl(con, sql(query)) %>% 
   as_tibble()
 names(SV)
+
+SV
