@@ -50,4 +50,7 @@ SV <- tbl(con, sql(query)) %>%
   as_tibble()
 names(SV)
 
-SV
+### estraggo la tabella-vista V_MappaStrategiciOperativi
+
+
+mp %>% filter(Anno == 2021) %>% View()
