@@ -107,16 +107,16 @@ anag19 %>%
    
 
 
-### Dati di attività e ricavi 2019###
+### DATI DI ATTIVITA' E RICAVI 2019####
 
 riepilogo <- read_excel( sheet = "riepilogo", here("report2019", "data", "raw", "dati.xls"))
-#reparti <- read_excel( sheet = "reparti", here("report attività 2019", "data", "raw", "dati.xls"))
+reparti <- read_excel( sheet = "reparti", here("report attività 2019", "data", "raw", "dati.xls"))
 # costi<- read_excel(sheet = "Reparti Formato Long", here(  "report attività 2019", "data", "raw", "costi personale.xls"))
 # 
-# r<-reparti %>% 
-#   group_by(Reparto, Laboratorio) %>% 
-#   summarise(esami=round(sum(n.esami),0), ricavi=round(sum(valore),0)) %>% 
-#   saveRDS(., file = here("programmazione", "data", "processed", "esamiricavi2019.rds"))
+r<-reparti %>%
+  group_by(Reparto, Laboratorio) %>%
+  summarise(esami=round(sum(n.esami),0), ricavi=round(sum(valore),0)) %>%
+  saveRDS(., file = here("programmazione", "data", "processed", "esamiricavi2019.rds"))
 # 
 riepilogo %>%
   select(Reparto,`Attività Interna`) %>%
