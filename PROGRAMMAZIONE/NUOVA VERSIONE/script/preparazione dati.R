@@ -2,13 +2,13 @@ library("tidyverse")
 library("here")
 library("readxl")
 
-#### dati dal controllo di gestione####
+#### DATI DA CONTROLLO DI GESTIONE####
 attività2019 <- read_excel(sheet = "reparti", here("programmazione", "NUOVA VERSIONE", "data", "raw", "attivita2019.xlsx"))
 attività2020 <- read_excel(sheet = "Foglio1", here("programmazione", "NUOVA VERSIONE", "data", "raw", "attivita2020.xlsx"))
 
 
 
-##DATI ATTIVITA' INTERNA E VENDITA PRODOTTI BY DIP/REP####
+#####Dati attività interna e vendita prodotti by dip/rep####
 attività2020 %>% 
   group_by(Reparto) %>% 
   summarise(
@@ -65,7 +65,7 @@ attività2019 %>%
   saveRDS(., file = here("programmazione", "NUOVA VERSIONE",  "shinyapp", "vpai.rds"))
 
 
-
+#####Dati esami e ricavi by dip/rep/lab####
 attività2020 %>% 
   group_by(Reparto, Laboratorio) %>% 
   summarise(
@@ -139,4 +139,14 @@ attività2020 %>%
   
   saveRDS(., file = here("programmazione", "NUOVA VERSIONE",  "shinyapp", "esamiricavi.rds"))
 
+
+#####Dati costi by dip/rep####
+
+####DATI ORE LAVORATE MATRICOLE BY DIP/REP####
+
+####DATI PROGETTI DI RICERCA BY DIP/REP####
+
+####DATI PUBBLICAZIONI BY DIP/REP####
+
+####DATI DA PERFORMANCES DA SCHEDA BUDGET####
   
