@@ -50,7 +50,7 @@ hwd <- hwd %>%
   group_by(Dipartimento, Reparto, Laboratorio, Matricola) %>% 
   summarise(hworked = sum(Minuti/60)) %>% 
   filter(str_detect(Dipartimento, paste(c("Dipartimento", "Area"),collapse = '|')) ) %>% 
-  filter(Dipartimento != "Dipartimento Amministrativo")
+  filter(Dipartimento != "Dipartimento Amministrativo") %>% 
 
 ###dati conversione matricole gru-sigma####
 grusigma <- read_excel(here("programmazione", "data", "raw", "MatricoleSigmaGRU.xlsx"))
@@ -68,7 +68,7 @@ anag19 %>%
          "contratto" = DECOMP) %>% 
   mutate(contratto = recode(contratto, "DIRIGENZA MEDICO/VETERINARIA SSN" = "DIRIGENZA", 
                            "DIRIGENZA S.P.T.A. SSN" = "DIRIGENZA", 
-                           "COMPARTO SSN" = "COMPARTO")) %>% 
+                           "COMPARTO SSN" = "COMPARTO")) %>% View()
   mutate(hcontr = ifelse( contratto == "COMPARTO", (36*hperc)/100, (38*hperc)/100)) %>% 
   
   # filter(contratto == "COMPARTO SSN") %>%
