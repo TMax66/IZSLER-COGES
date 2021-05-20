@@ -54,3 +54,30 @@ names(SV)
 
 
 mp %>% filter(Anno == 2021) %>% View()
+
+
+library(DBI)
+library(tidyverse)
+library(dbplyr)
+con <- DBI::dbConnect(odbc::odbc(), Driver = "SQL Server", Server = "dbtest02", 
+                      Database = "DW_COGE_DEV", Port = 1433)
+
+query <- c("SELECT
+dbo.Personale_V2020.Matricola,
+dbo.Personale_V2020.Mese,
+dbo.IZS_CDC.CENTRO_DI_COSTO,
+dbo.Personale_V2020.Percentuale,
+dbo.Personale_V2020.Ore,
+dbo.Personale_V2020.SmartWorking,
+dbo.Personale_V2020.Cognome,
+dbo.Personale_V2020.Dirigente,
+dbo.Personale_V2020.Contratto,
+dbo.Personale_V2020.Dislocazione
+FROM
+dbo.Personale_V2020 INNER JOIN dbo.IZS_CDC ON (dbo.Personale_V2020.CDC=dbo.IZS_CDC.CODICE_CDC)")
+
+
+dati <- tbl(con, sql(query)) %>% as.tibble 
+
+unique(factor(dati$Dislocazione))
+
