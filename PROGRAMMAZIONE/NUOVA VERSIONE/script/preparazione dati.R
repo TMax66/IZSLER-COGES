@@ -135,9 +135,31 @@ attività2020 %>%
                               "Colture Cellulari, Biobanca" = "LABORATORIO COLTURE CELLULARI, BIOBANCA", 
                               "Proteomica" = "LABORATORIO DI PROTEOMICA E DIAGNOSTICA TSE", 
                               "Virologia" = "LABORATORIO DI VIROLOGIA E SIEROLOGIA SPECIALIZZATA, MICROSCOPIA ELETTRONICA", 
-                              "Virus Vescicolari e Produzioni Biotecnologiche" = "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE")) %>% 
-  
+                              "Virus Vescicolari e Produzioni Biotecnologiche" = "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE"), 
+         Dipartimento = recode (Reparto, "REPARTO VIROLOGIA" = "Dipartimento Tutela e  Salute Animale", 
+                                "REPARTO TECNOLOGIE BIOLOGICHE APPLICATE" = "Dipartimento Tutela e  Salute Animale",
+                                "REPARTO PRODUZIONE E CONTROLLO MATERIALE BIOLOGICO" = "Dipartimento Tutela e  Salute Animale",
+                                "REPARTO VIRUS VESCICOLARI E PRODUZIONI BIOTECNOLOGICHE" = "Dipartimento Tutela e  Salute Animale", 
+                                "REPARTO PRODUZIONE PRIMARIA" = "Dipartimento Sicurezza Alimentare", 
+                                "REPARTO CONTROLLO ALIMENTI" = "Dipartimento Sicurezza Alimentare",
+                                "REPARTO CHIMICA DEGLI ALIMENTI E MANGIMI" = "Dipartimento Sicurezza Alimentare", 
+                                "REPARTO CHIMICO DEGLI ALIMENTI (BOLOGNA)" = "Dipartimento Sicurezza Alimentare", 
+                                "SEDE TERRITORIALE DI BERGAMO - BINAGO - SONDRIO" = "Area Territoriale Lombardia",
+                                "SEDE TERRITORIALE DI BRESCIA" = "Area Territoriale Lombardia",
+                                "SEDE TERRITORIALE DI PAVIA" = "Area Territoriale Lombardia",
+                                "SEDE TERRITORIALE DI CREMONA - MANTOVA" = "Area Territoriale Lombardia", 
+                                "SEDE TERRITORIALE DI LODI - MILANO" = "Area Territoriale Lombardia", 
+                                "SEDE TERRITORIALE DI FORLÌ - RAVENNA" = "Area Territoriale Emilia Romagna", 
+                                "SEDE TERRITORIALE DI BOLOGNA - MODENA - FERRARA" = "Area Territoriale Emilia Romagna", 
+                                "SEDE TERRITORIALE DI PIACENZA - PARMA" = "Area Territoriale Emilia Romagna", 
+                                "SEDE TERRITORIALE DI REGGIO EMILIA" = "Area Territoriale Emilia Romagna", 
+                                "ANALISI DEL RISCHIO ED EPIDEMIOLOGIA GENOMICA" = "Direzione Sanitaria")) %>% 
   saveRDS(., file = here("programmazione", "NUOVA VERSIONE",  "shinyapp", "esamiricavi.rds"))
+
+
+
+
+
 
 
 #####Dati costi by dip/rep####
@@ -237,7 +259,7 @@ Dipartimento = recode (REPARTO, "REPARTO VIROLOGIA" = "Dipartimento Tutela e  Sa
 )%>%
   mutate(Dipartimento = toupper(Dipartimento) ) %>% 
   select(Dipartimento, REPARTO, CENTRO_DI_COSTO, Dirigente,
-         Matricola, Nome, Cognome, InizioRapporto, FineRapporto) 
+         Matricola, Nome, Cognome, InizioRapporto, FineRapporto) %>% View()
 
 # %>% 
 #   filter(!is.na(Dipartimento)) %>% 

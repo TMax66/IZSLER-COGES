@@ -25,12 +25,12 @@ library("hrbrthemes")
 pr <- read_excel(here("programmazione", "piramideR", "pr2020.xlsx"))
 
 # ESTRAZIONE PER MERIALDI_____________________________________________________
-# PRJ <- pr %>% 
-#   select(CodIDIzler, DataInizio, DataFine, Descrizione, Tipologia) %>% 
-#   mutate(Anno = year(DataInizio), 
-#          Durata = year(DataFine)-Anno)%>% 
-#   select(-DataInizio, -DataFine) %>% 
-#   distinct(., CodIDIzler,.keep_all = TRUE) %>% 
+# PRJ <- pr %>%
+#   select(CodIDIzler, DataInizio, DataFine, Descrizione, Tipologia) %>%
+#   mutate(Anno = year(DataInizio),
+#          Durata = year(DataFine)-Anno)%>%
+#   #select(-DataInizio, -DataFine) %>%
+#   distinct(., CodIDIzler,.keep_all = TRUE) %>% View()
 #   writexl::write_xlsx("progetti.xlsx")
 #_____________________________________________________________________________
 
