@@ -90,7 +90,7 @@ L’IZSLER ha sede legale a Brescia e si avvale di 17 sedi territoriali situate 
 \begin{table}[H]
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
-\textbf{Regione} & \textbf{Popolazione} & \textbf{Superficie (km²)} & \textbf{Densità (ab/km²)} & \textbf{Comuni} & \textbf{Provincie} \\ \hline
+\textbf{Regione} & \textbf{Popolazione} & \textbf{Superficie (km²)} & \textbf{Densità (ab/km²)} & \textbf{Comuni} & \textbf{Province} \\ \hline
 Lombardia        & 10103969             & 23863,65                  & 423,4                     & 1506            & 12                 \\ \hline
 Emilia-Romagna   & 4467118              & 22452,78                  & 198,96                    & 328             & 9                  \\ \hline
 \end{tabular}
@@ -414,47 +414,198 @@ La Mappa Strategica dell’Istituto, si identifica in una fotografia sintetica d
 <!-- Di seguito in tabella sono riportati i risultati raggiunti nel 2020 sia per quello che riguarda gli Obiettivi Strategici sia per gli Obiettivi Operativi. -->
 
 ### Implementazione delle attività relative alla ricerca nazionale e internazionale
-Questo obiettivo è stato declinato in due azioni principali: 
 
--1. Rafforzamento della competitività nell'ambito della progettualità e della ricerca sperimentale nazionale ed internazionale 
-In tabella sono riportati gli indicatori strategici con i rispettivi target per il 2020 il risultato ottenuto la % di realizzazione e un breve commento al risultato raggiunto
+Obiettivo  declinato in due azioni principali: 
 
-|    <br>Indicatore strategico    	|    <br>Target   2020    	|    <br>Actual       	|    <br>%   realizzazione     	|    <br>Breve   descrizione del risultato raggiunto    	|
-|-	|-	|-	|-	|-	|
-|    <br>Impact Fattor (pubblicazioni scientifiche) anno   X/ Impact Fattor media ultimo triennio     	|    <br>>1    	|    <br>1,15<br>   <br>(318,27/275,37)    	|    <br>100%    	|    <br>L’indicatore mostra un buon andamento rispetto alla media dell’ultimo   triennio, che mette in evidenza il buon lavoro svolto per mantenere alti i   livelli della produzione scientifica e della ricerca    	|
-|    <br>% di quota dei Fondi Ministeriali della ricerca corrente   assegnati all'Istituto anno X/ % del totale dei Fondi Ministeriali della   ricerca corrente media ultimo triennio    	|    <br>>1    	|    <br>0,93<br>   <br>(12,21/13,06)    	|    <br>93,50%    	|    <br>L’indicatore mostra un miglioramento rispetto al valore anno   precedente (80%), considerando una congiunturale diminuzione dei fondi   assegnati dal Ministero, la capacità dell’Izlser di attrarre i finanziamenti   della ricerca si attesta sui valori medi rispetto agli ultimi esercizi     	|
-|    <br>N° progetti presentati a livello comunitario ed   internazionale anno x/ N° di progetti presentati a livello comunitario ed   internazionale media ultimo triennio     	|    <br>>1    	|    <br>1,73<br>   <br> (8/4,6)    	|    <br>100%    	|    <br>Nell’anno 2020 sono segnalate 8 partecipazioni a progetti europei ed internazionali.   Nel triennio precedente 2017 - 2018 - 2019 risultano 14 partecipazioni a   progetti europei ed internazionali. Media del triennio: 4,6. Pertanto, nel   2020 risultano 3,4 partecipazioni a progetti internazionali in più rispetto   alla media del triennio precedente (+ 1,74).    	|
-|    <br>% di realizzazione del Project "Realizzazione   network nazionale ed internazionale della Biobanca Veterinaria»    	|    <br>70%    	|    <br>65%    	|    <br>92,86%    	|    <br>L’indicatore fa riferimento al Project relativo alla realizzazione di   network della biobanca, L’actual mostra la % di realizzazione delle attività   del project per l’anno 2020, e verrà descritto nelle slides successive.    	|
-
-
+-1 Rafforzamento della competitività nell'ambito della progettualità e della ricerca sperimentale nazionale ed internazionale 
+-2 Sviluppare sinergie per valorizzare le competenze dei CRN
 
 
 
 
 ## I project
-PROJECT N.1: Realizzazione network nazionale ed internazionale della Biobanca Veterinaria 
-SIGNIFICATO STRATEGICO: 
+Cosa sono????
+
+**PROJECT N.1: Realizzazione network nazionale ed internazionale della Biobanca Veterinaria** 
+
+_Significato strategico_: 
 
 - L’Istituto è sede di un biobanca veterinaria e centro di referenza OIE ”Veterinary Biobank”; 
 - Il Ministero della Salute e l’OIE hanno ritenuto strategico realizzare a livello nazionale ed internazionale un network tra gli istituti di ricerca ed i centri di referenza nazionali ed internazionali; 
 - L’Istituto ha avviato attività di pianificazione e programmazione per la realizzazione delle aspettative nazionali ed internazionali. 
-SVILUPPO: 
+
+_Sviluppo_:
+
 - Azioni da realizzare a livello di Istituto e quindi di carattere trasversale alle strutture sanitarie ed amministrative; 
 - Azioni di coordinamento nazionale con gli altri IIZZSS; 
 - Azioni di pianificazione delle attività concordate con il Ministero e l’OIE.
- RISULTATI ATTESI: 
+
+_Risultati attesi_: 
+
 - Realizzazione di un network nazionale; 
 - Realizzazione della struttura informatica nazionale; 
 - Integrazione del network nazionale con il progetto pilota internazionale; 
 - Realizzazione della struttura informatica per la realizzazione del network internazionale 
 - Disponibilità ai paesi terzi del modello di struttura informatica nazionale per l’integrazione con la piattaforma internazionale. 
 
+_Attività realizzate nel 2020_:
+
+
+
+**PROJECT N.2: Emissione e revisione metodi di prova**
+
+_Significato strategico_:  
+
+- L’Istituto persegue la politica della qualità da oltre vent’anni; 
+- L’Unità Assicurazione Qualità è il supporto tecnico alle decisioni strategiche della direzione aziendale; 
+- La decisione di avviare nuove attività, metodi di prova o variare il campo di applicazione degli stessi deve essere presa in coerenza con una strategia organizzativa. 
+
+_Sviluppo_:
+
+- Analisi dello stato attuale dell’accreditamento delle prove; 
+- Analisi del grado di copertura dell’Istituto in relazione alle esigenze dei portatori di interesse istituzionali; 
+- Definizione di una strategia operativa per il miglioramento del grado di copertura. 
+
+_Risultati attesi_:  
+- Definizione di un sistema di verifica costante del grado di copertura territoriale delle esigenze; 
+- Ridistribuzione dei metodi analitici ed eventuale revisione; 
+- Programmazione delle modifiche dell’offerta analitica dell’IZSLER 
+
+_Attività realizzate nel 2020_:
+
+
+
+**PROJECT N.3: Classyfarm** 
+
+_Significato strategico_:  
+
+- Il Ministro della Salute ha identificato tra le linee prioritarie l’applicazione del sistema Classyfarm a livello nazionale; 
+- L’IZSLER ha sviluppato per conto del Ministero della Salute il sistema classyfarm; 
+- L’applicazione del sistema deve essere diffuso a livello nazionale ma deve avere la piena condivisione delle opportunità offerte anche all’interno di IZSLER. 
+
+_Sviluppo_:
+
+- Azioni da realizzare a livello di Istituto e quindi di carattere trasversale alle strutture sanitarie ed amministrative per l’applicazione del sistema; 
+- Definizione delle azioni necessarie per consolidare il sistema all’Interno di IZSLER; 
+- Azioni di coordinamento nazionale con gli altri IIZZSS; 
+- Azioni di pianificazione delle attività concordate con il Ministero.
+
+_Risultati attesi_: 
+
+- Condivisione con tutte le strutture dell’IZSLER della strategicità delle azioni definite; 
+- Creazione di percorsi operativi attraverso i quali sviluppare le attività dell’IZSLER; 
+- Soddisfare le esigenze strategiche del Ministero per l’applicazione a livello nazionale. 
+
+_Attività realizzate nel 2020_:
+
+
+
+**PROJECT N.4: Gestione centralizzata delle richieste dell’utenza** (integrato con il Project applicazione della lean alla gestione centralizzata delle richieste dell’utenza) 
+
+_Significato strategico_:  
+
+- L’Izsler ha definito nel piano di riorganizzazione una struttura strategica di gestione dell’interfaccia utente-IZSLER presso la sede centrale; 
+- È opportuno razionalizzare l’utilizzo di risorse umane e strumentali dedicate; 
+- È opportuno ridurre i punti di accettazioni presenti presso la sede di Brescia; 
+- È opportuno separare le responsabilità accettazione e gestione conflitto di interessi. 
+
+_Sviluppo_:
+
+- Azioni da realizzare a livello di Istituto e quindi di carattere trasversale alle strutture sanitarie ed amministrative per la realizzazione della sede operativa unica; 
+- Acquisizione di ulteriori fasi comuni utili alla razionalizzazione del processo di gestione e circolazione di campioni e dati; 
+- Realizzazione di sistemi di monitoraggio e feedback verso i reparti di dati di gestione ed analisi dei tempi di realizzazione dei processi produttivi; 
+- Semplificazione di procedure informatiche e di gestione del sistema qualità; 
+- Collegamento operativo con le attività della biobanca. 
+
+_Risultati attesi_: 
+
+- Realizzazione della sede unica per l’accettazione dei campioni, semplificazione nei rapporti con i clienti: front office unico e Uniformità di comportamenti; 
+- Controllo quali-quantitativo flusso campioni e dati e alimentazione sistema informativo aziendale uniforme e coerente; 
+- Realizzazione di un sistema di monitoraggio attività e tempi, feed back ai reparti e supporto per il miglioramento degli stessi; 
+- Semplificazione dei processi e applicazione di sistemi di eliminazione delle attività non a valore per l’organizzazione. 
+
+_Attività realizzate nel 2020_:
+
+
+
+**PROJECT N.5: Pianificazione delle strategie di comunicazione dell’Istituto** 
+
+_Significato strategico_:  
+
+- L’Izsler ha definito nel piano di riorganizzazione un ufficio dedicato alla comunicazione; 
+- Gli strumenti di comunicazione disponibili devono essere utilizzati in modo organizzato strutturato e secondo politiche predefinite; 
+- La comunicazione verso l’esterno e verso l’esterno rappresenta un elemento determinante per valorizzare le attività svolte. 
+
+_Sviluppo_:
+
+- Realizzare azioni per pianificare e migliorare la comunicazione verso l’esterno; 
+- Realizzare azioni per pianificare e migliorare la comunicazione verso l’interno; 
+- Attivare un servizio interno di analisi e produzione delle informazioni. 
+
+_Risultati attesi_: 
+
+- Revisione aggiornamento e pianificazione redazionale del sito istituzionale; 
+- Attivazione della presenza sui social media; 
+- Attivazione ed aggiornamento di una APP istituzionale; 
+- Nuove modalità di interazione tra uffici e reparti.
+
+_Attività realizzate nel 2020_:
+
+
+
 ## Il Cascading: dagli obiettivi strategici agli obiettivi operativi
+
+Dagli obiettivi strategici sono stati «costruiti» gli obiettivi operativi inseriti all’interno dell’ Albero  della  Performance   in un processo definito di «cascading»,  declinati in indicatori, target e strutture assegnatarie, suddivisi nella  quattro principali  prospettive di analisi.
+Nella dimensione **Istituzioni, cittadini e consumatori**  l’Ente  mette in evidenza il rafforzamento dell’IZSLER nel settore della PA centrale, l’ampliamento delle attività  nell’ambito della collaborazione con le Regioni e gli Enti locali, il potenziamento dell’integrazione con il Ministero e le Regioni, l’ aumento del network scientifico e della collaborazione scientifica sia a livello nazionale ed internazionale, la partecipazione a progetti di ricerca, twinning  e il potenziamento dell’attività diagnostica e delle produzioni. Una dimensione strategica dell’IZSLER che pone le basi per lo sviluppo di scenari futuri, declinati in ben n. 95 indicatori di mantenimento/potenziamento di attività.
+Nella dimensione **economico-finanziario** l’IZSLER analizza la gestione economica-finanziaria in un’ottica di contenimento delle uscite, di razionalizzazione dell’utilizzo delle risorse,  improntati al perseguimento dell’efficienza, assicurando  la massima efficacia.
+Nella dimensione dei  **processi interni*»**  l’Ente  valuta il modo in cui  raggiungere un migliore efficienza dell’amministrazione,  attraverso l’adeguamento dei processi produttivi dei servizi alle “migliori pratiche” (modelli di eccellenza e standard internazionali e nazionali), mediante l’ottimizzazione della gestione, delle procedure e dei processi, con particolare riferimento al contenimento ed alla riduzione dei tempi di TDF/TDR , nonché all'ottimizzazione dei tempi dei procedimenti amministrativi. 
+Nella dimensione della **Innovazione , crescita e sviluppo organizzativo** rientrano gli indicatori relativi alla qualità totale e soddisfazione delle aspettative dell’utenza, che si declinano  nella qualità e la quantità delle prestazioni e dei servizi erogati, dello sviluppo qualitativo e quantitativo delle relazioni con i cittadini,  gli utenti , i destinatari dei servizi e la rilevazione del grado di soddisfazione dei destinatari delle attività. 
+Lo sviluppo organizzativo viene supportato dalla costante innovazione  dei sistemi informativi e dalla  valorizzazione del capitale umano mediante percorsi di promozione delle competenze. Vista la necessaria integrazione tra gli obiettivi del Piano della Performance e il PTPCT, in questa sezione vengono riportati anche gli obiettivi in tema di trasparenza, anticorruzione e conflitto di interessi. 
+In questa sezione si realizza l’effettiva pianificazione, il controllo delle performance e dei processi, analizzati da diverse prospettive.
+Le  quattro  dimensioni vengono valutati sia dal punto di vista del singolo indicatore rispetto al suo trend storico, sia rispetto alla scala dei valori/dimensione a cui appartengono , sia rispetto al grado di performance della singole struttura .
+Utilizzando opportuni strumenti di indagine è possibile fare un’analisi su molti livelli; i grafici qui di seguito riportati sono un esempio della valutazione fatte periodicamente dall’IZSLER, anche al fine di un continuo e costante monitoraggio.
+
+
 # Gli Obiettivi Individuali: Direzione Generale, Sanitaria ed Amministrativa
+
+La  Giunta  della  Regione  Lombardia  con  deliberazione  n.  XI/2110 del  09.09.2019,  ha  definito,  di concerto  con  la  Regione  Emilia  Romagna,  gli  obiettivi  aziendali  di  interesse  regionale  per l’anno di riferimento del Direttore Generale  dell’Istituto.
+Con  Decreto    n.  305  del  24.09.2019 il  Direttore  Generale,  prende atto del coinvolgimento del Direttore Amministrativo e del Direttore Sanitario nel raggiungimento degli obiettivi per l’anno 2020.Al  Direttore  Sanitario  e al Direttore Amministrativo,  oltre  agli  obiettivi  aziendali  di  interesse  regionali, sono  stati  assegnati  anche   gli  obiettivi  strategici  che  per  i  diversi  ambiti  di  competenza   li riguardavano.
+Con nota prot. N. 1967 del 31/01/2020 è stata trasmessa alle Regione la rendicontazione attestante l’attività svolta per ciascun obiettivo. Al momento non è ancora stato comunicato dalle Regioni la valutazione sul raggiungimento degli obiettivi assegnati per l’anno 2020
+
 ## Gli elementi di valutazione quantitativa e qualitativa
+Le schede di valutazione individuale sono state redatte in conformità alle metodologie indicate nel Sistema di Misurazione e Valutazione dell’IZSLER anno 2020, approvato con delibera del direttore generale n.__ del___. In base alla normativa vigente e agli accordi aziendali, i responsabili di struttura hanno regolarmente provveduto alla valutazione del personale dirigente e di comparto. Si presenta qui di seguito gli elementi costitutivi della schede di valutazione del personale del comparto e della dirigenza.
+
+
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/f3.png")
+```
+
+
 ### Elementi di valutazione qualitativa: le aree di attenzione
 
+**Valutazione  Qualitativa**:  relativa  alla  qualità  del  contributo  dato  e  dell’impegno  assicurato  al  raggiungimento  degli obiettivi assegnati.
+I criteri di valutazione sono differenziati tra personale  del  Comparto e della  Dirigenza,  ed all’interno  di quest’ultima tra Dirigenti Responsabili di Struttura e Professional, come di seguito illustrato.
+**Personale del  Comparto**:  La valutazione qualitativa  del  contributo  dato  e  dell’impegno  assicurato  nell’anno  di  riferimento  è valutata  con  riferimento  alle  aree  di  attenzione  previste  per  la  categoria  di  appartenenza  e  specificate  nella  scheda  di assegnazione  come  sotto  riportate.  Il  Valutatore  descrive  brevemente  il  contributo  atteso  in  relazione  ad  ognuna  delle  aree identificate ed agli obiettivi assegnati e il giudizio finale deve essere oggettivabile anche documentalmente.
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/f4.png")
+```
+
+**Dirigenti delle aree Veterinaria - Sanitaria - Tecnica - Professionale - Amministrativa.** Sono state individuate n. 9 aree di attenzione, tra le quali il Valutatore può scegliere per il Dirigente valutato non meno di 3 e non più di 5 aree tra le n. 9 elencate. Anche in questo caso il Valutatore descrive brevemente il contributo atteso in relazione ad ognuna delle aree identificate ed agli obiettivi assegnati e il giudizio finale complessivo per tutte le aree individuate deve essere oggettivabile anche documentalmente.
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/f5.png")
+```
+
 # La dimensione economico-finanziaria
+Si riporta di seguito la sintesi del bilancio consuntivo anno 2019 con le informazioni più rilevanti di carattere economico-finanziario, la proposta di Bilancio consuntivo anno 2020 è in fase di fine istruttoria. Nel bilancio si evidenzia un utile di esercizio pari a 11.105.153. Per ogni ulteriore approfondimento si rimanda alla pagina della sezione “Amministrazione Trasparente”, sotto sezione “Bilanci”. ll Bilancio è stato adottato con delibera______-del______il Collegio dei revisori dei conti ha espresso parere favorevole con vernale n.____del-__.
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/f6.png")
+```
+
+
 
 # Le pari opportunità
 
