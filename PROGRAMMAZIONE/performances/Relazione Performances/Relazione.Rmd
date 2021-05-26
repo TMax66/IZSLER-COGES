@@ -1,98 +1,463 @@
 ---
-title: "LA RELAZIONE SULLA PERFORMANCE "
-subtitle: "ANNO 2020"
-author: "Uff. Controllo di Gestione e Performance"
-output: 
-  pagedreport::paged_hazelnuts:
-    front_img: "figure/cover.png"
-    back_img: "figure/cover.png"
-    logo: "figure/Logo-IZSLER.png"
-    
-knit: pagedown::chrome_print
-toc-title: "Indice dei contenuti"
-secondary-color: "#00873E"
-google-font: TRUE
-main-font: "Raleway"
-main-color: "#6cabdd"
----
+title: ''
+author: ''
+header-includes: \usepackage[italian]{babel} \usepackage{setspace}\doublespacing \usepackage{float} 
+                  \usepackage{booktabs} \usepackage{longtable} 
+                  \usepackage{fontspec} \usepackage{caption}
+                  \setmainfont{Times New Roman} \usepackage{booktabs}
+                  
+              
+output:
+  pdf_document:
+    latex_engine: xelatex
+    #toc: yes
+    number_sections: yes
+    fig_caption: yes
+fontsize: 12pt
+  
+linkcolor: blue
+ 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+---
+\newcommand*\NewPage{\newpage\null\thispagestyle{empty}\newpage\thispagestyle{empty}}
+
+\newpage
+
+```{r child='frontespizio.Rmd'}
 ```
 
-# This is part 1 {-}
+<!-- \newpage -->
+<!-- \pagenumbering{Roman} -->
 
-## Second level {-}
+<!-- ```{r child='sintesi.rmd'} -->
+<!-- ``` -->
 
-This file is what a user will see when they select your template. Make sure that you update the fields in the yaml header. In particular you will want to update the `output` field to whatever format your template requires.
+```{r include=FALSE}
+library(tidyverse)
+library(readxl)
+library(here)
+library(kableExtra)
 
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
-Finally, be sure to remove this message!
-This file is what a user will see when they select your template. Make sure that you update the fields in the yaml header. In particular you will want to update the `output` field to whatever format your template requires.
+```
 
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
-
-## Second level {-}
-
-Finally, be sure to remove this message!
-This file is what a user will see when they select your template. Make sure that you update the fields in the yaml header. In particular you will want to update the `output` field to whatever format your template requires.
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
-
-Finally, be sure to remove this message! This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
-Finally, be sure to remove this message!
-This file is what a user will see when they select your template. Make sure that you update the fields in the yaml header. In particular you will want to update the `output` field to whatever format your template requires.
-
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
-
-Finally, be sure to remove this message!
-This file is what a user will see when they select your template. Make sure that you update the fields in the yaml header. In particular you will want to update the `output` field to whatever format your template requires.
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
-Finally, be sure to remove this message!
-This file is what a user will see when they select your template. Make sure that you update the fields in the yaml header. In particular you will want to update the `output` field to whatever format your template requires.
-
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
-
-Finally, be sure to remove this message!
-This file is what a user will see when they select your template. Make sure that you update the fields in the yaml header. In particular you will want to update the `output` field to whatever format your template requires.
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
-
-Finally, be sure to remove this message!This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
-Finally, be sure to remove this message!
-This file is what a user will see when they select your template. Make sure that you update the fields in the yaml header. In particular you will want to update the `output` field to whatever format your template requires.
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
-Finally, be sure to remove this message!
-This file is what a user will see when they select your template. Make sure that you update the fields in the yaml header. In particular you will want to update the `output` field to whatever format your template requires.
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
+\newpage
+\tableofcontents
 
 
-+ item 1
-+ item 2
-+ item 3
 
-1. numbered 1
-2. numbered 2
-3. numbered 3
+\newpage
 
 
-## Second level {-}
+# PREMESSA {-}
+La Relazione sulla Performance, informata ai principi dell’art. 13, comma 6, lettera b), del D Lgs n.150/2009 e all’art.10, comma 1, lettera b) dello stesso decreto, evidenzia a consuntivo con riferimento all’anno 2020, i risultati organizzativi e individuali raggiunti rispetto agli obiettivi programmati con rilevazione degli eventuali scostamenti.
+Il documento chiude il Ciclo di Gestione della Performance avviato con l’approvazione del Piano della Performance 2020-2022 con deliberazione del Consiglio di Amministrazione n.____ del ______2020.
+La logica sottesa è quella di rendere edotti i diversi portatori di interesse (stakeholders) sui risultati attesi ed alle modalità con cui quei risultati sono stati raggiunti.
+ In riferimento alle finalità sopra descritte, si è impostata la Relazione in modo snello e comprensibile raccogliendo le informazioni di maggior interesse ed ispirandosi ai principi di trasparenza, immediata intelligibilità, veridicità e verificabilità dei contenuti, partecipazione e coerenza interna ed esterna.
+La presente Relazione della Performance è stata sottoposta alla validazione del Nucleo di Valutazione delle Prestazioni e pubblicata nella sezione «Amministrazione trasparente» del sito internet dell’Istituto, ai sensi dell’art. 10, c. 8, lett. b), d.lgs. 33/2013. 
 
-Finally, be sure to remove this message!
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
-Finally, be sure to remove this message!
-This file is what a user will see when they select your template. Make sure that you update the fields in the yaml header. In particular you will want to update the `output` field to whatever format your template requires.
 
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
 
-Finally, be sure to remove this message!
-This file is what a user will see when they select your template. Make sure that you update the fields in the yaml header. In particular you will want to update the `output` field to whatever format your template requires.
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
 
-# And now part 2 {-}
 
-This file is what a user will see when they select your template. Make sure that you update the fields in the yaml header. In particular you will want to update the `output` field to whatever format your template requires.
 
-## Second level {-}
+\newpage
+# Informazioni d'interesse per i cittadini e gli altri stakeholders esterni
 
-This is a good place to demonstrate special features that your template provides. Ideally it should knit out-of-the-box, or at least contain clear instructions as to what needs changing.
+## Gli stakeholders dell'IZSLER{-}
+Molteplici sono i soggetti portatori di interesse o stakeholders che hanno correlazioni di diversa natura con l’Istituto. Da quelli che detengono un rapporto diretto, clienti, fornitori, cittadini, a tutti gli attori le cui azioni possono direttamente o indirettamente influenzare le scelte attuate o da porre in essere (collettività, Pubblica Amministrazione, istituzioni pubbliche ecc.)
 
-Finally, be sure to remove this message!
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/f1.png")
+```
+
+\newpage
+
+## Analisi del contesto di riferimento
+L’ analisi del contesto di riferimento ci offre la possibilità di valutare i dati qualitativi e quantitativi che caratterizzano gli ambiti di riferimento dell’Istituto, con l’obiettivo di fornire informazioni rilevanti per gli stakeholders, per l’interpretazione dei risultati raggiunti presentati nelle pagine successive.
+
+## Il contesto esterno di riferimento: contesto europeo ed internazionale
+Gli Istituti Zooprofilattici costituiscono una struttura sanitaria integrata, unica in Europa, in grado di assicurare una rete di servizi per verificare la salubrità degli alimenti e dell’ambiente, per la salvaguardia della salute dell’uomo. La funzione di raccordo e coordinamento delle attività degli II.ZZ.SS. è svolta dalla Direzione Generale della sicurezza degli alimenti e della nutrizione del Ministero della Salute che ne definisce, mediante il lavoro della Commissione Scientifica Nazionale, le Linee guida e le tematiche principali. 
+La rete degli II.ZZ.SS. ben si integra e si riconosce con il valore internazionale “ONE HEALTH” basato su collaborazioni intersettoriali e formalmente riconosciuto dalla Commissione Europea, OMS, FAO, OIE, istituti di ricerca, ONG e a molti altri. Questo approccio riconosce che la salute delle persone, degli animali e degli ecosistemi sono interconnesse, promuovendo una metodologia intersettoriale, e multidisciplinare, in grado di affrontare i rischi potenziali o già esistenti che hanno origine dall’interfaccia tra ambiente, animali e uomo.
+
+## Il contesto nazionale
+Gli Istituti Zooprofilattici Sperimentali (II.ZZ.SS.) costituiscono una rete di eccellenza sul territorio nazionale in grado di operare di concerto con il Ministero della Salute a stretto contatto con i Servizi Veterinari Regionali e delle ASL.
+Assicurano al Servizio Sanitario Nazionale attività diagnostica di campo e di laboratorio, di sorveglianza epidemiologica, di ricerca e formazione, delle zoonosi, del benessere animale e della sicurezza alimentare, nel rispetto degli standard di qualità e di prevenzione stabiliti dall’Unione Europea. Gli II.ZZ.SS. con le loro 10 sedi centrali dislocate sul territorio nazionale e le 90 sezioni diagnostiche periferiche, sono sottoposti alla vigilanza del Ministero della Salute.
+
+## IL contesto Regionale: Lombardia e Emilia Romagna
+
+L’IZSLER ha sede legale a Brescia e si avvale di 17 sedi territoriali situate nelle regioni Lombardia (Brescia, Bergamo, Mantova, Cremona, Sondrio, Binago (VA), Milano, Pavia e Lodi) ed Emilia-Romagna (Bologna, Piacenza, Parma, Reggio nell’Emilia, Modena, Forlì, Ravenna e Ferrara), che curano e gestiscono i contatti con le realtà territoriali, interessando un’area di circa 46.000 kmq in cui risiedono oltre 14 milioni di abitanti.  I dati di seguito riportati, aggiornati al 31/12/2019 (ISTAT), forniscono un quadro delle dimensioni delle regioni di competenza dell’IZSLER. 
+
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Regione} & \textbf{Popolazione} & \textbf{Superficie (km²)} & \textbf{Densità (ab/km²)} & \textbf{Comuni} & \textbf{Provincie} \\ \hline
+Lombardia        & 10103969             & 23863,65                  & 423,4                     & 1506            & 12                 \\ \hline
+Emilia-Romagna   & 4467118              & 22452,78                  & 198,96                    & 328             & 9                  \\ \hline
+\end{tabular}
+
+\end{table}
+
+
+La **Regione Lombardia** può considerarsi come la “locomotiva d’Italia” essendo la Regione più ricca e popolosa del Paese, nonché una delle aree più industrializzate dell’intero panorama europeo.
+ La situazione economica della Regione, come emerso da un recente report della Banca d’Italia, ha risentito pesantemente degli effetti dell’epidemia da COVID-19 che ha colpito l’intera popolazione mondiale nel corso del 2020 e delle restrizioni delle attività disposte dai decreti governativi per contenere la diffusione del contagio. In particolare, secondo le stime basate sull'indicatore trimestrale dell'economia regionale (ITER) della Banca d'Italia, in Lombardia il prodotto interno lordo sarebbe diminuito di circa il 12% nei primi sei mesi del 2020. Il recupero registrato nel terzo trimestre delle componenti del fondo dell’economia regionale non ha compensato i cali della prima parte dell'anno e l'attività economica è rimasta su livelli significativamente inferiori a quelli precedenti alla crisi sanitaria. Nell'industria, la produzione manifatturiera, secondo i dati di Union camere Lombardia, è diminuita in misura marcata nel primo semestre dell'anno, con un calo più accentuato nel secondo trimestre, per poi tornare leggermente a crescere nel corso del terzo trimestre, anche se in riduzione rispetto allo stesso periodo del 2019 (-5,2%). Nei servizi, il fatturato delle imprese del commercio al dettaglio si è ridotto del 7,3% nei primi nove mesi dell’anno rispetto ai dati dello stesso periodo del 2019. L’impatto della pandemia è stato più contenuto nei servizi alle imprese (-8,5% nel primo semestre dell’anno), mentre più intenso per i trasporti (-15,1%) e molto marcato nei settori della ristorazione e dell’alloggio (-34,5%)3. Il settore dell’agricoltura lombarda risulta il meno penalizzato dagli effetti negativi della crisi sanitaria da COVID-19, nonostante la diminuzione del valore aggiunto dell’agricoltura (-4,9%) nei primi 6 mesi dell’anno, dopo un 2019 positivo. Per quanto riguarda gli scambi con l’estero, nel primo semestre del 2020 le esportazioni lombarde di beni hanno subito una forte contrazione rispetto al medesimo periodo del 2019 (-15,9%) e lo stesso dicasi per le importazioni. La crisi sanitaria legata all’epidemia da COVID-19 ha determinato nel corso del 2020 un progressivo peggioramento delle condizioni del mercato del lavoro. Dopo essere stati sostanzialmente invariati durante il primo trimestre dell’anno, gli occupati sono diminuiti in maniera significativa nel secondo trimestre (-1,3%) rispetto allo stato periodo del 2019, soprattutto tra i lavoratori autonomi e tra i dipendenti con contratti diversi dal tempo indeterminato.
+
+La **Regione Emilia-Romagna** rappresenta, nel panorama italiano, una delle più estese dal punto di vista territoriale, nonché più popolose ed è una delle Regioni con il più alto livello di competitività imprenditoriale, grazie ad un sistema economico e produttivo focalizzato sui mercati internazionali.
+La crisi innescata dalla pandemia da COVID-19 ha colpito anche l’economica delle Regione Emilia, già in recessione dal 2019, soprattutto nei primi due trimestri dell’anno, come evidenziato dall’indicatore trimestrale dell’economia regionale (ITER) elaborato dalla Banca d’Italia. La riduzione della produzione industriale della Regione (-14,9% nella prima metà del 2020 rispetto al medesimo periodo del 20196), ha riguardato tutti i settori della manifattura. In tale contesto solo le imprese farmaceutiche e alimentari hanno registrato una dinamica migliore. Nel settore dei servizi si registra un calo generalizzato delle attività. Nel terziario, la diminuzione dei volumi di attività è stata più evidente per il commercio dei beni non alimentari, soprattutto al dettaglio, e per i servizi di alloggio. Tra gennaio e settembre anche le esportazioni di merci sono diminuite significativamente (- 14,2%), soprattutto nell’ambito della meccanica, dei mezzi di trasporto, dell’abbigliamento e dei prodotti di metallo. Dopo una prolungata fese espansiva in atto dal 2014, anche il tasso di occupazione si è ridotto, soprattutto nel secondo trimetre dell’anno (-69,1%), interessando principalmente la componente femminile e quella a tempo determinato.
+Di seguito sono riportati alcuni dati significativi a rappresentare il patrimonio zootecnico e le aziende che operano nel territorio di competenza dell’Istituto.
+
+\begin{center}
+\begin{table}[H]
+\begin{tabular}{|l|c|c|l|l|c|c|}
+\cline{1-3} \cline{5-7}
+\multicolumn{3}{|c|}{\textbf{Lombardia}}                                                               &  & \multicolumn{3}{c|}{\textbf{Emilia-Romagna}}                                    \\ \cline{1-3} \cline{5-7} 
+\textbf{Specie}   & \multicolumn{1}{l|}{\textbf{N.Allevamenti}} & \multicolumn{1}{l|}{\textbf{N.Capi}} &  & \multicolumn{1}{c|}{\textbf{Specie}} & \textbf{N.Allevamenti} & \textbf{N.Capi} \\ \cline{1-3} \cline{5-7} 
+Bovini e bufalini & 15446                                       & 1543959                              &  & Bovini e bufalini                    & 6448                   & 572512          \\ \cline{1-3} \cline{5-7} 
+Ovini e caprini   & 13130                                       & 209308                               &  & Ovini e caprini                      & 3342                   & 71487           \\ \cline{1-3} \cline{5-7} 
+Suini             & 8382                                        & 4407955                              &  & Suini                                & 3779                   & 1126379         \\ \cline{1-3} \cline{5-7} 
+Avicoli           & 3427                                        & 21180545                             &  & Avicoli                              & 1170                   & 41729415        \\ \cline{1-3} \cline{5-7} 
+Equidi            & 20605                                       & 61085                                &  & Equidi                               & 10744                  & 35000*          \\ \cline{1-3} \cline{5-7} 
+\end{tabular}
+\tiny Fonte Banca Dati Nazionale dell’Anagrafe Zootecnica (BDN) per bovini, ovini, caprini e suini – BDR per avicoli ed equini al 31/12/2020  \\
+*ultima stima disponibile al 2018, dato non più presente in banca dati nazionale.
+
+\end{table}
+\end{center}
+
+# L'Amministrazione
+
+L'Istituto Zooprofilattico Sperimentale della Lombardia e dell'Emilia Romagna (IZSLER) è un Ente Sanitario di Diritto Pubblico, dotato di autonomia gestionale, amministrativa e tecnica, che opera nell'ambito del Servizio Sanitario Nazionale come strumento tecnico scientifico dello Stato, delle Regioni e delle Province Autonome, garantendo ai Servizi Veterinari le prestazioni e la collaborazione in materia di sanita animale, controllo di salubrità e qualità  degli alimenti di origine animale, igiene degli allevamenti e corretto rapporto tra insediamenti umani, animali ed ambiente.
+
+La mission dell'IZSLER è:
+
+ **"Operare a favore della salute pubblica e delle attività produttive del settore agro-alimentare nel rispetto dei valori etici, al fine dello sviluppo socio-economico del paese"**
+ 
+ L’organizzazione attuale dell’Istituto trova il suo fondamento normativo nel D. Lgs n.106 del 28.06.2012, recante la “Riorganizzazione degli enti vigilati dal Ministero della Salute, ai sensi dell’art.2 della L. n. 183 del 04.11.2010”, delineati poi nelle leggi regionali della Lombardia n.22 del 24.07.2014 e dell’Emilia-Romagna n.9 del 30.06.2014. 
+Con Deliberazione della Giunta Regionale della Regione Lombardia n. XI/2622 del 16.12.2019 è stato nominato il direttore generale, **Dr. Piero Frazzi**. L’attuale Direttore Generale, con proprio decreto n.25 del 07.02.2020 incaricava Direttore Amministrativo il Dott. Giovanni Ziviani e con proprio decreto n.24 del 07.02.2020 Direttore Sanitario, il Dott. Giuseppe Diegoli. A seguito delle personali dimissioni del Dott. Diegoli il Direttore Generale, con proprio decreto n.243 del 30.07.2020 incaricava Direttore Sanitario, il **Dott. Giuseppe Merialdi**.
+
+Gli organi dell’Istituto sono:
+
+- DIRETTORE GENERALE: Dr. Piero Frazzi  
+
+- CONSIGLIO DI AMMINISTRAZIONE:
+  Dott. Paolo Cozzolino – Presidente, 
+  Dott. Mario Chiari - Vicepresidente, 
+  Dott. Marco Delledonne - Membro, 
+  Dott.ssa Flavia Piccinelli – Membro, 
+  Dott. Maurilio Giorgi - Membro. 
+
+- COLLEGIO DEI REVISORI DEI CONTI: 
+Dott. Alberto Parzani – Presidente, 
+Dott. Marco Domenicali - Componente, 
+Dott. Lino Pietrobono - Componente.  
+
+Il Nucleo di Valutazione delle Prestazioni (NVP), composto da: 
+D.ssa Simonetta Fedeli – Presidente
+Dott. Sergio Valentini – Componente
+D.ssa Giuseppina Cruso - Componente, 
+con funzioni analoghe a quelle degli organismo indipendente di valutazione (OIV) è un soggetto nominato in ogni Amministrazione Pubblica e svolge in modo indipendente alcune importanti funzioni nel processo di misurazione e valutazione della performance, tra cui la validazione del presente documento ai sensi dell’art. 10 lettera b) del D. Lgs 150/2009 e s.m.i..
+ 
+\newpage
+L’IZSLER svolge compiti inerenti il settore della sanità pubblica veterinaria, della sicurezza alimentare e del benessere animale, nonché attività di ricerca scientifica sperimentale veterinaria. L’IZSLER opera come strumento tecnico-scientifico dello Stato, della regione Lombardia e della regione Emilia Romagna nell’ambito del Servizio Sanitario nazionale, garantendo, in tal modo, al Ministero della Salute, alle Regioni stesse alle aziende sanitarie le prestazioni e la collaborazione tecnico scientifica necessarie all’espletamento delle funzioni in materia di sanità pubblica veterinaria e sicurezza alimentare.
+
+In particolare, all’IZSLER sono affidate le seguenti funzioni istituzionali: 
+
+- erogazione del servizio diagnostico delle malattie degli animali e delle zoonosi;
+- supporto tecnico-scientifico ed operativo all'azione di farmaco-vigilanza veterinaria;
+- sorveglianza epidemiologica nell'ambito della sanità animale, igiene delle produzioni zootecniche, igiene degli alimenti, anche mediante l'attivazione di centri epidemiologici;
+- attuazione di iniziative statali o regionali, anche in collaborazione con le università, per la formazione, l'aggiornamento e la specializzazione di veterinari e di altri operatori; 
+- cooperazione tecnico-scientifica con istituti del settore veterinario anche esteri, previe intese con il Ministero della Salute;
+- esecuzione degli accertamenti analitici necessari alle azioni di polizia veterinaria e all'attuazione dei piani di profilassi, risanamento ed eradicazione;
+- esecuzione degli esami necessari all'attività di controllo sugli alimenti di origine animale, nonché degli esami necessari all'attività di controllo sull'alimentazione animale; 
+- ricerca sperimentale sulla eziologia, patogenesi e profilassi delle malattie infettive diffusive degli animali; 
+- ricerca in materia di igiene degli allevamenti e delle produzioni zootecniche;
+- supporto tecnico-scientifico ed operativo per le azioni di difesa sanitaria e di miglioramento delle produzioni animali;
+- ricerca di base e finalizzata per lo sviluppo delle conoscenze in materia di sicurezza alimentare e sanità veterinaria, secondo programmi e mediante convenzioni con università e istituti di ricerca italiani e stranieri, nonché su richiesta dello Stato, delle Regioni ed altri enti pubblici; 
+- studio e sperimentazione di tecnologie e metodiche necessarie al controllo sulla salubrità degli alimenti e dell’alimentazione animale;
+- formazione di personale specializzato nel campo della zooprofilassi e salubrità degli alimenti anche presso istituti e laboratori di Paesi esteri; 
+- elaborazione ed applicazione di metodi alternativi all’impiego di modelli animali nella sperimentazione scientifica;
+- consulenza ed assistenza agli allevatori per la bonifica zoosanitaria, per lo sviluppo e il miglioramento igienico delle produzioni animali; 
+- produzione, commercializzazione e distribuzione di medicinali e prodotti necessari per la lotta alle malattie degli animali e per l’espletamento delle funzioni di sanità pubblica veterinaria.
+
+• Sanità Animale: l’IZSLER garantisce in questo settore un servizio diagnostico attivo negli ambiti di maggior interesse zootecnico (bovino, suino, ovicaprino, avicolo, cunicolo, ittico, apistico e della selvaggina allevata) e nelle specie di affezione (cani, gatti, rettili, animali selvatici, uccelli esotici, etc.). Le prestazioni non si limitano alle sole analisi di laboratorio ma comprendono anche interventi in allevamento. 
+
+## **Settori di competenza istituzionale dell’IZSLER** {-}
+
+- **Sicurezza Alimentare** come previsto dalle programmazioni sanitarie regionali e dalla politica dell’Unione Europea, l’IZSLER svolge funzioni di supporto nell’ambito dei piani nazionali e 15 Cfr “Piano delle Performance 2020-2022” adottato con Delibera del Consiglio di Amministrazione n.2/2020. 25 regionali di controllo sugli alimenti nella filiera produttiva e di commercio. Tale attività è assicurata anche a supporto delle azioni dei Nuclei Antisofisticazioni e Sanità (NAS) dell’Arma dei Carabinieri e degli organi periferici del Ministero della Salute.
+- **Benessere Animale** : l'accertamento dei livelli del benessere animale è funzionale all'attività di certificazione delle filiere alimentari, in linea con le attuali direttive dell'Unione Europea sulla qualità delle produzioni zootecniche (intesa come qualità totale del processo produttivo) e sulla valorizzazione delle produzioni locali tipiche. I parametri che caratterizzano lo stato di benessere sono la sintesi di un approccio combinato, multidisciplinare, basato su competenze di clinica, etologia, immunologia, immunobiochimica e sull'applicazione di tipologie analitiche di biochimica clinica. 
+- **Formazione**: si configura come una delle mission più importanti e comporta la formazione di personale specializzato nel campo della zooprofilassi e salubrità degli alimenti anche presso istituti e laboratori di paesi esteri. L’IZSLER pianifica strategicamente le attività in tale settore, al fine di soddisfare il fabbisogno formativo in coerenza con le performance aziendali, progettando interventi formativi ad hoc e corsi accreditati ECM. Inoltre, mediante convenzioni, vengono accolti in Istituto, ogni anno, tirocinanti, frequentatori volontari e ricercatori, ed è fornita loro l’opportunità di svolgere attività di supporto tecnico-scientifico nell’ambito del corso di studi o del percorso post-laurea, delle scuole di specializzazione e dei dottorati di ricerca. 
+- **Ricerca**: tra i compiti istituzionali principali dell’IZSLER figura l’attività di Ricerca.
+I principali programmi di ricerca finanziati dal Ministero della Salute, ai quali partecipa l’IZSLER sono: 
+- la Ricerca Corrente (è l’attività di ricerca scientifica diretta a sviluppare nel tempo le conoscenze fondamentali in settori specifici della biomedicina e della sanità pubblica); 
+- la Ricerca Finalizzata (è uno dei principali strumenti per il conseguimento degli obiettivi delle politiche del Servizio Sanitario Nazionale). 
+ L’Istituto partecipa, inoltre, a progetti di ricerca europei e ad altri programmi di ricerca diversi da quelli finanziati dal Ministero della Salute, a progetti finanziati dalle Regioni Lombardia ed Emilia Romagna. L’Istituto, nell’ambito dei propri compiti istituzionali, può sviluppare anche attività di ricerca autofinanziate (progetti autofinanziati). 
+
+Nella seguente tabella sono riportati i dati suddivisi per tipologia di progetto di ricerca relativamente al 2020.
+
+\begin{center}
+\begin{table}[H]
+\begin{tabular}{ccccc}
+\multicolumn{5}{c}{\textbf{Progetti di Ricerca Anno 2020}}                                                                                     \\ \hline
+\multicolumn{1}{|c|}{\textbf{Tipologia}} &
+  \multicolumn{1}{c|}{\textbf{In corso}} &
+  \multicolumn{1}{c|}{\textbf{Conclusi}} &
+  \multicolumn{1}{c|}{\textbf{Nuovi}} &
+  \multicolumn{1}{c|}{\textbf{Totale}} \\ \hline
+\multicolumn{1}{|c|}{Corrente}       & \multicolumn{1}{c|}{88}  & \multicolumn{1}{c|}{12} & \multicolumn{1}{c|}{14} & \multicolumn{1}{c|}{114} \\ \hline
+\multicolumn{1}{|c|}{Autofinanziato} & \multicolumn{1}{c|}{8}   & \multicolumn{1}{c|}{3}  & \multicolumn{1}{c|}{8}  & \multicolumn{1}{c|}{19}  \\ \hline
+\multicolumn{1}{|c|}{Altro tipo}     & \multicolumn{1}{c|}{3}   & \multicolumn{1}{c|}{6}  & \multicolumn{1}{c|}{4}  & \multicolumn{1}{c|}{13}  \\ \hline
+\multicolumn{1}{|c|}{Istituzionale}  & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{5}  & \multicolumn{1}{c|}{4}  & \multicolumn{1}{c|}{13}  \\ \hline
+\multicolumn{1}{|c|}{Europeo}        & \multicolumn{1}{c|}{3}   & \multicolumn{1}{c|}{3}  & \multicolumn{1}{c|}{1}  & \multicolumn{1}{c|}{7}   \\ \hline
+\multicolumn{1}{|c|}{Finalizzato}    & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{1}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{5}   \\ \hline
+\multicolumn{1}{|c|}{Regionali}      & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{1}  & \multicolumn{1}{c|}{3}  & \multicolumn{1}{c|}{5}   \\ \hline
+\multicolumn{1}{|c|}{CCM*}           & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{2}   \\ \hline
+\multicolumn{1}{|c|}{Totale}         & \multicolumn{1}{c|}{113} & \multicolumn{1}{c|}{31} & \multicolumn{1}{c|}{34} & \multicolumn{1}{c|}{178} \\ \hline
+\multicolumn{5}{l}{*Centro Controllo Malattie}                                                                                                
+\end{tabular}
+\end{table}
+\end{center}
+
+
+## L'attività analitica, i servizi resi, le produzioni
+
+## Centri di referenza nazionali, internazionali e i laboratori di riferimento
+
+I Centri di referenza sono strutture di eccellenza che rappresentano uno strumento operativo di elevata e provata competenza nei settori della sanità animale, dell’igiene degli alimenti e dell’igiene zootecnica.
+In IZSLER sono attivi **9** Centri di Referenza Nazionali, **8** Centri di referenza o di Collaborazione Internazionale, **4** Centri di Riferimento Regionali e un Laboratorio Nazionale di Riferimento. 
+
+Al seguente [link](https://www.izsler.it/chi-siamo/per-chi-e-con-chi-lavoriamo/centri-di-referenza/) si accede alla pagina istituzionale dei Centri di Referenza dell'IZSLER per maggiori dettagli.
+
+Nell'arco del 2020 si sootolineano le seguenti attività di rilievo che ha visto il coinvolgimento del CR.....
+
+<!-- | Centri di Referenza Nazionale | -->
+<!-- |:-:| -->
+<!-- |    <br>Centro di Referenza Nazionale per lo studio e la diagnosi dell’Afta epizootica  e delle Malattie Vescicolari (DM 2.11.1991)    | -->
+<!-- |    <br>Centro di Referenza Nazionale per la Leptospirosi (DM 4.10.1999)    | -->
+<!-- |    <br>Centro di Referenza Nazionale per la Clamidiosi (DM 4.10.1999)    | -->
+<!-- |    <br>Centro di Referenza Nazionale per la Malattia di Aujeszky –   Pseudorabbia (DM 8.5.2002)    | -->
+<!-- |    <br>Centro di Referenza Nazionale per il Benessere Animale (DM 13.02.2003) | -->
+<!-- |    <br>Centro di Referenza Nazionale per la Formazione in Sanità Pubblica Veterinaria (DM 27.08.2004)    | -->
+<!-- |    <br>Centro di Referenza Nazionale per i Metodi Alternativi, Benessere  e Cura degli Animali da Laboratorio (DM 20.04.2011)  | -->
+<!-- |    <br>Centro di Referenza Nazionale per la Tubercolosi da M. bovis (DM 4.10.1999)    | -->
+<!-- |    <br>Centro di Referenza Nazionale per la Tularemia (DM 4.10.1999)   | -->
+
+
+<!-- |    <br>Centri di Referenza o di Collaborazione Internazionali    | -->
+<!-- |-| -->
+<!-- |    <br>Centro di Referenza FAO: Afta Epizootica e Malattia Vescicolare del   suino (lettera di incarico 19.11.1015)    | -->
+<!-- |    <br>Laboratorio di Referenza OIE: Malattia Vescicolare del Suino (59   General Session 1991)    | -->
+<!-- |    <br>Laboratorio di Referenza OIE: Malattia Emorragica del Coniglio (59   General Session 1991)    | -->
+<!-- |    <br>Laboratorio di Referenza OIE: Influenza Suina (80° General Session   Paris 20-25 May 2012 resolution n. 20)    | -->
+<!-- |    <br>Laboratorio di Referenza OIE: Myxomatosi del Coniglio (80° General   Session Paris 20-25 May 2012 resolution n. 20)    | -->
+<!-- |    <br>Laboratorio di Referenza   OIE: Foot and mouth disease (81° General Session Paris 26-31 May 2013   resolution n. 32)    | -->
+<!-- |    <br>Collaborating Centre for Cell Cultures (81° General Session Paris 26-31 May 2013 resolution n. 32), rinominato Veterinary Biological Biobank (March 2014)    | -->
+<!-- |    <br>Centro di Referenza Europeo per le piccole specie allevate a scopo zootecnico (EUROCAW-SMALL ANIMAL)    | -->
+
+
+## Le risorse umane
+Le risorse umane rappresentano il capitale primario per dell’Istituto che investe nell’acquisizione di diverse professionalità anche ad alto livello di specializzazione.
+Alla data del 31.12.2020 l’IZSLER ha nel su organico n. 704 unità così suddivise:
+- 584 dipendenti assunti a tempo indeterminato;
+-  57 dipendenti assunti a tempo determinato;
+-  50 borse di studio;
+-  13 personale addetto alla ricerca;
+
+
+## Il patrimonio immobiliare
+
+
+## La produzione scientifica 
+
+## La formazione
+L’Istituto in virtù del mandato istituzionale e della propria mission, considera strategica l’attività della formazione e la utilizza come strumento essenziale per favorire lo sviluppo culturale e professionale del proprio personale. L’IZSLER è riconosciuto come provider per il sistema di Educazione Continua in Medicina (ECM) e Centro di Referenza Nazionale per la Sanità Pubblica Veterinaria, come tale collabora con il Ministero della Saluta e con le Regioni di competenza per la formazione dei veterinari e degli operatori sanitari del settore agroalimentare. Le attività di formazione sono erogate direttamente in aule dedicate e attrezzate e attraverso una piattaforma di Formazione a Distanza (FAD) per corsi online, webinar e videoconferenze.  La collaborazione con Scuole superiori e Università attraverso specifiche convenzioni, permette l’accesso ai laboratori e agli uffici di studenti delle scuole superiori per l’alternanza scuola lavoro, degli studenti di vari percorsi di laurea, scuole di specialità e dottorati per completare la preparazione scolastica con la formazione sul campo.
+Dal 18 maggio 2012 ha conseguito la certificazione secondo la norma “UNI EN ISO 9001:2008”, sistemi di gestione per la qualità-Requisiti” e un aggiornamento alla norma “UNI EN ISO 9001:2015” dal 18 maggio 2016.
+
+
+
+
+# Principali attività e risultati raggiunti dall'IZSLER nell'anno 2020
+
+## Aspetti organizzativi
+
+### Attauazione dei dipartimenti{-}
+Con deliberazione n.  del   è stato attuato un nuovo modello organizzativo, che ha permesso di porre le basi per perseguire la finalità di creare un’unica identità e integrare, capitalizzandole, le esperienze passate, mettendo a fattore comune le buone pratiche, con il desiderio di vivere una nuova realtà organizzativa.
+I criteri utilizzati per la definizione dell’organizzazione sono:
+- valorizzare le funzioni dell’IZSLER in tema di prevenzione, analisi della domanda, valutazione dei bisogni e governo dell’offerta;
+- delineare un’organizzazione snella ma adeguata alla complessità dell’IZSLER;
+-	governare le tematiche e i processi con un’attenzione particolare all’articolazione territoriale;
+-	essere garante per la salute dei cittadini, integrandosi con gli enti sanitari e nazionali e tutti gli attori del territorio, in sinergia con le istituzioni locali.
+Il nuovo modello ha comportato l’attuazione dei seguenti Dipartimenti:
+
+- DIPARTIMENTO SICUREZZA ALIIMENTARE 
+- DIPARTIMENTO TUTELA SALUTE ANIMALE 
+- DIPARTIMENTO AREA TERRITORIALE EMILIA ROMAGNA
+- DIPARTIMENTO AREA TERRITORIALE LOMBARDIA 
+- DIPARTIMENTO AMMINISTRATIVO
+
+
+## Progettazione e realizzazione
+Nel corso dell’anno 2020 l’attività di costruzione ha avuto un rallentamento per la pandemia da Covid-19. I primi mesi dell’anno l’attività si è concentrata sull’esecuzione di lavori per la predisposizione di due laboratori per l’analisi dei tamponi Covid-19 mentre gli altri cantieri hanno visto un sostanziale fermo. Nonostante quanto sopra precisato nell’anno 2020 si sono realizzate le seguenti attività:
+
+- la progettazione per la realizzazione della nuova accettazione unica presso la sede di Brescia;
+- la trasformazione del seminterrato dello stabulario a deposito libri;
+- l’inizio del cantiere per la realizzazione del nuovo laboratorio di Batteriologia;
+- la realizzazione del nuovo laboratorio entomologico di Reggio Emilia;
+- la realizzazione dell’ampliamento della sede di Bologna ha avuto un rallentamento ma si ritiene che l’attività si concluderà nell’anno 2021;
+- l’inizio della progettazione definitiva ed esecutiva per la nuova sede territoriale di Cremona.
+ Si sono approvate inoltre le seguenti progettazioni: 
+- progetto di fattibilità tecnico- economica la ristrutturazione della sede territoriale di Parma; 
+- progetto di fattibilità tecnico-economica degli ambienti lasciati liberi per il trasferimento della sede di Bologna per il reparto chimico;
+- completamento progettazione per la trasformazione a laboratorio dell’ex magazzino della sede territoriale di Reggio Emilia.
+
+Nel 2020 si sono attivate due importanti convenzioni, una con la Centrale Unica di Committenza (CUC) della Provincia di Brescia per l’esperimento di alcune procedure di gara e l’altra con Infrastrutture Lombarde (ora AREA spa) per la completa realizzazione di due importanti interventi previsti presso la sede di Brescia.
+
+
+## Piramide della ricerca
+
+A seguito dell’emanazione del Decreto Ministeriale 20 novembre 2019, n.164 “Regolamento recante la valutazione del personale della ricerca sanitaria“ (GU serie generale n.2 del 03.01.2020) con Delibera n.  del  sono stati stipulati nell’arco del 2020 n. contratti di collaboratore professionale di ricercatore e n. collaboratore professionale di supporto alla ricerca, secondo le previsioni dell’art. 1 comma 423 della Legge n.205/2017. Con decreto del Direttore Generale n.  del   è stato istituito il Nucleo di valutazione della Piramide della ricerca
+
+
+
+## IZSLER: In prima linea a supporto dell'emergenza da COVID-19
+
+A seguito della pandemia da covid19 che ha colpito l’Italia e il mondo, l’Istituto è stato fin da subito in prima linea per la tutela e la difesa della salute del cittadino, mettendo a disposizione competenze specifiche, personale specializzato, attrezzature e ambienti idonei a trattare patogeni ad alto rischio.
+Con nota prot.n. 0005086/P del 02.03.2020 il Ministero della Salute ha formalizzato il supporto diagnostico dell’Istituto nel contrastare l’emergenza sanitaria, individuandolo come laboratorio autorizzato per eseguire analisi, grazie alla comprovata esperienza in campo diagnostico e alla presenza di un Sistema di Gestione della qualità.
+
+Già a partire da marzo 2020, l’IZSLER ha supportato il Sistema Sanitario Nazionale nell’analisi dei tamponi nasofaringei (TNF) per la ricerca di Sars-CoV-2 in campioni umani. 
+Il 5 marzo è stato attivato il primo laboratorio presso il Reparto Tecnologie Biologiche Applicate della sede centrale di Brescia, diretto dalla dott.ssa Beatrice Boniotti, al quale si sono aggiunti dopo pochi giorni il laboratorio presso la sede territoriale di Pavia, diretto dalla dott.ssa Paola Prati, e successivamente nel mese di agosto, un ulteriore laboratorio presso la sede territoriale di Modena, diretto dalla dott.ssa Elena Carra. 
+Ad Ottobre è stato attivato un quarto laboratorio presso la Sede Territoriale di Brescia, diretto dal Dr. Alborali, dedicato all’analisi di campioni animali e che ha supportato il primo laboratorio di Brescia durante la seconda ondata dell’emergenza pandemica.
+L’IZSLER ha codificato e validato un metodo di prova interno, MP 09/314 “Metodo di prova interno per la ricerca del virus Sars-CoV-2 in campioni biologici umani mediante “RT PCR Real Time”, sulla base dei protocolli pubblicati sul sito del WHO e ha tenuto sotto controllo le performance del metodo, partecipando a circuiti esterni di laboratorio promossi da Regione Lombardia e LGC Standards.
+Dal 5 marzo 2020 al 31 dicembre 2020, l’IZSLER ha analizzato n. 659.670 tamponi nasofaringei per la ricerca di Sars-CoV-2, provenienti dalle seguenti 4 regioni:
+
+- per la Lombardia sono stati analizzati n. 565.278 TNF;
+- per l’Emilia Romagna sono stati analizzati  n.93.405;
+- per il Piemonte sono stati analizzati n.7;
+- per la Valle d’Aosta sono stati analizzati n. 980.
+
+I tamponi provenienti da queste ultime 2 regioni sono stati analizzati nelle primissime fasi dell’emergenza Covid, quando le Regioni, il SSN e molti laboratori ospedalieri erano ancora in fase di organizzazione e il numero di analisi richieste superava la capacità analitica di quelli attivi. 
+Mediamente sono stati analizzati 2440 tamponi al giorno con picchi fino 5100 durante le settimane più acute della seconda ondata nei mesi di ottobre e novembre. 
+Per quanto riguarda le province lombarde, il maggior numero di TNF analizzati dall’IZSLER proveniva dalla provincia di Brescia, per un totale di 190.268 TNF, seguita dalla provincia di Mantova con 114.546 TNF, quindi la provincia di Milano con 62.384 TNF. 
+Per l’Emilia Romagna invece la provincia con più TNF analizzati è stata Bologna con 41.372, seguita dalla provincia di Parma con 21.301 e la provincia di Piacenza con 18.515 TNF analizzati.
+L’IZSLER ha analizzato tamponi provenienti da 227 diversi conferenti, la maggior parte dei quali appartenenti a strutture ospedaliere come ASST del Garda, ASST della Franciacorta, ASST di Mantova, ASST di Crema, Spedali Civili di Brescia, ASST Santi Paolo e Carlo, ASST di Cremona, ASST Bergamo Ovest, ASST di Lodi, ASST Valle Olona, ASST Ovest Milanese e ASST Lariana; tra i conferenti anche le principali ATS locali, come ATS della Valpadana, ATS Brescia, ATS Bergamo, ATS Pavia, ATS Brianza, ATS della Montagna; tra i restanti conferenti numerose RSA del territorio, Fondazioni Onlus, case di cura, strutture e cliniche private
+Entrando nel dettaglio per ogni singolo laboratorio, in tutto il 2020 il laboratorio dedicato della sede di Brescia ha refertato n.412.158 tamponi provenienti da tutte le province della Lombardia, il laboratorio della sede territoriale di Pavia n. 170.640 tamponi provenienti da Lombardia, Piemonte, Valle d’Aosta ed Emilia Romagna, e la sede territoriale di Modena ha analizzato n. 76.872 tamponi, provenienti da Lombardia ed Emilia Romagna.
+La sede di Brescia ha avuto 163 diversi conferenti, tra i quali ATS della Valpadana con 13001 tamponi analizzati, ASST del Garda con 56.215 analisi, ASST di Crema con 25713 analisi, ASST della Franciacorta con 20.526 analisi, Spedali Civili di Brescia con 42.650 tamponi, ASSt Santi Paolo e Carlo con 19.698 tamponi, ASST di Mantova con 81.688 analisi, ATS Bergamo con 12.275 tamponi, ATS Brescia con 2572 tamponi. 
+La sede di Pavia ha registrato 63 diversi conferenti, tra cui ATS Pavia con 51.918 tamponi analizzati, Ospedale di Vigevano con 12.277 analisi, ASST Lariana con 12.259 analisi e ASST Ovest Milanese con 17.124 analisi, AUSl di Piacenza con 18.500 analisi, ICS Maugeri-IRCCS Pavia con 11.019 tamponi. 
+La sede di Modena ha avuto 20 diversi conferenti, tra cui AUSl di Bologna con 40.626 tamponi analizzati, AUSL di Parma con 11.432 analisi, AUSL Romagna con 11.874 tamponi, ATS della Valpadana con 7.748 tamponi analizzati e ASST di Mantova con 1.582 analisi.
+
+E’ da sottolineare che l’Istituto per far fronte all’emergenza sanitaria ha dovuto prontamente riprogrammare le proprie attività, alcune delle quali sono state momentaneamente sospese e qualche laboratorio è stato riconvertito, per dare spazio all’esecuzione urgente di analisi dei campioni da covid19.
+A tal proposito per supportare le ingenti attività laboratoriale l’intera organizzazione dell’istituto è stata coinvolta a vario titolo mettendo in campo le seguenti azioni:
+
+- l’ UO gestione personale ha  assunto  n.______ personale tecnico sanitario dedicato al campionamento;
+- l’UO Provveditorato ha gestito numerose gare per l’acquisizione del materiali necessario all’esecuzione dei campioni;
+- i Sistemi Informativi hanno supportato i laboratori dal punto di vista tecnico-informatico;
+- sono state revisionate tutte le procedure di sicurezza e biosicurezza per il personale e per garantire l’accesso in sede da parte dell’utenza;
+- sono state riviste le procedure di accettazione dei campioni, di acquisizione di beni e servizi specifici;
+- si è garantito un costante flesso informativo dei dati epidemiologici verso il Ministero  della Salute e delle regioni;
+- si è provveduto ad organizzare corsi di formazione specifici per gli addetti ai servizi di laboratorio;
+Il grande lavoro di equipe/squadra dell’Istituto ha permesso di fronteggiare l’emergenza sanitaria con prontezza ed efficacia, dimostrando notevoli capacità organizzative e spirito di servizio.
+
+
+
+## Un importante riconoscimento: Laboratorio Nazionale di Riferimento per le Tossine Vegetali Naturali negli alimenti
+
+Con la nota n° 0033302 DGISAN-MDS-P del 23/09/2020, in conformità all’articolo 100 del Regolamento UE 625/2017, il Ministero della Salute ha designato il Reparto Chimico degli Alimenti di Bologna dell’Istituto Zooprofilattico Sperimentale della Lombardia e dell’Emilia-Romagna (IZSLER) quale Laboratorio Nazionale di Riferimento per le tossine vegetali naturali negli alimenti in condivisione con il Dipartimento di Sicurezza Alimentare, Nutrizione e Sanità Pubblica Veterinaria dell’Istituto Superiore di Sanità (ISS). 
+Il Reparto Chimico e l’ISS lavoreranno secondo le rispettive competenze coordinandosi e condividendo periodicamente i programmi di lavoro, in accordo con il comma 5 dell’articolo 100 del Regolamento UE 625/2017.
+L’attività degli LNR è incentrata sullo sviluppo e sull’applicazione di metodi di analisi per la determinazione delle tossine vegetali naturali in diverse matrici di origine vegetale quali cereali, baby food, miele, polline, erbe infusionali, spezie, semi di lupino e derivati, prodotti da forno a base di semi di papavero, mandorle e armelline, olii e grassi vegetali, prodotti alimentari a base di canapa, solanacee e integratori alimentari a base di aloe. 
+Le tossine vegetali su cui i laboratori operano sono: gli alcaloidi del tropano e le calistegine, gli alcaloidi pirrolizidinici, gli alcaloidi chinolizidinici, gli alcaloidi dell’oppio, l’acido cianidrico, l’acido erucico, i cannabinoidi, i glicoalcaloidi, l’idrossiantracene.
+Ciascun laboratorio partecipa annualmente a prove comparative inter-laboratorio organizzate dall’EURL “Mycotoxins & plant toxins” di Wageningen (Paesi Bassi) e programma la partecipazione a circuiti di interesse organizzati da altri enti riconosciuti con lo scopo di valutare e monitorare la competenza tecnica del laboratorio.
+Inoltre entrambi i laboratori pianificano e organizzano secondo una programmazione concordata ed in base alla specifiche competenze prove comparative inter-laboratorio tra laboratori ufficiali per metodi di screening e per metodi di conferma assicurando un adeguato follow-up delle attività. 
+I laboratori operano a stretto contatto con la rete dei laboratori ufficiali e forniscono informazioni e supporto ai laboratori del controllo ufficiale. 
+
+
+
+# La Performance in sintesi
+Il Consiglio di Amministrazione con Deliberazione n. del  ha adottato il Piano Performance 2020-2022, individuando gli indirizzi e i compiti istituzionali dell’Istituto, successivamente sono stati declinati gli obiettivi operativi con delibera del Direttore Generale n  del 
+
+Gli obiettivi strategici, raggruppati all’interno di diverse “prospettive di analisi”, secondo un approccio della Balanced Scorecard, individuati dalla Direzione sono i seguenti: 
+
+**PROSPETTIVA ISTITUZIONI CITTADINI E CONSUMATORI** Prospettiva orientata a misurare l’impatto delle azioni in termini di valore prodotto con riferimento ai diversi portatori di interesse, valutando la capacità dell’ente di garantirne la piena soddisfazione delle aspettative di questi ultimi. 
+
+- 1.IMPLEMENTAZIONE DELLE ATTIVITA’ RELATIVE ALLA RICERCA NAZIONALE E INTERNAZIONALE
+- 2.IMPLEMENTAZIONE DELLE ATTIVITA’ ISTITUZIONALI NEL SETTORE DELLA SICUREZZA  ALIMENTARE, SANITA’ ANIMALE E IGIENE VETERINARIA
+
+
+
+**PROSTETTIVA ECONOMICA FINANZIARIA** prospettiva orientata al monitoraggio degli aspetti economico-finanziari in relazione alla programmazione strategica volta, quindi, a valutare la gestione dell’ente in ragione della sua capacità di perseguire adeguati margini. 
+
+- 3. SOSTENIBILITA' ECONOMICA E FINANZIARIA
+
+**PROSPETTIVA PROCESSI INTERNI**
+
+- 4. REINGEGNERIZZAZIONE DEI PROCESSI
+
+**PROSTETTIVA INNOVAZIONE, CRESCITA E SVILUPPO ORGANIZZATIVO**
+
+- 5. AMMINISTRAZIONE TRASPARENTE ED ANTICORRUZIONE
+- 6. VALORIZZAZIONE DEL CAPITALE UMANO
+
+Tale approccio ha supportato il processo di redazione del Piano della Performance, in cui gli obiettivi dell’Istituto sono stati declinati in una logica multidimensionale. 
+
+
+
+## La Mappa Strategica
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/f2.png")
+```
+
+La Mappa Strategica dell’Istituto, si identifica in una fotografia sintetica della Performance conseguita per l’anno 2020, la declinazione della Vision  dell’Ente  in  Aree  Strategiche  e  relativi  Obiettivi  Strategici, tra  loro collegati da specifiche relazioni di causa effetto. L’Istituto nell’analisi della Performance si è dotato di un altro strumento che è il «Livello sintetico di Performance di Ente», il quale rappresenta il risultato complessivo raggiunto dall’Istituto. Nell’anno 2020 il Livello Sintetico di Performance di Ente presenta una percentuale dell’86%, rispetto ad un dato atteso dell’83%, ma in netta diminuzione rispetto all’anno precedente (90%).
+
+**E’ necessario precisare che l’intero processo del ciclo di gestione delle performance ha subito non poche difficoltà a causa dell’emergenza sanitaria da COVID-19, che ha comportato un ritardo delle sue fasi e un impatto sul raggiungimento di alcuni obiettivi. Nel corso dell’anno 2020 l’Istituto è stato impegnato principalmente nel fronteggiare la pandemia, destinando risorse, capacità e competenze a tal fine, ritardando progetti e sospendendo altre attività.**
+
+
+## I risultati raggiunti
+
+<!-- Di seguito in tabella sono riportati i risultati raggiunti nel 2020 sia per quello che riguarda gli Obiettivi Strategici sia per gli Obiettivi Operativi. -->
+
+### Implementazione delle attività relative alla ricerca nazionale e internazionale
+Questo obiettivo è stato declinato in due azioni principali: 
+
+-1. Rafforzamento della competitività nell'ambito della progettualità e della ricerca sperimentale nazionale ed internazionale 
+In tabella sono riportati gli indicatori strategici con i rispettivi target per il 2020 il risultato ottenuto la % di realizzazione e un breve commento al risultato raggiunto
+
+|    <br>Indicatore strategico    	|    <br>Target   2020    	|    <br>Actual       	|    <br>%   realizzazione     	|    <br>Breve   descrizione del risultato raggiunto    	|
+|-	|-	|-	|-	|-	|
+|    <br>Impact Fattor (pubblicazioni scientifiche) anno   X/ Impact Fattor media ultimo triennio     	|    <br>>1    	|    <br>1,15<br>   <br>(318,27/275,37)    	|    <br>100%    	|    <br>L’indicatore mostra un buon andamento rispetto alla media dell’ultimo   triennio, che mette in evidenza il buon lavoro svolto per mantenere alti i   livelli della produzione scientifica e della ricerca    	|
+|    <br>% di quota dei Fondi Ministeriali della ricerca corrente   assegnati all'Istituto anno X/ % del totale dei Fondi Ministeriali della   ricerca corrente media ultimo triennio    	|    <br>>1    	|    <br>0,93<br>   <br>(12,21/13,06)    	|    <br>93,50%    	|    <br>L’indicatore mostra un miglioramento rispetto al valore anno   precedente (80%), considerando una congiunturale diminuzione dei fondi   assegnati dal Ministero, la capacità dell’Izlser di attrarre i finanziamenti   della ricerca si attesta sui valori medi rispetto agli ultimi esercizi     	|
+|    <br>N° progetti presentati a livello comunitario ed   internazionale anno x/ N° di progetti presentati a livello comunitario ed   internazionale media ultimo triennio     	|    <br>>1    	|    <br>1,73<br>   <br> (8/4,6)    	|    <br>100%    	|    <br>Nell’anno 2020 sono segnalate 8 partecipazioni a progetti europei ed internazionali.   Nel triennio precedente 2017 - 2018 - 2019 risultano 14 partecipazioni a   progetti europei ed internazionali. Media del triennio: 4,6. Pertanto, nel   2020 risultano 3,4 partecipazioni a progetti internazionali in più rispetto   alla media del triennio precedente (+ 1,74).    	|
+|    <br>% di realizzazione del Project "Realizzazione   network nazionale ed internazionale della Biobanca Veterinaria»    	|    <br>70%    	|    <br>65%    	|    <br>92,86%    	|    <br>L’indicatore fa riferimento al Project relativo alla realizzazione di   network della biobanca, L’actual mostra la % di realizzazione delle attività   del project per l’anno 2020, e verrà descritto nelle slides successive.    	|
+
+
+
+
+
+
+## I project
+PROJECT N.1: Realizzazione network nazionale ed internazionale della Biobanca Veterinaria 
+SIGNIFICATO STRATEGICO: 
+
+- L’Istituto è sede di un biobanca veterinaria e centro di referenza OIE ”Veterinary Biobank”; 
+- Il Ministero della Salute e l’OIE hanno ritenuto strategico realizzare a livello nazionale ed internazionale un network tra gli istituti di ricerca ed i centri di referenza nazionali ed internazionali; 
+- L’Istituto ha avviato attività di pianificazione e programmazione per la realizzazione delle aspettative nazionali ed internazionali. 
+SVILUPPO: 
+- Azioni da realizzare a livello di Istituto e quindi di carattere trasversale alle strutture sanitarie ed amministrative; 
+- Azioni di coordinamento nazionale con gli altri IIZZSS; 
+- Azioni di pianificazione delle attività concordate con il Ministero e l’OIE.
+ RISULTATI ATTESI: 
+- Realizzazione di un network nazionale; 
+- Realizzazione della struttura informatica nazionale; 
+- Integrazione del network nazionale con il progetto pilota internazionale; 
+- Realizzazione della struttura informatica per la realizzazione del network internazionale 
+- Disponibilità ai paesi terzi del modello di struttura informatica nazionale per l’integrazione con la piattaforma internazionale. 
+
+## Il Cascading: dagli obiettivi strategici agli obiettivi operativi
+# Gli Obiettivi Individuali: Direzione Generale, Sanitaria ed Amministrativa
+## Gli elementi di valutazione quantitativa e qualitativa
+### Elementi di valutazione qualitativa: le aree di attenzione
+
+# La dimensione economico-finanziaria
+
+# Le pari opportunità
+
+# Azioni svolte nell'ambito del PTPCT
+
+# Il processo di redazione della relazione sulla performance
