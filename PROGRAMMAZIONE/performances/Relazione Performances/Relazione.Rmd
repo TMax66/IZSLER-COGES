@@ -424,15 +424,16 @@ knitr::include_graphics("figure/gare2.png")
 ```
 
 
-## Aspetti organizzativi
+## Aspetti organizzativi: attuazione dei dipartimenti
 
-### Attauazione dei dipartimenti{-}
-Con deliberazione n.  del   è stato attuato un nuovo modello organizzativo, che ha permesso di porre le basi per perseguire la finalità di creare un’unica identità e integrare, capitalizzandole, le esperienze passate, mettendo a fattore comune le buone pratiche, con il desiderio di vivere una nuova realtà organizzativa.
+Con Delibera del Consiglio di Amministrazione n. 17 del 15.12.2020 è stato attuato un nuovo modello organizzativo, che ha permesso di porre le basi per perseguire la finalità di creare un’unica identità e integrare, capitalizzandole, le esperienze passate, mettendo a fattore comune le buone pratiche, con il desiderio di vivere una nuova realtà organizzativa.
 I criteri utilizzati per la definizione dell’organizzazione sono:
+
 - valorizzare le funzioni dell’IZSLER in tema di prevenzione, analisi della domanda, valutazione dei bisogni e governo dell’offerta;
 - delineare un’organizzazione snella ma adeguata alla complessità dell’IZSLER;
 -	governare le tematiche e i processi con un’attenzione particolare all’articolazione territoriale;
 -	essere garante per la salute dei cittadini, integrandosi con gli enti sanitari e nazionali e tutti gli attori del territorio, in sinergia con le istituzioni locali.
+
 Il nuovo modello ha comportato l’attuazione dei seguenti Dipartimenti:
 
 - DIPARTIMENTO SICUREZZA ALIIMENTARE 
@@ -442,25 +443,48 @@ Il nuovo modello ha comportato l’attuazione dei seguenti Dipartimenti:
 - DIPARTIMENTO AMMINISTRATIVO
 
 
-
-
 ## Piramide della ricerca
+A seguito dell’emanazione del Decreto Ministeriale 20 novembre 2019, n.164 “Regolamento recante la valutazione del personale della ricerca sanitaria“ (GU serie generale n.2 del 03.01.2020) sono stati stipulati nell’arco del 2019/2020 n. 6 contratti di Collaboratore Professionale di ricerca sanitaria cat. D e n. 8 Ricercatore Sanitario cat. Ds, secondo le previsioni dell’art. 1 comma 423 della Legge n.205/2017.
+Con decreto del Direttore Generale n. 28 del 26.01.2021 è stato istituito il Nucleo di Valutazione del Personale della ricerca sanitaria, costituito da:
 
-A seguito dell’emanazione del Decreto Ministeriale 20 novembre 2019, n.164 “Regolamento recante la valutazione del personale della ricerca sanitaria“ (GU serie generale n.2 del 03.01.2020) con Delibera n.  del  sono stati stipulati nell’arco del 2020 n. contratti di collaboratore professionale di ricercatore e n. collaboratore professionale di supporto alla ricerca, secondo le previsioni dell’art. 1 comma 423 della Legge n.205/2017. Con decreto del Direttore Generale n.  del   è stato istituito il Nucleo di valutazione della Piramide della ricerca
-
-
-
-
-
-
+- Presidente: Dott. Piero Frazzi, Direttore Generale che si avvale per gli aspetti di competenza del Direttore Sanitario, Dott. Giuseppe Merialdi;
+- Componente: Dott. Antonio Lavazza, Dirigente Responsabile Dipartimento Sanità Animale;
+- Componente: Dott. Guerino Lombardi, Dirigente Responsabile Struttura Biblioteca, Formazione e Comunicazione;
 
 
+# Ciclo di gestione della performance
+
+## Una definizione di performance
+
+La **performance** è intesa come _contributo (risultato e modalità di raggiungimento del risultato) che le varie componenti organizzative (individui, gruppi di individui, unità organizzative, ente nel suo complesso) apportano attraverso la propria azione al raggiungimento delle finalità e degli obiettivi dell’Ente ed, in ultima istanza, alla soddisfazione dei bisogni della collettività per i quali l’Ente è stato costituito_ .Quindi la capacità di ottenere risultati per i propri utenti e portatori d’interesse mediante il migliore utilizzo delle risorse messe a disposizione.
+
+## Perché misuriamo e valutiamo la performance dell’Istituto
+
+L’attività di misurazione e valutazione della performance si colloca, al centro della riforma del lavoro pubblico, configurata a partire dagli anni novanta con le disposizioni normative confluite poi nel D Lgs 165/2001 e s.m.i. fino alle disposizioni della legge n.15/2009 e del D Lgs n.150/2009 e s.m.i. L’ impostazione della riforma porta al centro dell’azione amministrativa la logica della misurazione della performance e di risultati, in un’ottica di recupero di efficienza e di efficacia al fine del miglioramento della qualità dell’azione della P.A. e un più ottimale utilizzo delle risorse. Ai fini dell’attuazione dei principi di cui all’art. 3 D Lgs 150/2009, le Pubbliche Amministrazioni, definiscono e assegnano gli obiettivi che si intendono raggiungere, volte alla misurazione della **performance organizzativa e individuale**.
+
+La performance organizzativa misura la performance dell’ente complessivamente, tramite gli obiettivi strategici, e quella delle varie strutture, tramite gli obiettivi operativi.
+
+### Performance organizzativa di ente nel suo complesso
+
+La performance organizzativa di ente richiede per essere misurata l’individuazione di una **batteria di obiettivi/indicatori strategici, inseriti nel Cruscotto di Ente e approvati all’interno del Piano Performance, che discendono da una programmazione istituzionale/strategica**. 
+
+L’Istituto pianifica le proprie attività secondo 3 livelli di programmazione:
+
+ a)	un **livello istituzionale** di ordine strategico che si qualifica per definire gli indirizzi di fondo pluriennali e annuali cui l’Istituto è tenuto, per quanto di competenza, ad attenersi; 
+ 
+ b)	un **livello strategico** qualificato per declinare gli indirizzi strategici ministeriali e regionali; 
+ c)	un **livello operativo** dove gli obiettivi strategici vengono declinati con gli strumenti di programmazione.
 
 
-# La Performance in sintesi
-Il Consiglio di Amministrazione con Deliberazione n. del  ha adottato il Piano Performance 2020-2022, individuando gli indirizzi e i compiti istituzionali dell’Istituto, successivamente sono stati declinati gli obiettivi operativi con delibera del Direttore Generale n  del 
+Tale rappresentazione risulta per altro coerente con quanto previsto dall’art. 27 dello Statuto: _“L’Istituto, ai fini di assicurare l’efficienza e l’efficacia dell’azione amministrativa nonché la rispondenza dell’attività delle strutture organizzative agli indirizzi prefissati, si dota di un proprio ciclo di gestione delle performance, che prevede l’adozione di un piano triennale in relazione alle performance attese, con propri indicatori e con gli strumenti di valutazione del livello di raggiungimento delle stesse, da approvarsi con deliberazione del consiglio di amministrazione”_.
 
-Gli obiettivi strategici, raggruppati all’interno di diverse “prospettive di analisi”, secondo un approccio della Balanced Scorecard, individuati dalla Direzione sono i seguenti: 
+
+#### Obiettivi strategici e cruscotto di ente
+
+Il Consiglio di Amministrazione con Deliberazione n. 2 del 24.02.2020 ha dato il via al Ciclo di Gestione delle Performance, adottando il “Piano Performance 2020-2022”, contenente gli obiettivi strategici dell’Istituto declinati secondo gli indirizzi Ministeriali e Regionali.
+Gli obiettivi strategici, raggruppati all’interno delle diverse “prospettive di analisi”, secondo  l’approccio della Balanced Scorecard, sono i seguenti:
+
+
 
 **PROSPETTIVA ISTITUZIONI CITTADINI E CONSUMATORI** Prospettiva orientata a misurare l’impatto delle azioni in termini di valore prodotto con riferimento ai diversi portatori di interesse, valutando la capacità dell’ente di garantirne la piena soddisfazione delle aspettative di questi ultimi. 
 
@@ -473,11 +497,11 @@ Gli obiettivi strategici, raggruppati all’interno di diverse “prospettive di
 
 - 3. SOSTENIBILITA' ECONOMICA E FINANZIARIA
 
-**PROSPETTIVA PROCESSI INTERNI**
+**PROSPETTIVA PROCESSI INTERNI** prospettiva orientata ad individuare il grado di efficienza ed efficacia con il quale l’Ente gestisce e controlla i processi interni mediante l’ottimizzazione di quelli esistenti ed alla definizione di processi attraverso i quali perseguire gli obiettivi strategici. 
 
 - 4. REINGEGNERIZZAZIONE DEI PROCESSI
 
-**PROSTETTIVA INNOVAZIONE, CRESCITA E SVILUPPO ORGANIZZATIVO**
+**PROSTETTIVA INNOVAZIONE, CRESCITA E SVILUPPO ORGANIZZATIVO** prospettiva volta alla valorizzazione delle potenzialità interne dell’ente per una crescita del personale in termini di competenze e motivazione nonché al potenziamento delle infrastrutture tecniche e tecnologiche di supporto.
 
 - 5. AMMINISTRAZIONE TRASPARENTE ED ANTICORRUZIONE
 - 6. VALORIZZAZIONE DEL CAPITALE UMANO
@@ -486,45 +510,20 @@ Tale approccio ha supportato il processo di redazione del Piano della Performanc
 
 
 
-## La Mappa Strategica
-
 ```{r echo=FALSE, fig.align = "center",out.width = '90%', }
 knitr::include_graphics("figure/f2.png")
 ```
 
-La Mappa Strategica dell’Istituto, si identifica in una fotografia sintetica della Performance conseguita per l’anno 2020, la declinazione della Vision  dell’Ente  in  Aree  Strategiche  e  relativi  Obiettivi  Strategici, tra  loro collegati da specifiche relazioni di causa effetto. L’Istituto nell’analisi della Performance si è dotato di un altro strumento che è il «Livello sintetico di Performance di Ente», il quale rappresenta il risultato complessivo raggiunto dall’Istituto. Nell’anno 2020 il Livello Sintetico di Performance di Ente presenta una percentuale dell’86%, rispetto ad un dato atteso dell’83%, ma in netta diminuzione rispetto all’anno precedente (90%).
-
-**E’ necessario precisare che l’intero processo del ciclo di gestione delle performance ha subito non poche difficoltà a causa dell’emergenza sanitaria da COVID-19, che ha comportato un ritardo delle sue fasi e un impatto sul raggiungimento di alcuni obiettivi. Nel corso dell’anno 2020 l’Istituto è stato impegnato principalmente nel fronteggiare la pandemia, destinando risorse, capacità e competenze a tal fine, ritardando progetti e sospendendo altre attività.**
-
-## Il Cascading: dagli obiettivi strategici agli obiettivi operativi
-
-Dagli obiettivi strategici sono stati «costruiti» gli obiettivi operativi inseriti all’interno dell’ Albero  della  Performance   in un processo definito di «cascading»,  declinati in indicatori, target e strutture assegnatarie, suddivisi nella  quattro principali  prospettive di analisi.
-Nella dimensione **Istituzioni, cittadini e consumatori**  l’Ente  mette in evidenza il rafforzamento dell’IZSLER nel settore della PA centrale, l’ampliamento delle attività  nell’ambito della collaborazione con le Regioni e gli Enti locali, il potenziamento dell’integrazione con il Ministero e le Regioni, l’ aumento del network scientifico e della collaborazione scientifica sia a livello nazionale ed internazionale, la partecipazione a progetti di ricerca, twinning  e il potenziamento dell’attività diagnostica e delle produzioni. Una dimensione strategica dell’IZSLER che pone le basi per lo sviluppo di scenari futuri, declinati in ben n. 95 indicatori di mantenimento/potenziamento di attività.
-Nella dimensione **economico-finanziario** l’IZSLER analizza la gestione economica-finanziaria in un’ottica di contenimento delle uscite, di razionalizzazione dell’utilizzo delle risorse,  improntati al perseguimento dell’efficienza, assicurando  la massima efficacia.
-Nella dimensione dei  **processi interni*»**  l’Ente  valuta il modo in cui  raggiungere un migliore efficienza dell’amministrazione,  attraverso l’adeguamento dei processi produttivi dei servizi alle “migliori pratiche” (modelli di eccellenza e standard internazionali e nazionali), mediante l’ottimizzazione della gestione, delle procedure e dei processi, con particolare riferimento al contenimento ed alla riduzione dei tempi di TDF/TDR , nonché all'ottimizzazione dei tempi dei procedimenti amministrativi. 
-Nella dimensione della **Innovazione , crescita e sviluppo organizzativo** rientrano gli indicatori relativi alla qualità totale e soddisfazione delle aspettative dell’utenza, che si declinano  nella qualità e la quantità delle prestazioni e dei servizi erogati, dello sviluppo qualitativo e quantitativo delle relazioni con i cittadini,  gli utenti , i destinatari dei servizi e la rilevazione del grado di soddisfazione dei destinatari delle attività. 
-Lo sviluppo organizzativo viene supportato dalla costante innovazione  dei sistemi informativi e dalla  valorizzazione del capitale umano mediante percorsi di promozione delle competenze. Vista la necessaria integrazione tra gli obiettivi del Piano della Performance e il PTPCT, in questa sezione vengono riportati anche gli obiettivi in tema di trasparenza, anticorruzione e conflitto di interessi. 
-In questa sezione si realizza l’effettiva pianificazione, il controllo delle performance e dei processi, analizzati da diverse prospettive.
-Le  quattro  dimensioni vengono valutati sia dal punto di vista del singolo indicatore rispetto al suo trend storico, sia rispetto alla scala dei valori/dimensione a cui appartengono , sia rispetto al grado di performance della singole struttura .
-Utilizzando opportuni strumenti di indagine è possibile fare un’analisi su molti livelli; i grafici qui di seguito riportati sono un esempio della valutazione fatte periodicamente dall’IZSLER, anche al fine di un continuo e costante monitoraggio.
+Come già sopra menzionato, al fine di individuare un sistema in grado di garantire la misurazione, valutazione e quindi, la rappresentazione in modo integrato ed esaustivo del livello di performance atteso e realizzato, con successiva evidenziazione di eventuali scostamenti, l’IZSLER provvede alla costruzione del cruscotto degli indicatori necessario per la misurazione della strategia. 
+Infatti, una volta definiti gli obiettivi strategici si procede all’individuazione delle misure in grado di monitorare il loro grado di raggiungimento. Al fine di garantire un monitoraggio continuo della performance dell‘Ente, anche ai fini dell'individuazione degli interventi correttivi in corso di esercizio, **gli indicatori individuati devono essere in grado di rappresentare tutte le azioni messe in atto per il raggiungimento degli obiettivi strategici prefissati**. Nella costruzione del cruscotto, contestualmente alla definizione degli indicatori, si procede alla definizione dei target e degli intervalli di variazione grazie ai quali l’Ente è in grado di rilevare lo scostamento tra i valori attesi e quelli effettivamente realizzati ed effettuare le opportune valutazioni. 
+Di seguito si riporta il **Cruscotto di Ente**,  che rispetto a quello dell’anno precedente, presenta una migliore razionalizzazione degli obiettivi strategici, dei Project e un minor numero indicatori per ciascuno di essi, individuati comunque in modo tale da garantire una corretta rappresentazione della performance dell’Ente, in continuità con la mission dell’Istituto.
 
 
-## I risultati raggiunti
-
-Di seguito in tabella sono riportati i risultati raggiunti nel 2020 sia per quello che riguarda gli Obiettivi Strategici sia per gli Obiettivi Operativi.
-
-
-```{r echo=FALSE, fig.align = "center",out.width = '90%', }
-knitr::include_graphics("figure/f8.png")
-```
-
-
-
-## Cruscotto dell'ente anno 2020 
+### Cruscotto dell'ente anno 2020 {-}
 Di seguito per ogni obiettivo strategico sono riportati i rispettivi obiettivi operativi/azioni e una tabella che sintetizza gli indicatori adottati, il target , il grado di raggiungimento e una breve descrizione del risultato raggiunto
 
 
-###  Obiettivo strategico 1: **Implementazione delle attività relative alla ricerca nazionale e internazionale** {-}
+####  Obiettivo strategico 1: **Implementazione delle attività relative alla ricerca nazionale e internazionale** {-}
 
 Questo obiettivo è  declinato in due azioni principali (obiettivi operativi): 
 
@@ -538,7 +537,7 @@ knitr::include_graphics("figure/ob1.png")
 
 \newpage
 
-### Obiettivo strategico 2: **Implementazione delle attività istituzionali nel settore della sicurezza alimentare, sanità animale e igiene veterinaria** {-}
+#### Obiettivo strategico 2: **Implementazione delle attività istituzionali nel settore della sicurezza alimentare, sanità animale e igiene veterinaria** {-}
 
 Questo obiettivo è  declinato in tre azioni principali (obiettivi operativi):
 
@@ -555,7 +554,7 @@ knitr::include_graphics("figure/ob2.png")
 
 \newpage
 
-### Obiettivo strategico 3: **Sostenibilità economica finanziaria**{-}
+#### Obiettivo strategico 3: **Sostenibilità economica finanziaria**{-}
 
 Questo obiettivo è declinato in un'unica azione (obiettivo operativo):
 
@@ -569,7 +568,7 @@ knitr::include_graphics("figure/ob3.png")
 
 \newpage
 
-### Obiettivo strategico 4: **Reingegnerizzazione dei processi**{-}
+#### Obiettivo strategico 4: **Reingegnerizzazione dei processi**{-}
 
 Questo obiettivo è declinato in un'unica azione (obiettivo operativo): 
 
@@ -584,7 +583,7 @@ knitr::include_graphics("figure/ob4.png")
 
 \newpage
 
-### Obiettivo strategico 5: **Amministrazione trasparente ed anticorruzione**{-}
+#### Obiettivo strategico 5: **Amministrazione trasparente ed anticorruzione**{-}
 
 Questo obiettivo è declinato in un'unica azione (obiettivo operativo) e un solo indicatore: 
 
@@ -597,7 +596,7 @@ knitr::include_graphics("figure/ob5.png")
 
 \newpage 
 
-### Obiettivo strategico 6: **Valorizzazione del capitale umano**{-}
+#### Obiettivo strategico 6: **Valorizzazione del capitale umano**{-}
 
 Questo obiettivo è declinato in due azioni (obiettivi operativi): 
 
@@ -610,9 +609,7 @@ Questo obiettivo è declinato in due azioni (obiettivi operativi):
 knitr::include_graphics("figure/ob6.png")
 ```
 
-
-## I project
-Cosa sono????
+#### **I project** {-}
 
 **PROJECT N.1: Realizzazione network nazionale ed internazionale della Biobanca Veterinaria** 
 
@@ -636,7 +633,6 @@ _Risultati attesi_:
 - Realizzazione della struttura informatica per la realizzazione del network internazionale 
 - Disponibilità ai paesi terzi del modello di struttura informatica nazionale per l’integrazione con la piattaforma internazionale. 
 
-_Attività realizzate nel 2020_:
 
 
 
@@ -659,7 +655,6 @@ _Risultati attesi_:
 - Ridistribuzione dei metodi analitici ed eventuale revisione; 
 - Programmazione delle modifiche dell’offerta analitica dell’IZSLER 
 
-_Attività realizzate nel 2020_:
 
 
 
@@ -684,7 +679,7 @@ _Risultati attesi_:
 - Creazione di percorsi operativi attraverso i quali sviluppare le attività dell’IZSLER; 
 - Soddisfare le esigenze strategiche del Ministero per l’applicazione a livello nazionale. 
 
-_Attività realizzate nel 2020_:
+
 
 
 
@@ -712,7 +707,6 @@ _Risultati attesi_:
 - Realizzazione di un sistema di monitoraggio attività e tempi, feed back ai reparti e supporto per il miglioramento degli stessi; 
 - Semplificazione dei processi e applicazione di sistemi di eliminazione delle attività non a valore per l’organizzazione. 
 
-_Attività realizzate nel 2020_:
 
 
 
@@ -737,7 +731,44 @@ _Risultati attesi_:
 - Attivazione ed aggiornamento di una APP istituzionale; 
 - Nuove modalità di interazione tra uffici e reparti.
 
-_Attività realizzate nel 2020_:
+
+ 
+**E’ necessario precisare che l’intero processo del ciclo di gestione delle performance ha subito non poche difficoltà a causa dell’emergenza sanitaria da COVID-19, che ha comportato un ritardo delle sue fasi e un impatto sul raggiungimento di alcuni obiettivi. Nel corso dell’anno 2020 l’Istituto è stato impegnato principalmente nel fronteggiare la pandemia, destinando risorse, capacità e competenze a tal fine, ritardando progetti e sospendendo altre attività.**
+
+
+### Livello sintetico di ente
+
+Per la misurazione della performance organizzativa di ente, l’istituto si è dotato di uno strumento che è il «**Livello sintetico di Ente», il quale rappresenta la media aritmetica di tutti gli obiettivi strategici raggiunti dall’Istituto**. Nell’anno 2020 il Livello Sintetico di Ente presenta una percentuale dell’86%, rispetto ad un target dell’83%, in netta diminuzione rispetto all’anno precedente (90%). E’ necessario precisare che l’intero processo del ciclo di gestione delle performance ha subito non poche difficoltà a causa dell’emergenza sanitaria da covid19, che ha comportato un ritardo delle sue fasi e un impatto sul raggiungimento di alcuni obiettivi. Nel corso dell’anno 2020 l’Istituto è stato impegnato principalmente nel fronteggiare la pandemia, destinando risorse, capacità e competenze a tal fine.
+<!-- Nelle immagini sotto riportate vengono messe in evidenza sia la dimensione strategica, area in blu, sia quella operativa, area in arancione. -->
+
+
+
+
+
+
+## Il Cascading: dagli obiettivi strategici agli obiettivi operativi
+
+Dagli obiettivi strategici sono stati «costruiti» gli obiettivi operativi inseriti all’interno dell’ Albero  della  Performance   in un processo definito di «cascading»,  declinati in indicatori, target e strutture assegnatarie, suddivisi nella  quattro principali  prospettive di analisi.
+Nella dimensione **Istituzioni, cittadini e consumatori**  l’Ente  mette in evidenza il rafforzamento dell’IZSLER nel settore della PA centrale, l’ampliamento delle attività  nell’ambito della collaborazione con le Regioni e gli Enti locali, il potenziamento dell’integrazione con il Ministero e le Regioni, l’ aumento del network scientifico e della collaborazione scientifica sia a livello nazionale ed internazionale, la partecipazione a progetti di ricerca, twinning  e il potenziamento dell’attività diagnostica e delle produzioni. Una dimensione strategica dell’IZSLER che pone le basi per lo sviluppo di scenari futuri, declinati in ben n. 95 indicatori di mantenimento/potenziamento di attività.
+Nella dimensione **economico-finanziario** l’IZSLER analizza la gestione economica-finanziaria in un’ottica di contenimento delle uscite, di razionalizzazione dell’utilizzo delle risorse,  improntati al perseguimento dell’efficienza, assicurando  la massima efficacia.
+Nella dimensione dei  **processi interni*»**  l’Ente  valuta il modo in cui  raggiungere un migliore efficienza dell’amministrazione,  attraverso l’adeguamento dei processi produttivi dei servizi alle “migliori pratiche” (modelli di eccellenza e standard internazionali e nazionali), mediante l’ottimizzazione della gestione, delle procedure e dei processi, con particolare riferimento al contenimento ed alla riduzione dei tempi di TDF/TDR , nonché all'ottimizzazione dei tempi dei procedimenti amministrativi. 
+Nella dimensione della **Innovazione , crescita e sviluppo organizzativo** rientrano gli indicatori relativi alla qualità totale e soddisfazione delle aspettative dell’utenza, che si declinano  nella qualità e la quantità delle prestazioni e dei servizi erogati, dello sviluppo qualitativo e quantitativo delle relazioni con i cittadini,  gli utenti , i destinatari dei servizi e la rilevazione del grado di soddisfazione dei destinatari delle attività. 
+Lo sviluppo organizzativo viene supportato dalla costante innovazione  dei sistemi informativi e dalla  valorizzazione del capitale umano mediante percorsi di promozione delle competenze. Vista la necessaria integrazione tra gli obiettivi del Piano della Performance e il PTPCT, in questa sezione vengono riportati anche gli obiettivi in tema di trasparenza, anticorruzione e conflitto di interessi. 
+In questa sezione si realizza l’effettiva pianificazione, il controllo delle performance e dei processi, analizzati da diverse prospettive.
+Le  quattro  dimensioni vengono valutati sia dal punto di vista del singolo indicatore rispetto al suo trend storico, sia rispetto alla scala dei valori/dimensione a cui appartengono , sia rispetto al grado di performance della singole struttura .
+Utilizzando opportuni strumenti di indagine è possibile fare un’analisi su molti livelli; i grafici qui di seguito riportati sono un esempio della valutazione fatte periodicamente dall’IZSLER, anche al fine di un continuo e costante monitoraggio.
+
+
+
+## I risultati raggiunti
+
+Di seguito in tabella sono riportati i risultati raggiunti nel 2020 sia per quello che riguarda gli Obiettivi Strategici sia per gli Obiettivi Operativi.
+
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/f8.png")
+```
+
 
 
 
