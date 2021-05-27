@@ -50,3 +50,65 @@ View(ore20)
 replabdip <- read.csv("C:/Users/vito.tranquillo/Desktop/GitProjects/IZSLER-COGES/replabdip.txt", sep="")
 
 write_xlsx(replabdip, path = "tabella.xlsx")
+
+
+
+
+query2 <- "SELECT
+  sum(dbo.CDC_MOVIMENTI_BO.Nominale),
+  sum(dbo.CDC_MOVIMENTI_BO.Reale),
+  sum(dbo.CDC_MOVIMENTI_BO.Quantita),
+  sum(dbo.CDC_MOVIMENTI_BO.Determinazioni),
+  dbo.IZS_ANNI.ANNO,
+  dbo.IZS_Reparti.CODICE_REPARTO,
+  dbo.IZS_Reparti.REPARTO,
+  dbo.CDC_MOVIMENTI_BO.Settore,
+  dbo.IZS_Riclassificazione.Gruppo,
+  dbo.IZS_Riclassificazione.Descrizione,
+  dbo.IZS_Riclassificazione.idClassificazione,
+  dbo.IZS_MESI.MESE,
+  dbo.IZS_Aree.Descrizione,
+  dbo.IZS_Riclassificazione.Ufficialita,
+  dbo.IZS_CDC.CODICE_CDC,
+  dbo.CDC_MOVIMENTI_BO.Numero_Accettazione,
+  dbo.CDC_MOVIMENTI_BO.Anno_Accettazione
+FROM
+  dbo.IZS_Aree INNER JOIN dbo.CDC_MOVIMENTI_BO ON (dbo.IZS_Aree.TipoCostoRicavo=dbo.CDC_MOVIMENTI_BO.TipoCostoRicavo and dbo.IZS_Aree.Codice_classe=dbo.CDC_MOVIMENTI_BO.Classe and dbo.IZS_Aree.Codice_area=dbo.CDC_MOVIMENTI_BO.Area)
+   INNER JOIN dbo.IZS_Classificazioni ON (dbo.IZS_Classificazioni.idClassificazione=dbo.CDC_MOVIMENTI_BO.IdClassificazione)
+   INNER JOIN dbo.IZS_Riclassificazione ON (dbo.IZS_Riclassificazione.idClassificazione=dbo.IZS_Classificazioni.idRiclassifica)
+   INNER JOIN dbo.IZS_CDC ON (dbo.IZS_CDC.CODICE_CDC=dbo.CDC_MOVIMENTI_BO.CDC)
+   INNER JOIN dbo.IZS_Reparti ON (dbo.IZS_Reparti.CODICE_REPARTO=dbo.IZS_CDC.CODICE_REPARTO)
+   INNER JOIN dbo.IZS_ANNI ON (dbo.IZS_ANNI.ANNO=dbo.CDC_MOVIMENTI_BO.ANNO)
+   INNER JOIN dbo.IZS_MESI ON (dbo.IZS_MESI.MESE=dbo.CDC_MOVIMENTI_BO.MESE)
+  
+WHERE
+  (
+   dbo.IZS_ANNI.ANNO  IN  ( 2020  )
+   AND
+   ( dbo.CDC_MOVIMENTI_BO.ORIGINE IN (1,2,3,12)  )
+   AND
+   ( dbo.CDC_MOVIMENTI_BO.TipoCostoRicavo = 2  )
+   AND
+   dbo.IZS_Riclassificazione.Descrizione  <>  'Note alle prove'
+  )
+GROUP BY
+  dbo.IZS_ANNI.ANNO, 
+  dbo.IZS_Reparti.CODICE_REPARTO, 
+  dbo.IZS_Reparti.REPARTO, 
+  dbo.CDC_MOVIMENTI_BO.Settore, 
+  dbo.IZS_Riclassificazione.Gruppo, 
+  dbo.IZS_Riclassificazione.Descrizione, 
+  dbo.IZS_Riclassificazione.idClassificazione, 
+  dbo.IZS_MESI.MESE, 
+  dbo.IZS_Aree.Descrizione, 
+  dbo.IZS_Riclassificazione.Ufficialita, 
+  dbo.IZS_CDC.CODICE_CDC, 
+  dbo.CDC_MOVIMENTI_BO.Numero_Accettazione, 
+  dbo.CDC_MOVIMENTI_BO.Anno_Accettazione
+
+
+"
+
+coge20 <- con %>% tbl(sql(query2)) %>% as_tibble()
+
+View(coge20)

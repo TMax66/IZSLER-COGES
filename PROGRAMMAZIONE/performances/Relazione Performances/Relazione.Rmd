@@ -51,10 +51,11 @@ library(kableExtra)
 
 # PREMESSA {-}
 La Relazione sulla Performance, informata ai principi dell’art. 13, comma 6, lettera b), del D Lgs n.150/2009 e all’art.10, comma 1, lettera b) dello stesso decreto, evidenzia a consuntivo con riferimento all’anno 2020, i risultati organizzativi e individuali raggiunti rispetto agli obiettivi programmati con rilevazione degli eventuali scostamenti.
-Il documento chiude il Ciclo di Gestione della Performance avviato con l’approvazione del Piano della Performance 2020-2022 con deliberazione del Consiglio di Amministrazione n.____ del ______2020.
+Il documento chiude il Ciclo di Gestione della Performance avviato con l’approvazione del “Piano della Performance 2020-2022” con deliberazione del Consiglio di Amministrazione n. 2 del 24.02.2020.
 La logica sottesa è quella di rendere edotti i diversi portatori di interesse (stakeholders) sui risultati attesi ed alle modalità con cui quei risultati sono stati raggiunti.
  In riferimento alle finalità sopra descritte, si è impostata la Relazione in modo snello e comprensibile raccogliendo le informazioni di maggior interesse ed ispirandosi ai principi di trasparenza, immediata intelligibilità, veridicità e verificabilità dei contenuti, partecipazione e coerenza interna ed esterna.
-La presente Relazione della Performance è stata sottoposta alla validazione del Nucleo di Valutazione delle Prestazioni e pubblicata nella sezione «Amministrazione trasparente» del sito internet dell’Istituto, ai sensi dell’art. 10, c. 8, lett. b), d.lgs. 33/2013. 
+La presente Relazione della Performance è stata sottoposta alla validazione del Nucleo di Valutazione delle Prestazioni e pubblicata nella sezione «Amministrazione trasparente» del sito internet dell’Istituto, nella sotto sezione “Performance”.
+
 
 
 
@@ -64,7 +65,7 @@ La presente Relazione della Performance è stata sottoposta alla validazione del
 \newpage
 # Informazioni d'interesse per i cittadini e gli altri stakeholders esterni
 
-## Gli stakeholders dell'IZSLER{-}
+## Gli stakeholders dell'IZSLER
 Molteplici sono i soggetti portatori di interesse o stakeholders che hanno correlazioni di diversa natura con l’Istituto. Da quelli che detengono un rapporto diretto, clienti, fornitori, cittadini, a tutti gli attori le cui azioni possono direttamente o indirettamente influenzare le scelte attuate o da porre in essere (collettività, Pubblica Amministrazione, istituzioni pubbliche ecc.)
 
 ```{r echo=FALSE, fig.align = "center",out.width = '90%', }
@@ -76,15 +77,15 @@ knitr::include_graphics("figure/f1.png")
 ## Analisi del contesto di riferimento
 L’ analisi del contesto di riferimento ci offre la possibilità di valutare i dati qualitativi e quantitativi che caratterizzano gli ambiti di riferimento dell’Istituto, con l’obiettivo di fornire informazioni rilevanti per gli stakeholders, per l’interpretazione dei risultati raggiunti presentati nelle pagine successive.
 
-## Il contesto esterno di riferimento: contesto europeo ed internazionale
+### Il contesto esterno di riferimento: contesto europeo ed internazionale
 Gli Istituti Zooprofilattici costituiscono una struttura sanitaria integrata, unica in Europa, in grado di assicurare una rete di servizi per verificare la salubrità degli alimenti e dell’ambiente, per la salvaguardia della salute dell’uomo. La funzione di raccordo e coordinamento delle attività degli II.ZZ.SS. è svolta dalla Direzione Generale della sicurezza degli alimenti e della nutrizione del Ministero della Salute che ne definisce, mediante il lavoro della Commissione Scientifica Nazionale, le Linee guida e le tematiche principali. 
 La rete degli II.ZZ.SS. ben si integra e si riconosce con il valore internazionale “ONE HEALTH” basato su collaborazioni intersettoriali e formalmente riconosciuto dalla Commissione Europea, OMS, FAO, OIE, istituti di ricerca, ONG e a molti altri. Questo approccio riconosce che la salute delle persone, degli animali e degli ecosistemi sono interconnesse, promuovendo una metodologia intersettoriale, e multidisciplinare, in grado di affrontare i rischi potenziali o già esistenti che hanno origine dall’interfaccia tra ambiente, animali e uomo.
 
-## Il contesto nazionale
+### Il contesto nazionale
 Gli Istituti Zooprofilattici Sperimentali (II.ZZ.SS.) costituiscono una rete di eccellenza sul territorio nazionale in grado di operare di concerto con il Ministero della Salute a stretto contatto con i Servizi Veterinari Regionali e delle ASL.
 Assicurano al Servizio Sanitario Nazionale attività diagnostica di campo e di laboratorio, di sorveglianza epidemiologica, di ricerca e formazione, delle zoonosi, del benessere animale e della sicurezza alimentare, nel rispetto degli standard di qualità e di prevenzione stabiliti dall’Unione Europea. Gli II.ZZ.SS. con le loro 10 sedi centrali dislocate sul territorio nazionale e le 90 sezioni diagnostiche periferiche, sono sottoposti alla vigilanza del Ministero della Salute.
 
-## IL contesto Regionale: Lombardia e Emilia Romagna
+### IL contesto Regionale: Lombardia e Emilia Romagna
 
 L’IZSLER ha sede legale a Brescia e si avvale di 17 sedi territoriali situate nelle regioni Lombardia (Brescia, Bergamo, Mantova, Cremona, Sondrio, Binago (VA), Milano, Pavia e Lodi) ed Emilia-Romagna (Bologna, Piacenza, Parma, Reggio nell’Emilia, Modena, Forlì, Ravenna e Ferrara), che curano e gestiscono i contatti con le realtà territoriali, interessando un’area di circa 46.000 kmq in cui risiedono oltre 14 milioni di abitanti.  I dati di seguito riportati, aggiornati al 31/12/2019 (ISTAT), forniscono un quadro delle dimensioni delle regioni di competenza dell’IZSLER. 
 
@@ -124,15 +125,27 @@ Equidi            & 20605                                       & 61085         
 \end{table}
 \end{center}
 
+Le Regioni Lombardia ed Emilia-Romagna trattano più del 50% del latte italiano (300 caseifici in Emilia-Romagna e 167 in Lombardia) e oltre il 30 % delle carni italiane con 150 impianti di macellazione in Emilia-Romagna e 1243 in Lombardia.
+
+
 # L'Amministrazione
 
-L'Istituto Zooprofilattico Sperimentale della Lombardia e dell'Emilia Romagna (IZSLER) è un Ente Sanitario di Diritto Pubblico, dotato di autonomia gestionale, amministrativa e tecnica, che opera nell'ambito del Servizio Sanitario Nazionale come strumento tecnico scientifico dello Stato, delle Regioni e delle Province Autonome, garantendo ai Servizi Veterinari le prestazioni e la collaborazione in materia di sanita animale, controllo di salubrità e qualità  degli alimenti di origine animale, igiene degli allevamenti e corretto rapporto tra insediamenti umani, animali ed ambiente.
+## Un po' di storia: Che cosa è l’Istituto Zooprofilattico Sperimentale della Lombardia ed Emilia Romagna (IZSLER)
+
+_Ente Sanitario di Diritto Pubblico_, nato nel 1921, _svolge attività di supporto tecnico-scientifico in materia di salute e tutela animale, sicurezza alimentare, salute e integrità dell’ambiente attraverso attività analitiche, attività di analisi del rischio e di ricerca specialistica_ La rete di relazioni di IZSLER si colloca primariamente nel tessuto sociale ed economico delle Regioni Lombardia ed Emilia-Romagna, ma si estende a livello nazionale con le attività istituzionali connesse con il Ministero della Salute e l’opera dei Centri di Referenza Nazionali, nonché a livello internazionale la collaborazione costante con organizzazioni come OIE, EFSA e FAO
+_L’interconnessione tra salute umana e animale_ oltre gli animali da compagnia e di allevamento e si estende alla salute degli animali selvatici, della biosfera e degli ecosistemi in essa presenti trova nelle molteplici competenze di IZSLER nel settore sicurezza alimentare e sanità pubblica la possibilità di contribuire, come testimoniato dalla situazione attuale, a creare _sinergie utili per affrontare le emergenze riguardanti la salute dell’uomo e degli animali e le emergenze ambientali sviluppando collaborazioni e punti di incontro tra salute umana e veterinaria_, e favorendo la connessione dei diversi attori della salute pubblica applicando l’approccio “One Health”. 
+
+## IZSLER oggi: organi, funzioni e settori di competenza 
+
+L’IZSLER opera come **strumento tecnico-scientifico** dello Stato, della regione Lombardia e della regione Emilia Romagna nell’ambito del Servizio Sanitario nazionale, garantendo, in tal modo, al Ministero della Salute, alle Regioni stesse alle aziende sanitarie le prestazioni e la collaborazione tecnico scientifica necessarie all’espletamento delle funzioni in materia di sanità pubblica veterinaria e sicurezza alimentare.
+L'Istituto Zooprofilattico Sperimentale della Lombardia e dell'Emilia Romagna (IZSLER) è un **Ente Sanitario di Diritto Pubblico**, dotato di autonomia gestionale, amministrativa e tecnica, che opera nell'ambito del Servizio Sanitario Nazionale come strumento tecnico scientifico dello Stato, delle Regioni e delle Province Autonome, garantendo ai Servizi Veterinari le prestazioni e la collaborazione in materia di sanita animale, controllo di salubrità e qualità  degli alimenti di origine animale, igiene degli allevamenti e corretto rapporto tra insediamenti umani, animali ed ambiente.
+
 
 La mission dell'IZSLER è:
 
  **"Operare a favore della salute pubblica e delle attività produttive del settore agro-alimentare nel rispetto dei valori etici, al fine dello sviluppo socio-economico del paese"**
  
- L’organizzazione attuale dell’Istituto trova il suo fondamento normativo nel D. Lgs n.106 del 28.06.2012, recante la “Riorganizzazione degli enti vigilati dal Ministero della Salute, ai sensi dell’art.2 della L. n. 183 del 04.11.2010”, delineati poi nelle leggi regionali della Lombardia n.22 del 24.07.2014 e dell’Emilia-Romagna n.9 del 30.06.2014. 
+**L’organizzazione attuale** dell’Istituto trova il suo fondamento normativo nel D. Lgs n.106 del 28.06.2012, recante la _“Riorganizzazione degli enti vigilati dal Ministero della Salute, ai sensi dell’art.2 della L. n. 183 del 04.11.2010”_, delineati poi nelle leggi regionali della Lombardia n.22 del 24.07.2014 e dell’Emilia-Romagna n.9 del 30.06.2014. 
 Con Deliberazione della Giunta Regionale della Regione Lombardia n. XI/2622 del 16.12.2019 è stato nominato il direttore generale, **Dr. Piero Frazzi**. L’attuale Direttore Generale, con proprio decreto n.25 del 07.02.2020 incaricava Direttore Amministrativo il Dott. Giovanni Ziviani e con proprio decreto n.24 del 07.02.2020 Direttore Sanitario, il Dott. Giuseppe Diegoli. A seguito delle personali dimissioni del Dott. Diegoli il Direttore Generale, con proprio decreto n.243 del 30.07.2020 incaricava Direttore Sanitario, il **Dott. Giuseppe Merialdi**.
 
 Gli organi dell’Istituto sono:
@@ -158,9 +171,8 @@ D.ssa Giuseppina Cruso - Componente,
 con funzioni analoghe a quelle degli organismo indipendente di valutazione (OIV) è un soggetto nominato in ogni Amministrazione Pubblica e svolge in modo indipendente alcune importanti funzioni nel processo di misurazione e valutazione della performance, tra cui la validazione del presente documento ai sensi dell’art. 10 lettera b) del D. Lgs 150/2009 e s.m.i..
  
 \newpage
-L’IZSLER svolge compiti inerenti il settore della sanità pubblica veterinaria, della sicurezza alimentare e del benessere animale, nonché attività di ricerca scientifica sperimentale veterinaria. L’IZSLER opera come strumento tecnico-scientifico dello Stato, della regione Lombardia e della regione Emilia Romagna nell’ambito del Servizio Sanitario nazionale, garantendo, in tal modo, al Ministero della Salute, alle Regioni stesse alle aziende sanitarie le prestazioni e la collaborazione tecnico scientifica necessarie all’espletamento delle funzioni in materia di sanità pubblica veterinaria e sicurezza alimentare.
 
-In particolare, all’IZSLER sono affidate le seguenti funzioni istituzionali: 
+In particolare, all’IZSLER sono affidate le seguenti **funzioni istituzionali**: 
 
 - erogazione del servizio diagnostico delle malattie degli animali e delle zoonosi;
 - supporto tecnico-scientifico ed operativo all'azione di farmaco-vigilanza veterinaria;
@@ -179,20 +191,26 @@ In particolare, all’IZSLER sono affidate le seguenti funzioni istituzionali:
 - consulenza ed assistenza agli allevatori per la bonifica zoosanitaria, per lo sviluppo e il miglioramento igienico delle produzioni animali; 
 - produzione, commercializzazione e distribuzione di medicinali e prodotti necessari per la lotta alle malattie degli animali e per l’espletamento delle funzioni di sanità pubblica veterinaria.
 
-• Sanità Animale: l’IZSLER garantisce in questo settore un servizio diagnostico attivo negli ambiti di maggior interesse zootecnico (bovino, suino, ovicaprino, avicolo, cunicolo, ittico, apistico e della selvaggina allevata) e nelle specie di affezione (cani, gatti, rettili, animali selvatici, uccelli esotici, etc.). Le prestazioni non si limitano alle sole analisi di laboratorio ma comprendono anche interventi in allevamento. 
 
-## **Settori di competenza istituzionale dell’IZSLER** {-}
 
-- **Sicurezza Alimentare** come previsto dalle programmazioni sanitarie regionali e dalla politica dell’Unione Europea, l’IZSLER svolge funzioni di supporto nell’ambito dei piani nazionali e 15 Cfr “Piano delle Performance 2020-2022” adottato con Delibera del Consiglio di Amministrazione n.2/2020. 25 regionali di controllo sugli alimenti nella filiera produttiva e di commercio. Tale attività è assicurata anche a supporto delle azioni dei Nuclei Antisofisticazioni e Sanità (NAS) dell’Arma dei Carabinieri e degli organi periferici del Ministero della Salute.
+I settori di competenza istituzionale dell’IZSLER sono: 
+
+-  **Sanità Animale**: l’IZSLER garantisce in questo settore un servizio diagnostico attivo negli ambiti di maggior interesse zootecnico (bovino, suino, ovicaprino, avicolo, cunicolo, ittico, apistico e della selvaggina allevata) e nelle specie di affezione (cani, gatti, rettili, animali selvatici, uccelli esotici, etc.). Le prestazioni non si limitano alle sole analisi di laboratorio ma comprendono anche interventi in allevamento. 
+
+- **Sicurezza Alimentare**: come previsto dalle programmazioni sanitarie regionali e dalla politica dell’Unione Europea, l’IZSLER svolge funzioni di supporto nell’ambito dei piani nazionali e 15 Cfr “Piano delle Performance 2020-2022” adottato con Delibera del Consiglio di Amministrazione n.2/2020. 25 regionali di controllo sugli alimenti nella filiera produttiva e di commercio. Tale attività è assicurata anche a supporto delle azioni dei Nuclei Antisofisticazioni e Sanità (NAS) dell’Arma dei Carabinieri e degli organi periferici del Ministero della Salute.
 - **Benessere Animale** : l'accertamento dei livelli del benessere animale è funzionale all'attività di certificazione delle filiere alimentari, in linea con le attuali direttive dell'Unione Europea sulla qualità delle produzioni zootecniche (intesa come qualità totale del processo produttivo) e sulla valorizzazione delle produzioni locali tipiche. I parametri che caratterizzano lo stato di benessere sono la sintesi di un approccio combinato, multidisciplinare, basato su competenze di clinica, etologia, immunologia, immunobiochimica e sull'applicazione di tipologie analitiche di biochimica clinica. 
 - **Formazione**: si configura come una delle mission più importanti e comporta la formazione di personale specializzato nel campo della zooprofilassi e salubrità degli alimenti anche presso istituti e laboratori di paesi esteri. L’IZSLER pianifica strategicamente le attività in tale settore, al fine di soddisfare il fabbisogno formativo in coerenza con le performance aziendali, progettando interventi formativi ad hoc e corsi accreditati ECM. Inoltre, mediante convenzioni, vengono accolti in Istituto, ogni anno, tirocinanti, frequentatori volontari e ricercatori, ed è fornita loro l’opportunità di svolgere attività di supporto tecnico-scientifico nell’ambito del corso di studi o del percorso post-laurea, delle scuole di specializzazione e dei dottorati di ricerca. 
 - **Ricerca**: tra i compiti istituzionali principali dell’IZSLER figura l’attività di Ricerca.
-I principali programmi di ricerca finanziati dal Ministero della Salute, ai quali partecipa l’IZSLER sono: 
-- la Ricerca Corrente (è l’attività di ricerca scientifica diretta a sviluppare nel tempo le conoscenze fondamentali in settori specifici della biomedicina e della sanità pubblica); 
-- la Ricerca Finalizzata (è uno dei principali strumenti per il conseguimento degli obiettivi delle politiche del Servizio Sanitario Nazionale). 
- L’Istituto partecipa, inoltre, a progetti di ricerca europei e ad altri programmi di ricerca diversi da quelli finanziati dal Ministero della Salute, a progetti finanziati dalle Regioni Lombardia ed Emilia Romagna. L’Istituto, nell’ambito dei propri compiti istituzionali, può sviluppare anche attività di ricerca autofinanziate (progetti autofinanziati). 
 
-Nella seguente tabella sono riportati i dati suddivisi per tipologia di progetto di ricerca relativamente al 2020.
+I principali programmi di ricerca finanziati dal Ministero della Salute, ai quali partecipa l’IZSLER sono: 
+
+- **la Ricerca Corrente** (è l’attività di ricerca scientifica diretta a sviluppare nel tempo le conoscenze fondamentali in settori specifici della biomedicina e della sanità pubblica); 
+
+- **la Ricerca Finalizzata** (è uno dei principali strumenti per il conseguimento degli obiettivi delle politiche del Servizio Sanitario Nazionale). 
+ 
+L’Istituto partecipa, inoltre, a progetti di ricerca europei e ad altri programmi di ricerca diversi da quelli finanziati dal Ministero della Salute, a progetti finanziati dalle Regioni Lombardia ed Emilia Romagna. L’Istituto, nell’ambito dei propri compiti istituzionali, può sviluppare anche attività di ricerca autofinanziate (progetti autofinanziati). 
+
+Nella seguente tabella sono riportati i dati suddivisi per tipologia dei progetti di ricerca relativamente al 2020.
 
 \begin{center}
 \begin{table}[H]
@@ -218,7 +236,10 @@ Nella seguente tabella sono riportati i dati suddivisi per tipologia di progetto
 \end{center}
 
 
-## L'attività analitica, i servizi resi, le produzioni
+## L’attività analitica 
+
+L’Istituto si occupa di diagnosi delle malattie degli animali e delle zoonosi, di controllo sugli alimenti e mangimi riguardo la presenza di contaminanti chimici, biologici e fisici degli alimenti, di sorveglianza epidemiologica, di ricerca e sperimentazione su tutte le materie indicate, di formazione permanente, di supporto tecnico scientifico .La nostra organizzazione attuale prevede l’esecuzione di diversi tipi di attività nei laboratori della sede centrale e nelle sedi territoriali dislocate nella regione Lombardia ed Emilia Romagna. Per ogni ulteriore approfondimento si rimanda agli ambiti di attività presenti sulla home page dell’Istituto.
+
 
 ## Centri di referenza nazionali, internazionali e i laboratori di riferimento
 
@@ -229,29 +250,6 @@ Al seguente [link](https://www.izsler.it/chi-siamo/per-chi-e-con-chi-lavoriamo/c
 
 Nell'arco del 2020 si sootolineano le seguenti attività di rilievo che ha visto il coinvolgimento del CR.....
 
-<!-- | Centri di Referenza Nazionale | -->
-<!-- |:-:| -->
-<!-- |    <br>Centro di Referenza Nazionale per lo studio e la diagnosi dell’Afta epizootica  e delle Malattie Vescicolari (DM 2.11.1991)    | -->
-<!-- |    <br>Centro di Referenza Nazionale per la Leptospirosi (DM 4.10.1999)    | -->
-<!-- |    <br>Centro di Referenza Nazionale per la Clamidiosi (DM 4.10.1999)    | -->
-<!-- |    <br>Centro di Referenza Nazionale per la Malattia di Aujeszky –   Pseudorabbia (DM 8.5.2002)    | -->
-<!-- |    <br>Centro di Referenza Nazionale per il Benessere Animale (DM 13.02.2003) | -->
-<!-- |    <br>Centro di Referenza Nazionale per la Formazione in Sanità Pubblica Veterinaria (DM 27.08.2004)    | -->
-<!-- |    <br>Centro di Referenza Nazionale per i Metodi Alternativi, Benessere  e Cura degli Animali da Laboratorio (DM 20.04.2011)  | -->
-<!-- |    <br>Centro di Referenza Nazionale per la Tubercolosi da M. bovis (DM 4.10.1999)    | -->
-<!-- |    <br>Centro di Referenza Nazionale per la Tularemia (DM 4.10.1999)   | -->
-
-
-<!-- |    <br>Centri di Referenza o di Collaborazione Internazionali    | -->
-<!-- |-| -->
-<!-- |    <br>Centro di Referenza FAO: Afta Epizootica e Malattia Vescicolare del   suino (lettera di incarico 19.11.1015)    | -->
-<!-- |    <br>Laboratorio di Referenza OIE: Malattia Vescicolare del Suino (59   General Session 1991)    | -->
-<!-- |    <br>Laboratorio di Referenza OIE: Malattia Emorragica del Coniglio (59   General Session 1991)    | -->
-<!-- |    <br>Laboratorio di Referenza OIE: Influenza Suina (80° General Session   Paris 20-25 May 2012 resolution n. 20)    | -->
-<!-- |    <br>Laboratorio di Referenza OIE: Myxomatosi del Coniglio (80° General   Session Paris 20-25 May 2012 resolution n. 20)    | -->
-<!-- |    <br>Laboratorio di Referenza   OIE: Foot and mouth disease (81° General Session Paris 26-31 May 2013   resolution n. 32)    | -->
-<!-- |    <br>Collaborating Centre for Cell Cultures (81° General Session Paris 26-31 May 2013 resolution n. 32), rinominato Veterinary Biological Biobank (March 2014)    | -->
-<!-- |    <br>Centro di Referenza Europeo per le piccole specie allevate a scopo zootecnico (EUROCAW-SMALL ANIMAL)    | -->
 
 
 ## Le risorse umane
@@ -263,60 +261,90 @@ Alla data del 31.12.2020 l’IZSLER ha nel su organico n. 704 unità così suddi
 -  13 personale addetto alla ricerca;
 
 
+ **mettere tabelle o grafico vedi pag 15 docu word**
+
+
+## Pari opportunità e bilancio di genere
+
+Già da tempo l’Istituto ha promosso politiche ed interventi atti alla promozione delle pari opportunità.
+Con deliberazione del Direttore Generale n. 408 del 12.7.2011, l’ente si è dotato di un organismo che vigilasse sul rispetto della Legge n.125 del 10.04.1991 e ss.ii.mm., costituendo il “**Comitato Unico di Garanzia per le Pari Opportunità, la Valorizzazione del Benessere di chi lavora e contro le Discriminazioni**”.
+Tale organismo persegue i seguenti obiettivi:
+
+- assicurare, nell'ambito del lavoro pubblico, parità e pari opportunità di genere;
+- garantire l'assenza di qualunque forma di violenza morale o psicologica o di discriminazione;
+- favorire l'ottimizzazione della produttività del lavoro pubblico, migliorando l'efﬁcienza delle prestazioni lavorative;
+- razionalizzare e rendere efﬁciente ed efﬁcace l'organizzazione della Pubblica Amministrazione anche in materia di pari opportunità.
+L’Organismo è stato rinnovato con Decreto del Direttore Generale n. 272 del 13/12/2017.
+In Istituto lavorano 458 donne e 245 uomini, così suddivisi:
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', } 
+knitr::include_graphics("figure/genere.png")
+```
+
+## Le risorse finanziarie: raggiungimento annuale equilibrio di bilancio
+
+Si riporta di seguito la sintesi del bilancio consuntivo anno 2019 con le informazioni più rilevanti di carattere economico-finanziario, la proposta di Bilancio consuntivo anno 2020 è in fase di fine istruttoria. Nel bilancio si evidenzia un utile di esercizio pari a € 11.105.153. Per ogni ulteriore approfondimento si rimanda alla pagina della sezione “Amministrazione Trasparente”, sotto sezione “Bilanci”.
+ll Bilancio è stato adottato con delibera del Consiglio di Amministrazione n. 6 del 22.07.2020, il Collegio dei Revisori dei Conti ha espresso parere favorevole con verbale n. 12 del 19.06.2020.
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/f6.png")
+```
+
+
+
+
 ## Il patrimonio immobiliare
+
+Le tabelle che seguono riportano il patrimonio immobiliare dell’Istituto distribuito nel territorio delle due regioni di competenza.
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/imm.png")
+```
 
 
 ## La produzione scientifica 
 
 ## La formazione
+
 L’Istituto in virtù del mandato istituzionale e della propria mission, considera strategica l’attività della formazione e la utilizza come strumento essenziale per favorire lo sviluppo culturale e professionale del proprio personale. L’IZSLER è riconosciuto come provider per il sistema di Educazione Continua in Medicina (ECM) e Centro di Referenza Nazionale per la Sanità Pubblica Veterinaria, come tale collabora con il Ministero della Saluta e con le Regioni di competenza per la formazione dei veterinari e degli operatori sanitari del settore agroalimentare. Le attività di formazione sono erogate direttamente in aule dedicate e attrezzate e attraverso una piattaforma di Formazione a Distanza (FAD) per corsi online, webinar e videoconferenze.  La collaborazione con Scuole superiori e Università attraverso specifiche convenzioni, permette l’accesso ai laboratori e agli uffici di studenti delle scuole superiori per l’alternanza scuola lavoro, degli studenti di vari percorsi di laurea, scuole di specialità e dottorati per completare la preparazione scolastica con la formazione sul campo.
 Dal 18 maggio 2012 ha conseguito la certificazione secondo la norma “UNI EN ISO 9001:2008”, sistemi di gestione per la qualità-Requisiti” e un aggiornamento alla norma “UNI EN ISO 9001:2015” dal 18 maggio 2016.
 
 
+## La ricerca
+
+L’attività di Ricerca figura tra i compiti istituzionali prioritari dell’IZSLER, delineata nella legge 23 giugno 1970, n.503 (art. 3) si attua attraverso i **_programmi di ricerca finanziati dal Ministero della Salute_**(Ricerca Corrente e Ricerca Finalizzata), ma anche attraverso la **_competizione con altri centri di ricerca per l’accesso ai fondi europei, ai fondi dei programmi di ricerca regionali per lo sviluppo del territorio di competenza e ai fondi di progetti finanziati da privati_**. A sostegno delle esigenze territoriali delle Regioni di competenza e del Ministero della salute, e per lo sviluppo di nuovi settori IZSLER **_sostiene progetti di ricerca con finanziamento proprio_**. 
+
+IZSLER è attualmente ricercatore principale in 63 progetti dei 102 in corso attualmente, gran parte e dei progetti sono finanziati dal Ministero della Salute e in collaborazione con altri IIZZSS o Università
+
+Nonostante le attività di esecuzione di migliaia di tamponi ogni giorno ii ricercatori di IZSLER hanno collaborato con altri centri di ricerca a livello italiano per sviluppare metodiche e approfondire le conoscenze del virus causa di Covid 19 come ad esempio nel progetto **_Coves - Sviluppo e validazione di una metodica rapida per la rilevazione di SARS-CoV-2 su superfici ambientali_**, ma ha contribuito anche a ricerche di base quali quella sulle potenzialità evolutive del coronavirus, capace di modificarsi resistendo alle difese organiche  e quella sulla possibilità di trasmissione dell’infezione da madre a feto attraverso la placenta .
+
+## Il Sistema di Gestione Integrato di Qualità 
+
+La politica dell’Istituto è orientata al miglioramento continuo della qualità, per la creazione di un sistema di gestione dell’intera organizzazione finalizzato al valore delle prestazioni erogate e delle produzioni finalizzata alla soddisfazione del cliente, sia pubblico che privato. La Direzione considera la Qualità una strategia competitiva e parte della missione aziendale, inserendola come uno degli obiettivi da perseguire. La qualità all’interno dell’Istituto, si traduce in un miglioramento continuo dei servizi resi in relazione alle esigenze del cliente e contemporaneamente alla valutazione dei costi, al fine di soddisfare i requisiti previsti dalla legislazione nazionale e comunitaria. A tal fine è stata definita anche una politica di trattamento dei reclami e della soddisfazione del cliente che assicuri che le informazioni siano comunicate alle parti direttamente coinvolte in modo facilmente accessibile.
+L’Istituto sta implementando un sistema di gestione integrato nell’ambito della qualità delle prove, delle produzioni certificate, della sicurezza e della Biosicurezza.
+Gli strumenti che l’Istituto ha individuato e di cui si avvale per il raggiungimento di questi obiettivi sono molteplici, i principali sono: 
+
+- un sistema organizzato di documenti (documenti del sistema di gestione della Qualità) che descrivono l’applicazione degli standard di riferimento per la qualità all’interno dell’Ente e definiscono i criteri di competenza e responsabilità dei diversi ruoli deputati alla stesura e all’approvazione di tali documenti; 
+- un sistema di comunicazione e diffusione per l’informazione e la formazione che coinvolge a cascata tutto il personale, 
+- un sistema integrato di Audit interno che prevede una programmazione annuale approvata dalla Direzione Generale su proposta del RAQ e della Direzione Sanitaria e che contempla in un unicum le diverse tipologie e finalità di Audit interno.  
+
+La funzione di auditing interno integrato oltre che agire a tutela della conformità dichiarata verso i requisiti di norma e/o legge,  è  per la Direzione Generale uno strumento sistematico di conoscenza  del dettato dalle norme di riferimento per le prove e le produzioni certificate che coadiuva l’integrazione di tali vincoli specifici con le regole degli altri diversi sistemi che coesistono in IZSLER  (Es. Biosicurezza, Controllo di Gestione, Anticorruzione) per l’obiettivo di una maggiore efficacia ed efficienza del Sistema di gestione inteso nell’insieme della sue complessità e articolazioni.   
+
+Sono da segnalare nel 2020 i seguenti rilevanti cambiamenti di organizzazione e di contesto, che hanno comportato un riesame generale degli strumenti e dei criteri alla base della gestione per una nuova definizione degli stessi in parte ancora da consolidare: 
+
+- la transizione alla nuova norma di accreditamento ISO/IEC 17025:2017 che presenta un’importante novità con l’introduzione della gestione basata sul rischio;
+- l’applicazione della nuova organizzazione dipartimentale e le relative deleghe di funzioni assegnate dalla Direzione Generale ai nuovi Direttori di Dipartimento secondo il relativo Regolamento;
+- la proposta, approvata nel febbraio del corrente anno, della nuova organizzazione di Ente con la creazione di una nuova struttura complessa per il controllo di gestione per lo sviluppo dello strumento di budgeting dipartimentale;
+- l’applicazione della separazione fisica tra attività ufficiali e non ufficiali nell’ambito della Sicurezza Alimentare tra le diverse sedi territoriali/Reparti dell’Ente;
+- la prima applicazione, su quattro strutture sanitarie pilota, dell’attività di Auditing interno gestionale istituita con il Decreto del Consiglio di Amministrazione n.9/2020 finalizzata alla verifica in campo del buon governo organizzativo inclusa l’applicazione delle misure di contrasto alla corruzione individuate nella relativa mappatura del PTPCT.  
+- l’integrazione della verifica delle misure di regolamentazione del PTPCT relative all’anonimizzazione del campione nel processo di prova negli Audit SAQ per la conformità ai requisiti dell’accreditamento.  
+
+Alla data del 31.12.2020 il numero totale di prove accreditate riferito a tutte le sedi IZSLER (LAB 0148 L) è pari a 1372.
+
+E’ stata avviata ed è in corso di consolidamento  una rimodulazione della politica di accreditamento delle prove nell’ambito della Sicurezza Alimentare, finora rivolta  ove possibile alla concentrazione delle prove accreditate per la migliore efficienza, avendo la separazione delle attività ufficiali e  di Autocontrollo,  a maggiore garanzia dell’imparzialità,  comportato  in alcuni casi  il trasferimento delle prove erogate prima nella stessa sede in regime di controllo ufficiale e di autocontrollo ad altra sede presso la quale la stessa prova non veniva eseguita.  Tale maggiore impegno è compensato da un innalzamento complessivo della qualità dei servizi erogati nelle diverse sedi dell’Ente e di conseguenza anche dalla crescita delle competenze del personale addetto alle attività di prova.  
 
 
 # Principali attività e risultati raggiunti dall'IZSLER nell'anno 2020
-
-## Aspetti organizzativi
-
-### Attauazione dei dipartimenti{-}
-Con deliberazione n.  del   è stato attuato un nuovo modello organizzativo, che ha permesso di porre le basi per perseguire la finalità di creare un’unica identità e integrare, capitalizzandole, le esperienze passate, mettendo a fattore comune le buone pratiche, con il desiderio di vivere una nuova realtà organizzativa.
-I criteri utilizzati per la definizione dell’organizzazione sono:
-- valorizzare le funzioni dell’IZSLER in tema di prevenzione, analisi della domanda, valutazione dei bisogni e governo dell’offerta;
-- delineare un’organizzazione snella ma adeguata alla complessità dell’IZSLER;
--	governare le tematiche e i processi con un’attenzione particolare all’articolazione territoriale;
--	essere garante per la salute dei cittadini, integrandosi con gli enti sanitari e nazionali e tutti gli attori del territorio, in sinergia con le istituzioni locali.
-Il nuovo modello ha comportato l’attuazione dei seguenti Dipartimenti:
-
-- DIPARTIMENTO SICUREZZA ALIIMENTARE 
-- DIPARTIMENTO TUTELA SALUTE ANIMALE 
-- DIPARTIMENTO AREA TERRITORIALE EMILIA ROMAGNA
-- DIPARTIMENTO AREA TERRITORIALE LOMBARDIA 
-- DIPARTIMENTO AMMINISTRATIVO
-
-
-## Progettazione e realizzazione
-Nel corso dell’anno 2020 l’attività di costruzione ha avuto un rallentamento per la pandemia da Covid-19. I primi mesi dell’anno l’attività si è concentrata sull’esecuzione di lavori per la predisposizione di due laboratori per l’analisi dei tamponi Covid-19 mentre gli altri cantieri hanno visto un sostanziale fermo. Nonostante quanto sopra precisato nell’anno 2020 si sono realizzate le seguenti attività:
-
-- la progettazione per la realizzazione della nuova accettazione unica presso la sede di Brescia;
-- la trasformazione del seminterrato dello stabulario a deposito libri;
-- l’inizio del cantiere per la realizzazione del nuovo laboratorio di Batteriologia;
-- la realizzazione del nuovo laboratorio entomologico di Reggio Emilia;
-- la realizzazione dell’ampliamento della sede di Bologna ha avuto un rallentamento ma si ritiene che l’attività si concluderà nell’anno 2021;
-- l’inizio della progettazione definitiva ed esecutiva per la nuova sede territoriale di Cremona.
- Si sono approvate inoltre le seguenti progettazioni: 
-- progetto di fattibilità tecnico- economica la ristrutturazione della sede territoriale di Parma; 
-- progetto di fattibilità tecnico-economica degli ambienti lasciati liberi per il trasferimento della sede di Bologna per il reparto chimico;
-- completamento progettazione per la trasformazione a laboratorio dell’ex magazzino della sede territoriale di Reggio Emilia.
-
-Nel 2020 si sono attivate due importanti convenzioni, una con la Centrale Unica di Committenza (CUC) della Provincia di Brescia per l’esperimento di alcune procedure di gara e l’altra con Infrastrutture Lombarde (ora AREA spa) per la completa realizzazione di due importanti interventi previsti presso la sede di Brescia.
-
-
-## Piramide della ricerca
-
-A seguito dell’emanazione del Decreto Ministeriale 20 novembre 2019, n.164 “Regolamento recante la valutazione del personale della ricerca sanitaria“ (GU serie generale n.2 del 03.01.2020) con Delibera n.  del  sono stati stipulati nell’arco del 2020 n. contratti di collaboratore professionale di ricercatore e n. collaboratore professionale di supporto alla ricerca, secondo le previsioni dell’art. 1 comma 423 della Legge n.205/2017. Con decreto del Direttore Generale n.  del   è stato istituito il Nucleo di valutazione della Piramide della ricerca
-
-
 
 ## IZSLER: In prima linea a supporto dell'emergenza da COVID-19
 
@@ -347,7 +375,7 @@ La sede di Modena ha avuto 20 diversi conferenti, tra cui AUSl di Bologna con 40
 E’ da sottolineare che l’Istituto per far fronte all’emergenza sanitaria ha dovuto prontamente riprogrammare le proprie attività, alcune delle quali sono state momentaneamente sospese e qualche laboratorio è stato riconvertito, per dare spazio all’esecuzione urgente di analisi dei campioni da covid19.
 A tal proposito per supportare le ingenti attività laboratoriale l’intera organizzazione dell’istituto è stata coinvolta a vario titolo mettendo in campo le seguenti azioni:
 
-- l’ UO gestione personale ha  assunto  n.______ personale tecnico sanitario dedicato al campionamento;
+- l’ UO gestione personale ha  assunto  n.26 personale tecnico sanitario dedicato al campionamento;
 - l’UO Provveditorato ha gestito numerose gare per l’acquisizione del materiali necessario all’esecuzione dei campioni;
 - i Sistemi Informativi hanno supportato i laboratori dal punto di vista tecnico-informatico;
 - sono state revisionate tutte le procedure di sicurezza e biosicurezza per il personale e per garantire l’accesso in sede da parte dell’utenza;
@@ -355,8 +383,6 @@ A tal proposito per supportare le ingenti attività laboratoriale l’intera org
 - si è garantito un costante flesso informativo dei dati epidemiologici verso il Ministero  della Salute e delle regioni;
 - si è provveduto ad organizzare corsi di formazione specifici per gli addetti ai servizi di laboratorio;
 Il grande lavoro di equipe/squadra dell’Istituto ha permesso di fronteggiare l’emergenza sanitaria con prontezza ed efficacia, dimostrando notevoli capacità organizzative e spirito di servizio.
-
-
 
 ## Un importante riconoscimento: Laboratorio Nazionale di Riferimento per le Tossine Vegetali Naturali negli alimenti
 
@@ -367,6 +393,67 @@ Le tossine vegetali su cui i laboratori operano sono: gli alcaloidi del tropano 
 Ciascun laboratorio partecipa annualmente a prove comparative inter-laboratorio organizzate dall’EURL “Mycotoxins & plant toxins” di Wageningen (Paesi Bassi) e programma la partecipazione a circuiti di interesse organizzati da altri enti riconosciuti con lo scopo di valutare e monitorare la competenza tecnica del laboratorio.
 Inoltre entrambi i laboratori pianificano e organizzano secondo una programmazione concordata ed in base alla specifiche competenze prove comparative inter-laboratorio tra laboratori ufficiali per metodi di screening e per metodi di conferma assicurando un adeguato follow-up delle attività. 
 I laboratori operano a stretto contatto con la rete dei laboratori ufficiali e forniscono informazioni e supporto ai laboratori del controllo ufficiale. 
+
+## Progettazione e realizzazione
+Nel corso dell’anno 2020 l’attività di costruzione ha avuto un rallentamento per la pandemia da Covid-19. I primi mesi dell’anno l’attività si è concentrata sull’esecuzione di lavori per la predisposizione di due laboratori per l’analisi dei tamponi Covid-19 mentre gli altri cantieri hanno visto un sostanziale fermo. Nonostante quanto sopra precisato nell’anno 2020 si sono realizzate le seguenti attività:
+
+- la progettazione per la realizzazione della nuova accettazione unica presso la sede di Brescia;
+- la trasformazione del seminterrato dello stabulario a deposito libri;
+- l’inizio del cantiere per la realizzazione del nuovo laboratorio di Batteriologia;
+- la realizzazione del nuovo laboratorio entomologico di Reggio Emilia;
+- la realizzazione dell’ampliamento della sede di Bologna ha avuto un rallentamento ma si ritiene che l’attività si concluderà nell’anno 2021;
+- l’inizio della progettazione definitiva ed esecutiva per la nuova sede territoriale di Cremona.
+ Si sono approvate inoltre le seguenti progettazioni: 
+- progetto di fattibilità tecnico- economica la ristrutturazione della sede territoriale di Parma; 
+- progetto di fattibilità tecnico-economica degli ambienti lasciati liberi per il trasferimento della sede di Bologna per il reparto chimico;
+- completamento progettazione per la trasformazione a laboratorio dell’ex magazzino della sede territoriale di Reggio Emilia.
+
+Nel 2020 si sono attivate due importanti convenzioni, una con la Centrale Unica di Committenza (CUC) della Provincia di Brescia per l’esperimento di alcune procedure di gara e l’altra con Infrastrutture Lombarde (ora AREA spa) per la completa realizzazione di due importanti interventi previsti presso la sede di Brescia.
+
+Con la CUC della Provincia di Brescia si sono esperite le procedure di gara come da tabella sottostante:
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/gare1.png")
+```
+
+
+Con Infrastrutture Lombarde (ora AREA SPA) l’Istituto ha sottoscritto una convenzione per la realizzazione di due importanti interventi affidandone alche la funzione di Stazione Appaltante:
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/gare2.png")
+```
+
+
+## Aspetti organizzativi
+
+### Attauazione dei dipartimenti{-}
+Con deliberazione n.  del   è stato attuato un nuovo modello organizzativo, che ha permesso di porre le basi per perseguire la finalità di creare un’unica identità e integrare, capitalizzandole, le esperienze passate, mettendo a fattore comune le buone pratiche, con il desiderio di vivere una nuova realtà organizzativa.
+I criteri utilizzati per la definizione dell’organizzazione sono:
+- valorizzare le funzioni dell’IZSLER in tema di prevenzione, analisi della domanda, valutazione dei bisogni e governo dell’offerta;
+- delineare un’organizzazione snella ma adeguata alla complessità dell’IZSLER;
+-	governare le tematiche e i processi con un’attenzione particolare all’articolazione territoriale;
+-	essere garante per la salute dei cittadini, integrandosi con gli enti sanitari e nazionali e tutti gli attori del territorio, in sinergia con le istituzioni locali.
+Il nuovo modello ha comportato l’attuazione dei seguenti Dipartimenti:
+
+- DIPARTIMENTO SICUREZZA ALIIMENTARE 
+- DIPARTIMENTO TUTELA SALUTE ANIMALE 
+- DIPARTIMENTO AREA TERRITORIALE EMILIA ROMAGNA
+- DIPARTIMENTO AREA TERRITORIALE LOMBARDIA 
+- DIPARTIMENTO AMMINISTRATIVO
+
+
+
+
+## Piramide della ricerca
+
+A seguito dell’emanazione del Decreto Ministeriale 20 novembre 2019, n.164 “Regolamento recante la valutazione del personale della ricerca sanitaria“ (GU serie generale n.2 del 03.01.2020) con Delibera n.  del  sono stati stipulati nell’arco del 2020 n. contratti di collaboratore professionale di ricercatore e n. collaboratore professionale di supporto alla ricerca, secondo le previsioni dell’art. 1 comma 423 della Legge n.205/2017. Con decreto del Direttore Generale n.  del   è stato istituito il Nucleo di valutazione della Piramide della ricerca
+
+
+
+
+
+
+
 
 
 
@@ -688,29 +775,8 @@ knitr::include_graphics("figure/f4.png")
 knitr::include_graphics("figure/f5.png")
 ```
 
-# La dimensione economico-finanziaria
-Si riporta di seguito la sintesi del bilancio consuntivo anno 2019 con le informazioni più rilevanti di carattere economico-finanziario, la proposta di Bilancio consuntivo anno 2020 è in fase di fine istruttoria. Nel bilancio si evidenzia un utile di esercizio pari a 11.105.153. Per ogni ulteriore approfondimento si rimanda alla pagina della sezione “Amministrazione Trasparente”, sotto sezione “Bilanci”. ll Bilancio è stato adottato con delibera______-del______il Collegio dei revisori dei conti ha espresso parere favorevole con vernale n.____del-__.
 
-```{r echo=FALSE, fig.align = "center",out.width = '90%', }
-knitr::include_graphics("figure/f6.png")
-```
 
-# Pari opportunità e bilancio di genere
-
-Già da tempo l’Istituto ha promosso politiche ed interventi atti alla promozione delle pari opportunità.
-Con deliberazione del Direttore Generale n. 408 del 12.7.2011, l’ente si è dotato di un organismo che vigilasse sul rispetto della Legge n.125 del 10.04.1991 e ss.ii.mm., costituendo il “Comitato Unico di Garanzia per le Pari Opportunità, la Valorizzazione del Benessere di chi lavora e contro le Discriminazioni”.
-Tale organismo persegue i seguenti obiettivi:
-
-- assicurare, nell'ambito del lavoro pubblico, parità e pari opportunità di genere;
-- garantire l'assenza di qualunque forma di violenza morale o psicologica o di discriminazione;
-- favorire l'ottimizzazione della produttività del lavoro pubblico, migliorando l'efﬁcienza delle prestazioni lavorative;
-- razionalizzare e rendere efﬁciente ed efﬁcace l'organizzazione della Pubblica Amministrazione anche in materia di pari opportunità.
-L’Organismo è stato rinnovato con Decreto del Direttore Generale n. 272 del 13/12/2017.
-In Istituto lavorano n.4 58 donne e n. 245 uomini, così suddivisi:
-
-```{r echo=FALSE, fig.align = "center",out.width = '90%', } 
-knitr::include_graphics("figure/genere.png")
-```
 
 # Azioni svolte nell'ambito del PTPCT
 Il quadro normativo sulla prevenzione della corruzione e sulla trasparenza ha sempre evidenziato l’importanza di integrare il ciclo della Performance con gli strumenti ed i processi relativi alla qualità dei servizi, alla trasparenza, all’integrità e in generale alla prevenzione della corruzione. 
