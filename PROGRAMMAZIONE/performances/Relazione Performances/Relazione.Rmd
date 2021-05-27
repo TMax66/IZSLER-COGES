@@ -5,6 +5,7 @@ header-includes: \usepackage[italian]{babel} \usepackage{setspace}\doublespacing
                   \usepackage{booktabs} \usepackage{longtable} 
                   \usepackage{fontspec} \usepackage{caption}
                   \setmainfont{Times New Roman} \usepackage{booktabs}
+                  \usepackage{multirow}
                   
               
 output:
@@ -32,7 +33,7 @@ linkcolor: blue
 <!-- ```{r child='sintesi.rmd'} -->
 <!-- ``` -->
 
-```{r include=FALSE}
+```{r eval=FALSE, include=FALSE}
 library(tidyverse)
 library(readxl)
 library(here)
@@ -408,6 +409,18 @@ La Mappa Strategica dell’Istituto, si identifica in una fotografia sintetica d
 
 **E’ necessario precisare che l’intero processo del ciclo di gestione delle performance ha subito non poche difficoltà a causa dell’emergenza sanitaria da COVID-19, che ha comportato un ritardo delle sue fasi e un impatto sul raggiungimento di alcuni obiettivi. Nel corso dell’anno 2020 l’Istituto è stato impegnato principalmente nel fronteggiare la pandemia, destinando risorse, capacità e competenze a tal fine, ritardando progetti e sospendendo altre attività.**
 
+## Il Cascading: dagli obiettivi strategici agli obiettivi operativi
+
+Dagli obiettivi strategici sono stati «costruiti» gli obiettivi operativi inseriti all’interno dell’ Albero  della  Performance   in un processo definito di «cascading»,  declinati in indicatori, target e strutture assegnatarie, suddivisi nella  quattro principali  prospettive di analisi.
+Nella dimensione **Istituzioni, cittadini e consumatori**  l’Ente  mette in evidenza il rafforzamento dell’IZSLER nel settore della PA centrale, l’ampliamento delle attività  nell’ambito della collaborazione con le Regioni e gli Enti locali, il potenziamento dell’integrazione con il Ministero e le Regioni, l’ aumento del network scientifico e della collaborazione scientifica sia a livello nazionale ed internazionale, la partecipazione a progetti di ricerca, twinning  e il potenziamento dell’attività diagnostica e delle produzioni. Una dimensione strategica dell’IZSLER che pone le basi per lo sviluppo di scenari futuri, declinati in ben n. 95 indicatori di mantenimento/potenziamento di attività.
+Nella dimensione **economico-finanziario** l’IZSLER analizza la gestione economica-finanziaria in un’ottica di contenimento delle uscite, di razionalizzazione dell’utilizzo delle risorse,  improntati al perseguimento dell’efficienza, assicurando  la massima efficacia.
+Nella dimensione dei  **processi interni*»**  l’Ente  valuta il modo in cui  raggiungere un migliore efficienza dell’amministrazione,  attraverso l’adeguamento dei processi produttivi dei servizi alle “migliori pratiche” (modelli di eccellenza e standard internazionali e nazionali), mediante l’ottimizzazione della gestione, delle procedure e dei processi, con particolare riferimento al contenimento ed alla riduzione dei tempi di TDF/TDR , nonché all'ottimizzazione dei tempi dei procedimenti amministrativi. 
+Nella dimensione della **Innovazione , crescita e sviluppo organizzativo** rientrano gli indicatori relativi alla qualità totale e soddisfazione delle aspettative dell’utenza, che si declinano  nella qualità e la quantità delle prestazioni e dei servizi erogati, dello sviluppo qualitativo e quantitativo delle relazioni con i cittadini,  gli utenti , i destinatari dei servizi e la rilevazione del grado di soddisfazione dei destinatari delle attività. 
+Lo sviluppo organizzativo viene supportato dalla costante innovazione  dei sistemi informativi e dalla  valorizzazione del capitale umano mediante percorsi di promozione delle competenze. Vista la necessaria integrazione tra gli obiettivi del Piano della Performance e il PTPCT, in questa sezione vengono riportati anche gli obiettivi in tema di trasparenza, anticorruzione e conflitto di interessi. 
+In questa sezione si realizza l’effettiva pianificazione, il controllo delle performance e dei processi, analizzati da diverse prospettive.
+Le  quattro  dimensioni vengono valutati sia dal punto di vista del singolo indicatore rispetto al suo trend storico, sia rispetto alla scala dei valori/dimensione a cui appartengono , sia rispetto al grado di performance della singole struttura .
+Utilizzando opportuni strumenti di indagine è possibile fare un’analisi su molti livelli; i grafici qui di seguito riportati sono un esempio della valutazione fatte periodicamente dall’IZSLER, anche al fine di un continuo e costante monitoraggio.
+
 
 ## I risultati raggiunti
 
@@ -641,17 +654,6 @@ _Attività realizzate nel 2020_:
 
 
 
-## Il Cascading: dagli obiettivi strategici agli obiettivi operativi
-
-Dagli obiettivi strategici sono stati «costruiti» gli obiettivi operativi inseriti all’interno dell’ Albero  della  Performance   in un processo definito di «cascading»,  declinati in indicatori, target e strutture assegnatarie, suddivisi nella  quattro principali  prospettive di analisi.
-Nella dimensione **Istituzioni, cittadini e consumatori**  l’Ente  mette in evidenza il rafforzamento dell’IZSLER nel settore della PA centrale, l’ampliamento delle attività  nell’ambito della collaborazione con le Regioni e gli Enti locali, il potenziamento dell’integrazione con il Ministero e le Regioni, l’ aumento del network scientifico e della collaborazione scientifica sia a livello nazionale ed internazionale, la partecipazione a progetti di ricerca, twinning  e il potenziamento dell’attività diagnostica e delle produzioni. Una dimensione strategica dell’IZSLER che pone le basi per lo sviluppo di scenari futuri, declinati in ben n. 95 indicatori di mantenimento/potenziamento di attività.
-Nella dimensione **economico-finanziario** l’IZSLER analizza la gestione economica-finanziaria in un’ottica di contenimento delle uscite, di razionalizzazione dell’utilizzo delle risorse,  improntati al perseguimento dell’efficienza, assicurando  la massima efficacia.
-Nella dimensione dei  **processi interni*»**  l’Ente  valuta il modo in cui  raggiungere un migliore efficienza dell’amministrazione,  attraverso l’adeguamento dei processi produttivi dei servizi alle “migliori pratiche” (modelli di eccellenza e standard internazionali e nazionali), mediante l’ottimizzazione della gestione, delle procedure e dei processi, con particolare riferimento al contenimento ed alla riduzione dei tempi di TDF/TDR , nonché all'ottimizzazione dei tempi dei procedimenti amministrativi. 
-Nella dimensione della **Innovazione , crescita e sviluppo organizzativo** rientrano gli indicatori relativi alla qualità totale e soddisfazione delle aspettative dell’utenza, che si declinano  nella qualità e la quantità delle prestazioni e dei servizi erogati, dello sviluppo qualitativo e quantitativo delle relazioni con i cittadini,  gli utenti , i destinatari dei servizi e la rilevazione del grado di soddisfazione dei destinatari delle attività. 
-Lo sviluppo organizzativo viene supportato dalla costante innovazione  dei sistemi informativi e dalla  valorizzazione del capitale umano mediante percorsi di promozione delle competenze. Vista la necessaria integrazione tra gli obiettivi del Piano della Performance e il PTPCT, in questa sezione vengono riportati anche gli obiettivi in tema di trasparenza, anticorruzione e conflitto di interessi. 
-In questa sezione si realizza l’effettiva pianificazione, il controllo delle performance e dei processi, analizzati da diverse prospettive.
-Le  quattro  dimensioni vengono valutati sia dal punto di vista del singolo indicatore rispetto al suo trend storico, sia rispetto alla scala dei valori/dimensione a cui appartengono , sia rispetto al grado di performance della singole struttura .
-Utilizzando opportuni strumenti di indagine è possibile fare un’analisi su molti livelli; i grafici qui di seguito riportati sono un esempio della valutazione fatte periodicamente dall’IZSLER, anche al fine di un continuo e costante monitoraggio.
 
 
 # Gli Obiettivi Individuali: Direzione Generale, Sanitaria ed Amministrativa
@@ -706,17 +708,9 @@ Tale organismo persegue i seguenti obiettivi:
 L’Organismo è stato rinnovato con Decreto del Direttore Generale n. 272 del 13/12/2017.
 In Istituto lavorano n.4 58 donne e n. 245 uomini, così suddivisi:
 
-\begin{center}
-\begin{table}[H]
-\begin{tabular}{|c|c|c|}
-\hline
-\textbf{Ruolo} & \textbf{Uomini} & \textbf{Donne} \\ \hline
-Borsisti & 15 & 35 \\ \hline
-Comparto & 172 & 360 \\ \hline
-Dirigenza & 58 & 63 \\ \hline
-\end{tabular}
-\end{table}
-\end{center}
+```{r echo=FALSE, fig.align = "center",out.width = '90%', } 
+knitr::include_graphics("figure/genere.png")
+```
 
 # Azioni svolte nell'ambito del PTPCT
 Il quadro normativo sulla prevenzione della corruzione e sulla trasparenza ha sempre evidenziato l’importanza di integrare il ciclo della Performance con gli strumenti ed i processi relativi alla qualità dei servizi, alla trasparenza, all’integrità e in generale alla prevenzione della corruzione. 
