@@ -411,16 +411,104 @@ La Mappa Strategica dell’Istituto, si identifica in una fotografia sintetica d
 
 ## I risultati raggiunti
 
-<!-- Di seguito in tabella sono riportati i risultati raggiunti nel 2020 sia per quello che riguarda gli Obiettivi Strategici sia per gli Obiettivi Operativi. -->
+Di seguito in tabella sono riportati i risultati raggiunti nel 2020 sia per quello che riguarda gli Obiettivi Strategici sia per gli Obiettivi Operativi.
 
-### Implementazione delle attività relative alla ricerca nazionale e internazionale
 
-Obiettivo  declinato in due azioni principali: 
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/f8.png")
+```
+
+
+
+## Cruscotto dell'ente anno 2020 
+Di seguito per ogni obiettivo strategico sono riportati i rispettivi obiettivi operativi/azioni e una tabella che sintetizza gli indicatori adottati, il target , il grado di raggiungimento e una breve descrizione del risultato raggiunto
+
+
+###  Obiettivo strategico 1: **Implementazione delle attività relative alla ricerca nazionale e internazionale** {-}
+
+Questo obiettivo è  declinato in due azioni principali (obiettivi operativi): 
 
 -1 Rafforzamento della competitività nell'ambito della progettualità e della ricerca sperimentale nazionale ed internazionale 
+
 -2 Sviluppare sinergie per valorizzare le competenze dei CRN
 
+```{r echo=FALSE, fig.align = "center", out.width = '110%', }
+knitr::include_graphics("figure/ob1.png")
+```
 
+\newpage
+
+### Obiettivo strategico 2: **Implementazione delle attività istituzionali nel settore della sicurezza alimentare, sanità animale e igiene veterinaria** {-}
+
+Questo obiettivo è  declinato in tre azioni principali (obiettivi operativi):
+
+-1 Sviluppo di sistemi di analisi del dato sanitario; 
+
+-2 Potenziamento dell'attività di diagnostica, produzione, supporto tecnico scientifico 
+
+-3 Attuazione nuove strategie per l'incremento degli interventi di conoscenza e competenza verso l'esterno 
+
+```{r echo=FALSE, fig.align = "center", out.width = '110%', }
+knitr::include_graphics("figure/ob2.png")
+```
+
+
+\newpage
+
+### Obiettivo strategico 3: **Sostenibilità economica finanziaria**{-}
+
+Questo obiettivo è declinato in un'unica azione (obiettivo operativo):
+
+- 1 Ottimizzare l'uso di risorse per aumentare l'efficienza
+
+
+```{r echo=FALSE, fig.align = "center", out.width = '110%', }
+knitr::include_graphics("figure/ob3.png")
+```
+
+
+\newpage
+
+### Obiettivo strategico 4: **Reingegnerizzazione dei processi**{-}
+
+Questo obiettivo è declinato in un'unica azione (obiettivo operativo): 
+
+-1 Sviluppare il processo di pianificazione,
+programmazione e controllo con l’ottimizzazione dei processi trasversali tecnico scientifico ed amministrativi
+
+
+
+```{r echo=FALSE, fig.align = "center", out.width = '110%', }
+knitr::include_graphics("figure/ob4.png")
+```
+
+\newpage
+
+### Obiettivo strategico 5: **Amministrazione trasparente ed anticorruzione**{-}
+
+Questo obiettivo è declinato in un'unica azione (obiettivo operativo) e un solo indicatore: 
+
+-1 Adozione misure previste dalla normativa in materia di trasparenza e prevenzione della corruzione  
+
+
+```{r echo=FALSE, fig.align = "center", out.width = '110%', }
+knitr::include_graphics("figure/ob5.png")
+```
+
+\newpage 
+
+### Obiettivo strategico 6: **Valorizzazione del capitale umano**{-}
+
+Questo obiettivo è declinato in due azioni (obiettivi operativi): 
+
+-1 Qualificazione e formazione del capitale umano; 
+
+-2 Efficacia ed efficienza degli interventi per la valorizzazione del capitale umano
+
+
+```{r echo=FALSE, fig.align = "center", out.width = '110%', }
+knitr::include_graphics("figure/ob6.png")
+```
 
 
 ## I project
@@ -605,10 +693,66 @@ Si riporta di seguito la sintesi del bilancio consuntivo anno 2019 con le inform
 knitr::include_graphics("figure/f6.png")
 ```
 
+# Pari opportunità e bilancio di genere
 
+Già da tempo l’Istituto ha promosso politiche ed interventi atti alla promozione delle pari opportunità.
+Con deliberazione del Direttore Generale n. 408 del 12.7.2011, l’ente si è dotato di un organismo che vigilasse sul rispetto della Legge n.125 del 10.04.1991 e ss.ii.mm., costituendo il “Comitato Unico di Garanzia per le Pari Opportunità, la Valorizzazione del Benessere di chi lavora e contro le Discriminazioni”.
+Tale organismo persegue i seguenti obiettivi:
 
-# Le pari opportunità
+- assicurare, nell'ambito del lavoro pubblico, parità e pari opportunità di genere;
+- garantire l'assenza di qualunque forma di violenza morale o psicologica o di discriminazione;
+- favorire l'ottimizzazione della produttività del lavoro pubblico, migliorando l'efﬁcienza delle prestazioni lavorative;
+- razionalizzare e rendere efﬁciente ed efﬁcace l'organizzazione della Pubblica Amministrazione anche in materia di pari opportunità.
+L’Organismo è stato rinnovato con Decreto del Direttore Generale n. 272 del 13/12/2017.
+In Istituto lavorano n.4 58 donne e n. 245 uomini, così suddivisi:
+
+\begin{center}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Ruolo} & \textbf{Uomini} & \textbf{Donne} \\ \hline
+Borsisti & 15 & 35 \\ \hline
+Comparto & 172 & 360 \\ \hline
+Dirigenza & 58 & 63 \\ \hline
+\end{tabular}
+\end{table}
+\end{center}
 
 # Azioni svolte nell'ambito del PTPCT
+Il quadro normativo sulla prevenzione della corruzione e sulla trasparenza ha sempre evidenziato l’importanza di integrare il ciclo della Performance con gli strumenti ed i processi relativi alla qualità dei servizi, alla trasparenza, all’integrità e in generale alla prevenzione della corruzione. 
+Per rendere efficace tale collegamento nel PTPCT è stato inserito un cronoprogramma di obiettivi da perseguire nel Piano Performance 2020-2022. Tali obiettivi sono stati assegnati alle varie strutture.
+Si riporta qui di seguito il cronoprogramma:
+
+INSERIRE IL CRONOPROGRAMMA
+
+Inoltre, In applicazione della L. n. 190/2012 in materia di prevenzione della corruzione e del D. L.gs n. 33/2013 di riordino degli obblighi di pubblicità, trasparenza e diffusioni di informazioni da parte delle Pubbliche Amministrazioni, l’IZSLER ha adottato i seguenti provvedimenti: 
+
+- con deliberazione n. 7 del 5.7.2016 il Consiglio di Amministrazione ha nominato la dott.ssa Lauretta Cocchi, Responsabile della Prevenzione della Corruzione e della Trasparenza; 
+- con delibera del Consiglio di Amministrazione  n. 13 del 30.10.2017 ha recepito il Codice di Comportamento dei dipendenti dell'IZSLER; 
+- con delibera del Consiglio di Amministrazione n. 1 del 29.01.2018 ha approvato il  Piano Triennale di Prevenzione della Corruzione e della Trasparenza 2018 – 2020;
+La sezione Amministrazione Trasparente del sito istituzionale è stata regolarmente aggiornata. In particolare si segnala la pubblicazione dei seguenti documenti:
+- in data 31.0.1.2019: Relazione annuale al 31/12/2018 del Responsabile della Prevenzione della Corruzione - Art.  Comma 14, Legge 6.11.2012/190;
+in data 10.04.2018: Attestazione del Nucleo di Valutazione delle Prestazioni dell’Istituto sull’assolvimento degli obblighi di pubblicazione ex Delibera ANAC 141/2018 al 31/03/2018.
+Integrazione del sistema anticorruzione con il sistema qualità
+
+
+
 
 # Il processo di redazione della relazione sulla performance
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/f7.png")
+```
+Il supporto al funzionamento del ciclo di gestione delle performance è assicurato dall’U.O. Gestione del Personale, il quale assicura inoltre le attività connesse al Sistema di Valutazione del Personale.
+Il   supporto   informatico   è   assicurato   dai   Sistemi   Informativi   che   cominciando dal   2013   hanno implementato la prima sperimentazione del cruscotto per la gestione del ciclo delle performance. Dal  2014  in  sinergia  tra  l’U.O.  Gestione  del  Personale  e  Sistemi  Informativi  si  è  sviluppato  una  nuova tipologia di cruscotto denominato «Obiettivi Strategici» e sono state predisposte le basi dati di appoggio per il caricamento dei target da parte delle strutture assegnatarie degli obiettivi/indicatori.Lo stesso è stato accompagnato da un altro applicativo che ha consentito, anche se in modo sperimentale, di  implementare  lo  stato  d’avanzamento  delle  attività  e  le  percentuali  di  conseguimento dei  target rispetto a quelli prefissati, dandone anche un evidenza grafica.
+
+# Conclusioni
+
+La Relazione sulla Performance è un documento di sintesi dell’intero ciclo di gestione della performance riferito ad un ciclo amministrativo. E’ anche un’opportunità per analizzare la validità e l’efficacia del processo e per fornire possibili input di miglioramento.
+
+Il 2020 è stato un anno di difficile attuazione per la situazione pandemica mondiale che ha visto l’Istituto impegnato in prima linea nell’affrontare tale emergenza, comportando un ritardo nella negoziazione, nell’assegnazione degli obiettivi e negli steps successivi.
+
+E’ da evidenziare lo sforzo compiuto da tutto il personale fin dall’inizio dell’emergenza, che ha saputo riadattare le proprie attività lavorative, anche con la sperimentazione di nuove modalità di lavoro “smart working” con risultati positivi, reagendo con prontezza e disponibilità al periodo difficile che abbiamo vissuto.
+
+								            	IL DIRETTORE GENERALE
+										              Dr. Piero Frazzi
