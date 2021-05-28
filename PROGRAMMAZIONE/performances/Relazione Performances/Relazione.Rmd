@@ -105,7 +105,7 @@ La **Regione Lombardia** può considerarsi come la “locomotiva d’Italia” e
 
 La **Regione Emilia-Romagna** rappresenta, nel panorama italiano, una delle più estese dal punto di vista territoriale, nonché più popolose ed è una delle Regioni con il più alto livello di competitività imprenditoriale, grazie ad un sistema economico e produttivo focalizzato sui mercati internazionali.
 La crisi innescata dalla pandemia da COVID-19 ha colpito anche l’economica delle Regione Emilia, già in recessione dal 2019, soprattutto nei primi due trimestri dell’anno, come evidenziato dall’indicatore trimestrale dell’economia regionale (ITER) elaborato dalla Banca d’Italia. La riduzione della produzione industriale della Regione (-14,9% nella prima metà del 2020 rispetto al medesimo periodo del 20196), ha riguardato tutti i settori della manifattura. In tale contesto solo le imprese farmaceutiche e alimentari hanno registrato una dinamica migliore. Nel settore dei servizi si registra un calo generalizzato delle attività. Nel terziario, la diminuzione dei volumi di attività è stata più evidente per il commercio dei beni non alimentari, soprattutto al dettaglio, e per i servizi di alloggio. Tra gennaio e settembre anche le esportazioni di merci sono diminuite significativamente (- 14,2%), soprattutto nell’ambito della meccanica, dei mezzi di trasporto, dell’abbigliamento e dei prodotti di metallo. Dopo una prolungata fese espansiva in atto dal 2014, anche il tasso di occupazione si è ridotto, soprattutto nel secondo trimetre dell’anno (-69,1%), interessando principalmente la componente femminile e quella a tempo determinato.
-Di seguito sono riportati alcuni dati significativi a rappresentare il patrimonio zootecnico e le aziende che operano nel territorio di competenza dell’Istituto.
+Di seguito sono riportati alcuni dati significativi a rappresentare il patrimonio zootecnico (Allevamenti e Capi) e gli impianti del settore alimentare  che operano nel territorio di competenza dell’Istituto.
 
 \begin{center}
 \begin{table}[H]
@@ -119,13 +119,76 @@ Suini             & 8382                                        & 4407955       
 Avicoli           & 3427                                        & 21180545                             &  & Avicoli                              & 1170                   & 41729415        \\ \cline{1-3} \cline{5-7} 
 Equidi            & 20605                                       & 61085                                &  & Equidi                               & 10744                  & 35000*          \\ \cline{1-3} \cline{5-7} 
 \end{tabular}
-\tiny Fonte Banca Dati Nazionale dell’Anagrafe Zootecnica (BDN) per bovini, ovini, caprini e suini – BDR per avicoli ed equini al 31/12/2020  \\
-*ultima stima disponibile al 2018, dato non più presente in banca dati nazionale.
+\small Fonte Banca Dati Nazionale dell’Anagrafe Zootecnica (BDN) per bovini, ovini, caprini e suini – BDR per avicoli ed equini al 31/12/2020  \\
+*ultima stima disponibile al 2018, dato non più presente in BDN.
 
 \end{table}
 \end{center}
 
-Le Regioni Lombardia ed Emilia-Romagna trattano più del 50% del latte italiano (300 caseifici in Emilia-Romagna e 167 in Lombardia) e oltre il 30 % delle carni italiane con 150 impianti di macellazione in Emilia-Romagna e 1243 in Lombardia.
+
+
+\begin{center}
+ \begin{table}[H]
+\begin{tabular}{cccc}
+\hline
+\multicolumn{1}{|l|}{\textbf{Tipologia Impianti Riconosciuti}} & \multicolumn{1}{l|}{\textbf{Lombardia}} & \multicolumn{1}{l|}{\textbf{Emilia-Romagna}} & \multicolumn{1}{l|}{\textbf{Totale}} \\ \hline
+\multicolumn{1}{|c|}{Prodotti a base di carne} & \multicolumn{1}{c|}{2521} & \multicolumn{1}{c|}{1207} & \multicolumn{1}{c|}{\textbf{3731}} \\ \hline
+\multicolumn{1}{|c|}{Prodotti a base di latte} & \multicolumn{1}{c|}{1267} & \multicolumn{1}{c|}{727} & \multicolumn{1}{c|}{\textbf{1994}} \\ \hline
+\multicolumn{1}{|c|}{Prodotti della pesca} & \multicolumn{1}{c|}{142} & \multicolumn{1}{c|}{128} & \multicolumn{1}{c|}{\textbf{270}} \\ \hline
+\multicolumn{1}{|c|}{Uova e ovoprodotti} & \multicolumn{1}{c|}{69} & \multicolumn{1}{c|}{51} & \multicolumn{1}{c|}{\textbf{120}} \\ \hline
+\multicolumn{1}{|c|}{Altre tipologie} & \multicolumn{1}{c|}{401} & \multicolumn{1}{c|}{1059} & \multicolumn{1}{c|}{\textbf{1460}} \\ \hline
+\multicolumn{1}{|c|}{\textbf{Totale}} & \multicolumn{1}{c|}{\textbf{4440}} & \multicolumn{1}{c|}{\textbf{3172}} & \multicolumn{1}{c|}{\textbf{7612}} \\ \hline
+\multicolumn{4}{l}{\small Fonte dati : SIV per la Lombardia e SISVET per Emilia-Romagna}
+\end{tabular}
+\end{table}
+\end{center}
+
+<!-- In Lombardia inoltre sono attivi oltre **88000** impianti registrati tra cui  **36541** di Ristorazione pubblica, **4743** di Ristorazione collettiva, **9234** di Vendita su aree pubbliche,  -->
+
+Nelle tabelle di seguito in dettaglio la distribuzione degli impianti registrati presenti nelle due regioni di competenza dell'IZSLER
+
+\begin{table}[H]
+\begin{tabular}{ll}
+\hline
+\multicolumn{2}{|c|}{\textbf{LOMBARDIA}} \\ \hline
+\multicolumn{1}{|c|}{Impianti registrati} & \multicolumn{1}{c|}{Totale} \\ \hline
+\multicolumn{1}{|l|}{Depositi   alimenti} & \multicolumn{1}{l|}{3170} \\ \hline
+\multicolumn{1}{|l|}{Esercizi di vicinato con vendita al dettaglio di prodotti vari   (di o.a. o non)} & \multicolumn{1}{l|}{17643} \\ \hline
+\multicolumn{1}{|l|}{Impianti macellazione} & \multicolumn{1}{l|}{125} \\ \hline
+\multicolumn{1}{|l|}{Impianti produzione trasformazione} & \multicolumn{1}{l|}{946} \\ \hline
+\multicolumn{1}{|l|}{Laboratori di produzione e vendita diretta al consumatore di   prodotti alimentari} & \multicolumn{1}{l|}{10678} \\ \hline
+\multicolumn{1}{|l|}{Laboratori di smielatura e confezionamento del miele} & \multicolumn{1}{l|}{816} \\ \hline
+\multicolumn{1}{|l|}{Macellerie, pollerie, pescherie (anche con laboratorio)} & \multicolumn{1}{l|}{3083} \\ \hline
+\multicolumn{1}{|l|}{Produzione primaria vegetale e animale} & \multicolumn{1}{l|}{1350} \\ \hline
+\multicolumn{1}{|l|}{Ristorazione collettiva} & \multicolumn{1}{l|}{4743} \\ \hline
+\multicolumn{1}{|l|}{Ristorazione pubblica} & \multicolumn{1}{l|}{36541} \\ \hline
+\multicolumn{1}{|l|}{Vendita su aree pubbliche} & \multicolumn{1}{l|}{9234} \\ \hline
+\multicolumn{1}{|l|}{\textbf{Totale}} & \multicolumn{1}{l|}{\textbf{88329}} \\ \hline
+\small Fonte dati: SIV & 
+\end{tabular}
+
+\end{table}
+
+
+\begin{table}[H]
+\begin{tabular}{ll}
+\multicolumn{2}{c}{\textbf{EMILIA-ROMAGNA}} \\ \hline
+\multicolumn{1}{|l|}{\textbf{Impianti registrati}} & \multicolumn{1}{l|}{\textbf{Totale}} \\ \hline
+\multicolumn{1}{|l|}{Depositi   alimenti} & \multicolumn{1}{l|}{468} \\ \hline
+\multicolumn{1}{|l|}{Esercizi di   vicinato con vendita al dettaglio di prodotti vari (di O.A. o non)} & \multicolumn{1}{l|}{18.411} \\ \hline
+\multicolumn{1}{|l|}{Impianti   macellazione} & \multicolumn{1}{l|}{72} \\ \hline
+\multicolumn{1}{|l|}{Impianti   produzione trasformazione} & \multicolumn{1}{l|}{10.778} \\ \hline
+\multicolumn{1}{|l|}{Laboratori di   produzione e vendita diretta al consumatore di prodotti alimentari} & \multicolumn{1}{l|}{2.241} \\ \hline
+\multicolumn{1}{|l|}{Laboratori di   smielatura e confezionamento del miele} & \multicolumn{1}{l|}{517} \\ \hline
+\multicolumn{1}{|l|}{Macellerie,   pollerie, pescherie (anche con laboratorio)} & \multicolumn{1}{l|}{3.862} \\ \hline
+\multicolumn{1}{|l|}{Produzione   primaria vegetale e animale} & \multicolumn{1}{l|}{5.989} \\ \hline
+\multicolumn{1}{|l|}{Vendita su aree pubbliche *} & \multicolumn{1}{l|}{3.143} \\ \hline
+\multicolumn{1}{|l|}{Ristorazione   Collettiva} & \multicolumn{1}{l|}{5.424} \\ \hline
+\multicolumn{1}{|l|}{Ristorazione   Pubblica} & \multicolumn{1}{l|}{30.904} \\ \hline
+\multicolumn{1}{|l|}{\textbf{Totale}} & \multicolumn{1}{l|}{\textbf{81.809}} \\ \hline
+Fonte dati SISVET RER & 
+\end{tabular}
+\end{table}
 
 
 # L'Amministrazione
@@ -235,7 +298,7 @@ In IZSLER sono attivi **9** Centri di Referenza Nazionali, **8** Centri di refer
 Al seguente [link](https://www.izsler.it/chi-siamo/per-chi-e-con-chi-lavoriamo/centri-di-referenza/) si accede alla pagina istituzionale dei Centri di Referenza dell'IZSLER per maggiori dettagli.
 
 
-
+\newpage
 
 ## Le risorse umane
 Le risorse umane rappresentano il capitale primario per dell’Istituto che investe nell’acquisizione di diverse professionalità anche ad alto livello di specializzazione.
@@ -245,8 +308,11 @@ Alla data del 31.12.2020 l’IZSLER ha nel su organico n. 704 unità così suddi
 -  50 borse di studio;
 -  13 personale addetto alla ricerca;
 
+```{r echo=FALSE, fig.align = "center",out.width = '90%', } 
+knitr::include_graphics("figure/pers.png")
+```
 
- **mettere tabelle o grafico vedi pag 15 docu word**
+ 
 
 
 ## Pari opportunità e bilancio di genere
@@ -295,6 +361,10 @@ knitr::include_graphics("figure/imm.png")
 L’Istituto in virtù del mandato istituzionale e della propria mission, considera strategica l’attività della formazione e la utilizza come strumento essenziale per favorire lo sviluppo culturale e professionale del proprio personale. L’IZSLER è riconosciuto come provider per il sistema di Educazione Continua in Medicina (ECM) e Centro di Referenza Nazionale per la Sanità Pubblica Veterinaria, come tale collabora con il Ministero della Saluta e con le Regioni di competenza per la formazione dei veterinari e degli operatori sanitari del settore agroalimentare. Le attività di formazione sono erogate direttamente in aule dedicate e attrezzate e attraverso una piattaforma di Formazione a Distanza (FAD) per corsi online, webinar e videoconferenze.  La collaborazione con Scuole superiori e Università attraverso specifiche convenzioni, permette l’accesso ai laboratori e agli uffici di studenti delle scuole superiori per l’alternanza scuola lavoro, degli studenti di vari percorsi di laurea, scuole di specialità e dottorati per completare la preparazione scolastica con la formazione sul campo.
 Dal 18 maggio 2012 ha conseguito la certificazione secondo la norma “UNI EN ISO 9001:2008”, sistemi di gestione per la qualità-Requisiti” e un aggiornamento alla norma “UNI EN ISO 9001:2015” dal 18 maggio 2016.
 
+
+Complessivamente nel 2020 sono stati erogati **62** corsi per un totale di **x** iscritti e **Y** crediti formativi prodotti.
+ Nel grafico seguente è riportata la distribuzione dei corsi per le diverse tipologie.
+ 
 ```{r echo=FALSE, fig.align='center',  out.width= '100%'}
 knitr::include_graphics("figure/corsi.png")
 
@@ -307,7 +377,8 @@ knitr::include_graphics("figure/corsi.png")
 
 L’attività di Ricerca figura tra i compiti istituzionali prioritari dell’IZSLER, delineata nella legge 23 giugno 1970, n.503 (art. 3) si attua attraverso i **_programmi di ricerca finanziati dal Ministero della Salute_**(Ricerca Corrente e Ricerca Finalizzata), ma anche attraverso la **_competizione con altri centri di ricerca per l’accesso ai fondi europei, ai fondi dei programmi di ricerca regionali per lo sviluppo del territorio di competenza e ai fondi di progetti finanziati da privati_**. A sostegno delle esigenze territoriali delle Regioni di competenza e del Ministero della salute, e per lo sviluppo di nuovi settori IZSLER **_sostiene progetti di ricerca con finanziamento proprio_**. 
 
-IZSLER è attualmente ricercatore principale in 63 progetti dei 102 in corso attualmente, gran parte e dei progetti sono finanziati dal Ministero della Salute e in collaborazione con altri IIZZSS o Università
+Complessivamente nel 2020 tra progetti in corso, conclusi e nuovi i riceratori dell'IZSLER sono stati impegnati su **178** progetti di ricerca, rispetto ai **204** del 2019,  in cui sono stati attivati un maggior numero di nuovi progetti (**44**). 
+Di seguito è rappresentato graficamente, la distribuzione del numero delle  diversa tipologie di progetti in base allo loro stato di attuazione nel 2020.
 
 
 ```{r echo=FALSE, fig.align='center',  out.width= '100%'}
@@ -315,20 +386,32 @@ knitr::include_graphics("figure/prj.png")
 
 ```
 
+
+
+
 ## Pubblicazioni
 
-Nell'arco del 2020 sono stati pubblicati 123 lavori scientifici su riviste peer-reviewd a cui hanno partecipato  come autori  complessivamente 95 ricercatori dell'IZSLER. Attraverso il database Incites, strumento del database citazionale Web of Science che attribuisce agli Autori di articoli scientifici pubblicati una serie di parametri bibliometrici  che ne caratterizzano l'impatto nella comunità scientifica,  risulta che, nel 2020,  la mediana del numero  di pubblicazioni per ricercatore è pari a 2 (min= 1, max= 18). Complessivamente la mediana del numero di citazioni che un singolo autore ha ottenuto nel 2020 degli articoli a cui ha partecipato è pari 2 (min = 0, max= 22) con una mediana del numero medio di citazioni per articolo per autore di 0.87 ( il 50% degli articoli pubblicati da un singolo autore non è stato citato). Il dato citazionale è tempo-dipendente e quindi è necessario aspettare almeno tre-quattro anni dalla pubblicazione per una sua corretta valutazione.  
+Nell'arco del 2020 sono stati pubblicati **123** lavori scientifici su riviste peer-review a cui hanno partecipato complessivamente 95 ricercatori dell'IZSLER. Attraverso il database Incites, strumento del database citazionale Web of Science che attribuisce agli Autori di articoli scientifici pubblicati una serie di parametri bibliometrici  che ne caratterizzano l'impatto nella comunità scientifica,  risulta che, nel 2020,  la mediana del numero  di pubblicazioni per ricercatore è pari a 2 (min= 1, max= 18). Complessivamente la mediana del numero di citazioni che un singolo autore ha ottenuto nel 2020 degli articoli a cui ha partecipato è pari 2 (min = 0, max= 22) con una mediana del numero medio di citazioni per articolo per autore di 0.87 ( il 50% degli articoli pubblicati da un singolo autore non è stato citato). Il dato citazionale è tempo-dipendente e quindi è necessario aspettare almeno tre-quattro anni dalla pubblicazione per una sua corretta valutazione.  
 
-Nel seguente grafico sono riportati per i parametri produttivi e citazionali la distribuzione relativa agli articoli pubblicati nel 2020 che vede la partecipazione di 95 ricercatori dell'IZSLER. 
+<!-- Nel seguente grafico sono riportati per i parametri produttivi e citazionali la distribuzione relativa agli articoli pubblicati nel 2020 che vede la partecipazione di 95 ricercatori dell'IZSLER.  -->
 
 
+
+<!-- ```{r echo=FALSE, fig.align='center',  out.width= '100%'} -->
+<!-- knitr::include_graphics("figure/distr.png") -->
+
+<!-- ``` -->
+
+
+Nella seguente tabella sono riportati per il triennio 2018-2020 il numero di pubblicazioni su riviste peer-review suddivise tipologia di ambito scientifico  delle tematiche trattate dai lavori pubblicati. 
 
 ```{r echo=FALSE, fig.align='center',  out.width= '100%'}
-knitr::include_graphics("figure/distr.png")
+knitr::include_graphics("figure/pubb.png")
 
 ```
 
- 
+
+
 Nonostante le attività di esecuzione di migliaia di tamponi ogni giorno i ricercatori di IZSLER hanno collaborato con altri centri di ricerca a livello italiano per sviluppare metodiche e approfondire le conoscenze del virus causa di Covid 19 come ad esempio nel progetto **_Coves - Sviluppo e validazione di una metodica rapida per la rilevazione di SARS-CoV-2 su superfici ambientali_**, ma ha contribuito anche a ricerche di base quali quella sulle potenzialità evolutive del coronavirus, capace di modificarsi resistendo alle difese organiche  e quella sulla possibilità di trasmissione dell’infezione da madre a feto attraverso la placenta .
 
 
@@ -491,7 +574,24 @@ L’Istituto pianifica le proprie attività secondo 3 livelli di programmazione:
 
  a)	un **livello istituzionale** di ordine strategico che si qualifica per definire gli indirizzi di fondo pluriennali e annuali cui l’Istituto è tenuto, per quanto di competenza, ad attenersi; 
  
- b)	un **livello strategico** qualificato per declinare gli indirizzi strategici ministeriali e regionali; 
+ b)	un **livello strategico** declinato dalle Regioni con i seguenti obiettivi:
+ 
+ - \textcolor{red}{Ridefinizione dell’organizzazione aziendale, con particolare riferimento al personale e agli  approvvigionamenti;}
+ 
+ - \textcolor{red}{Definizione di un quadro pluriennale degli investimenti in raccordo con la programmazione della Regione Lombardia e della Regione Emilia-Romagna con
+particolare attenzione all’innovazione e allo sviluppo del patrimonio dell’istituto;}
+
+ - \textcolor{red}{Sviluppo dei sistemi informativi a supporto delle scelte strategiche e dei programmi di attività e di controllo ufficiale previsti dalla normativa nazionale e regionale;}
+ 
+ - \textcolor{red}{Implementazione e sviluppo di metodiche di laboratorio necessarie per il controllo degli alimenti e dei mangimi;}
+ 
+ - \textcolor{red}{Sviluppo di progetti innovativi concordati con la Regione Lombardia e la Regione
+Emilia-Romagna in ambito di sanità pubblica e sicurezza alimentare;}
+ 
+ - \textcolor{red}{Sviluppo della funzione di sorveglianza epidemiologica a supporto delle politiche sanitarie regionali in tema di sanità pubblica veterinaria;}
+ 
+ - \textcolor{red}{Definizione del piano pluriennale delle attività in raccordo con la programmazione sanitaria della Regione Lombardia e della Regione Emilia-Romagna.}
+ 
  c)	un **livello operativo** dove gli obiettivi strategici vengono declinati con gli strumenti di programmazione.
 
 
@@ -505,20 +605,20 @@ Gli obiettivi strategici, raggruppati all’interno delle diverse “prospettive
 
 
 
-**PROSPETTIVA ISTITUZIONI CITTADINI E CONSUMATORI** Prospettiva orientata a misurare l’impatto delle azioni in termini di valore prodotto con riferimento ai diversi portatori di interesse, valutando la capacità dell’ente di garantirne la piena soddisfazione delle aspettative di questi ultimi. 
+**ISTITUZIONI, CITTADINI E CONSUMATORI** Prospettiva orientata a misurare l’impatto delle azioni in termini di valore prodotto con riferimento ai diversi portatori di interesse, valutando la capacità dell’ente di garantirne la piena soddisfazione delle aspettative di questi ultimi. 
 
 - 1.IMPLEMENTAZIONE DELLE ATTIVITA’ RELATIVE ALLA RICERCA NAZIONALE E INTERNAZIONALE
 - 2.IMPLEMENTAZIONE DELLE ATTIVITA’ ISTITUZIONALI NEL SETTORE DELLA SICUREZZA  ALIMENTARE, SANITA’ ANIMALE E IGIENE VETERINARIA
 
-**PROSTETTIVA ECONOMICA FINANZIARIA** prospettiva orientata al monitoraggio degli aspetti economico-finanziari in relazione alla programmazione strategica volta, quindi, a valutare la gestione dell’ente in ragione della sua capacità di perseguire adeguati margini. 
+**ECONOMICA FINANZIARIA** prospettiva orientata al monitoraggio degli aspetti economico-finanziari in relazione alla programmazione strategica volta, quindi, a valutare la gestione dell’ente in ragione della sua capacità di perseguire adeguati margini. 
 
 - 3. SOSTENIBILITA' ECONOMICA E FINANZIARIA
 
-**PROSPETTIVA PROCESSI INTERNI** prospettiva orientata ad individuare il grado di efficienza ed efficacia con il quale l’Ente gestisce e controlla i processi interni mediante l’ottimizzazione di quelli esistenti ed alla definizione di processi attraverso i quali perseguire gli obiettivi strategici. 
+**PROCESSI INTERNI** prospettiva orientata ad individuare il grado di efficienza ed efficacia con il quale l’Ente gestisce e controlla i processi interni mediante l’ottimizzazione di quelli esistenti ed alla definizione di processi attraverso i quali perseguire gli obiettivi strategici. 
 
 - 4. REINGEGNERIZZAZIONE DEI PROCESSI
 
-**PROSTETTIVA INNOVAZIONE, CRESCITA E SVILUPPO ORGANIZZATIVO** prospettiva volta alla valorizzazione delle potenzialità interne dell’ente per una crescita del personale in termini di competenze e motivazione nonché al potenziamento delle infrastrutture tecniche e tecnologiche di supporto.
+**INNOVAZIONE, CRESCITA E SVILUPPO ORGANIZZATIVO** prospettiva volta alla valorizzazione delle potenzialità interne dell’ente per una crescita del personale in termini di competenze e motivazione nonché al potenziamento delle infrastrutture tecniche e tecnologiche di supporto.
 
 - 5. AMMINISTRAZIONE TRASPARENTE ED ANTICORRUZIONE
 - 6. VALORIZZAZIONE DEL CAPITALE UMANO
@@ -814,7 +914,7 @@ Con nota prot. N. 1545 del 26.01.2021 è stata trasmessa alle Regione la rendico
 
 
 
-# Sistema Integrato Di Gestione Tra Il Ptpct E Il Piano Performance 
+# Sistema Integrato Di Gestione Tra Il PTPCT E Il Piano Performance 
 
 Il quadro normativo sulla prevenzione della corruzione e sulla trasparenza ha sempre evidenziato l’importanza di integrare il ciclo della Performance con gli strumenti ed i processi relativi alla qualità dei servizi, alla trasparenza, all’integrità e in generale alla prevenzione della corruzione. 
 Per rendere efficace tale collegamento nel PTPCT è stato inserito un cronoprogramma di obiettivi da perseguire nel Piano Performance 2020-2022. 
@@ -825,8 +925,9 @@ Con delibera del Consiglio di Amministrazione n.1 del 31.01.2020, è stato adott
 
 L’apporto al funzionamento del ciclo di gestione delle performance è assicurato dall’Ufficio di staff “programmazione dei servizi tecnici e controllo di gestione” in staff alla Direzione Generale.
 Il sistema adottato dall’Istituto si avvale del software “obiettivi strategici” tale sistema è in dotazione dal 2013 e consente l’inserimento del piano degli obiettivi, la rendicontazione degli obiettivi e la elaborazione delle schede di valutazione individuali.
-L’ elaborazione degli obiettivi viene effettuata utilizzando un altro applicativo “Idasboards” che consente un’analisi dei dati a vari livelli e complessità.
 
+
+# Futuri sviluppi e miglioramento del ciclo delle performances
 
 
 
@@ -834,11 +935,11 @@ L’ elaborazione degli obiettivi viene effettuata utilizzando un altro applicat
 # CONCLUSIONI {-}
 
 
-La Relazione sulla Performance è un documento di sintesi e di analisi dell’intero ciclo di gestione della performance riferito all’anno precedente ma è anche un’opportunità per analizzare la validità del processo e trovare spunti di miglioramento, per poter rispondere in modo sempre più efficace al mandato istituzionale dell’ente.
+La Relazione sulla Performance è un documento di sintesi e di analisi dell’intero ciclo di gestione della performance riferito all’anno 2020 ma è anche un’opportunità per analizzare i risultati ottenuti e trovare spunti di miglioramento, per poter rispondere in modo sempre più efficace al mandato istituzionale dell’ente.
 
-E’ doveroso ricordare che l’anno 2020 è stato un anno di difficile attuazione per la situazione pandemica mondiale che ha visto l’Istituto impegnato in prima linea nell’affrontare tale emergenza, comportando un ritardo nella negoziazione, nell’assegnazione degli obiettivi e negli step successivi.
+Nonostante l’anno 2020 sia stato un anno di difficile attuazione,  per la situazione pandemica italiana,   l’Istituto è riuscito a raggiungere gli obiettivi programmati grazie alla collaborazione e all'impegno di tutto il personale reagendo con prontezza e disponibilità al periodo difficile che abbiamo vissuto. A loro va il mio sentito ringraziamento.
 
-Il personale dell’Istituto, in questa fase così critica, ha saputo fin da subito fronteggiare l’emergenza, riaddattando le proprie attività lavorative, sperimentando dove era possibile nuove modalità di lavoro (smart working) e reagendo con prontezza e disponibilità al periodo difficile che abbiamo vissuto, a loro va il mio sentito ringraziamento.
+
 
 \begin{center}
 

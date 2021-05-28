@@ -2,6 +2,7 @@ library(tidyverse)
 library(plyr)
 library(lemon)
 library(hrbrthemes)
+library(readxl)
 
 
 d <- tibble("Ruolo" = c(rep("Dirigenza", 2), rep("Comparto", 2), rep("Borse di studio", 2)), 
@@ -57,21 +58,20 @@ d <- tibble("Ruolo" = c(rep("Dirigenza", 2), rep("Comparto", 2), rep("Borse di s
     mutate(Stato = factor(Stato, levels = c("In corso", "Conclusi", "Nuovi"))) %>% 
     ggplot(aes(x= reorder(Tipologia, value),  y=value))+
     geom_bar(stat = "identity", fill = "gray")+
-    geom_text(aes(label = value), position = "dodge")+
+    geom_text(aes(label = value), position = "dodge", size = 7)+
     coord_flip()+
     labs(
        x = "",
        y = "",
-       subtitle = "Distribuzione del numero dei progetti di ricerca nell'anno 2020"
+       title = "Distribuzione del numero dei progetti di ricerca nell'anno 2020"
     ) +
     facet_wrap( ~Stato)+
-    theme_ipsum_rc() 
-    theme(
-       axis.text.x=element_blank(),
-    )
-    
+    theme_ipsum_rc(base_size = 16, 
+                   strip_text_size = 20) 
 
-form <- tibble("Tipologia" = c("Formazione sul campo", 
+
+ 
+ form <- tibble("Tipologia" = c("Formazione sul campo", 
                                "Residenziale", 
                                "Formazione a distanza"), 
                "N.corsi" = c(9, 31, 23))
@@ -80,17 +80,15 @@ form <- tibble("Tipologia" = c("Formazione sul campo",
 form %>% 
    ggplot(aes(x= reorder(Tipologia, N.corsi ), y= N.corsi))+
    geom_bar(stat = "identity", fill = "gray")+
-   geom_text(aes(label = N.corsi), position = "dodge")+
+   geom_text(aes(label = N.corsi), position = "dodge", size=6)+
    coord_flip()+
    labs(
       x = "",
       y = "",
-      subtitle = "Distribuzione del numero di corsi erogati nel 2020"
+      title = "Distribuzione del numero di corsi erogati nel 2020"
    ) +
-   theme_ipsum_rc() 
-theme(
-   axis.text.x=element_blank(),
-)
+   theme_ipsum_rc(base_size = 18) 
+
 
 library("here")
 
@@ -152,5 +150,38 @@ ricercatori %>%
              mCitm = mean(Cit.Media), 
              MCitm = median(Cit.Media), 
              minMcitm = min(Cit.Media), 
-             maxMvitm = max(Cit.Media)) %>% View()
+             maxMvitm = max(Cit.Media)) 
+
+
+pubblicazioni <- read_excel(here("programmazione", "piramideR", "pub2000-2020.xlsx"))
+pubblicazioni$Cognome <- str_to_lower(pubblicazioni$AU)
+pubblicazioni$Cognome <- gsub(",.*$", "", pubblicazioni$Cognome)
+
+
+
+
+prj_func <- function(dati, dtf1, dti, anno)
+{ prj %>%
+      mutate("Stato" = ifelse(DataFine < as.Date(dtf1), "Archiviato", "Attivo")) %>% 
+      filter(Stato == "Attivo" & DataInizio <= as.Date(dti)) %>%
+      # mutate("Statoanno" = ifelse(DataFine <=as.Date(dtf1), "Concluso", "Aperto")) %>%
+      # filter(Statoanno == "Aperto") %>% 
+      summarise( 
+                "N.Progetti"=nlevels(factor(Codice)))%>%  
+      mutate(anno = anno)
+   
+}
+
+prj_func(dati = prj, dtf1 = "2020-01-01", dti = "2020-12-31", anno = 2019)
+
+
+prj_func2 <- function(dati, dt1, dt2)
+{  prj %>%
+      filter(DataInizio >= as.Date(dt1) & DataInizio <=as.Date(dt2)) %>% 
+      summarise("N.Progetti"=nlevels(factor(Codice))) 
+   
+}
+
+
+prj_func2(prj, dt1 = "2016-01-01", dt2= "2016-12-31")
    
