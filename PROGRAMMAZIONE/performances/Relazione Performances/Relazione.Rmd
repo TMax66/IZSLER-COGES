@@ -210,35 +210,21 @@ I principali programmi di ricerca finanziati dal Ministero della Salute, ai qual
  
 L’Istituto partecipa, inoltre, a progetti di ricerca europei e ad altri programmi di ricerca diversi da quelli finanziati dal Ministero della Salute, a progetti finanziati dalle Regioni Lombardia ed Emilia Romagna. L’Istituto, nell’ambito dei propri compiti istituzionali, può sviluppare anche attività di ricerca autofinanziate (progetti autofinanziati). 
 
-Nella seguente tabella sono riportati i dati suddivisi per tipologia dei progetti di ricerca relativamente al 2020.
-
-\begin{center}
-\begin{table}[H]
-\begin{tabular}{ccccc}
-\multicolumn{5}{c}{\textbf{Progetti di Ricerca Anno 2020}}                                                                                     \\ \hline
-\multicolumn{1}{|c|}{\textbf{Tipologia}} &
-  \multicolumn{1}{c|}{\textbf{In corso}} &
-  \multicolumn{1}{c|}{\textbf{Conclusi}} &
-  \multicolumn{1}{c|}{\textbf{Nuovi}} &
-  \multicolumn{1}{c|}{\textbf{Totale}} \\ \hline
-\multicolumn{1}{|c|}{Corrente}       & \multicolumn{1}{c|}{88}  & \multicolumn{1}{c|}{12} & \multicolumn{1}{c|}{14} & \multicolumn{1}{c|}{114} \\ \hline
-\multicolumn{1}{|c|}{Autofinanziato} & \multicolumn{1}{c|}{8}   & \multicolumn{1}{c|}{3}  & \multicolumn{1}{c|}{8}  & \multicolumn{1}{c|}{19}  \\ \hline
-\multicolumn{1}{|c|}{Altro tipo}     & \multicolumn{1}{c|}{3}   & \multicolumn{1}{c|}{6}  & \multicolumn{1}{c|}{4}  & \multicolumn{1}{c|}{13}  \\ \hline
-\multicolumn{1}{|c|}{Istituzionale}  & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{5}  & \multicolumn{1}{c|}{4}  & \multicolumn{1}{c|}{13}  \\ \hline
-\multicolumn{1}{|c|}{Europeo}        & \multicolumn{1}{c|}{3}   & \multicolumn{1}{c|}{3}  & \multicolumn{1}{c|}{1}  & \multicolumn{1}{c|}{7}   \\ \hline
-\multicolumn{1}{|c|}{Finalizzato}    & \multicolumn{1}{c|}{4}   & \multicolumn{1}{c|}{1}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{5}   \\ \hline
-\multicolumn{1}{|c|}{Regionali}      & \multicolumn{1}{c|}{1}   & \multicolumn{1}{c|}{1}  & \multicolumn{1}{c|}{3}  & \multicolumn{1}{c|}{5}   \\ \hline
-\multicolumn{1}{|c|}{CCM*}           & \multicolumn{1}{c|}{2}   & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{2}   \\ \hline
-\multicolumn{1}{|c|}{Totale}         & \multicolumn{1}{c|}{113} & \multicolumn{1}{c|}{31} & \multicolumn{1}{c|}{34} & \multicolumn{1}{c|}{178} \\ \hline
-\multicolumn{5}{l}{*Centro Controllo Malattie}                                                                                                
-\end{tabular}
-\end{table}
-\end{center}
 
 
 ## L’attività analitica 
 
-L’Istituto si occupa di diagnosi delle malattie degli animali e delle zoonosi, di controllo sugli alimenti e mangimi riguardo la presenza di contaminanti chimici, biologici e fisici degli alimenti, di sorveglianza epidemiologica, di ricerca e sperimentazione su tutte le materie indicate, di formazione permanente, di supporto tecnico scientifico .La nostra organizzazione attuale prevede l’esecuzione di diversi tipi di attività nei laboratori della sede centrale e nelle sedi territoriali dislocate nella regione Lombardia ed Emilia Romagna. Per ogni ulteriore approfondimento si rimanda agli ambiti di attività presenti sulla home page dell’Istituto.
+L’Istituto si occupa di diagnosi delle malattie degli animali e delle zoonosi, di controllo sugli alimenti e mangimi riguardo la presenza di contaminanti chimici, biologici e fisici degli alimenti, di sorveglianza epidemiologica, di ricerca e sperimentazione su tutte le materie indicate, di formazione permanente, di supporto tecnico scientifico .La nostra organizzazione attuale prevede l’esecuzione di diversi tipi di attività nei laboratori della sede centrale e nelle sedi territoriali dislocate nella regione Lombardia ed Emilia Romagna. Per ogni ulteriore approfondimento si rimanda alle seguenti pagine web istituzionali:
+
+- [Sanità Animale](https://www.izsler.it/sanita-animale/)
+
+- [Sicurezza Alimentare](https://www.izsler.it/sicurezza-alimentare/)
+
+- [Benessere Animale](https://www.izsler.it/benessere-animale/)
+
+- [Ricerca](https://www.izsler.it/ricerca-2/)
+
+
 
 
 ## Centri di referenza nazionali, internazionali e i laboratori di riferimento
@@ -248,7 +234,6 @@ In IZSLER sono attivi **9** Centri di Referenza Nazionali, **8** Centri di refer
 
 Al seguente [link](https://www.izsler.it/chi-siamo/per-chi-e-con-chi-lavoriamo/centri-di-referenza/) si accede alla pagina istituzionale dei Centri di Referenza dell'IZSLER per maggiori dettagli.
 
-Nell'arco del 2020 si sootolineano le seguenti attività di rilievo che ha visto il coinvolgimento del CR.....
 
 
 
@@ -301,6 +286,7 @@ Le tabelle che seguono riportano il patrimonio immobiliare dell’Istituto distr
 knitr::include_graphics("figure/imm.png")
 ```
 
+\newpage
 
 ## La produzione scientifica 
 
@@ -309,14 +295,44 @@ knitr::include_graphics("figure/imm.png")
 L’Istituto in virtù del mandato istituzionale e della propria mission, considera strategica l’attività della formazione e la utilizza come strumento essenziale per favorire lo sviluppo culturale e professionale del proprio personale. L’IZSLER è riconosciuto come provider per il sistema di Educazione Continua in Medicina (ECM) e Centro di Referenza Nazionale per la Sanità Pubblica Veterinaria, come tale collabora con il Ministero della Saluta e con le Regioni di competenza per la formazione dei veterinari e degli operatori sanitari del settore agroalimentare. Le attività di formazione sono erogate direttamente in aule dedicate e attrezzate e attraverso una piattaforma di Formazione a Distanza (FAD) per corsi online, webinar e videoconferenze.  La collaborazione con Scuole superiori e Università attraverso specifiche convenzioni, permette l’accesso ai laboratori e agli uffici di studenti delle scuole superiori per l’alternanza scuola lavoro, degli studenti di vari percorsi di laurea, scuole di specialità e dottorati per completare la preparazione scolastica con la formazione sul campo.
 Dal 18 maggio 2012 ha conseguito la certificazione secondo la norma “UNI EN ISO 9001:2008”, sistemi di gestione per la qualità-Requisiti” e un aggiornamento alla norma “UNI EN ISO 9001:2015” dal 18 maggio 2016.
 
+```{r echo=FALSE, fig.align='center',  out.width= '100%'}
+knitr::include_graphics("figure/corsi.png")
+
+```
+
+
 
 ## La ricerca
+
 
 L’attività di Ricerca figura tra i compiti istituzionali prioritari dell’IZSLER, delineata nella legge 23 giugno 1970, n.503 (art. 3) si attua attraverso i **_programmi di ricerca finanziati dal Ministero della Salute_**(Ricerca Corrente e Ricerca Finalizzata), ma anche attraverso la **_competizione con altri centri di ricerca per l’accesso ai fondi europei, ai fondi dei programmi di ricerca regionali per lo sviluppo del territorio di competenza e ai fondi di progetti finanziati da privati_**. A sostegno delle esigenze territoriali delle Regioni di competenza e del Ministero della salute, e per lo sviluppo di nuovi settori IZSLER **_sostiene progetti di ricerca con finanziamento proprio_**. 
 
 IZSLER è attualmente ricercatore principale in 63 progetti dei 102 in corso attualmente, gran parte e dei progetti sono finanziati dal Ministero della Salute e in collaborazione con altri IIZZSS o Università
 
-Nonostante le attività di esecuzione di migliaia di tamponi ogni giorno ii ricercatori di IZSLER hanno collaborato con altri centri di ricerca a livello italiano per sviluppare metodiche e approfondire le conoscenze del virus causa di Covid 19 come ad esempio nel progetto **_Coves - Sviluppo e validazione di una metodica rapida per la rilevazione di SARS-CoV-2 su superfici ambientali_**, ma ha contribuito anche a ricerche di base quali quella sulle potenzialità evolutive del coronavirus, capace di modificarsi resistendo alle difese organiche  e quella sulla possibilità di trasmissione dell’infezione da madre a feto attraverso la placenta .
+
+```{r echo=FALSE, fig.align='center',  out.width= '100%'}
+knitr::include_graphics("figure/prj.png")
+
+```
+
+## Pubblicazioni
+
+Nell'arco del 2020 sono stati pubblicati 123 lavori scientifici su riviste peer-reviewd a cui hanno partecipato  come autori  complessivamente 95 ricercatori dell'IZSLER. Attraverso il database Incites, strumento del database citazionale Web of Science che attribuisce agli Autori di articoli scientifici pubblicati una serie di parametri bibliometrici  che ne caratterizzano l'impatto nella comunità scientifica,  risulta che, nel 2020,  la mediana del numero  di pubblicazioni per ricercatore è pari a 2 (min= 1, max= 18). Complessivamente la mediana del numero di citazioni che un singolo autore ha ottenuto nel 2020 degli articoli a cui ha partecipato è pari 2 (min = 0, max= 22) con una mediana del numero medio di citazioni per articolo per autore di 0.87 ( il 50% degli articoli pubblicati da un singolo autore non è stato citato). Il dato citazionale è tempo-dipendente e quindi è necessario aspettare almeno tre-quattro anni dalla pubblicazione per una sua corretta valutazione.  
+
+Nel seguente grafico sono riportati per i parametri produttivi e citazionali la distribuzione relativa agli articoli pubblicati nel 2020 che vede la partecipazione di 95 ricercatori dell'IZSLER. 
+
+
+
+```{r echo=FALSE, fig.align='center',  out.width= '100%'}
+knitr::include_graphics("figure/distr.png")
+
+```
+
+ 
+Nonostante le attività di esecuzione di migliaia di tamponi ogni giorno i ricercatori di IZSLER hanno collaborato con altri centri di ricerca a livello italiano per sviluppare metodiche e approfondire le conoscenze del virus causa di Covid 19 come ad esempio nel progetto **_Coves - Sviluppo e validazione di una metodica rapida per la rilevazione di SARS-CoV-2 su superfici ambientali_**, ma ha contribuito anche a ricerche di base quali quella sulle potenzialità evolutive del coronavirus, capace di modificarsi resistendo alle difese organiche  e quella sulla possibilità di trasmissione dell’infezione da madre a feto attraverso la placenta .
+
+
+
 
 ## Il Sistema di Gestione Integrato di Qualità 
 
@@ -424,6 +440,9 @@ knitr::include_graphics("figure/gare2.png")
 ```
 
 
+
+
+
 ## Aspetti organizzativi: attuazione dei dipartimenti
 
 Con Delibera del Consiglio di Amministrazione n. 17 del 15.12.2020 è stato attuato un nuovo modello organizzativo, che ha permesso di porre le basi per perseguire la finalità di creare un’unica identità e integrare, capitalizzandole, le esperienze passate, mettendo a fattore comune le buone pratiche, con il desiderio di vivere una nuova realtà organizzativa.
@@ -491,8 +510,6 @@ Gli obiettivi strategici, raggruppati all’interno delle diverse “prospettive
 - 1.IMPLEMENTAZIONE DELLE ATTIVITA’ RELATIVE ALLA RICERCA NAZIONALE E INTERNAZIONALE
 - 2.IMPLEMENTAZIONE DELLE ATTIVITA’ ISTITUZIONALI NEL SETTORE DELLA SICUREZZA  ALIMENTARE, SANITA’ ANIMALE E IGIENE VETERINARIA
 
-
-
 **PROSTETTIVA ECONOMICA FINANZIARIA** prospettiva orientata al monitoraggio degli aspetti economico-finanziari in relazione alla programmazione strategica volta, quindi, a valutare la gestione dell’ente in ragione della sua capacità di perseguire adeguati margini. 
 
 - 3. SOSTENIBILITA' ECONOMICA E FINANZIARIA
@@ -516,16 +533,19 @@ knitr::include_graphics("figure/f2.png")
 
 Come già sopra menzionato, al fine di individuare un sistema in grado di garantire la misurazione, valutazione e quindi, la rappresentazione in modo integrato ed esaustivo del livello di performance atteso e realizzato, con successiva evidenziazione di eventuali scostamenti, l’IZSLER provvede alla costruzione del cruscotto degli indicatori necessario per la misurazione della strategia. 
 Infatti, una volta definiti gli obiettivi strategici si procede all’individuazione delle misure in grado di monitorare il loro grado di raggiungimento. Al fine di garantire un monitoraggio continuo della performance dell‘Ente, anche ai fini dell'individuazione degli interventi correttivi in corso di esercizio, **gli indicatori individuati devono essere in grado di rappresentare tutte le azioni messe in atto per il raggiungimento degli obiettivi strategici prefissati**. Nella costruzione del cruscotto, contestualmente alla definizione degli indicatori, si procede alla definizione dei target e degli intervalli di variazione grazie ai quali l’Ente è in grado di rilevare lo scostamento tra i valori attesi e quelli effettivamente realizzati ed effettuare le opportune valutazioni. 
+
+
 Di seguito si riporta il **Cruscotto di Ente**,  che rispetto a quello dell’anno precedente, presenta una migliore razionalizzazione degli obiettivi strategici, dei Project e un minor numero indicatori per ciascuno di essi, individuati comunque in modo tale da garantire una corretta rappresentazione della performance dell’Ente, in continuità con la mission dell’Istituto.
 
 
+
 ### Cruscotto dell'ente anno 2020 {-}
-Di seguito per ogni obiettivo strategico sono riportati i rispettivi obiettivi operativi/azioni e una tabella che sintetizza gli indicatori adottati, il target , il grado di raggiungimento e una breve descrizione del risultato raggiunto
+Di seguito per ogni obiettivo strategico sono riportate le rispettive azioni e una tabella che sintetizza gli indicatori adottati, il target , il grado di raggiungimento e una breve descrizione del risultato raggiunto
 
 
 ####  Obiettivo strategico 1: **Implementazione delle attività relative alla ricerca nazionale e internazionale** {-}
 
-Questo obiettivo è  declinato in due azioni principali (obiettivi operativi): 
+Questo obiettivo è  declinato in due azioni principali: 
 
 -1 Rafforzamento della competitività nell'ambito della progettualità e della ricerca sperimentale nazionale ed internazionale 
 
@@ -539,7 +559,7 @@ knitr::include_graphics("figure/ob1.png")
 
 #### Obiettivo strategico 2: **Implementazione delle attività istituzionali nel settore della sicurezza alimentare, sanità animale e igiene veterinaria** {-}
 
-Questo obiettivo è  declinato in tre azioni principali (obiettivi operativi):
+Questo obiettivo è  declinato in tre azioni principali:
 
 -1 Sviluppo di sistemi di analisi del dato sanitario; 
 
@@ -556,7 +576,7 @@ knitr::include_graphics("figure/ob2.png")
 
 #### Obiettivo strategico 3: **Sostenibilità economica finanziaria**{-}
 
-Questo obiettivo è declinato in un'unica azione (obiettivo operativo):
+Questo obiettivo è declinato in un'unica azione:
 
 - 1 Ottimizzare l'uso di risorse per aumentare l'efficienza
 
@@ -570,11 +590,10 @@ knitr::include_graphics("figure/ob3.png")
 
 #### Obiettivo strategico 4: **Reingegnerizzazione dei processi**{-}
 
-Questo obiettivo è declinato in un'unica azione (obiettivo operativo): 
+Questo obiettivo è declinato in un'unica azione: 
 
 -1 Sviluppare il processo di pianificazione,
-programmazione e controllo con l’ottimizzazione dei processi trasversali tecnico scientifico ed amministrativi
-
+programmazione e controllo con l’ottimizzazione dei processi trasversali tecnico scientifico ed amministrativi.
 
 
 ```{r echo=FALSE, fig.align = "center", out.width = '110%', }
@@ -585,9 +604,9 @@ knitr::include_graphics("figure/ob4.png")
 
 #### Obiettivo strategico 5: **Amministrazione trasparente ed anticorruzione**{-}
 
-Questo obiettivo è declinato in un'unica azione (obiettivo operativo) e un solo indicatore: 
+Questo obiettivo è declinato in un'unica azione  e un solo indicatore: 
 
--1 Adozione misure previste dalla normativa in materia di trasparenza e prevenzione della corruzione  
+-1 Adozione misure previste dalla normativa in materia di trasparenza e prevenzione della corruzione.
 
 
 ```{r echo=FALSE, fig.align = "center", out.width = '110%', }
@@ -598,11 +617,11 @@ knitr::include_graphics("figure/ob5.png")
 
 #### Obiettivo strategico 6: **Valorizzazione del capitale umano**{-}
 
-Questo obiettivo è declinato in due azioni (obiettivi operativi): 
+Questo obiettivo è declinato in due azioni: 
 
 -1 Qualificazione e formazione del capitale umano; 
 
--2 Efficacia ed efficienza degli interventi per la valorizzazione del capitale umano
+-2 Efficacia ed efficienza degli interventi per la valorizzazione del capitale umano.
 
 
 ```{r echo=FALSE, fig.align = "center", out.width = '110%', }
@@ -654,8 +673,6 @@ _Risultati attesi_:
 - Definizione di un sistema di verifica costante del grado di copertura territoriale delle esigenze; 
 - Ridistribuzione dei metodi analitici ed eventuale revisione; 
 - Programmazione delle modifiche dell’offerta analitica dell’IZSLER 
-
-
 
 
 **PROJECT N.3: Classyfarm** 
@@ -738,112 +755,119 @@ _Risultati attesi_:
 
 ### Livello sintetico di ente
 
-Per la misurazione della performance organizzativa di ente, l’istituto si è dotato di uno strumento che è il «**Livello sintetico di Ente», il quale rappresenta la media aritmetica di tutti gli obiettivi strategici raggiunti dall’Istituto**. Nell’anno 2020 il Livello Sintetico di Ente presenta una percentuale dell’86%, rispetto ad un target dell’83%, in netta diminuzione rispetto all’anno precedente (90%). E’ necessario precisare che l’intero processo del ciclo di gestione delle performance ha subito non poche difficoltà a causa dell’emergenza sanitaria da covid19, che ha comportato un ritardo delle sue fasi e un impatto sul raggiungimento di alcuni obiettivi. Nel corso dell’anno 2020 l’Istituto è stato impegnato principalmente nel fronteggiare la pandemia, destinando risorse, capacità e competenze a tal fine.
+Per la misurazione della performance organizzativa di ente, l’istituto si è dotato di uno strumento che è il «**Livello sintetico di Ente», il quale rappresenta la media aritmetica di tutti gli obiettivi strategici raggiunti dall’Istituto**. Nell’anno 2020 il Livello Sintetico di Ente presenta una percentuale dell’**83.5%**, in linea con il target previsto dell'**83%**, ma  in  diminuzione rispetto all’anno precedente (90%). 
+E’ necessario precisare che l’intero processo del ciclo di gestione delle performance ha subito non poche difficoltà a causa dell’emergenza sanitaria da covid19, che ha comportato un ritardo delle sue fasi e un impatto sul raggiungimento di alcuni obiettivi. Nel corso dell’anno 2020 l’Istituto è stato impegnato principalmente nel fronteggiare la pandemia, destinando risorse, capacità e competenze a tal fine.
 <!-- Nelle immagini sotto riportate vengono messe in evidenza sia la dimensione strategica, area in blu, sia quella operativa, area in arancione. -->
 
-
-
-
-
-
-## Il Cascading: dagli obiettivi strategici agli obiettivi operativi
-
-Dagli obiettivi strategici sono stati «costruiti» gli obiettivi operativi inseriti all’interno dell’ Albero  della  Performance   in un processo definito di «cascading»,  declinati in indicatori, target e strutture assegnatarie, suddivisi nella  quattro principali  prospettive di analisi.
-Nella dimensione **Istituzioni, cittadini e consumatori**  l’Ente  mette in evidenza il rafforzamento dell’IZSLER nel settore della PA centrale, l’ampliamento delle attività  nell’ambito della collaborazione con le Regioni e gli Enti locali, il potenziamento dell’integrazione con il Ministero e le Regioni, l’ aumento del network scientifico e della collaborazione scientifica sia a livello nazionale ed internazionale, la partecipazione a progetti di ricerca, twinning  e il potenziamento dell’attività diagnostica e delle produzioni. Una dimensione strategica dell’IZSLER che pone le basi per lo sviluppo di scenari futuri, declinati in ben n. 95 indicatori di mantenimento/potenziamento di attività.
-Nella dimensione **economico-finanziario** l’IZSLER analizza la gestione economica-finanziaria in un’ottica di contenimento delle uscite, di razionalizzazione dell’utilizzo delle risorse,  improntati al perseguimento dell’efficienza, assicurando  la massima efficacia.
-Nella dimensione dei  **processi interni*»**  l’Ente  valuta il modo in cui  raggiungere un migliore efficienza dell’amministrazione,  attraverso l’adeguamento dei processi produttivi dei servizi alle “migliori pratiche” (modelli di eccellenza e standard internazionali e nazionali), mediante l’ottimizzazione della gestione, delle procedure e dei processi, con particolare riferimento al contenimento ed alla riduzione dei tempi di TDF/TDR , nonché all'ottimizzazione dei tempi dei procedimenti amministrativi. 
-Nella dimensione della **Innovazione , crescita e sviluppo organizzativo** rientrano gli indicatori relativi alla qualità totale e soddisfazione delle aspettative dell’utenza, che si declinano  nella qualità e la quantità delle prestazioni e dei servizi erogati, dello sviluppo qualitativo e quantitativo delle relazioni con i cittadini,  gli utenti , i destinatari dei servizi e la rilevazione del grado di soddisfazione dei destinatari delle attività. 
-Lo sviluppo organizzativo viene supportato dalla costante innovazione  dei sistemi informativi e dalla  valorizzazione del capitale umano mediante percorsi di promozione delle competenze. Vista la necessaria integrazione tra gli obiettivi del Piano della Performance e il PTPCT, in questa sezione vengono riportati anche gli obiettivi in tema di trasparenza, anticorruzione e conflitto di interessi. 
-In questa sezione si realizza l’effettiva pianificazione, il controllo delle performance e dei processi, analizzati da diverse prospettive.
-Le  quattro  dimensioni vengono valutati sia dal punto di vista del singolo indicatore rispetto al suo trend storico, sia rispetto alla scala dei valori/dimensione a cui appartengono , sia rispetto al grado di performance della singole struttura .
-Utilizzando opportuni strumenti di indagine è possibile fare un’analisi su molti livelli; i grafici qui di seguito riportati sono un esempio della valutazione fatte periodicamente dall’IZSLER, anche al fine di un continuo e costante monitoraggio.
-
-
-
-## I risultati raggiunti
-
-Di seguito in tabella sono riportati i risultati raggiunti nel 2020 sia per quello che riguarda gli Obiettivi Strategici sia per gli Obiettivi Operativi.
-
+Nella tabella sottostante viene indicata la percentuale di raggiungimento di ogni singolo obiettivo strategico e del livelli sintetico di ente
 
 ```{r echo=FALSE, fig.align = "center",out.width = '90%', }
 knitr::include_graphics("figure/f8.png")
 ```
 
+Come si può osservare dalla tabella l'obiettivo strategico **Valorizzazione del capitale umano** ha ottenuto un percentuale di realizzazione molto bassa condizionando quindi in modo rilevante il **Livello sintetico di Ente**. Questo obiettivo strategico è stato declinato in due obiettivi operativi: 
+
+- _Qualificazione e formazione del capitale umano_ con due indicatori strategici atti a misurare il numero totale e medio di crediti ECM erogati prodotti dall'IZSLER rispetto alla media dell'ultimo triennio  che hanno ottenuto rispettivamente l'**8.65%** e il **3.93%** di realizzazione, a causa della drastica cancellazione  degli eventi in presenza dovuta allo stato di emergenza in vigore nel paese. E sebbene l'Istituto attraverso la Formazione abbia prontamente dirottato le risorse nell'organzizzazione di eventi formativi a distanza (FAD) ottenendo elevati numeri d'iscrizione sia di utenti interni che esterni , questo dato non è stato colto -perchè non previsto- dal sistema di registrazione degli obiettivi strategici e loro declinazioni ( obiettivi operativi/ indicatori strategici)
+
+- _Efficacia ed efficienza degli interventi per la valorizzazione del capitale umano_ con un solo indicatore strategico che ha raggiunto il 100% della realizzazione. 
+
+Ne deriva che se si esclude questo obiettivo strategico (che per la sua natura più di tutti ha risentito delle restrizioni ai movimenti imposti dallo stato di emergenza epidemico in corso), dalla definzione del **Livello sintetico di Ente** si osserva che quest'ultimo si attesta ad un livello di realizzazione del **92.7%** superiore al target prefissato del **90%**
+
+Il **Livello sintetico di Ente** entra nella valutazione quantitativa della scheda di valutazione del personale dirigente (componente A1) come verrà spiegato nelle pagine successive.
+
+Dagli obiettivi strategici sono stati definiti  gli obiettivi operativi inseriti all’interno del Piano Operativo, adottati con Decreto del Direttore Generale n.131 del 29.05.2020, in un processo definito di «cascading» e assegnati alle strutture.  Nell’anno 2020 la performance complessiva degli obiettivi operativi, assegnati alle strutture, che è data dalla media aritmetica di tutti gli indicatori operativi, è pari al **90%**.
+La performance organizzativa delle strutture legata agli obiettivi operativi, entra nella valutazione quantitativa (componente A2/A) della scheda di valutazione del personale dirigente/comparto, come verrà spiegato nelle pagine successive.
 
 
+## Performance individuale
 
-
-
-# Gli Obiettivi Individuali: Direzione Generale, Sanitaria ed Amministrativa
-
-La  Giunta  della  Regione  Lombardia  con  deliberazione  n.  XI/2110 del  09.09.2019,  ha  definito,  di concerto  con  la  Regione  Emilia  Romagna,  gli  obiettivi  aziendali  di  interesse  regionale  per l’anno di riferimento del Direttore Generale  dell’Istituto.
-Con  Decreto    n.  305  del  24.09.2019 il  Direttore  Generale,  prende atto del coinvolgimento del Direttore Amministrativo e del Direttore Sanitario nel raggiungimento degli obiettivi per l’anno 2020.Al  Direttore  Sanitario  e al Direttore Amministrativo,  oltre  agli  obiettivi  aziendali  di  interesse  regionali, sono  stati  assegnati  anche   gli  obiettivi  strategici  che  per  i  diversi  ambiti  di  competenza   li riguardavano.
-Con nota prot. N. 1967 del 31/01/2020 è stata trasmessa alle Regione la rendicontazione attestante l’attività svolta per ciascun obiettivo. Al momento non è ancora stato comunicato dalle Regioni la valutazione sul raggiungimento degli obiettivi assegnati per l’anno 2020
-
-## Gli elementi di valutazione quantitativa e qualitativa
-Le schede di valutazione individuale sono state redatte in conformità alle metodologie indicate nel Sistema di Misurazione e Valutazione dell’IZSLER anno 2020, approvato con delibera del direttore generale n.__ del___. In base alla normativa vigente e agli accordi aziendali, i responsabili di struttura hanno regolarmente provveduto alla valutazione del personale dirigente e di comparto. Si presenta qui di seguito gli elementi costitutivi della schede di valutazione del personale del comparto e della dirigenza.
-
-
+Le schede di valutazione individuale sono state redatte in conformità alle metodologie indicate nel Sistema di Misurazione e Valutazione dell’IZSLER anno 2020, approvato con Delibera del Direttore Generale n. 363 del 03.11.2020. In base alla normativa vigente e agli accordi aziendali, i responsabili di struttura hanno regolarmente provveduto alla valutazione del personale dirigente e di comparto.
+ Si presenta qui di seguito gli elementi costitutivi delle schede di valutazione del personale del comparto e della dirigenza.
 
 ```{r echo=FALSE, fig.align = "center",out.width = '90%', }
 knitr::include_graphics("figure/f3.png")
 ```
 
 
-### Elementi di valutazione qualitativa: le aree di attenzione
+La **Valutazione Quantitativa** si riferisce alla componente A1, obiettivi di performance organizzativa  e componente A2, obiettivi di performance individuale/team.
 
-**Valutazione  Qualitativa**:  relativa  alla  qualità  del  contributo  dato  e  dell’impegno  assicurato  al  raggiungimento  degli obiettivi assegnati.
-I criteri di valutazione sono differenziati tra personale  del  Comparto e della  Dirigenza,  ed all’interno  di quest’ultima tra Dirigenti Responsabili di Struttura e Professional, come di seguito illustrato.
-**Personale del  Comparto**:  La valutazione qualitativa  del  contributo  dato  e  dell’impegno  assicurato  nell’anno  di  riferimento  è valutata  con  riferimento  alle  aree  di  attenzione  previste  per  la  categoria  di  appartenenza  e  specificate  nella  scheda  di assegnazione  come  sotto  riportate.  Il  Valutatore  descrive  brevemente  il  contributo  atteso  in  relazione  ad  ognuna  delle  aree identificate ed agli obiettivi assegnati e il giudizio finale deve essere oggettivabile anche documentalmente.
+
+La **Valutazione Qualitativa** si riferisce alla qualità del contributo dato e dell’impegno  assicurato  al  raggiungimento  degli obiettivi assegnati. I criteri di valutazione sono differenziati tra personale del Comparto e della Dirigenza, ed all’interno di quest’ultima tra Dirigenti Responsabili di Struttura e Professional, come di seguito illustrato.
+
+- **Personale del Comparto**.  La valutazione qualitativa del contributo dato e dell’impegno  assicurato  nell’anno  di  riferimento  è valutata  con  riferimento  alle  aree  di  attenzione  previste  per  la  categoria  di  appartenenza  e  specificate  nella  scheda  di assegnazione  come  sotto  riportate.  Il Valutatore descrive brevemente il  contributo  atteso  in  relazione  ad  ognuna  delle  aree identificate ed agli obiettivi assegnati e il giudizio finale deve essere oggettivabile anche documentalmente.
 
 ```{r echo=FALSE, fig.align = "center",out.width = '90%', }
 knitr::include_graphics("figure/f4.png")
 ```
 
-**Dirigenti delle aree Veterinaria - Sanitaria - Tecnica - Professionale - Amministrativa.** Sono state individuate n. 9 aree di attenzione, tra le quali il Valutatore può scegliere per il Dirigente valutato non meno di 3 e non più di 5 aree tra le n. 9 elencate. Anche in questo caso il Valutatore descrive brevemente il contributo atteso in relazione ad ognuna delle aree identificate ed agli obiettivi assegnati e il giudizio finale complessivo per tutte le aree individuate deve essere oggettivabile anche documentalmente.
+- **Dirigenti delle aree Veterinaria - Sanitaria - Tecnica - Professionale - Amministrativa**. Sono state individuate n. 9 aree di attenzione, tra le quali il Valutatore può scegliere per il Dirigente valutato non meno di 3 e non più di 5 aree tra le n. 9 elencate. Anche in questo caso il Valutatore descrive brevemente il contributo atteso in relazione ad ognuna delle aree identificate ed agli obiettivi assegnati e il giudizio finale complessivo per tutte le aree individuate deve essere oggettivabile anche documentalmente.
 
 ```{r echo=FALSE, fig.align = "center",out.width = '90%', }
 knitr::include_graphics("figure/f5.png")
 ```
 
+# Gli Obiettivi Individuali: Direzione Generale, Sanitaria Ed Amministrativa
+
+La Giunta della Regione Lombardia con deliberazione n. XI/3345 del 06.07.2020 _"Determinazioni in ordine agli obiettivi di interesse regionale da assegnare al Direttore Generale dell'Istituto Zooprofilattico Sperimentale della Lombardia e dell'Emilia Romagna-esercizio 2020”_, ha definito, di concerto con la Regione Emilia Romagna, gli obiettivi aziendali di interesse regionale per l’anno di riferimento del Direttore Generale dell’Istituto.
+Con Decreto n.  216 del 14.07.2020 il Direttore Generale, prende atto del coinvolgimento del Direttore Amministrativo e del Direttore Sanitario nel raggiungimento degli obiettivi per l’anno 2020.Al Direttore Sanitario e al Direttore Amministrativo, oltre agli obiettivi aziendali di interesse regionali, sono stati assegnati  anche  gli  obiettivi  strategici  che  per  i  diversi  ambiti  di  competenza li riguardavano.
+Con nota prot. N. 1545 del 26.01.2021 è stata trasmessa alle Regione la rendicontazione attestante l’attività svolta per ciascun obiettivo. Al momento non è ancora stato comunicato dalle Regioni la valutazione sul raggiungimento degli obiettivi assegnati per l’anno 2020.
 
 
 
-# Azioni svolte nell'ambito del PTPCT
+# Sistema Integrato Di Gestione Tra Il Ptpct E Il Piano Performance 
+
 Il quadro normativo sulla prevenzione della corruzione e sulla trasparenza ha sempre evidenziato l’importanza di integrare il ciclo della Performance con gli strumenti ed i processi relativi alla qualità dei servizi, alla trasparenza, all’integrità e in generale alla prevenzione della corruzione. 
-Per rendere efficace tale collegamento nel PTPCT è stato inserito un cronoprogramma di obiettivi da perseguire nel Piano Performance 2020-2022. Tali obiettivi sono stati assegnati alle varie strutture.
-Si riporta qui di seguito il cronoprogramma:
+Per rendere efficace tale collegamento nel PTPCT è stato inserito un cronoprogramma di obiettivi da perseguire nel Piano Performance 2020-2022. 
+Con delibera del Consiglio di Amministrazione n.1 del 31.01.2020, è stato adottato il PIANO TRIENNALE DI PREVENZIONE DELLA CORRUZIONE E DELLA TRASPARENZA 2020 – 2022, nell’Allegato F sono state riportate le misure generali, specifiche e/o obbligatorie per l’anno 2020 che sono confluite nel Piano Performance anno 2020, nell’obiettivo strategico “Amministrazione trasparente e anticorruzione”.
 
-INSERIRE IL CRONOPROGRAMMA
 
-Inoltre, In applicazione della L. n. 190/2012 in materia di prevenzione della corruzione e del D. L.gs n. 33/2013 di riordino degli obblighi di pubblicità, trasparenza e diffusioni di informazioni da parte delle Pubbliche Amministrazioni, l’IZSLER ha adottato i seguenti provvedimenti: 
+# Il Processo Di Redazione Della Relazione Sulla Performance: Gli Strumenti Informatici A Supporto
 
-- con deliberazione n. 7 del 5.7.2016 il Consiglio di Amministrazione ha nominato la dott.ssa Lauretta Cocchi, Responsabile della Prevenzione della Corruzione e della Trasparenza; 
-- con delibera del Consiglio di Amministrazione  n. 13 del 30.10.2017 ha recepito il Codice di Comportamento dei dipendenti dell'IZSLER; 
-- con delibera del Consiglio di Amministrazione n. 1 del 29.01.2018 ha approvato il  Piano Triennale di Prevenzione della Corruzione e della Trasparenza 2018 – 2020;
-La sezione Amministrazione Trasparente del sito istituzionale è stata regolarmente aggiornata. In particolare si segnala la pubblicazione dei seguenti documenti:
-- in data 31.0.1.2019: Relazione annuale al 31/12/2018 del Responsabile della Prevenzione della Corruzione - Art.  Comma 14, Legge 6.11.2012/190;
-in data 10.04.2018: Attestazione del Nucleo di Valutazione delle Prestazioni dell’Istituto sull’assolvimento degli obblighi di pubblicazione ex Delibera ANAC 141/2018 al 31/03/2018.
-Integrazione del sistema anticorruzione con il sistema qualità
+L’apporto al funzionamento del ciclo di gestione delle performance è assicurato dall’Ufficio di staff “programmazione dei servizi tecnici e controllo di gestione” in staff alla Direzione Generale.
+Il sistema adottato dall’Istituto si avvale del software “obiettivi strategici” tale sistema è in dotazione dal 2013 e consente l’inserimento del piano degli obiettivi, la rendicontazione degli obiettivi e la elaborazione delle schede di valutazione individuali.
+L’ elaborazione degli obiettivi viene effettuata utilizzando un altro applicativo “Idasboards” che consente un’analisi dei dati a vari livelli e complessità.
 
 
 
 
-# Il processo di redazione della relazione sulla performance
 
-```{r echo=FALSE, fig.align = "center",out.width = '90%', }
-knitr::include_graphics("figure/f7.png")
-```
-Il supporto al funzionamento del ciclo di gestione delle performance è assicurato dall’U.O. Gestione del Personale, il quale assicura inoltre le attività connesse al Sistema di Valutazione del Personale.
-Il   supporto   informatico   è   assicurato   dai   Sistemi   Informativi   che   cominciando dal   2013   hanno implementato la prima sperimentazione del cruscotto per la gestione del ciclo delle performance. Dal  2014  in  sinergia  tra  l’U.O.  Gestione  del  Personale  e  Sistemi  Informativi  si  è  sviluppato  una  nuova tipologia di cruscotto denominato «Obiettivi Strategici» e sono state predisposte le basi dati di appoggio per il caricamento dei target da parte delle strutture assegnatarie degli obiettivi/indicatori.Lo stesso è stato accompagnato da un altro applicativo che ha consentito, anche se in modo sperimentale, di  implementare  lo  stato  d’avanzamento  delle  attività  e  le  percentuali  di  conseguimento dei  target rispetto a quelli prefissati, dandone anche un evidenza grafica.
+# CONCLUSIONI {-}
 
-# Conclusioni
 
-La Relazione sulla Performance è un documento di sintesi dell’intero ciclo di gestione della performance riferito ad un ciclo amministrativo. E’ anche un’opportunità per analizzare la validità e l’efficacia del processo e per fornire possibili input di miglioramento.
+La Relazione sulla Performance è un documento di sintesi e di analisi dell’intero ciclo di gestione della performance riferito all’anno precedente ma è anche un’opportunità per analizzare la validità del processo e trovare spunti di miglioramento, per poter rispondere in modo sempre più efficace al mandato istituzionale dell’ente.
 
-Il 2020 è stato un anno di difficile attuazione per la situazione pandemica mondiale che ha visto l’Istituto impegnato in prima linea nell’affrontare tale emergenza, comportando un ritardo nella negoziazione, nell’assegnazione degli obiettivi e negli steps successivi.
+E’ doveroso ricordare che l’anno 2020 è stato un anno di difficile attuazione per la situazione pandemica mondiale che ha visto l’Istituto impegnato in prima linea nell’affrontare tale emergenza, comportando un ritardo nella negoziazione, nell’assegnazione degli obiettivi e negli step successivi.
 
-E’ da evidenziare lo sforzo compiuto da tutto il personale fin dall’inizio dell’emergenza, che ha saputo riadattare le proprie attività lavorative, anche con la sperimentazione di nuove modalità di lavoro “smart working” con risultati positivi, reagendo con prontezza e disponibilità al periodo difficile che abbiamo vissuto.
+Il personale dell’Istituto, in questa fase così critica, ha saputo fin da subito fronteggiare l’emergenza, riaddattando le proprie attività lavorative, sperimentando dove era possibile nuove modalità di lavoro (smart working) e reagendo con prontezza e disponibilità al periodo difficile che abbiamo vissuto, a loro va il mio sentito ringraziamento.
 
-								            	IL DIRETTORE GENERALE
-										              Dr. Piero Frazzi
+\begin{center}
+
+IL DIRETTORE GENERALE
+									                                                        
+Dr. Piero Frazzi
+
+\end{center}
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
