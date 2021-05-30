@@ -1,11 +1,11 @@
 library(tidyverse)
-library(plyr)
+
 library(lemon)
 library(hrbrthemes)
 library(readxl)
 library(lubridate)
 
-
+detach(package:plyr)
 d <- tibble("Ruolo" = c(rep("Dirigenza", 2), rep("Comparto", 2), rep("Borse di studio", 2)), 
             "Genere" = rep(c("Uomini", "Donne"), 3), 
             "Numero" = c(58, 63, 172, 360, 15, 35))
@@ -193,11 +193,26 @@ covid <- read_excel("PROGRAMMAZIONE/performances/Relazione Performances/covid.xl
                     col_types = c("date", "text", "numeric", 
                                   "numeric", "numeric"))
    
-
+library(zoo)
 covid %>% 
    mutate(anno = year(data)) %>% 
    pivot_longer(names_to = "Laboratorio", cols = 3:5) %>% 
-   group_by(Laboratorio) %>% 
-   summarise(Tot = sum(value, na.rm = T)) %>% View()
+   group_by(data) %>% 
+   summarise(Tot = sum(value, na.rm = T)) %>% 
+   filter(Tot > 0) %>%
+   mutate(sett = rollmean(Tot, k = 30, fill = NA) )%>% 
+   ggplot(aes(
+      x = data, 
+      y = sett
+   ))+
+   geom_line(col = "blue")+
+   geom_col( aes(y = Tot), 
+      alpha = 1/5)+
+   labs(
+      y = "Numero Tamponi Naso Faringei", 
+      x = ""
+   )
+   
+ 
    
   
