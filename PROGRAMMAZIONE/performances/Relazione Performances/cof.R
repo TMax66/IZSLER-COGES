@@ -3,6 +3,7 @@ library(plyr)
 library(lemon)
 library(hrbrthemes)
 library(readxl)
+library(lubridate)
 
 
 d <- tibble("Ruolo" = c(rep("Dirigenza", 2), rep("Comparto", 2), rep("Borse di studio", 2)), 
@@ -184,4 +185,19 @@ prj_func2 <- function(dati, dt1, dt2)
 
 
 prj_func2(prj, dt1 = "2016-01-01", dt2= "2016-12-31")
+
+
+##covid####
+
+covid <- read_excel("PROGRAMMAZIONE/performances/Relazione Performances/covid.xlsx", 
+                    col_types = c("date", "text", "numeric", 
+                                  "numeric", "numeric"))
    
+
+covid %>% 
+   mutate(anno = year(data)) %>% 
+   pivot_longer(names_to = "Laboratorio", cols = 3:5) %>% 
+   group_by(Laboratorio) %>% 
+   summarise(Tot = sum(value, na.rm = T)) %>% View()
+   
+  
