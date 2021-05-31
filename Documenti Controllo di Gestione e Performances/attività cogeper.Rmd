@@ -7,28 +7,28 @@ output: pdf_document
 
 L'attività dell'ufficio di controllo di gestione e performance è pienamente inserita nel ciclo delle performances e da questo governata
 
+
+```{r include=FALSE}
+library(tidyverse)
+library(readxl)
+library(here)
+library(timevis)
+library(reshape2)
+library(hrbrthemes)
+library("lubridate")
+library("scales")
+```
+
+
 ```{r eval=FALSE, include=FALSE}
-timing <- read_excel("ANALYSIS/data/raw/timing.xlsx", 
-                     col_types = c( "text", "date", 
-                                   "date"))
+timing <- read_excel( here ("Documenti Controllo di Gestione e Performances",   "timing.xlsx"), 
+                     col_types = c( "text", "date", "date"))
 
 timing <- timing %>% 
-  mutate(event = factor(event, levels = c("Presentazione proposta", 
-                                         "Approvazione CS IZSLER",
-                                         "Approvazione MS e Inizio Progetto",
-                                         "Inizio attività borsa di studio",
-                                         "Attività di raccolta campioni di feci",
-                                         "Analisi  microbiologiche isolamento, identificazione e test di suscettibilità",
-                                         "Invio Relazione Parziale",
-                                         "Analisi metagenomica su pool di E.coli",
-                                         "Approvazione richiesta proroga durata progetto",
-                                         "Analisi genoma ceppi E.coli resistenti a Ceftiofur",
-                                         "Elaborazione dati genoma ceppi E.coli resistenti a Ceftiofur",
-                                         "Analisi statistica dati  dei profili fenotipici di resistenza",
-                                         "Analisi dati metagenomici",
-                                         "Editing relazione finale",
-                                         "Invio Relazione Finale", 
-                                         "Sospensione per emergenza COVID-19")))  
+  mutate(event = factor(event, levels = c("Piano quadriennale dell'attività dell'IZSLER", 
+                                          "Definizione obiettivi strategici/obiettivi operativi/indicatori/target : Piano delle performance", 
+                                          "Scheda Budget (definzione/negoziazione con i dipartimenti)", 
+                                          "Relazione sulla performance (anno 2021)")))  
  
 
 
@@ -42,7 +42,7 @@ timing <- timing %>%
   ylab(NULL) +
     theme_ipsum_rc()+
     theme(legend.position = "blank")+
-    scale_x_date(labels = date_format("%m-%Y"), breaks = "6 month")+
+    scale_x_date(labels = date_format("%m-%Y"), breaks = "1 month")+
     scale_color_manual(values=c(rep("#487DA8", 16)))
 
 ```
