@@ -334,15 +334,17 @@ knitr::include_graphics("figure/genere.png")
 
 ## Le risorse finanziarie: raggiungimento annuale equilibrio di bilancio
 
-Si riporta di seguito la sintesi del bilancio consuntivo anno 2019 con le informazioni più rilevanti di carattere economico-finanziario, la proposta di Bilancio consuntivo anno 2020 è in fase di fine istruttoria. Nel bilancio si evidenzia un utile di esercizio pari a € 11.105.153. Per ogni ulteriore approfondimento si rimanda alla pagina della sezione “Amministrazione Trasparente”, sotto sezione “Bilanci”.
-ll Bilancio è stato adottato con delibera del Consiglio di Amministrazione n. 6 del 22.07.2020, il Collegio dei Revisori dei Conti ha espresso parere favorevole con verbale n. 12 del 19.06.2020.
+Si riporta di seguito la sintesi del bilancio consuntivo anno 2020 con le informazioni più rilevanti di carattere economico-finanziario.  Per ogni ulteriore approfondimento si rimanda alla pagina della sezione “Amministrazione Trasparente”, sotto sezione “Bilanci”.
 
 ```{r echo=FALSE, fig.align = "center",out.width = '90%', }
-knitr::include_graphics("figure/f6.png")
+knitr::include_graphics("figure/bil1.png")
 ```
 
 
 
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/bil2.png")
+```
 
 ## Il patrimonio immobiliare
 
