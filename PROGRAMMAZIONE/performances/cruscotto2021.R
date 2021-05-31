@@ -30,7 +30,12 @@ strutture <- read_excel( here("PROGRAMMAZIONE", "performances", "tabella convers
 
 strutture$StrutturaAssegnataria <- gsub("\\d+", "", strutture$StrutturaAssegnataria)
 
-strutture$StrutturaAssegnataria <- gsub("", "", strutture$StrutturaAssegnataria)
+strutture$StrutturaAssegnataria <- gsub("\"", "",  strutture$StrutturaAssegnataria)
+strutture$StrutturaAssegnataria <- str_trim(strutture$StrutturaAssegnataria)
 
 ob2021 %>% 
   left_join(strutture, by = "StrutturaAssegnataria") %>% View()
+
+
+
+unique()
