@@ -205,14 +205,36 @@ covid %>%
       x = data, 
       y = sett
    ))+
-   geom_line(col = "blue")+
-   geom_col( aes(y = Tot), 
-      alpha = 1/5)+
+   geom_line(col = "blue", size = 1.5)+
+   # geom_col( aes(y = Tot), 
+   #    alpha = 1/5)+
+   
+   geom_point(aes(x = data, 
+                  y = Tot), alpha = 1/5)+
+   geom_line(aes(x = data, 
+                 y = Tot), alpha = 1/5)+
+   geom_hline(yintercept = 2729) +
+   
    labs(
       y = "Numero Tamponi Naso Faringei", 
-      x = ""
+      x = "", 
+      title = "Andamento del numero di tamponi naso-faringei processati dai laboratori COVID dell'IZSLER nel 2020 e primi mesi del 2021", 
+      subtitle = " I punti rappresentano il numero di tamponi giornalieri, la linea blu la media mobile mensile"
+   )+
+   theme_ipsum_rc(base_size = 14,  axis_title_size = 15, 
+                  plot_title_size = 12)+
+   theme(
+      axis.text.x=element_text(size = 14),
+    
    )
    
  
    
-  
+covid %>% 
+   mutate(anno = year(data)) %>% 
+   pivot_longer(names_to = "Laboratorio", cols = 3:5) %>% 
+   group_by(data) %>% 
+   summarise(Tot = sum(value, na.rm = T)) %>%  
+   filter(Tot > 0) %>% 
+   summarise(m = max(Tot), 
+             media = mean(Tot))
