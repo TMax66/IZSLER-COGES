@@ -9,15 +9,15 @@ ob2021 <- read_excel("PROGRAMMAZIONE/performances/Estrazione_Operativo_Strategic
 
 ob2021 %>% 
   select(MacroArea, ObiettivoStrategico, Indicatore, StrutturaAssegnataria, Valore, Periodo) %>% 
-  filter(Periodo == 4) %>% 
+  filter(Periodo == 4) %>% View()
   pivot_wider(names_from = "StrutturaAssegnataria", values_from = Valore) %>% View()
   
 
-ob2021 %>% 
-  select(StrutturaAssegnataria) %>% 
-  mutate(StrutturaAssegnataria = factor(StrutturaAssegnataria)) %>% 
-  unique() %>% 
-  write.table(., file = "strutture.csv")
+# ob2021 %>% 
+#   select(StrutturaAssegnataria) %>% 
+#   mutate(StrutturaAssegnataria = factor(StrutturaAssegnataria)) %>% 
+#   unique() %>% 
+#   write.table(., file = "strutture.csv")
 
 
 # datiSB %>% 
@@ -28,6 +28,9 @@ ob2021 %>%
 #tabella di conversione strutture
 strutture <- read_excel( here("PROGRAMMAZIONE", "performances", "tabella conversione strutture.xlsx"))
 
+strutture$StrutturaAssegnataria <- gsub("\\d+", "", strutture$StrutturaAssegnataria)
+
+strutture$StrutturaAssegnataria <- gsub("", "", strutture$StrutturaAssegnataria)
 
 ob2021 %>% 
   left_join(strutture, by = "StrutturaAssegnataria") %>% View()
