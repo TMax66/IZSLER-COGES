@@ -37,5 +37,3 @@ ob2021 %>%
   left_join(strutture, by = "StrutturaAssegnataria") %>% View()
 
 
-
-unique()
