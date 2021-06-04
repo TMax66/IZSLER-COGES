@@ -91,7 +91,9 @@ AI %>%
   left_join(strutture, by = c("CENTRO_DI_COSTO")) %>% 
   saveRDS(., file = here("COGES", "data", "processed",  "ai.rds"))
 
-  
+
+
+
 #DATI DA PROGETTI DI RICERCA####
 
 
