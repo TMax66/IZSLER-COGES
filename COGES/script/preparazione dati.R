@@ -1,60 +1,89 @@
 library("tidyverse")
 library("here")
 library("readxl")
-library(DBI)
-library(odbc)
+library("DBI")
+library("odbc")
  
 #library(dbplyr)
-
-#DATI DA CONTROLLO DI GESTIONE####
-
-##ANALISI e Ricavi####
-analisi <- read_excel(sheet = "Report 1", here("COGES", "data", "raw",  "analisi1921.xls"))
-
-analisi %>% 
-  group_by(Anno, Reparto,  `Centro Di Costo`) %>% 
-summarise(n.esami = sum(Determinazioni, na.rm = T), 
-          valore = sum ( `A Tariffario`, na.rm = T)) %>%  
-  pivot_wider(names_from = Anno, values_from = c("n.esami", "valore")) %>% View()
-
-##COSTI####
-
-costi <- read_excel(sheet = "Report 1", here("COGES", "data", "raw",  "costi1921.xls"))
-
-
 
 #DATI ORE LAVORATE DA DBASE PERSONALE_COGE####
 con <- DBI::dbConnect(odbc::odbc(), Driver = "SQL Server", Server = "dbtest02", 
                       Database = "DW_COGE_DEV", Port = 1433)
 
 query <- "SELECT
-  dbo.Personale_V2020.Anno,
-  dbo.Personale_V2020.Mese,
-  dbo.Personale_V2020.Matricola,
+  dbo.IZS_Livello0.Livello0,
   dbo.IZS_Dipartimenti.DIPARTIMENTO,
   dbo.IZS_Reparti.REPARTO,
   dbo.IZS_CDC.CENTRO_DI_COSTO,
-  dbo.Personale_V2020.Percentuale,
-  dbo.Personale_V2020.InizioRapporto,
-  dbo.Personale_V2020.FineRapporto,
+  dbo.Personale_V2020.Anno,
+  dbo.Personale_V2020.Matricola,
+  dbo.Personale_V2020.Ore,
+  dbo.Personale_V2020.SmartWorking,
   dbo.Personale_V2020.Dirigente,
   dbo.Personale_V2020.Contratto,
-  dbo.Personale_V2020.Ore,
-  dbo.Personale_V2020.SmartWorking
+  dbo.Personale_V2020.Percentuale,
+  dbo.Personale_V2020.Mese,
+  dbo.Personale_V2020.FineRapporto
 FROM
   dbo.Personale_V2020 INNER JOIN dbo.IZS_CDC ON (dbo.Personale_V2020.CDC=dbo.IZS_CDC.CODICE_CDC)
    INNER JOIN dbo.IZS_Reparti ON (dbo.IZS_CDC.CODICE_REPARTO=dbo.IZS_Reparti.CODICE_REPARTO)
    INNER JOIN dbo.IZS_Dipartimenti ON (dbo.IZS_Reparti.CODICE_DIPARTIMENTO=dbo.IZS_Dipartimenti.CODICE_DIPARTIMENTO)
+   INNER JOIN dbo.IZS_Livello0 ON (dbo.IZS_Dipartimenti.Codice_Livello0=dbo.IZS_Livello0.CODICE_Livello0)
   
 WHERE
   dbo.Personale_V2020.Anno  >=  2019
-
 "
-orelavorate <- con %>% tbl(sql(query)) %>% as_tibble()
+con %>% tbl(sql(query)) %>% as_tibble() %>% 
+  saveRDS(., file = here("COGES", "data", "processed",  "orelavorate.rds"))
+
+
+tabstr <- readRDS(file = here("COGES", "data", "processed",  "orelavorate.rds") )
+
+strutture <- tabstr %>% 
+  select("Dipartimento" = Livello0, "Reparto" = DIPARTIMENTO, 
+         "Laboratorio" = REPARTO, CENTRO_DI_COSTO) %>% 
+  unique()
+  #saveRDS(., file = here("COGES", "data", "processed",  "strutture.rds"))
 
 
 
+#DATI DA CONTROLLO DI GESTIONE####
 
+##ANALISI e Ricavi####
+analisi <- read_excel(sheet = "Report 1", here("COGES", "data", "raw",  "analisi1921.xls"))
+# il file analisi1921.xls deriva da una query eseguita in business object in sai-manager##
+
+analisi %>% rename("CENTRO_DI_COSTO" =`Centro Di Costo`) %>% 
+  select(-Reparto) %>% 
+  left_join(strutture, by = c("CENTRO_DI_COSTO")) %>% 
+  saveRDS(., file = here("COGES", "data", "processed",  "analisi.rds"))
+  
+
+
+##COSTI####
+
+costi <- read_excel(sheet = "Report 1", here("COGES", "data", "raw",  "costi1921.xls"))
+# il file costi1921.xls deriva da una query eseguita in business object in sai-manager##
+
+costi %>% rename("CENTRO_DI_COSTO" =`Centro Di Costo`) %>% 
+  select(-Reparto) %>% 
+  left_join(strutture, by = c("CENTRO_DI_COSTO")) %>% View()
+  saveRDS(., file = here("COGES", "data", "processed",  "costi.rds"))
+
+
+
+##VENDITA PRODOTTI####
+  
+##ATTIVITA' INTERNA####
+
+
+#DATI DA PROGETTI DI RICERCA####
+
+
+#DATI DA PUBBLICAZIONI####
+
+
+#DATI DA DBASE PERFORMANCE (OBIETTIVI, INDICATORI, TARGET, RISULTATO, FTEQ PROGRAMMATI)####
 
 
 
