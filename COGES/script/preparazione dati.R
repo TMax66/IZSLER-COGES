@@ -73,10 +73,25 @@ costi %>% rename("CENTRO_DI_COSTO" =`Centro Di Costo`) %>%
 
 
 ##VENDITA PRODOTTI####
+
+VP <- read_excel(sheet = "Report 1", here("COGES", "data", "raw",  "VP1921.xls"))
+  # il file VP1921.xls  deriva da una query eseguita in business object in sai-manager##
   
+VP %>% rename("CENTRO_DI_COSTO" =`Centro Di Costo`) %>% 
+  left_join(strutture, by = c("CENTRO_DI_COSTO")) %>% 
+  saveRDS(., file = here("COGES", "data", "processed",  "vp.rds"))
+
 ##ATTIVITA' INTERNA####
 
+AI <- read_excel(sheet = "Report 1", here("COGES", "data", "raw",  "AI1921.xls"))
+  # il file AI1921.xls deriva da una query eseguita in business object in sai-manager##
 
+AI %>% 
+  rename("CENTRO_DI_COSTO" =`Centro Di Costo`) %>% 
+  left_join(strutture, by = c("CENTRO_DI_COSTO")) %>% 
+  saveRDS(., file = here("COGES", "data", "processed",  "ai.rds"))
+
+  
 #DATI DA PROGETTI DI RICERCA####
 
 
