@@ -435,7 +435,7 @@ Sono da segnalare nel 2020 i seguenti rilevanti cambiamenti di organizzazione e 
 
 - la transizione alla nuova norma di accreditamento ISO/IEC 17025:2017 che presenta un’importante novità con l’introduzione della gestione basata sul rischio;
 - l’applicazione della nuova organizzazione dipartimentale e le relative deleghe di funzioni assegnate dalla Direzione Generale ai nuovi Direttori di Dipartimento secondo il relativo Regolamento;
-- la proposta, approvata nel febbraio del corrente anno, della nuova organizzazione di Ente con la creazione di una nuova struttura complessa per il controllo di gestione per lo sviluppo dello strumento di budgeting dipartimentale;
+- la proposta, approvata nel febbraio del 2020, della nuova organizzazione di Ente con la creazione di una nuova struttura complessa per il controllo di gestione per lo sviluppo dello strumento di budgeting dipartimentale;
 - l’applicazione della separazione fisica tra attività ufficiali e non ufficiali nell’ambito della Sicurezza Alimentare tra le diverse sedi territoriali/Reparti dell’Ente;
 - la prima applicazione, su quattro strutture sanitarie pilota, dell’attività di Auditing interno gestionale istituita con il Decreto del Consiglio di Amministrazione n.9/2020 finalizzata alla verifica in campo del buon governo organizzativo inclusa l’applicazione delle misure di contrasto alla corruzione individuate nella relativa mappatura del PTPCT.  
 - l’integrazione della verifica delle misure di regolamentazione del PTPCT relative all’anonimizzazione del campione nel processo di prova negli Audit SAQ per la conformità ai requisiti dell’accreditamento.  
@@ -488,8 +488,9 @@ A tal proposito per supportare le ingenti attività laboratoriale l’intera org
 - i Sistemi Informativi hanno supportato i laboratori dal punto di vista tecnico-informatico;
 - sono state revisionate tutte le procedure di sicurezza e biosicurezza per il personale e per garantire l’accesso in sede da parte dell’utenza;
 - sono state riviste le procedure di accettazione dei campioni, di acquisizione di beni e servizi specifici;
-- si è garantito un costante flesso informativo dei dati epidemiologici verso il Ministero  della Salute e delle regioni;
+- si è garantito un costante flusso informativo dei dati epidemiologici verso il Ministero  della Salute e delle regioni;
 - si è provveduto ad organizzare corsi di formazione specifici per gli addetti ai servizi di laboratorio;
+
 Il grande lavoro di equipe/squadra dell’Istituto ha permesso di fronteggiare l’emergenza sanitaria con prontezza ed efficacia, dimostrando notevoli capacità organizzative e spirito di servizio.
 
 ## Un importante riconoscimento: Laboratorio Nazionale di Riferimento per le Tossine Vegetali Naturali negli alimenti
@@ -858,8 +859,6 @@ _Risultati attesi_:
 - Nuove modalità di interazione tra uffici e reparti.
 
 
- 
-**E’ necessario precisare che l’intero processo del ciclo di gestione delle performance ha subito non poche difficoltà a causa dell’emergenza sanitaria da COVID-19, che ha comportato un ritardo delle sue fasi e un impatto sul raggiungimento di alcuni obiettivi. Nel corso dell’anno 2020 l’Istituto è stato impegnato principalmente nel fronteggiare la pandemia, destinando risorse, capacità e competenze a tal fine, ritardando progetti e sospendendo altre attività.**
 
 
 ### Livello sintetico di ente
@@ -880,7 +879,6 @@ Come si può osservare dalla tabella l'obiettivo strategico **Valorizzazione del
 
 - _Efficacia ed efficienza degli interventi per la valorizzazione del capitale umano_ con un solo indicatore strategico che ha raggiunto il 100% della realizzazione. 
 
-Ne deriva che se si esclude questo obiettivo strategico (che per la sua natura più di tutti ha risentito delle restrizioni ai movimenti imposti dallo stato di emergenza epidemico in corso), dalla definzione del **Livello sintetico di Ente** si osserva che quest'ultimo si attesta ad un livello di realizzazione del **92.7%** superiore al target prefissato del **90%**
 
 Il **Livello sintetico di Ente** entra nella valutazione quantitativa della scheda di valutazione del personale dirigente (componente A1) come verrà spiegato nelle pagine successive.
 
