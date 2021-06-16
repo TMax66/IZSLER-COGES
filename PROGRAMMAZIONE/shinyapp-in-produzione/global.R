@@ -21,7 +21,7 @@ library("fmsb")
 
 dati <- readRDS("dati.rds")
 dati <- dati %>% 
-  mutate(across(where(is.numeric), function(x) round(x, 2)))
+  mutate(across(where(is.numeric), function(x) round(x, 2))) %>% View()
 vp <- readRDS("vp.rds")
 ai <- readRDS("ai.rds")
 ricerca <- readRDS("ricerca.rds")

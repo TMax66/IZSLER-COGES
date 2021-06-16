@@ -238,3 +238,60 @@ covid %>%
    filter(Tot > 0) %>% 
    summarise(m = max(Tot), 
              media = mean(Tot))
+
+
+
+##grafici valutazione del personale
+
+
+valdip <- read_excel("PROGRAMMAZIONE/Relazione Performances 2020/VALUTAZIONE DIPENDENTI ANNO 2020 - NVP  SEDUTA DEL 12.03.2021.xls", 
+                                                                           col_types = c("text", "text", "text", 
+                                                                                         "text", "numeric", "numeric", "numeric", 
+                         
+                                                                                         
+                                                                                         
+                                                                                                                                                         "text", "numeric", "numeric", "numeric"))
+valdip %>% 
+   mutate(categ = cut(TOT, breaks = c(quantile(TOT, probs = c(0,0.10, 0.25, 0.5, 0.75, 1))), include.lowest = TRUE)) %>% 
+   ggplot(aes(x=categ))+
+   geom_bar()
+
+
+ptot <- valdip %>% 
+   # mutate(dirigenza = ifelse(is.na(CATEGORIA), "DIRIGENZA", "COMPARTO")) %>%  
+   ggplot(aes(x = TOT))+
+   geom_histogram(bins = 19, col= "grey", fill= "steelblue")+
+   geom_vline(aes(xintercept = mean(TOT)), color = "red")+
+   geom_text(aes(x = mean(TOT), y = 200, label = paste("Media = ", round(mean(TOT),2))))+
+   labs(x= "valutazione", y= "n.personale IZSLER", 
+        subtitle = "Valutazione del personale IZSLER anno 2020 ")+
+   theme_ipsum_rc()
+   
+pdir <-valdip %>% 
+   mutate(dirigenza = ifelse(is.na(CATEGORIA), "DIRIGENZA", "COMPARTO")) %>%  
+   filter(dirigenza == "DIRIGENZA") %>% 
+   ggplot(aes(x = TOT))+
+   geom_histogram(bins = 18, col= "grey", fill= "steelblue")+
+   geom_vline(aes(xintercept = mean(TOT)))+
+   geom_text(aes(x = mean(TOT), y = 28, label = paste("Media = ", round(mean(TOT),2))))+
+   labs(x= "valutazione", y= "n. personale dirigente", 
+        subtitle = "Valutazione personale di dirigenza")+
+   theme_ipsum_rc()
+
+pcomp <- valdip %>% 
+   mutate(dirigenza = ifelse(is.na(CATEGORIA), "DIRIGENZA", "COMPARTO")) %>%  
+   filter(dirigenza == "COMPARTO") %>% 
+   ggplot(aes(x = TOT))+
+   geom_histogram(bins = 11, col= "grey", fill= "steelblue")+
+   geom_text(aes(x = mean(TOT), y = 100, label = paste("Media = ", round(mean(TOT),2))))+
+   geom_vline(aes(xintercept = mean(TOT)))+
+   labs(x= "valutazione", y= "n. personale di comparto", 
+        subtitle = "Valutazione personale di comparto")+
+   theme_ipsum_rc()
+
+
+library(patchwork)
+
+ptot/
+(pdir|pcomp)
+

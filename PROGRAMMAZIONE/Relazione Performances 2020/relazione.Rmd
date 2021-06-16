@@ -913,6 +913,34 @@ knitr::include_graphics("figure/f4.png")
 knitr::include_graphics("figure/f5.png")
 ```
 
+## Esiti del processo di valutazione 
+
+Le schede di valutazione individuali sono state redatte in conformità alle metodologie indicate del “Sistema di misurazione e valutazione della Performance”, approvato con decreto del direttore generale n.216 del 26.05.2021.
+In base alla normativa vigente e agli accordi aziendali, i responsabili di struttura hanno regolarmente provveduto alla valutazione del personale dirigente e di comparto della relativa struttura di appartenenza.
+Il processo di valutazione nell’anno 2020 ha coinvolto:
+ 
+- n.47 Valutatori; 
+- n.628 dipendenti di cui: 
+ - n.507 dipendenti del Comparto;
+ - n.83 Dirigenti Veterinari;
+ - n.32 Dirigenti Sanitari - Biologi e Chimici;
+-  n.6 Dirigenti delle Aree Professionale, Tecnica ed Amministrativa;
+-  tra i Dirigenti n. 19 titolari di incarico di struttura complessa o facenti funzioni.
+
+Nei grafici seguenti si illustrano gli esiti del processo di valutazione:
+
+```{r echo=FALSE, fig.align = "center",out.width = '90%', }
+knitr::include_graphics("figure/valut20.png")
+```
+
+Complessivamente 
+
+
+Dall’analisi del trend 2019-2020, si evidenzia una significativa diminuzione dei dipendenti che hanno raggiunto una valutazione complessiva di n.100/100 punti, passando da n. (anno 2019) a n.  (anno 2020), a favore di una progressiva e maggiore differenziazione di classi di punteggio tra il 95 al 99. 
+Tale trend sembra mettere in evidenza una migliore attenzione e sensibilità verso una valutazione più mirata e realistica.
+
+
+
 # Gli Obiettivi Individuali: Direzione Generale, Sanitaria Ed Amministrativa
 
 La Giunta della Regione Lombardia con deliberazione n. XI/3345 del 06.07.2020 _"Determinazioni in ordine agli obiettivi di interesse regionale da assegnare al Direttore Generale dell'Istituto Zooprofilattico Sperimentale della Lombardia e dell'Emilia Romagna-esercizio 2020”_, ha definito, di concerto con la Regione Emilia Romagna, gli obiettivi aziendali di interesse regionale per l’anno di riferimento del Direttore Generale dell’Istituto.
