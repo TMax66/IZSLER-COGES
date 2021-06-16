@@ -245,46 +245,73 @@ covid %>%
 
 
 valdip <- read_excel("PROGRAMMAZIONE/Relazione Performances 2020/VALUTAZIONE DIPENDENTI ANNO 2020 - NVP  SEDUTA DEL 12.03.2021.xls", 
-                                                                           col_types = c("text", "text", "text", 
-                                                                                         "text", "numeric", "numeric", "numeric", 
-                         
-                                                                                         
-                                                                                         
-                                                                                                                                                         "text", "numeric", "numeric", "numeric"))
+                     col_types = c("text", "text", "text", 
+                                   "text", "numeric", "numeric"))
+   
+   
+   
+   
+# valdip %>% 
+#    mutate(categ = cut(TOT, breaks = c(quantile(TOT, probs = c(0,0.10, 0.25, 0.5, 0.75, 1))), include.lowest = TRUE)) %>% 
+#    ggplot(aes(x=categ))+
+#    geom_bar()
+
+library(kableExtra)
+options(digits = 3)
+
+
 valdip %>% 
-   mutate(categ = cut(TOT, breaks = c(quantile(TOT, probs = c(0,0.10, 0.25, 0.5, 0.75, 1))), include.lowest = TRUE)) %>% 
-   ggplot(aes(x=categ))+
-   geom_bar()
+   mutate(dirigenza = ifelse(is.na(CATEGORIA), "DIRIGENZA", "COMPARTO")) %>%  
+   filter(dirigenza == "COMPARTO") %>% 
+   group_by(anno) %>% 
+   summarise(min = min(TOT,na.rm=T), 
+                       "25°percentile" = quantile(TOT, 0.25, na.rm = T), 
+                       "mediana" = median(TOT,na.rm=T), 
+                       "75°percentile" = quantile(TOT, 0.75, na.rm=T),
+                       max = max(TOT,na.rm=T)) %>% 
+   kbl("latex", booktabs = TRUE, caption = "Distribuzione dei punteggi di valutazione del personale IZSLER nel 2019 e 2020") %>% 
+   kable_styling()
+
+
+   
+   
+   
+
 
 
 ptot <- valdip %>% 
+   filter(anno == 2020) %>% 
    # mutate(dirigenza = ifelse(is.na(CATEGORIA), "DIRIGENZA", "COMPARTO")) %>%  
    ggplot(aes(x = TOT))+
    geom_histogram(bins = 19, col= "grey", fill= "steelblue")+
-   geom_vline(aes(xintercept = mean(TOT)), color = "red")+
-   geom_text(aes(x = mean(TOT), y = 200, label = paste("Media = ", round(mean(TOT),2))))+
+
    labs(x= "valutazione", y= "n.personale IZSLER", 
         subtitle = "Valutazione del personale IZSLER anno 2020 ")+
-   theme_ipsum_rc()
+   theme_ipsum_rc()+
+    
+   geom_vline(aes(xintercept = median(TOT)), color = "red")+
+   geom_text(aes(x = median(TOT), y = 200, label = paste("Mediana = ", round(median(TOT),2))))
    
 pdir <-valdip %>% 
+   filter(anno == 2020) %>% 
    mutate(dirigenza = ifelse(is.na(CATEGORIA), "DIRIGENZA", "COMPARTO")) %>%  
    filter(dirigenza == "DIRIGENZA") %>% 
    ggplot(aes(x = TOT))+
    geom_histogram(bins = 18, col= "grey", fill= "steelblue")+
-   geom_vline(aes(xintercept = mean(TOT)))+
-   geom_text(aes(x = mean(TOT), y = 28, label = paste("Media = ", round(mean(TOT),2))))+
+   geom_vline(aes(xintercept = median(TOT)), color = "red")+
+   geom_text(aes(x = median(TOT), y = 28, label = paste("Mediana = ", round(mean(TOT),2))))+
    labs(x= "valutazione", y= "n. personale dirigente", 
         subtitle = "Valutazione personale di dirigenza")+
    theme_ipsum_rc()
 
 pcomp <- valdip %>% 
+   filter(anno == 2020) %>% 
    mutate(dirigenza = ifelse(is.na(CATEGORIA), "DIRIGENZA", "COMPARTO")) %>%  
    filter(dirigenza == "COMPARTO") %>% 
    ggplot(aes(x = TOT))+
    geom_histogram(bins = 11, col= "grey", fill= "steelblue")+
-   geom_text(aes(x = mean(TOT), y = 100, label = paste("Media = ", round(mean(TOT),2))))+
-   geom_vline(aes(xintercept = mean(TOT)))+
+   geom_text(aes(x = median(TOT), y = 100, label = paste("Mediana = ", round(mean(TOT),2))))+
+   geom_vline(aes(xintercept = median(TOT)), color = "red")+
    labs(x= "valutazione", y= "n. personale di comparto", 
         subtitle = "Valutazione personale di comparto")+
    theme_ipsum_rc()
@@ -295,3 +322,22 @@ library(patchwork)
 ptot/
 (pdir|pcomp)
 
+valdip %>% 
+   filter(anno == 2019) %>% 
+   mutate(dirigenza = ifelse(is.na(CATEGORIA), "DIRIGENZA", "COMPARTO")) %>%  
+   filter(dirigenza == "DIRIGENZA") %>% 
+mutate(TOT = factor(TOT)) %>% 
+   group_by(TOT) %>% 
+summarise(n=n()) %>% 
+   summarise( sum(n))
+148/519
+
+valdip %>% 
+   filter(anno == 2020) %>% 
+   mutate(dirigenza = ifelse(is.na(CATEGORIA), "DIRIGENZA", "COMPARTO")) %>%  
+   filter(dirigenza == "DIRIGENZA") %>% 
+   mutate(TOT = factor(TOT)) %>% 
+   group_by(TOT) %>% 
+   summarise(n=n()) %>% 
+   summarise( sum(n))
+74/502
