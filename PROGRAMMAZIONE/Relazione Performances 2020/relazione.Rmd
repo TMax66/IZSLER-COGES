@@ -303,10 +303,11 @@ Al seguente [link](https://www.izsler.it/chi-siamo/per-chi-e-con-chi-lavoriamo/c
 ## Le risorse umane
 Le risorse umane rappresentano il capitale primario per dell’Istituto che investe nell’acquisizione di diverse professionalità anche ad alto livello di specializzazione.
 Alla data del 31.12.2020 l’IZSLER ha nel su organico n. 704 unità così suddivise:
+
 - 584 dipendenti assunti a tempo indeterminato;
--  57 dipendenti assunti a tempo determinato;
--  50 borse di studio;
--  13 personale addetto alla ricerca;
+- 57 dipendenti assunti a tempo determinato;
+- 50 borse di studio;
+- 13 personale addetto alla ricerca;
 
 ```{r echo=FALSE, fig.align = "center",out.width = '90%', } 
 knitr::include_graphics("figure/pers.png")
@@ -453,8 +454,8 @@ A seguito della pandemia da covid19 che ha colpito l’Italia e il mondo, l’Is
 Con nota prot.n. 0005086/P del 02.03.2020 il Ministero della Salute ha formalizzato il supporto diagnostico dell’Istituto nel contrastare l’emergenza sanitaria, individuandolo come laboratorio autorizzato per eseguire analisi, grazie alla comprovata esperienza in campo diagnostico e alla presenza di un Sistema di Gestione della qualità.
 
 Già a partire da marzo 2020, l’IZSLER ha supportato il Sistema Sanitario Nazionale nell’analisi dei tamponi nasofaringei (TNF) per la ricerca di Sars-CoV-2 in campioni umani. 
-Il 5 marzo è stato attivato il primo laboratorio presso il Reparto Tecnologie Biologiche Applicate della sede centrale di Brescia, diretto dalla dott.ssa Beatrice Boniotti, al quale si sono aggiunti dopo pochi giorni il laboratorio presso la sede territoriale di Pavia, diretto dalla dott.ssa Paola Prati, e successivamente nel mese di agosto, un ulteriore laboratorio presso la sede territoriale di Modena, diretto dalla dott.ssa Elena Carra. 
-Ad Ottobre è stato attivato un quarto laboratorio presso la Sede Territoriale di Brescia, diretto dal Dr. Alborali, dedicato all’analisi di campioni animali e che ha supportato il primo laboratorio di Brescia durante la seconda ondata dell’emergenza pandemica.
+Il 5 marzo è stato attivato il primo laboratorio presso il Reparto Tecnologie Biologiche Applicate della sede centrale di Brescia,  al quale si sono aggiunti dopo pochi giorni il laboratorio presso la sede territoriale di Pavia, e successivamente nel mese di agosto, un ulteriore laboratorio presso la sede territoriale di Modena. 
+Ad Ottobre è stato attivato un quarto laboratorio presso la Sede Territoriale di Brescia dedicato all’analisi di campioni animali e che ha supportato il primo laboratorio di Brescia durante la seconda ondata dell’emergenza pandemica.
 L’IZSLER ha codificato e validato un metodo di prova interno, MP 09/314 “Metodo di prova interno per la ricerca del virus Sars-CoV-2 in campioni biologici umani mediante “RT PCR Real Time”, sulla base dei protocolli pubblicati sul sito del WHO e ha tenuto sotto controllo le performance del metodo, partecipando a circuiti esterni di laboratorio promossi da Regione Lombardia e LGC Standards.
 Dal 5 marzo 2020 al 31 dicembre 2020, l’IZSLER ha analizzato n. 659.670 tamponi nasofaringei per la ricerca di Sars-CoV-2, provenienti dalle seguenti 4 regioni:
 
@@ -483,8 +484,8 @@ La sede di Modena ha avuto 20 diversi conferenti, tra cui AUSl di Bologna con 40
 E’ da sottolineare che l’Istituto per far fronte all’emergenza sanitaria ha dovuto prontamente riprogrammare le proprie attività, alcune delle quali sono state momentaneamente sospese e qualche laboratorio è stato riconvertito, per dare spazio all’esecuzione urgente di analisi dei campioni da covid19.
 A tal proposito per supportare le ingenti attività laboratoriale l’intera organizzazione dell’istituto è stata coinvolta a vario titolo mettendo in campo le seguenti azioni:
 
-- l’ UO gestione personale ha  assunto  n.26 personale tecnico sanitario dedicato al campionamento;
-- l’UO Provveditorato ha gestito numerose gare per l’acquisizione del materiali necessario all’esecuzione dei campioni;
+- l’ UO Gestione risorse umane e sviluppo competenze ha  assunto  n.26 personale tecnico sanitario dedicato al campionamento;
+- l’UO Provveditorato economato e vendite ha gestito numerose gare per l’acquisizione del materiali necessario all’esecuzione dei campioni;
 - i Sistemi Informativi hanno supportato i laboratori dal punto di vista tecnico-informatico;
 - sono state revisionate tutte le procedure di sicurezza e biosicurezza per il personale e per garantire l’accesso in sede da parte dell’utenza;
 - sono state riviste le procedure di accettazione dei campioni, di acquisizione di beni e servizi specifici;
@@ -564,7 +565,7 @@ Con decreto del Direttore Generale n. 28 del 26.01.2021 è stato istituito il Nu
 - Componente: Dott. Guerino Lombardi, Dirigente Responsabile Struttura Biblioteca, Formazione e Comunicazione;
 
 
-# Ciclo di gestione della performance
+# Ciclo di gestione della Performance
 
 ## Una definizione di performance
 
@@ -650,7 +651,7 @@ Di seguito si riporta il **Cruscotto di Ente**,  che rispetto a quello dell’an
 
 
 ### Cruscotto dell'ente anno 2020 {-}
-Di seguito per ogni obiettivo strategico sono riportate le rispettive azioni e una tabella che sintetizza gli indicatori adottati, il target , il grado di raggiungimento e una breve descrizione del risultato raggiunto
+Di seguito per ogni obiettivo strategico sono riportate le rispettive azioni e una tabella che sintetizza gli indicatori adottati, il target , il grado di raggiungimento e una breve descrizione del risultato raggiunto: 
 
 
 ####  Obiettivo strategico 1: **Implementazione delle attività relative alla ricerca nazionale e internazionale** {-}
@@ -738,9 +739,10 @@ Questo obiettivo è declinato in due azioni:
 knitr::include_graphics("figure/ob6.png")
 ```
 
-#### **I project** {-}
+#### **I PROJECT** {-}
 
-**PROJECT N.1: Realizzazione network nazionale ed internazionale della Biobanca Veterinaria** 
+
+#### **PROJECT N.1: Realizzazione network nazionale ed internazionale della Biobanca Veterinaria** {-}
 
 _Significato strategico_: 
 
@@ -863,7 +865,7 @@ _Risultati attesi_:
 
 ### Livello sintetico di ente
 
-Per la misurazione della performance organizzativa di ente, l’istituto si è dotato di uno strumento che è il «**Livello sintetico di Ente», il quale rappresenta la media aritmetica di tutti gli obiettivi strategici raggiunti dall’Istituto**. Nell’anno 2020 il Livello Sintetico di Ente presenta una percentuale dell’**83.5%**, in linea con il target previsto dell'**83%**, ma  in  diminuzione rispetto all’anno precedente (90%). 
+Per la misurazione della performance organizzativa di ente, l’Istituto si è dotato di uno strumento che è il «**Livello sintetico di Ente», il quale rappresenta la media aritmetica di tutti gli obiettivi strategici raggiunti dall’Istituto**. Nell’anno 2020 il Livello Sintetico di Ente presenta una percentuale dell’**83.5%**, in linea con il target previsto dell'**83%**, ma  in  diminuzione rispetto all’anno precedente (90%). 
 E’ necessario precisare che l’intero processo del ciclo di gestione delle performance ha subito non poche difficoltà a causa dell’emergenza sanitaria da covid19, che ha comportato un ritardo delle sue fasi e un impatto sul raggiungimento di alcuni obiettivi. Nel corso dell’anno 2020 l’Istituto è stato impegnato principalmente nel fronteggiare la pandemia, destinando risorse, capacità e competenze a tal fine.
 <!-- Nelle immagini sotto riportate vengono messe in evidenza sia la dimensione strategica, area in blu, sia quella operativa, area in arancione. -->
 
@@ -888,7 +890,7 @@ La performance organizzativa delle strutture legata agli obiettivi operativi, en
 
 ## Performance individuale
 
-Le schede di valutazione individuale sono state redatte in conformità alle metodologie indicate nel Sistema di Misurazione e Valutazione dell’IZSLER anno 2020, approvato con Delibera del Direttore Generale n. 363 del 03.11.2020. In base alla normativa vigente e agli accordi aziendali, i responsabili di struttura hanno regolarmente provveduto alla valutazione del personale dirigente e di comparto.
+Le schede di valutazione individuale sono state redatte in conformità alle metodologie indicate nel Sistema di Misurazione e Valutazione dell’IZSLER anno 2020, approvato con Delibera del Direttore Generale n. 363 del 03.11.2020. 
  Si presenta qui di seguito gli elementi costitutivi delle schede di valutazione del personale del comparto e della dirigenza.
 
 ```{r echo=FALSE, fig.align = "center",out.width = '90%', }
@@ -915,7 +917,7 @@ knitr::include_graphics("figure/f5.png")
 
 ## Esiti del processo di valutazione 
 
-Le schede di valutazione individuali sono state redatte in conformità alle metodologie indicate del “Sistema di misurazione e valutazione della Performance”, approvato con decreto del direttore generale n.216 del 26.05.2021.
+Le schede di valutazione individuali sono state redatte in conformità alle metodologie indicate del “Sistema di misurazione e valutazione della Performance”.
 In base alla normativa vigente e agli accordi aziendali, i responsabili di struttura hanno regolarmente provveduto alla valutazione del personale dirigente e di comparto della relativa struttura di appartenenza.
 Il processo di valutazione nell’anno 2020 ha coinvolto:
  
