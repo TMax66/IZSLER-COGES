@@ -357,7 +357,7 @@ knitr::include_graphics("figure/imm.png")
 
 \newpage
 
-## La produzione scientifica 
+
 
 ## La formazione
 

@@ -35,7 +35,7 @@ fontsize: 12pt
  
   
 \begin{center} 
- Adottata con Deliberazione del Consiglio di Amministrazione n. del 
+ Adottata con Deliberazione del Consiglio di Amministrazione n.7 del 23/06/2021
  \end{center}
  
   

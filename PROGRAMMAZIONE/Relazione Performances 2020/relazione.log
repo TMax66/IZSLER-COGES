@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.6.20)  21 JUN 2021 11:41
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.6.20)  23 JUN 2021 11:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1175,104 +1175,104 @@ File: figure/imm.png Graphic file (type bmp)
 [22] [23]
 File: figure/corsi.png Graphic file (type bmp)
 <figure/corsi.png>
-[24]
 LaTeX Font Info:    Font shape `TU/TimesNewRoman(0)/b/it' will be
-(Font)              scaled to size 12.0pt on input line 771.
+(Font)              scaled to size 12.0pt on input line 768.
+[24]
 File: figure/prj.png Graphic file (type bmp)
 <figure/prj.png>
 [25]
 File: figure/pubb.png Graphic file (type bmp)
 <figure/pubb.png>
-[26] [27] [28]
-Underfull \hbox (badness 10000) in paragraph at lines 900--907
+[26] [27]
+Underfull \hbox (badness 10000) in paragraph at lines 897--904
 
  []
 
-[29] [30]
+[28] [29]
 File: figure/covid.png Graphic file (type bmp)
 <figure/covid.png>
-[31] [32] [33] [34] [35]
+[30] [31] [32] [33] [34]
 File: figure/gare1.png Graphic file (type bmp)
 <figure/gare1.png>
 File: figure/gare2.png Graphic file (type bmp)
 <figure/gare2.png>
-[36] [37] [38] [39] [40] [41]
+[35] [36] [37] [38] [39] [40]
 File: figure/f2.png Graphic file (type bmp)
 <figure/f2.png>
-[42]
+[41]
 File: figure/ob1.png Graphic file (type bmp)
 <figure/ob1.png>
 
-Overfull \hbox (46.97888pt too wide) in paragraph at lines 1480--1480
+Overfull \hbox (46.97888pt too wide) in paragraph at lines 1477--1477
  [] 
  []
 
-[43] [44]
+[42] [43]
 File: figure/ob2.png Graphic file (type bmp)
 <figure/ob2.png>
 
-Overfull \hbox (47.01123pt too wide) in paragraph at lines 1503--1503
+Overfull \hbox (47.01123pt too wide) in paragraph at lines 1500--1500
+ [] 
+ []
+
+[44]
+File: figure/ob3.png Graphic file (type bmp)
+<figure/ob3.png>
+
+Overfull \hbox (46.98543pt too wide) in paragraph at lines 1519--1519
  [] 
  []
 
 [45]
-File: figure/ob3.png Graphic file (type bmp)
-<figure/ob3.png>
+File: figure/ob4.png Graphic file (type bmp)
+<figure/ob4.png>
 
-Overfull \hbox (46.98543pt too wide) in paragraph at lines 1522--1522
+Overfull \hbox (46.98203pt too wide) in paragraph at lines 1536--1536
  [] 
  []
 
 [46]
-File: figure/ob4.png Graphic file (type bmp)
-<figure/ob4.png>
+File: figure/ob5.png Graphic file (type bmp)
+<figure/ob5.png>
 
-Overfull \hbox (46.98203pt too wide) in paragraph at lines 1539--1539
+Overfull \hbox (46.99896pt too wide) in paragraph at lines 1552--1552
  [] 
  []
 
 [47]
-File: figure/ob5.png Graphic file (type bmp)
-<figure/ob5.png>
-
-Overfull \hbox (46.99896pt too wide) in paragraph at lines 1555--1555
- [] 
- []
-
-[48]
 File: figure/ob6.png Graphic file (type bmp)
 <figure/ob6.png>
 
-Overfull \hbox (47.00346pt too wide) in paragraph at lines 1573--1573
+Overfull \hbox (47.00346pt too wide) in paragraph at lines 1570--1570
  [] 
  []
 
-[49] [50] [51] [52] [53]
+[48] [49] [50] [51] [52]
 File: figure/f8.png Graphic file (type bmp)
 <figure/f8.png>
-[54]
+[53]
 File: figure/f3.png Graphic file (type bmp)
 <figure/f3.png>
-[55]
+[54]
 File: figure/f4.png Graphic file (type bmp)
 <figure/f4.png>
-[56]
+[55]
 File: figure/f5.png Graphic file (type bmp)
 <figure/f5.png>
-[57] [58]
+[56] [57]
 File: figure/valut20.png Graphic file (type bmp)
 <figure/valut20.png>
-[59] [60] [61] [62] (./relazione.aux)
+[58] [59] [60] [61] (./relazione.aux)
 Package rerunfilecheck Info: File `relazione.out' has not changed.
-(rerunfilecheck)             Checksum: 6A2C3BDB3CCA846B1DE9FF2F2C1193B8;11542.
+(rerunfilecheck)             Checksum: 3B0A59FC5C2CFB4808B290665F812CD9;11352.
  ) 
 Here is how much of TeX's memory you used:
- 19146 strings out of 478442
- 347274 string characters out of 5856508
- 848739 words of memory out of 5000000
- 39195 multiletter control sequences out of 15000+600000
+ 19145 strings out of 478442
+ 347247 string characters out of 5856508
+ 848681 words of memory out of 5000000
+ 39194 multiletter control sequences out of 15000+600000
  407051 words of font info for 71 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 87i,9n,122p,711b,461s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 87i,9n,122p,711b,443s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on relazione.pdf (62 pages).
+Output written on relazione.pdf (61 pages).
