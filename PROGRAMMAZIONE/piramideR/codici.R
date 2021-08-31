@@ -140,7 +140,7 @@ library(knitr)
 library(kableExtra)
 PRJ %>% 
   knitr::kable(digits = 2, caption = "Coefficienti di regressione") %>%
-  kable_styling() %>%
+  kable_styling() %>%  
   save_kable(file = "table_1.png", zoom = 1.5)
   
 
@@ -403,6 +403,34 @@ mutate(score = rowSums(select(., -1)),
   kable_styling() %>%
   save_kable(file = "table_8.png", zoom = 1.5)
   
+
+#tabella per tesi merialdi 
+# Dati %>%
+#   select(-9, -10) %>% 
+#   rename( Dipartimento = Dip, "N. Prog. in corso" = `Nprj in corso`, 
+#           "Budget Prog. in corso" = `Bdg in corso`, 
+#           "Mediana Budget Prog. in corso" = `MdBdg in corso`, 
+#           "Nuovi Prog." = NuoviPrj, 
+#           "Budget Nuovi Prog." = BdgNuoviprj, 
+#           "Mediana Budget Nuovi Prog." = MdBdgNuoviprj, 
+#           "N. Pubblicazioni" = Pubs, 
+#           "Collaborazioni Intern." = CollInt, 
+#           "Impatto Cit. Normalizzato" = ImpCitsNorm
+#           ) %>% 
+# 
+#   mutate(score = rowSums(select(., -1)), 
+#          # tscore = 50+10*score, 
+#          #   pscore = tscore/sum(tscore), 
+#          #   Npiram = 30*pscore
+#          d = max(score)-rev(score), 
+#          peso = d/sum(d)
+#   ) %>% 
+#   arrange(desc(score)) %>% 
+#   select(-d, -peso) %>% 
+#   knitr::kable(digits = 2, caption = "Z-score") %>%
+#   kable_styling()
+
+
 
 
 

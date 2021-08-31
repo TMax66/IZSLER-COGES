@@ -309,7 +309,7 @@ vp %>%
    mutate(obcod = paste("OB", seq(1:nrow(.)))) %>%
    pivot_longer(3:37, names_to = "struttura", values_to = "FTED") %>% 
    mutate(reparto = recode(struttura, "STBO" = "STBO-FE-MO", 
-                           "STFE" = "STBO-FE-MO", 
+                           "STFE" = "", 
                            "STMO" = "STBO-FE-MO", 
                            "STPR" = "STPR-PC", 
                            "STPC" = "STPR-PC",
